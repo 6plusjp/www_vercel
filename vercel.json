@@ -19,16 +19,6 @@
       "source": "/rss",
       "destination": "/blog/rss.xml",
       "permanent": true
-    },
-    {
-      "source": "/post/:slug*",
-      "destination": "/blog/:slug*",
-      "permanent": true
-    },
-    {
-      "source": "/:slug*",
-      "destination": "/blog/:slug*",
-      "permanent": true
     }
   ]
 }
