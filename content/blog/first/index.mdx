@@ -1,0 +1,24 @@
+---
+title: First post
+description: the first post.
+published: 2022-02-03
+bannerImgId: samples/bike
+---
+
+I'm trying something out with Remix.
+
+## code
+
+```js
+import { Outlet } from 'remix'
+
+export default function Blog() {
+  return (
+    <div className="flex justify-center">
+      <div className="prose py-10 lg:prose-xl">
+        <Outlet />
+      </div>
+    </div>
+  )
+}
+```

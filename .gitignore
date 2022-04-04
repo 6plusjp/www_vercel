@@ -1,7 +1,17 @@
+# Node
 node_modules
 
-.cache
+# Vercel
 .vercel
 
+# Remix build
+.cache
+/build
 public/build
 api/_build
+
+# Postcss build
+/app/styles
+
+# Misc
+.env

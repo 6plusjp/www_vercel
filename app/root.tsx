@@ -1,39 +1,117 @@
 import {
-  Link,
   Links,
-  LiveReload,
   Meta,
-  Outlet,
   Scripts,
+  LiveReload,
   ScrollRestoration,
-  useCatch
+  Outlet,
+  useLoaderData,
+  useCatch,
+  Link,
+  json,
 } from "remix";
-import type { LinksFunction } from "remix";
+import type { LoaderFunction, LinksFunction, MetaFunction } from "remix";
 
-import globalStylesUrl from "~/styles/global.css";
-import darkStylesUrl from "~/styles/dark.css";
+import tailwind from "~/styles/tailwind.css";
+import global from "~/styles/global.css";
+import noScriptCSS from "~/styles/no-script.css";
+import reachUi from "~/styles/vendors.css";
+
+import { getEnv } from "./utils/env.server";
+import {
+  getThemeSession,
+  Theme,
+  ThemeBody,
+  ThemeProvider,
+  ThemeScript,
+  useTheme,
+} from "./utils/theme";
+import { getDomainUrl, getUrl, removeTrailingSlash } from "./utils/misc";
+import { getMeta } from "./utils/seo";
+import clsx from "clsx";
+import { ExternalLink } from "./components/external-link";
+
+export type RootLoaderData = {
+  ENV: ReturnType<typeof getEnv>;
+  requestInfo: {
+    origin: string;
+    path: string;
+  };
+  theme: Theme | null;
+};
+export const loader: LoaderFunction = async ({ request }) => {
+  const { getTheme } = await getThemeSession(request);
+
+  const data: RootLoaderData = {
+    ENV: getEnv(),
+    requestInfo: {
+      origin: getDomainUrl(request),
+      path: new URL(request.url).pathname,
+    },
+    theme: getTheme(),
+  };
+
+  return json(data);
+};
+
+export const meta: MetaFunction = ({ data }) => {
+  const requestInfo = data?.requestInfo;
+  return {
+    viewport: "width=device-width,initial-scale=1,viewport-fit=cover",
+    ...getMeta({
+      origin: requestInfo?.origin ?? "",
+      url: getUrl(requestInfo),
+      keywords: "React, JavaScript, TypeScript",
+    }),
+  };
+};
 
 // https://remix.run/api/app#links
-export let links: LinksFunction = () => {
+export const links: LinksFunction = () => {
   return [
-    { rel: "stylesheet", href: globalStylesUrl },
+    // {
+    //   rel: 'preload',
+    //   as: 'font',
+    //   href: '/fonts/inter/Inter-Regular.woff2',
+    //   type: 'font/woff2',
+    //   crossOrigin: 'anonymous',
+    // },
     {
-      rel: "stylesheet",
-      href: darkStylesUrl,
-      media: "(prefers-color-scheme: dark)"
-    }
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+      href: "/favicons/apple-touch-icon.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "32x32",
+      href: "/favicons/favicon-32x32.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "16x16",
+      href: "/favicons/favicon-16x16.png",
+    },
+    { rel: "manifest", href: "/site.webmanifest" },
+    { rel: "icon", href: "/favicon.ico" },
+    { rel: "stylesheet", href: reachUi },
+    { rel: "stylesheet", href: global },
+    { rel: "stylesheet", href: tailwind },
   ];
 };
 
 // https://remix.run/api/conventions#default-export
 // https://remix.run/api/conventions#route-filenames
 export default function App() {
+  const data = useLoaderData<RootLoaderData>();
   return (
-    <Document>
-      <Layout>
+    <ThemeProvider specifiedTheme={data.theme}>
+      <Document>
         <Outlet />
-      </Layout>
-    </Document>
+        <ThemeBody ssrTheme={Boolean(data.theme)} />
+      </Document>
+    </ThemeProvider>
   );
 }
 
@@ -41,19 +119,25 @@ export default function App() {
 export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
   return (
-    <Document title="Error!">
-      <Layout>
-        <div>
-          <h1>There was an error</h1>
-          <p>{error.message}</p>
-          <hr />
-          <p>
-            Hey, developer, you should replace this with what you want your
-            users to see.
-          </p>
-        </div>
-      </Layout>
-    </Document>
+    <html lang="ja">
+      <head>
+        <title>Oh no...</title>
+        <Links />
+      </head>
+      <body className="min-h-screen flex flex-col w-full overflow-x-hidden bg-gray-900 text-gray-200">
+        <Layout>
+          <div>
+            <h1 className="text-4xl bold mb-8">There was an error!</h1>
+            <p className="mb-8">{error.message}</p>
+            <hr />
+            <p>
+              Hey, developer, you should replace this with what you want your
+              users to see.
+            </p>
+          </div>
+        </Layout>
+      </body>
+    </html>
   );
 }
 
@@ -82,38 +166,53 @@ export function CatchBoundary() {
   }
 
   return (
-    <Document title={`${caught.status} ${caught.statusText}`}>
-      <Layout>
-        <h1>
-          {caught.status}: {caught.statusText}
-        </h1>
-        {message}
-      </Layout>
-    </Document>
+    <html lang="ja">
+      <head>
+        <title>{`${caught.status} ${caught.statusText}`}</title>
+        <Links />
+      </head>
+      <body className="min-h-screen flex flex-col w-full overflow-x-hidden bg-gray-900 text-gray-200">
+        <Layout>
+          <h1>
+            {caught.status}: {caught.statusText}
+          </h1>
+          {message}
+        </Layout>
+      </body>
+    </html>
   );
 }
 
-function Document({
-  children,
-  title
-}: {
-  children: React.ReactNode;
-  title?: string;
-}) {
+function Document({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData();
+  const [theme] = useTheme();
   return (
-    <html lang="en">
+    <html lang="ja" className={clsx("font-display", theme)}>
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        {title ? <title>{title}</title> : null}
         <Meta />
+        <link
+          rel="canonical"
+          href={removeTrailingSlash(
+            `${data.requestInfo.origin}${data.requestInfo.path}`
+          )}
+        />
         <Links />
+        <noscript>
+          <link rel="stylesheet" href={noScriptCSS} />
+        </noscript>
+        <ThemeScript ssrTheme={Boolean(data.theme)} />
       </head>
-      <body>
+      <body className="w-full antialiased">
         {children}
         <ScrollRestoration />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+          }}
+        />
         <Scripts />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+        <LiveReload />
       </body>
     </html>
   );
@@ -121,32 +220,39 @@ function Document({
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="remix-app">
-      <header className="remix-app__header">
-        <div className="container remix-app__header-content">
-          <Link to="/" title="Remix" className="remix-app__header-home-link">
+    <div className="flex flex-col flex-1 h-full">
+      <header className="px-6 lg:px-12 py-9 flex justify-between items-center">
+        <div className="flex justify-between container mx-auto">
+          <Link to="/" title="Remix" className="">
             <RemixLogo />
           </Link>
-          <nav aria-label="Main navigation" className="remix-app__header-nav">
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <a href="https://remix.run/docs">Remix Docs</a>
-              </li>
-              <li>
-                <a href="https://github.com/remix-run/remix">GitHub</a>
-              </li>
-            </ul>
+          <nav aria-label="Main navigation" className="flex items-center gap-6">
+            <Link
+              className="text-sm mx-2 sm:mx-4 last:mr-0 opacity-80 hover:opacity-100 font-semibold"
+              to="/"
+            >
+              Home
+            </Link>
+            <ExternalLink
+              className="text-sm mx-2 sm:mx-4 last:mr-0 opacity-80 hover:opacity-100 font-semibold"
+              href="https://remix.run/docs"
+            >
+              Remix Docs
+            </ExternalLink>
+            <ExternalLink
+              className="text-sm mx-2 sm:mx-4 last:mr-0 opacity-80 hover:opacity-100 font-semibold"
+              href="https://github.com/remix-run/remix"
+            >
+              GitHub
+            </ExternalLink>
           </nav>
         </div>
       </header>
-      <div className="remix-app__main">
-        <div className="container remix-app__main-content">{children}</div>
+      <div className="flex flex-col flex-1">
+        <div className="container mx-auto text-base">{children}</div>
       </div>
-      <footer className="remix-app__footer">
-        <div className="container remix-app__footer-content">
+      <footer className="px-6 lg:px-12 py-9 text-sm flex justify-between items-center">
+        <div className="container mx-auto flex justify-center items-center">
           <p>&copy; You!</p>
         </div>
       </footer>

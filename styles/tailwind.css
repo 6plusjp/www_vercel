@@ -1,0 +1,291 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter/Inter-Regular.woff2') format('woff2'),
+    url('/fonts/inter/Inter-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* underline */
+.underline-animation {
+  @apply relative inline-block no-underline hover:text-hp focus:text-hp;
+}
+.underline-animation:after {
+  content: '';
+  @apply absolute bottom-0 left-0 h-[1px] w-full origin-bottom-right scale-x-0 bg-hp transition-transform;
+}
+.underline-animation:hover:after {
+  @apply origin-bottom-left scale-x-100;
+}
+.underline-animation:focus:after {
+  @apply origin-bottom-left scale-x-100;
+}
+
+@layer base {
+  /* Paragraphs should have a bottom margin to separate them, by default.
+  p {
+    @apply mb-3;
+  } */
+}
+
+@layer components {
+  /* alert */
+  .alert {
+    @apply flex w-full flex-col items-center justify-between gap-4 space-y-2 md:flex-row md:space-y-0;
+  }
+  .alert > :where(*) {
+    @apply flex items-center gap-2;
+  }
+
+  .avatar {
+    @apply relative inline-flex;
+  }
+  .avatar > div {
+    @apply block overflow-hidden;
+  }
+  .avatar img {
+    @apply h-full w-full object-cover;
+  }
+  .avatar.placeholder > div {
+    @apply flex items-center justify-center;
+  }
+
+  .badge {
+    @apply inline-flex items-center justify-center transition duration-200 ease-in-out;
+    @apply h-5 text-sm leading-5;
+    width: fit-content;
+    padding-left: 0.563rem;
+    padding-right: 0.563rem;
+  }
+
+  /* breadcrumbs */
+  .breadcrumbs {
+    @apply max-w-full overflow-x-auto;
+  }
+  .breadcrumbs > ul {
+    @apply flex items-center whitespace-nowrap;
+    min-height: min-content;
+  }
+  .breadcrumbs > ul > li {
+    @apply flex items-center;
+  }
+  .breadcrumbs > ul > li > a {
+    @apply flex cursor-pointer items-center hover:underline;
+  }
+
+  /* button */
+  .btn {
+    @apply inline-flex flex-shrink-0 cursor-pointer select-none flex-wrap items-center justify-center rounded text-center transition duration-200 ease-in-out;
+    @apply h-12 min-h-[3rem] px-4 text-sm;
+    line-height: 1em;
+  }
+  .btn:focus {
+    @apply outline-none;
+  }
+  /* disabled */
+  .btn-disabled,
+  .btn[disabled] {
+    @apply pointer-events-none;
+  }
+  /* shapes */
+  .btn-square {
+    @apply h-12 w-12 p-0;
+  }
+  .btn-circle {
+    @apply h-12 w-12 rounded-full p-0;
+  }
+  /* loading */
+  .btn.loading,
+  .btn.loading:hover {
+    @apply pointer-events-none;
+  }
+  .btn.loading:before {
+    @apply mr-2 h-4 w-4 rounded-full border-2;
+    animation: spin 2s linear infinite;
+    content: '';
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-bottom-color: currentColor;
+    border-right-color: currentColor;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn.loading:before {
+      animation: spin 10s linear infinite;
+    }
+  }
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .btn-group {
+    @apply flex flex-wrap;
+  }
+  .btn-group > input[type='radio'].btn {
+    @apply appearance-none;
+  }
+  .btn-group > input[type='radio'].btn:before {
+    content: attr(data-title);
+  }
+
+  .hero {
+    @apply grid w-full place-items-center bg-cover bg-center;
+  }
+  .hero > * {
+    @apply col-start-1 row-start-1;
+  }
+  .hero-overlay {
+    @apply col-start-1 row-start-1 h-full w-full;
+  }
+  .hero-content {
+    @apply z-0 flex items-center justify-center;
+  }
+
+  .kbd {
+    @apply inline-flex items-center justify-center;
+  }
+
+  /* menu toggle */
+  .menu-toggle path {
+    fill: transparent;
+    stroke-linecap: square;
+    stroke-dashoffset: auto;
+    transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+  }
+  .menu-toggle .top {
+    stroke-dasharray: 25 172;
+  }
+  .menu-toggle .middle {
+    stroke-dasharray: 40 111;
+  }
+  .menu-toggle .bottom {
+    stroke-dasharray: 25 172;
+  }
+  .menu-toggle:hover .top {
+    stroke-dasharray: 40 172;
+  }
+  .menu-toggle:hover .bottom {
+    stroke-dasharray: 40 172;
+  }
+  .menu-toggle.active path {
+    stroke: #a9a9a9;
+  }
+  .menu-toggle.active .top {
+    stroke-dashoffset: -132px;
+    stroke-dasharray: 40 172;
+  }
+  .menu-toggle.active .middle {
+    stroke-dashoffset: -71px;
+  }
+  .menu-toggle.active .bottom {
+    stroke-dashoffset: -132px;
+    stroke-dasharray: 40 172;
+  }
+
+  .mockup {
+    &-code {
+      @apply relative overflow-hidden overflow-x-auto;
+      pre[data-prefix] {
+        &:before {
+          content: attr(data-prefix);
+          @apply inline-block text-right;
+        }
+      }
+    }
+    &-window {
+      @apply relative overflow-hidden overflow-x-auto;
+      pre[data-prefix] {
+        &:before {
+          content: attr(data-prefix);
+          @apply inline-block text-right;
+        }
+      }
+    }
+  }
+
+  .modal {
+    @apply pointer-events-none invisible fixed inset-0 flex items-end justify-center opacity-0 sm:items-center;
+    z-index: 999;
+  }
+  .modal-open,
+  .modal:target,
+  .modal-toggle:checked + .modal {
+    @apply pointer-events-auto visible opacity-100;
+  }
+  .modal-action {
+    @apply flex;
+  }
+  .modal-toggle {
+    @apply fixed h-0 w-0 appearance-none opacity-0;
+  }
+
+  /* tabs */
+  .tabs {
+    @apply flex flex-wrap items-end;
+  }
+  .tab {
+    @apply relative inline-flex cursor-pointer select-none flex-wrap items-center justify-center text-center;
+    @apply h-8 text-sm leading-loose;
+    --tab-padding: 1rem;
+  }
+
+  /* tooltip */
+
+  .animate-wave {
+    @apply relative overflow-hidden;
+    /* Fix bug in Safari https://bugs.webkit.org/show_bug.cgi?id=68196 */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+  }
+  .animate-wave::after {
+    @apply absolute inset-0 -translate-x-full;
+    animation: waveKeyframe 1.6s linear 0.5s infinite;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent
+    );
+    content: '';
+  }
+  .dark .animate-wave::after {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+  }
+  @keyframes waveKeyframe {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* toc */
+  .toc ul {
+    @apply mb-3;
+  }
+  .toc li {
+    @apply py-1 pl-2 text-sm;
+  }
+  .toc a {
+    @apply w-auto hover:text-hp focus:text-hp focus:outline-none;
+  }
+}
+
+@layer utilities {
+}
