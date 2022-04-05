@@ -173,7 +173,7 @@ export function CatchBoundary() {
       </head>
       <body className="min-h-screen flex flex-col w-full overflow-x-hidden bg-gray-900 text-gray-200">
         <Layout>
-          <h1>
+          <h1 className="text-4xl bold mb-8">
             {caught.status}: {caught.statusText}
           </h1>
           {message}
@@ -253,7 +253,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       </div>
       <footer className="px-6 lg:px-12 py-9 text-sm flex justify-between items-center">
         <div className="container mx-auto flex justify-center items-center">
-          <p>&copy; You!</p>
+          <span>Copyright © 2022 6+ All rights reserved. </span>
         </div>
       </footer>
     </div>

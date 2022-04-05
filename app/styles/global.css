@@ -10,10 +10,10 @@
   --color-base-700: #16161a;
   --color-base-800: #0d0d0d;
   --color-base-900: #010101;
-  --color-info: #2094f3;
-  --color-success: #009485;
-  --color-warning: #ff9900;
-  --color-error: #ff5724;
+  --color-info: 207 90% 54%;
+  --color-success: 174 100% 29%;
+  --color-warning: 36 100% 50%;
+  --color-error: 14 100% 57%;
   --color-highlight-dark: #7f5af0;
   --color-highlight-dark-sec: #2cb67d;
   --color-highlight-light: #ff8e3c;
@@ -29,11 +29,11 @@
 
   --image-filter: grayscale(15%);
 
-  --font-JP: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo';
-  --font-body: -apple-system, 'Segoe UI', Helvetica Neue, Helvetica, Roboto,
-    Arial, var(--font-JP), sans-serif, system-ui, 'Apple Color Emoji',
-    'Segoe UI Emoji';
-  --font-display: 'Inter', var(--font-body);
+  --font-JP: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo";
+  --font-body: -apple-system, "Segoe UI", Helvetica Neue, Helvetica, Roboto,
+    Arial, var(--font-JP), sans-serif, system-ui, "Apple Color Emoji",
+    "Segoe UI Emoji";
+  --font-display: "Inter", var(--font-body);
 }
 
 .dark {
@@ -74,6 +74,6 @@ img {
   text-indent: -9999px;
 }
 
-.dark img:not([src*='.svg']) {
+.dark img:not([src*=".svg"]) {
   filter: var(--image-filter);
 }

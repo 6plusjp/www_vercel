@@ -69,7 +69,6 @@ type ActionData = {
   status: "success" | "error";
   fields: {
     name: string | null;
-    readingName: string | null;
     email: string | null;
     subject: "仕事のご依頼" | "ご質問" | "その他" | null;
     body: string | null;
@@ -113,6 +112,12 @@ export default function Contact() {
           noValidate={isHydrated}
           aria-describedby="contact-form-error"
         >
+          <Alert state="warning" className="mb-8">
+            現在、お問い合わせフォームはメンテナンス中です。
+            <br />
+            ご依頼、ご質問がある方はお手数をおかけしますが、
+            6plusjp6gmail.com（2つ目の6を@に）までご連絡ください。
+          </Alert>
           <h1 className="mb-12 py-8 text-3xl font-bold text-tp sm:text-4xl">
             お問い合わせ
           </h1>
@@ -153,9 +158,7 @@ export default function Contact() {
             />
             {emailSuccessfullySent ? (
               <>
-                <Alert className="bg-success-500 text-success-100">
-                  {`送信完了しました! `}
-                </Alert>
+                <Alert state="success">送信完了しました!</Alert>
               </>
             ) : (
               // IDEA: show a loading state here
@@ -168,14 +171,14 @@ export default function Contact() {
                     "btn w-28 bg-hp text-base shadow sm:text-lg",
                     fetcher.state !== "idle"
                       ? "text-ts"
-                      : "text-tp transition duration-300 hover:-translate-y-0.5 hover:border hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none"
+                      : "text-tp transition duration-300 hover:-translate-y-0.5 hover:border hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border dark:hover:border-white hover:border-black focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none"
                   )}
                 >
                   {fetcher.state === "submitting" ? "送信中..." : "送信"}
                 </button>
                 <button
                   type="reset"
-                  className="btn w-28 bg-bs text-base text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:bg-transparent hover:shadow-inner focus:border sm:text-lg"
+                  className="btn w-28 bg-bs text-base text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border dark:hover:border-white hover:border-black hover:bg-transparent hover:shadow-inner focus:border sm:text-lg"
                 >
                   リセット
                 </button>

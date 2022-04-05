@@ -2,20 +2,30 @@ import { renderToString } from "react-dom/server";
 import { RemixServer } from "remix";
 import type { EntryContext } from "remix";
 
-export default function handleRequest(
+import { otherRoutes } from "./other-routes.server";
+
+export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
-  let markup = renderToString(
+  for (const handler of otherRoutes) {
+    const otherRouteResponse = await handler(request, remixContext);
+    if (otherRouteResponse) return otherRouteResponse;
+  }
+
+  const markup = renderToString(
     <RemixServer context={remixContext} url={request.url} />
   );
 
-  responseHeaders.set("Content-Type", "text/html");
+  const html = `<!DOCTYPE html>${markup}`;
 
-  return new Response("<!DOCTYPE html>" + markup, {
+  responseHeaders.set("Content-Type", "text/html");
+  responseHeaders.set("Content-Length", String(Buffer.byteLength(html)));
+
+  return new Response(html, {
     status: responseStatusCode,
-    headers: responseHeaders
+    headers: responseHeaders,
   });
 }

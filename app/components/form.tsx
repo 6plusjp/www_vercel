@@ -1,41 +1,42 @@
-import * as React from 'react'
-import clsx from 'clsx'
-import { useId } from '@reach/auto-id'
-import { useField } from 'remix-validated-form'
-import { ExclamationCircleIcon } from '@heroicons/react/outline'
+import * as React from "react";
 
-function Label({ className, ...labelProps }: JSX.IntrinsicElements['label']) {
+import clsx from "clsx";
+import { useId } from "@reach/auto-id";
+import { useField } from "remix-validated-form";
+import { ExclamationCircleIcon } from "@heroicons/react/outline";
+
+function Label({ className, ...labelProps }: JSX.IntrinsicElements["label"]) {
   return (
     <label
       {...labelProps}
-      className={clsx('inline-block text-lg text-tp', className)}
+      className={clsx("inline-block text-lg text-tp", className)}
     />
-  )
+  );
 }
 
-type InputProps = JSX.IntrinsicElements['input']
+type InputProps = JSX.IntrinsicElements["input"];
 const Input = React.forwardRef<
   HTMLInputElement,
   {
-    defaultValue?: string | null
-    name: string
-    label: string
-    className?: string
-    description?: React.ReactNode
-    id?: string
+    defaultValue?: string | null;
+    name: string;
+    label: string;
+    className?: string;
+    description?: React.ReactNode;
+    id?: string;
   } & InputProps
 >(function Input(
   { defaultValue, name, label, className, description, id, ...props },
   ref
 ) {
-  const prefix = useId()
-  const inputId = id ?? `${prefix}-${name}`
-  const errorId = `${inputId}-error`
-  const descriptionId = `${inputId}-description`
-  const { getInputProps, error } = useField(name)
+  const prefix = useId();
+  const inputId = id ?? `${prefix}-${name}`;
+  const errorId = `${inputId}-error`;
+  const descriptionId = `${inputId}-description`;
+  const { getInputProps, error } = useField(name);
 
   return (
-    <div className={clsx('mb-8', className)}>
+    <div className={clsx("mb-8", className)}>
       <div className="mb-4 flex items-baseline justify-between gap-2">
         <Label htmlFor={inputId} className="">
           {label}
@@ -58,41 +59,41 @@ const Input = React.forwardRef<
           error ? errorId : description ? descriptionId : undefined
         }
         autoComplete={
-          name === 'name'
-            ? 'name organization'
-            : name === 'email'
+          name === "name"
+            ? "name organization"
+            : name === "email"
             ? name
-            : 'off'
+            : "off"
         }
         {...getInputProps({ ref, id: inputId })}
       />
     </div>
-  )
-})
+  );
+});
 
-type TextareaProps = JSX.IntrinsicElements['textarea']
+type TextareaProps = JSX.IntrinsicElements["textarea"];
 const Textarea = React.forwardRef<
   HTMLTextAreaElement,
   {
-    defaultValue?: string | null
-    name: string
-    label: string
-    className?: string
-    description?: React.ReactNode
-    id?: string
+    defaultValue?: string | null;
+    name: string;
+    label: string;
+    className?: string;
+    description?: React.ReactNode;
+    id?: string;
   } & TextareaProps
 >(function Textarea(
   { defaultValue, name, label, className, description, id, ...props },
   ref
 ) {
-  const prefix = useId()
-  const inputId = id ?? `${prefix}-${name}`
-  const errorId = `${inputId}-error`
-  const descriptionId = `${inputId}-description`
-  const { getInputProps, error } = useField(name)
+  const prefix = useId();
+  const inputId = id ?? `${prefix}-${name}`;
+  const errorId = `${inputId}-error`;
+  const descriptionId = `${inputId}-description`;
+  const { getInputProps, error } = useField(name);
 
   return (
-    <div className={clsx('mb-8', className)}>
+    <div className={clsx("mb-8", className)}>
       <div className="mb-4 flex items-baseline justify-between gap-2">
         <Label htmlFor={inputId} className="">
           {label}
@@ -107,7 +108,7 @@ const Textarea = React.forwardRef<
       </div>
       <textarea
         className={clsx(
-          'w-full rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8'
+          "w-full rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8"
         )}
         {...(props as TextareaProps)}
         required
@@ -119,32 +120,32 @@ const Textarea = React.forwardRef<
         {...getInputProps({ ref, id: inputId })}
       />
     </div>
-  )
-})
+  );
+});
 
-type SelectProps = JSX.IntrinsicElements['select']
+type SelectProps = JSX.IntrinsicElements["select"];
 const Select = React.forwardRef<
   HTMLSelectElement,
   {
-    defaultValue?: string | null
-    name: string
-    label: string
-    className?: string
-    description?: React.ReactNode
-    id?: string
+    defaultValue?: string | null;
+    name: string;
+    label: string;
+    className?: string;
+    description?: React.ReactNode;
+    id?: string;
   } & SelectProps
 >(function Select(
   { defaultValue, name, label, className, description, id, ...props },
   ref
 ) {
-  const prefix = useId()
-  const inputId = id ?? `${prefix}-${name}`
-  const errorId = `${inputId}-error`
-  const descriptionId = `${inputId}-description`
-  const { getInputProps, error } = useField(name)
+  const prefix = useId();
+  const inputId = id ?? `${prefix}-${name}`;
+  const errorId = `${inputId}-error`;
+  const descriptionId = `${inputId}-description`;
+  const { getInputProps, error } = useField(name);
 
   return (
-    <div className={clsx('mb-8', className)}>
+    <div className={clsx("mb-8", className)}>
       <div className="mb-4 flex items-baseline justify-between gap-2">
         <Label htmlFor={inputId} className="">
           {label}
@@ -159,7 +160,7 @@ const Select = React.forwardRef<
       </div>
       <select
         className={clsx(
-          'w-full rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8'
+          "w-full rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8"
         )}
         {...(props as SelectProps)}
         required
@@ -171,58 +172,58 @@ const Select = React.forwardRef<
         {...getInputProps({ ref, id: inputId })}
       />
     </div>
-  )
-})
+  );
+});
 
 interface InputErrorProps {
-  id: string
-  children?: string | null
+  id: string;
+  children?: string | null;
 }
 function InputError({ children, id }: InputErrorProps) {
   if (!children) {
-    return null
+    return null;
   }
 
   return (
-    <p role="alert" id={id} className="inline-flex text-sm text-error-500">
+    <p role="alert" id={id} className="inline-flex text-sm text-error">
       <ExclamationCircleIcon className="h-5 w-5" />
       {children}
     </p>
-  )
+  );
 }
 
 function ButtonGroup({
   children,
   className,
 }: {
-  children: React.ReactNode | React.ReactNode[]
-  className?: string
+  children: React.ReactNode | React.ReactNode[];
+  className?: string;
 }) {
   return (
     <div
       className={clsx(
         className,
-        'flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0'
+        "flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0"
       )}
     >
       {children}
     </div>
-  )
+  );
 }
 
 function ErrorPanel({
   children,
   id,
 }: {
-  children: React.ReactNode
-  id?: string
+  children: React.ReactNode;
+  id?: string;
 }) {
   return (
     <div role="alert" className="relative mt-8 px-11 py-8" id={id}>
       <div className="absolute inset-0 rounded-lg bg-error-100" />
       <div className="relative text-lg font-medium text-tp">{children}</div>
     </div>
-  )
+  );
 }
 
-export { Label, Input, Select, Textarea, InputError, ButtonGroup, ErrorPanel }
+export { Label, Input, Select, Textarea, InputError, ButtonGroup, ErrorPanel };

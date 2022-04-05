@@ -1,14 +1,14 @@
-import type { LoaderFunction } from 'remix'
+import type { LoaderFunction } from "remix";
 
-import * as dateFns from 'date-fns'
+import * as dateFns from "date-fns";
 
-import { getDomainUrl } from '~/utils/misc'
-import { getBlogPages } from '~/utils/post.server'
+import { getDomainUrl } from "~/utils/misc";
+import { getBlogPages } from "~/utils/post.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const posts = await getBlogPages('blog')
+  const posts = await getBlogPages("blog");
 
-  const blogUrl = `${getDomainUrl(request)}/blog`
+  const blogUrl = `${getDomainUrl(request)}/blog`;
 
   const rss = `
     <rss xmlns:blogChannel="${blogUrl}" version="2.0">
@@ -19,40 +19,42 @@ export const loader: LoaderFunction = async ({ request }) => {
         <language>ja</language>
         <ttl>40</ttl>
         ${posts
-          .map(post =>
+          .map((post) =>
             `
             <item>
-              <title>${cdata(post.frontmatter.title ?? 'Untitled Post')}</title>
+              <title>${cdata(post.title ?? "Untitled Post")}</title>
               <description>${cdata(
-                post.frontmatter.description ?? 'This post is... indescribable'
+                post.description ?? "This post is... indescribable"
               )}</description>
               <pubDate>${dateFns.format(
                 dateFns.add(
-                  post.frontmatter.date
-                    ? dateFns.parseISO(post.frontmatter.date)
+                  post.updated
+                    ? dateFns.parseISO(post.updated)
+                    : post.published
+                    ? dateFns.parseISO(post.published)
                     : Date.now(),
                   { minutes: new Date().getTimezoneOffset() }
                 ),
-                'yyyy-MM-ii'
+                "yyyy-MM-ii"
               )}</pubDate>
               <link>${blogUrl}/${post.slug}</link>
               <guid>${blogUrl}/${post.slug}</guid>
             </item>
           `.trim()
           )
-          .join('\n')}
+          .join("\n")}
       </channel>
     </rss>
-  `.trim()
+  `.trim();
 
   return new Response(rss, {
     headers: {
-      'Content-Type': 'application/xml',
-      'Content-Length': String(Buffer.byteLength(rss))
-    }
-  })
-}
+      "Content-Type": "application/xml",
+      "Content-Length": String(Buffer.byteLength(rss)),
+    },
+  });
+};
 
 function cdata(s: string) {
-  return `<![CDATA[${s}]]>`
+  return `<![CDATA[${s}]]>`;
 }

@@ -1,45 +1,50 @@
-import { formatHtml } from './unified'
-const SibApiV3Sdk = require('sib-api-v3-typescript')
+const SibApiV3Sdk = require("sib-api-v3-typescript");
+
+import invariant from "tiny-invariant";
+import { formatHtml } from "./unified";
 
 interface Props {
-  subject: string
-  text: string
-  html?: string
-  name: string
-  email: string
+  subject: string;
+  text: string;
+  html?: string;
+  name: string;
+  email: string;
 }
 async function sendEmail({ name, email, subject, text, html }: Props) {
   if (html === undefined) {
-    html = await formatHtml(text)
+    html = await formatHtml(text);
   } else if (html === null) {
-    html = text
+    html = text;
   }
 
-  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi()
-  const apiKey = apiInstance.authentications['apiKey']
-  apiKey.apiKey = process.env.SENDINBLUE_API_KEY
+  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+  const apiKey = apiInstance.authentications["apiKey"];
+  apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
 
-  const templateId = 1
+  const templateId = 1;
 
-  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail()
-  sendSmtpEmail.subject = subject
-  sendSmtpEmail.htmlContent = html
-  sendSmtpEmail.sender = { name: 'John Doe', email: 'example@example.com' }
-  sendSmtpEmail.to = [{ email: email, name: name }]
+  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+  sendSmtpEmail.subject = subject;
+  sendSmtpEmail.htmlContent = html;
+  sendSmtpEmail.sender = { name: "John Doe", email: "example@example.com" };
+  sendSmtpEmail.to = [{ email: email, name: name }];
   // sendSmtpEmail.cc = [{ email: 'example2@example2.com', name: 'Janice Doe' }]
   // sendSmtpEmail.bcc = [{ name: 'John Doe', email: 'example@example.com' }]
-  sendSmtpEmail.replyTo = { email: 'replyto@domain.com', name: 'John Doe' }
-  sendSmtpEmail.headers = { 'Some-Custom-Name': 'unique-id-1234' }
-  sendSmtpEmail.params = { parameter: 'My param value', subject: 'New Subject' }
+  sendSmtpEmail.replyTo = { email: "replyto@domain.com", name: "John Doe" };
+  sendSmtpEmail.headers = { "Some-Custom-Name": "unique-id-1234" };
+  sendSmtpEmail.params = {
+    parameter: "My param value",
+    subject: "New Subject",
+  };
 
   apiInstance.sendTransacEmail(templateId, sendSmtpEmail).then(
     function () {
-      console.log('SENDINBLUE_API called successfully.')
+      console.log("SENDINBLUE_API called successfully.");
     },
     function (error: Error) {
-      console.error(error)
+      console.error(error);
     }
-  )
+  );
 
   // const body = new URLSearchParams({
   //   to,
@@ -47,39 +52,45 @@ async function sendEmail({ name, email, subject, text, html }: Props) {
   //   subject,
   //   text,
   //   html,
-  // })
+  // });
 
-  // await fetch(`https://api.sendinblue.com/v3/smtp/email`, {
-  //   method: 'POST',
+  // const options = {
+  //   method: "POST",
   //   body: JSON.stringify(body),
   //   headers: {
-  //     'api-key': 'xkeysib - xxxxxxxxxxxxxxxxx',
-  //     'content-type': 'application/json',
-  //     accept: 'application/json',
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //     "api-key": process.env.SENDINBLUE_API_KEY,
   //   },
-  // })
+  // };
+  // invariant(process.env.SENDINBLUE_API_KEY, "SENDINBLUE_API_KEY not found");
+
+  // await fetch(`https://api.sendinblue.com/v3/smtp/email`, options)
+  //   .then((response) => response.json())
+  //   .then((response) => console.log(response))
+  //   .catch((err) => console.error(err));
 }
 
 async function sendTestEmail() {
-  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi()
+  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
-  const apiKey = apiInstance.authentications['apiKey']
-  apiKey.apiKey = process.env.SENDINBLUE_API_KEY
+  const apiKey = apiInstance.authentications["apiKey"];
+  apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
 
-  const templateId = 1
+  const templateId = 1;
 
-  const sendTestEmail = new SibApiV3Sdk.SendTestEmail()
+  const sendTestEmail = new SibApiV3Sdk.SendTestEmail();
 
-  sendTestEmail.emailTo = ['magogappa@gmail.com']
+  sendTestEmail.emailTo = ["magogappa@gmail.com"];
 
   apiInstance.sendTestTemplate(templateId, sendTestEmail).then(
     function () {
-      console.log('API called successfully.')
+      console.log("API called successfully.");
     },
     function (error: Error) {
-      console.error(error)
+      console.error(error);
     }
-  )
+  );
 }
 
-export { sendEmail, sendTestEmail }
+export { sendEmail, sendTestEmail };
