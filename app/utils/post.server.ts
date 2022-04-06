@@ -3,13 +3,7 @@ import * as matter from "gray-matter";
 import type { TransformerOption } from "@cld-apis/types";
 
 import { m2toc } from "./unified";
-import {
-  readdirSync,
-  readFileSync,
-  join,
-  resolve,
-  readFile,
-} from "./fs.server";
+import { readdirSync, join, resolve, readFile } from "./fs.server";
 
 export type MdxProps = {
   code: string;
@@ -170,10 +164,10 @@ async function getBlogPages(contentDir: string) {
   });
 }
 
-type ImgBuilder = {
-  (transformations?: TransformerOption): string;
-  id: string;
-};
+// type ImgBuilder = {
+//   (transformations?: TransformerOption): string;
+//   id: string;
+// };
 export type ImgProps = {
   widths: number[];
   sizes: string[];

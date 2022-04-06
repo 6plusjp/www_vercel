@@ -1,7 +1,8 @@
-const SibApiV3Sdk = require("sib-api-v3-typescript");
-import invariant from "tiny-invariant";
+// import invariant from "tiny-invariant";
 
 import { formatHtml } from "./unified";
+
+const SibApiV3Sdk = require("sib-api-v3-typescript");
 
 interface Props {
   subject: string;
