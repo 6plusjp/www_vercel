@@ -1,14 +1,10 @@
 import * as React from "react";
-import { useActionData, json, useFetcher } from "remix";
-import type { ActionFunction, LoaderFunction, MetaFunction } from "remix";
+import { json, useFetcher } from "remix";
+import type { ActionFunction, MetaFunction } from "remix";
 
 import clsx from "clsx";
 import { z } from "zod";
-import {
-  setFormDefaults,
-  ValidatedForm,
-  validationError,
-} from "remix-validated-form";
+import { ValidatedForm, validationError } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
 
 import { Navbar } from "~/components/navbar";
@@ -19,7 +15,6 @@ import { Alert } from "~/components/alert";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
 import { useHydrated } from "~/utils/hydrated";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { sendEmail } from "~/utils/email.server";
 
 const schema = z.object({
@@ -114,7 +109,7 @@ export default function Contact() {
           noValidate={isHydrated}
           aria-describedby="contact-form-error"
         >
-          <Alert state="warning" className="mb-8">
+          <Alert state="info" className="mb-8">
             現在、お問い合わせフォームはメンテナンス中です。
             <br />
             ご依頼、ご質問がある方はお手数をおかけしますが、
@@ -173,14 +168,14 @@ export default function Contact() {
                     "btn w-28 bg-hp text-base shadow sm:text-lg",
                     fetcher.state !== "idle"
                       ? "text-ts"
-                      : "text-tp transition duration-300 hover:-translate-y-0.5 hover:border hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border dark:hover:border-white hover:border-black focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none"
+                      : "text-tp transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none dark:hover:border-white"
                   )}
                 >
                   {fetcher.state === "submitting" ? "送信中..." : "送信"}
                 </button>
                 <button
                   type="reset"
-                  className="btn w-28 bg-bs text-base text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border dark:hover:border-white hover:border-black hover:bg-transparent hover:shadow-inner focus:border sm:text-lg"
+                  className="btn w-28 bg-bs text-base text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:shadow-inner focus:border dark:hover:border-white sm:text-lg"
                 >
                   リセット
                 </button>

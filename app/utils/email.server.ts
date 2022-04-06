@@ -38,11 +38,11 @@ async function sendEmail(data: Props) {
   // sendSmtpEmail.cc = [{ email: 'example2@example2.com', name: 'Janice Doe' }]
   // sendSmtpEmail.bcc = [{ name: 'John Doe', email: 'example@example.com' }]
   // sendSmtpEmail.replyTo = { email: "replyto@domain.com", name: "John Doe" };
-  sendSmtpEmail.headers = { "Some-Custom-Name": "unique-id-1234" };
-  sendSmtpEmail.params = {
-    parameter: "My param value",
-    subject: "New Subject",
-  };
+  // sendSmtpEmail.headers = { "Some-Custom-Name": "unique-id-1234" };
+  // sendSmtpEmail.params = {
+  //   parameter: "My param value",
+  //   subject: "New Subject",
+  // };
 
   apiInstance.sendTransacEmail(templateId, sendSmtpEmail).then(
     function () {

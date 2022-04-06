@@ -3,7 +3,7 @@ import * as matter from "gray-matter";
 import type { TransformerOption } from "@cld-apis/types";
 
 import { m2toc } from "./unified";
-import { readdirSync, join, resolve, readFile } from "./fs.server";
+import { join, resolve, readFile, readdir } from "./fs.server";
 
 export type MdxProps = {
   code: string;
@@ -31,6 +31,7 @@ export type MdxProps = {
 };
 export type MdxPropsWithoutCode = Omit<MdxProps, "code">;
 
+let postsPath = join(__dirname, "../../content");
 async function getBlogPost(slug: string) {
   const [remarkGfm, rehypeSlug, rehypeAutolinkHeadings] = await Promise.all([
     import("remark-gfm").then((mod) => mod.default),
@@ -39,8 +40,8 @@ async function getBlogPost(slug: string) {
   ]);
 
   const contentDir = "blog";
-  const dirPath = `${__dirname}/../../content/${contentDir}`;
-  const source = await readFile(join(dirPath, slug, "index.mdx"), "utf-8");
+  const dirPath = join(postsPath, contentDir, slug, "index.mdx");
+  const source = await readFile(dirPath, "utf-8");
 
   const rehypeAutolinkHeadingsOptions = {
     behavior: "before",
@@ -132,30 +133,43 @@ async function getBlogPost(slug: string) {
 
 async function getBlogPages(contentDir: string) {
   const dirPath = resolve("content", contentDir);
-  const postDirs = await readdirSync(dirPath);
-  const posts: Array<MdxPropsWithoutCode["frontmatter"]> = [];
+  const dir = await readdir(dirPath);
+  const posts: Array<MdxPropsWithoutCode["frontmatter"]> = await Promise.all(
+    dir.map(async (filename) => {
+      const contentPath = join(dirPath, filename, "index.mdx");
+      const source = await readFile(contentPath, "utf-8");
+      const { frontmatter } = await bundleMDX({
+        cwd: contentPath,
+        source,
+      });
+      return {
+        slug: filename.replace(/\.mdx$/, ""),
+        ...frontmatter,
+      };
+    })
+  );
 
-  for (const postDir of postDirs) {
-    const contentPath = join(dirPath, postDir);
-    const postPath = join(contentPath, `index.mdx`);
-    const slug = postDir;
+  // for (const postDir of dir) {
+  //   const contentPath = join(dirPath, postDir);
+  //   const postPath = join(contentPath, `index.mdx`);
+  //   const slug = postDir;
 
-    const source = await readFile(postPath, "utf-8").catch(() => {
-      console.error(`Missing .mdx for "${slug}"`);
-    });
-    if (!source) continue;
+  //   const source = await readFile(postPath, "utf-8").catch(() => {
+  //     console.error(`Missing .mdx for "${slug}"`);
+  //   });
+  //   if (!source) continue;
 
-    const mdx = await bundleMDX({
-      cwd: contentPath,
-      source,
-    }).catch((e) => console.error(e, `\n\nError bundleMDX for "${slug}"`));
-    if (!mdx) {
-      console.error(`Couldn't bundleMDX for "${slug}"`);
-      continue;
-    }
-    // if (!mdx.frontmatter.slug) mdx.frontmatter.slug = slug
-    posts.push({ slug, ...mdx.frontmatter });
-  }
+  //   const mdx = await bundleMDX({
+  //     cwd: contentPath,
+  //     source,
+  //   }).catch((e) => console.error(e, `\n\nError bundleMDX for "${slug}"`));
+  //   if (!mdx) {
+  //     console.error(`Couldn't bundleMDX for "${slug}"`);
+  //     continue;
+  //   }
+  //   // if (!mdx.frontmatter.slug) mdx.frontmatter.slug = slug
+  //   posts.push({ slug, ...mdx.frontmatter });
+  // }
 
   return posts.sort((a, z) => {
     const aTime = new Date(a.updated ?? a.published ?? "").getTime();
