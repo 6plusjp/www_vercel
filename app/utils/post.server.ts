@@ -3,7 +3,13 @@ import * as matter from "gray-matter";
 import type { TransformerOption } from "@cld-apis/types";
 
 import { m2toc } from "./unified";
-import { readdir, readFile, join, resolve } from "./fs.server";
+import {
+  readdirSync,
+  readFileSync,
+  join,
+  resolve,
+  readFile,
+} from "./fs.server";
 
 export type MdxProps = {
   code: string;
@@ -39,7 +45,7 @@ async function getBlogPost(slug: string) {
   ]);
 
   const contentDir = "blog";
-  const dirPath = `${__dirname}/../content/${contentDir}`;
+  const dirPath = `${__dirname}/../../content/${contentDir}`;
   const source = await readFile(join(dirPath, slug, "index.mdx"), "utf-8");
 
   const rehypeAutolinkHeadingsOptions = {
@@ -105,9 +111,8 @@ async function getBlogPost(slug: string) {
       esbuildOptions: (options) => {
         options.minify = true;
         // Set the `outdir` to a public location for this bundle.
-        // console.log("esbuildOptions", resolve("public"));
-        // options.outdir = resolve("public", "build", "_assets");
-        options.outdir = resolve("build/_assets");
+        // options.outdir = resolve("build/_assets");
+        options.outdir = resolve("api/_build/_assets");
         options.loader = {
           ...options.loader,
           ".png": "file",
@@ -115,9 +120,10 @@ async function getBlogPost(slug: string) {
           ".jpeg": "file",
         };
         // Set the public path to /img/about
-        options.publicPath = join("build/_assets");
+        // options.publicPath = join("build/_assets");
+        options.publicPath = join("api/_build/_assets");
         // Set write to true so that esbuild will output the files.
-        options.write = true;
+        // options.write = true;
 
         return options;
       },
@@ -132,7 +138,7 @@ async function getBlogPost(slug: string) {
 
 async function getBlogPages(contentDir: string) {
   const dirPath = resolve("content", contentDir);
-  const postDirs = await readdir(dirPath);
+  const postDirs = await readdirSync(dirPath);
   const posts: Array<MdxPropsWithoutCode["frontmatter"]> = [];
 
   for (const postDir of postDirs) {

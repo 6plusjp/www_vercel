@@ -1,20 +1,23 @@
 const SibApiV3Sdk = require("sib-api-v3-typescript");
-
 import invariant from "tiny-invariant";
+
 import { formatHtml } from "./unified";
 
 interface Props {
   subject: string;
-  text: string;
+  body: string;
   html?: string;
   name: string;
   email: string;
 }
-async function sendEmail({ name, email, subject, text, html }: Props) {
+async function sendEmail(data: Props) {
+  const { name, email, subject, body } = data;
+  let { html } = data;
+
   if (html === undefined) {
-    html = await formatHtml(text);
+    html = await formatHtml(body);
   } else if (html === null) {
-    html = text;
+    html = body;
   }
 
   const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
@@ -26,11 +29,14 @@ async function sendEmail({ name, email, subject, text, html }: Props) {
   const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
   sendSmtpEmail.subject = subject;
   sendSmtpEmail.htmlContent = html;
-  sendSmtpEmail.sender = { name: "John Doe", email: "example@example.com" };
+  sendSmtpEmail.sender = {
+    name: "6plus -ロクタス-",
+    email: "6plusjp@gmail.com",
+  };
   sendSmtpEmail.to = [{ email: email, name: name }];
   // sendSmtpEmail.cc = [{ email: 'example2@example2.com', name: 'Janice Doe' }]
   // sendSmtpEmail.bcc = [{ name: 'John Doe', email: 'example@example.com' }]
-  sendSmtpEmail.replyTo = { email: "replyto@domain.com", name: "John Doe" };
+  // sendSmtpEmail.replyTo = { email: "replyto@domain.com", name: "John Doe" };
   sendSmtpEmail.headers = { "Some-Custom-Name": "unique-id-1234" };
   sendSmtpEmail.params = {
     parameter: "My param value",

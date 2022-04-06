@@ -19,6 +19,8 @@ import { Alert } from "~/components/alert";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
 import { useHydrated } from "~/utils/hydrated";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { sendEmail } from "~/utils/email.server";
 
 const schema = z.object({
   name: z
@@ -75,7 +77,6 @@ type ActionData = {
   };
   errors: {
     name?: string | null;
-    readingName?: string | null;
     email?: string | null;
     subject?: string | null;
     body?: string | null;
@@ -84,6 +85,7 @@ type ActionData = {
 export const action: ActionFunction = async ({ request }) => {
   const result = await clientValidator.validate(await request.formData());
   if (result.error) return validationError(result.error);
+  await sendEmail(result.data);
   return json({ status: "success", fields: result.data });
 };
 

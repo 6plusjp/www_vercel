@@ -69,13 +69,13 @@ export const meta: MetaFunction = ({ data }) => {
 // https://remix.run/api/app#links
 export const links: LinksFunction = () => {
   return [
-    // {
-    //   rel: 'preload',
-    //   as: 'font',
-    //   href: '/fonts/inter/Inter-Regular.woff2',
-    //   type: 'font/woff2',
-    //   crossOrigin: 'anonymous',
-    // },
+    {
+      rel: "preload",
+      as: "font",
+      href: "/fonts/inter/Inter-Regular.woff2",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    },
     {
       rel: "apple-touch-icon",
       sizes: "180x180",
@@ -126,9 +126,9 @@ export function ErrorBoundary({ error }: { error: Error }) {
       </head>
       <body className="min-h-screen flex flex-col w-full overflow-x-hidden bg-gray-900 text-gray-200">
         <Layout>
-          <div>
-            <h1 className="text-4xl bold mb-8">There was an error!</h1>
-            <p className="mb-8">{error.message}</p>
+          <div className="space-y-8">
+            <h1 className="text-4xl bold">There was an error!</h1>
+            <p className="text-xl">{error.message}</p>
             <hr />
             <p>
               Hey, developer, you should replace this with what you want your
@@ -149,7 +149,7 @@ export function CatchBoundary() {
   switch (caught.status) {
     case 401:
       message = (
-        <p>
+        <p className="text-xl">
           Oops! Looks like you tried to visit a page that you do not have access
           to.
         </p>
@@ -157,7 +157,9 @@ export function CatchBoundary() {
       break;
     case 404:
       message = (
-        <p>Oops! Looks like you tried to visit a page that does not exist.</p>
+        <p className="text-xl">
+          Oops! Looks like you tried to visit a page that does not exist.
+        </p>
       );
       break;
 
