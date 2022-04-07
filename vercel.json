@@ -4,21 +4,13 @@
       "ENABLE_FILE_SYSTEM_API": "1"
     }
   },
+  "cleanUrls": true,
   "redirects": [
+    { "source": "/user", "destination": "/api/user", "permanent": false },
     {
-      "source": "/rss.xml",
-      "destination": "/blog/rss.xml",
-      "permanent": true
-    },
-    {
-      "source": "/feed",
-      "destination": "/blog/rss.xml",
-      "permanent": true
-    },
-    {
-      "source": "/rss",
-      "destination": "/blog/rss.xml",
-      "permanent": true
+      "source": "/posts/:slug",
+      "destination": "/blog/:slug",
+      "permanent": false
     }
   ]
 }

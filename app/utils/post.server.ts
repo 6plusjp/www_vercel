@@ -31,7 +31,7 @@ export type MdxProps = {
 };
 export type MdxPropsWithoutCode = Omit<MdxProps, "code">;
 
-const postsPath = join(__dirname, "../../public/pages");
+const postsPath = join(process.cwd(), "content");
 async function getBlogPost(slug: string) {
   const [remarkGfm, rehypeSlug, rehypeAutolinkHeadings] = await Promise.all([
     import("remark-gfm").then((mod) => mod.default),
