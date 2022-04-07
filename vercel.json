@@ -8,8 +8,8 @@
   "redirects": [
     { "source": "/user", "destination": "/api/user", "permanent": false },
     {
-      "source": "/posts/:slug",
-      "destination": "/blog/:slug",
+      "source": "/posts/:id",
+      "destination": "/blog/:id",
       "permanent": false
     }
   ]
