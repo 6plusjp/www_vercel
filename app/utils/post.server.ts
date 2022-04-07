@@ -31,7 +31,7 @@ export type MdxProps = {
 };
 export type MdxPropsWithoutCode = Omit<MdxProps, "code">;
 
-let postsPath = join(__dirname, "../../content");
+const postsPath = join(__dirname, "../../public/pages");
 async function getBlogPost(slug: string) {
   const [remarkGfm, rehypeSlug, rehypeAutolinkHeadings] = await Promise.all([
     import("remark-gfm").then((mod) => mod.default),
@@ -93,7 +93,7 @@ async function getBlogPost(slug: string) {
   try {
     const { frontmatter, code } = await bundleMDX({
       source,
-      cwd: "/content/blog",
+      cwd: dirPath,
       mdxOptions: (options) => {
         options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
         options.rehypePlugins = [
@@ -132,7 +132,8 @@ async function getBlogPost(slug: string) {
 }
 
 async function getBlogPages(contentDir: string) {
-  const dirPath = resolve("content", contentDir);
+  // const dirPath = resolve("content", contentDir);
+  const dirPath = join(postsPath, contentDir);
   const dir = await readdir(dirPath);
   const posts: Array<MdxPropsWithoutCode["frontmatter"]> = await Promise.all(
     dir.map(async (filename) => {
