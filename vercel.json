@@ -11,6 +11,11 @@
       "source": "/posts/:id",
       "destination": "/blog/:id",
       "permanent": false
+    },
+    {
+      "source": "/posts",
+      "destination": "/blog",
+      "permanent": false
     }
   ]
 }

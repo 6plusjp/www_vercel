@@ -1,9 +1,10 @@
 import { bundleMDX } from "mdx-bundler";
+import fs from "fs";
+import path from "path";
 import * as matter from "gray-matter";
 import type { TransformerOption } from "@cld-apis/types";
 
 import { m2toc } from "./unified";
-import { join, resolve, readFile, readdir } from "./fs.server";
 
 export type MdxProps = {
   code: string;
@@ -31,7 +32,7 @@ export type MdxProps = {
 };
 export type MdxPropsWithoutCode = Omit<MdxProps, "code">;
 
-const postsPath = join(process.cwd(), "content");
+const postsPath = path.join(process.cwd(), "content");
 async function getBlogPost(slug: string) {
   const [remarkGfm, rehypeSlug, rehypeAutolinkHeadings] = await Promise.all([
     import("remark-gfm").then((mod) => mod.default),
@@ -40,8 +41,8 @@ async function getBlogPost(slug: string) {
   ]);
 
   const contentDir = "blog";
-  const dirPath = join(postsPath, contentDir, slug, "index.mdx");
-  const source = await readFile(dirPath, "utf-8");
+  const dirPath = path.join(postsPath, contentDir, slug, "index.mdx");
+  const source = fs.readFileSync(dirPath, "utf8");
 
   const rehypeAutolinkHeadingsOptions = {
     behavior: "before",
@@ -107,7 +108,7 @@ async function getBlogPost(slug: string) {
         options.minify = true;
         // Set the `outdir` to a public location for this bundle.
         // options.outdir = resolve("build/_assets");
-        options.outdir = resolve("api/_build/_assets");
+        options.outdir = path.resolve("api/_build/_assets");
         options.loader = {
           ...options.loader,
           ".png": "file",
@@ -116,7 +117,7 @@ async function getBlogPost(slug: string) {
         };
         // Set the public path to /img/about
         // options.publicPath = join("build/_assets");
-        options.publicPath = join("api/_build/_assets");
+        options.publicPath = path.join("api/_build/_assets");
         // Set write to true so that esbuild will output the files.
         // options.write = true;
 
@@ -133,12 +134,12 @@ async function getBlogPost(slug: string) {
 
 async function getBlogPages(contentDir: string) {
   // const dirPath = resolve("content", contentDir);
-  const dirPath = join(postsPath, contentDir);
-  const dir = await readdir(dirPath);
+  const dirPath = path.join(postsPath, contentDir);
+  const dir = fs.readdirSync(dirPath);
   const posts: Array<MdxPropsWithoutCode["frontmatter"]> = await Promise.all(
     dir.map(async (filename) => {
-      const contentPath = join(dirPath, filename, "index.mdx");
-      const source = await readFile(contentPath, "utf-8");
+      const contentPath = path.join(dirPath, filename, "index.mdx");
+      const source = fs.readFileSync(contentPath, "utf8");
       const { frontmatter } = await bundleMDX({
         cwd: contentPath,
         source,
