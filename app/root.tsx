@@ -115,6 +115,47 @@ export default function App() {
   );
 }
 
+function Document({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData();
+  const [theme] = useTheme();
+  return (
+    <html lang="ja" className={clsx("font-display", theme)}>
+      <head>
+        <meta charSet="utf-8" />
+        <Meta />
+        <link
+          rel="canonical"
+          href={removeTrailingSlash(
+            `${data.requestInfo.origin}${data.requestInfo.path}`
+          )}
+        />
+        <Links />
+        <noscript>
+          <link rel="stylesheet" href={noScriptCSS} />
+        </noscript>
+        <ThemeScript ssrTheme={Boolean(data.theme)} />
+        <script
+          async
+          defer
+          data-website-id="37cf2507-a08a-46af-97fb-2a27fa9fcda4"
+          src="https://umami-6plus.up.railway.app/umami.js"
+        ></script>
+      </head>
+      <body className="w-full antialiased">
+        {children}
+        <ScrollRestoration />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+          }}
+        />
+        <Scripts />
+        <LiveReload />
+      </body>
+    </html>
+  );
+}
+
 // https://remix.run/docs/en/v1/api/conventions#errorboundary
 export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
@@ -124,10 +165,10 @@ export function ErrorBoundary({ error }: { error: Error }) {
         <title>Oh no...</title>
         <Links />
       </head>
-      <body className="min-h-screen flex flex-col w-full overflow-x-hidden bg-gray-900 text-gray-200">
+      <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
         <Layout>
           <div className="space-y-8">
-            <h1 className="text-4xl bold">There was an error!</h1>
+            <h1 className="bold text-4xl">There was an error!</h1>
             <p className="text-xl">{error.message}</p>
             <hr />
             <p>
@@ -173,9 +214,9 @@ export function CatchBoundary() {
         <title>{`${caught.status} ${caught.statusText}`}</title>
         <Links />
       </head>
-      <body className="min-h-screen flex flex-col w-full overflow-x-hidden bg-gray-900 text-gray-200">
+      <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
         <Layout>
-          <h1 className="text-4xl bold mb-8">
+          <h1 className="bold mb-8 text-4xl">
             {caught.status}: {caught.statusText}
           </h1>
           {message}
@@ -185,64 +226,29 @@ export function CatchBoundary() {
   );
 }
 
-function Document({ children }: { children: React.ReactNode }) {
-  const data = useLoaderData();
-  const [theme] = useTheme();
-  return (
-    <html lang="ja" className={clsx("font-display", theme)}>
-      <head>
-        <meta charSet="utf-8" />
-        <Meta />
-        <link
-          rel="canonical"
-          href={removeTrailingSlash(
-            `${data.requestInfo.origin}${data.requestInfo.path}`
-          )}
-        />
-        <Links />
-        <noscript>
-          <link rel="stylesheet" href={noScriptCSS} />
-        </noscript>
-        <ThemeScript ssrTheme={Boolean(data.theme)} />
-      </head>
-      <body className="w-full antialiased">
-        {children}
-        <ScrollRestoration />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-          }}
-        />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
-  );
-}
-
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col flex-1 h-full">
-      <header className="px-6 lg:px-12 py-9 flex justify-between items-center">
-        <div className="flex justify-between container mx-auto">
+    <div className="flex h-full flex-1 flex-col">
+      <header className="flex items-center justify-between px-6 py-9 lg:px-12">
+        <div className="container mx-auto flex justify-between">
           <Link to="/" title="Remix" className="">
             <RemixLogo />
           </Link>
           <nav aria-label="Main navigation" className="flex items-center gap-6">
             <Link
-              className="text-sm mx-2 sm:mx-4 last:mr-0 opacity-80 hover:opacity-100 font-semibold"
+              className="mx-2 text-sm font-semibold opacity-80 last:mr-0 hover:opacity-100 sm:mx-4"
               to="/"
             >
               Home
             </Link>
             <ExternalLink
-              className="text-sm mx-2 sm:mx-4 last:mr-0 opacity-80 hover:opacity-100 font-semibold"
+              className="mx-2 text-sm font-semibold opacity-80 last:mr-0 hover:opacity-100 sm:mx-4"
               href="https://remix.run/docs"
             >
               Remix Docs
             </ExternalLink>
             <ExternalLink
-              className="text-sm mx-2 sm:mx-4 last:mr-0 opacity-80 hover:opacity-100 font-semibold"
+              className="mx-2 text-sm font-semibold opacity-80 last:mr-0 hover:opacity-100 sm:mx-4"
               href="https://github.com/remix-run/remix"
             >
               GitHub
@@ -250,11 +256,11 @@ function Layout({ children }: { children: React.ReactNode }) {
           </nav>
         </div>
       </header>
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-1 flex-col">
         <div className="container mx-auto text-base">{children}</div>
       </div>
-      <footer className="px-6 lg:px-12 py-9 text-sm flex justify-between items-center">
-        <div className="container mx-auto flex justify-center items-center">
+      <footer className="flex items-center justify-between px-6 py-9 text-sm lg:px-12">
+        <div className="container mx-auto flex items-center justify-center">
           <span>Copyright © 2022 6+ All rights reserved. </span>
         </div>
       </footer>
