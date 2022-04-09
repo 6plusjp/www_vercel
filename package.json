@@ -1,7 +1,9 @@
 {
   "private": true,
   "name": "6plus-portfolio",
-  "description": "",
+  "version": "3.0.0",
+  "description": "A remix version of 6plus portfolio",
+  "author": "Shoma Yamamoto <6plusjp@gmail.com> (https://6plus.tech/)",
   "license": "",
   "scripts": {
     "build": "npm run cleanup && run-s build:*",
