@@ -1,21 +1,35 @@
 import * as React from "react";
-import { json, useFetcher } from "remix";
-import type { ActionFunction, MetaFunction } from "remix";
+import {
+  ActionFunction,
+  MetaFunction,
+  useActionData,
+  // LoaderFunction,
+} from "remix";
+import { json } from "remix";
 
 import clsx from "clsx";
 import { z } from "zod";
-import { ValidatedForm, validationError } from "remix-validated-form";
+import {
+  useIsSubmitting,
+  ValidatedForm,
+  validationError,
+  ValidatorData,
+} from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
 
 import { Navbar } from "~/components/navbar";
-import { ErrorPanel, Input, Select, Textarea } from "~/components/form";
+import { Input, Select, Textarea } from "~/components/form";
 import { Footer } from "~/components/footer";
 import { Alert } from "~/components/alert";
 
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
 import { useHydrated } from "~/utils/hydrated";
-import { sendEmail } from "~/utils/email.server";
+import {
+  // sendEmail,
+  sendTestEmail,
+} from "~/utils/email.server";
+import { Button } from "~/components/button";
 
 const schema = z.object({
   name: z
@@ -52,95 +66,73 @@ export const meta: MetaFunction = ({ parentsData }) => {
   };
 };
 
-// export const loader: LoaderFunction = () => {
-//   // for no-js
-//   const data = useActionData();
-//   if (data.fields) {
-//     return json(setFormDefaults("validatedForm", data.fields));
-//   } else {
-//     return;
-//   }
-// };
-
 type ActionData = {
   status: "success" | "error";
-  fields: {
-    name: string | null;
-    email: string | null;
-    subject: "仕事のご依頼" | "ご質問" | "その他" | null;
-    body: string | null;
-  };
-  errors: {
-    name?: string | null;
-    email?: string | null;
-    subject?: string | null;
-    body?: string | null;
-  };
+  fields: ValidatorData<typeof clientValidator>;
 };
 export const action: ActionFunction = async ({ request }) => {
   const result = await clientValidator.validate(await request.formData());
-  if (result.error) return validationError(result.error);
-  await sendEmail(result.data);
-  return json({ status: "success", fields: result.data });
+  if (result.error) return validationError(result.error, result.submittedData);
+
+  await sendTestEmail();
+  // await sendEmail(result.data);
+  return json({
+    status: "success",
+    fields: result.data,
+  });
 };
 
 export default function Contact() {
-  // const data = useActionData()
-  const fetcher = useFetcher();
-  const emailSuccessfullySent =
-    fetcher.type === "done" &&
-    (fetcher.data as ActionData).status === "success";
-
+  const data = useActionData<ActionData>();
   const isHydrated = useHydrated();
+
   return (
     <div className="bg-bp duration-500">
       <Navbar />
+      <Alert state="info" className="mx-auto mb-8 max-w-7xl">
+        現在、お問い合わせフォームはメンテナンス中です。
+        <br />
+        ご依頼、ご質問がある方はお手数をおかけしますが、
+        6plusjp6gmail.com（2つ目の6を@に）までご連絡ください。
+      </Alert>
       <main className="px-[5vw]">
         <ValidatedForm
           id="validatedForm"
-          // netlify-honeypot="bot-field"
-          // data-netlify="true"
           method="post"
           resetAfterSubmit
           name="contact"
           validator={clientValidator}
-          fetcher={fetcher}
+          // fetcher={fetcher}
           className="mx-auto max-w-xl py-12 lg:max-w-7xl"
           noValidate={isHydrated}
-          aria-describedby="contact-form-error"
+          defaultValues={{
+            name: data?.fields.name ?? "",
+            email: data?.fields.email ?? "",
+            subject: data?.fields.subject,
+            body: data?.fields.body ?? "",
+          }}
         >
-          <Alert state="info" className="mb-8">
-            現在、お問い合わせフォームはメンテナンス中です。
-            <br />
-            ご依頼、ご質問がある方はお手数をおかけしますが、
-            6plusjp6gmail.com（2つ目の6を@に）までご連絡ください。
-          </Alert>
           <h1 className="mb-12 py-8 text-3xl font-bold text-tp sm:text-4xl">
             お問い合わせ
           </h1>
-          <input type="hidden" name="form-name" value="contact" />
-          <label className="hidden">
-            Don’t fill this out if you’re human: <input name="bot-field" />
-          </label>
           <div className="grid gap-x-12 gap-y-4 lg:grid-cols-2">
             <Input
               name="name"
               label="お名前 / 会社名"
               placeholder="6+"
-              defaultValue={fetcher.data?.fields.name ?? ""}
+              // defaultValue={fetcher.data?.fields.name ?? ""}
             />
             <Input
               type="email"
               label="メールアドレス"
               placeholder="6plusjp@example.com"
-              defaultValue={fetcher.data?.fields.email ?? ""}
+              // defaultValue={fetcher.data?.fields.email ?? ""}
               name="email"
             />
             <Select
               name="subject"
               label="件名"
-              placeholder="No subject"
-              defaultValue={fetcher.data?.fields.subject ?? ""}
+              // defaultValue={fetcher.data?.fields.subject ?? ""}
             >
               <option value="仕事のご依頼">仕事のご依頼</option>
               <option value="ご質問">ご質問</option>
@@ -151,40 +143,21 @@ export default function Contact() {
               label="お問い合わせ内容"
               placeholder="I am writing to ask you to send us your company brochure and product catalog."
               rows={8}
-              defaultValue={fetcher.data?.fields.body ?? ""}
+              // defaultValue={fetcher.data?.fields.body ?? ""}
             />
-            {emailSuccessfullySent ? (
+            {data?.status === "success" ? (
               <>
                 <Alert state="success">送信完了しました!</Alert>
               </>
             ) : (
-              // IDEA: show a loading state here
               <div className="my-8 flex items-end justify-center gap-4 sm:justify-between lg:col-span-2">
                 <div className="hidden w-28 sm:block"></div>
-                <button
-                  type="submit"
-                  disabled={fetcher.state !== "idle"}
-                  className={clsx(
-                    "btn w-28 bg-hp text-base shadow sm:text-lg",
-                    fetcher.state !== "idle"
-                      ? "text-ts"
-                      : "text-tp transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none dark:hover:border-white"
-                  )}
-                >
-                  {fetcher.state === "submitting" ? "送信中..." : "送信"}
-                </button>
-                <button
-                  type="reset"
-                  className="btn w-28 bg-bs text-base text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:shadow-inner focus:border dark:hover:border-white sm:text-lg"
-                >
-                  リセット
-                </button>
+                <SubmitButton />
+                <ResetButton />
               </div>
             )}
-            {fetcher.data?.errors ? (
-              <ErrorPanel id="contact-form-error">
-                {fetcher.data.errors}
-              </ErrorPanel>
+            {data?.status === "error" ? (
+              <Alert state="error">There was an error!</Alert>
             ) : null}
           </div>
         </ValidatedForm>
@@ -193,3 +166,32 @@ export default function Contact() {
     </div>
   );
 }
+
+const SubmitButton = () => {
+  const isSubmitting = useIsSubmitting();
+  return (
+    <Button
+      type="submit"
+      className={clsx(
+        "btn w-28 bg-hp text-base shadow sm:text-lg",
+        isSubmitting
+          ? "text-ts"
+          : "text-tp transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none dark:hover:border-white"
+      )}
+      disabled={isSubmitting}
+    >
+      {isSubmitting ? "送信中..." : "送信"}
+    </Button>
+  );
+};
+
+const ResetButton = () => {
+  return (
+    <Button
+      type="reset"
+      className="btn w-28 bg-bs text-base text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:shadow-inner focus:border dark:hover:border-white sm:text-lg"
+    >
+      リセット
+    </Button>
+  );
+};

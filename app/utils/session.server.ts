@@ -2,12 +2,12 @@ import { createCookieSessionStorage, redirect } from "remix";
 
 // import invariant from "tiny-invariant";
 
-import { Theme } from "./theme";
-import { __DEV__ } from "./assertion";
+// import { Theme } from "./theme";
+// import { __DEV__ } from "./assertion";
 import { getRequiredServerEnvVar } from "./env.server";
 
 const sessionStorageKey = "6+__session";
-const hasSupport = () => typeof Storage !== "undefined";
+// const hasSupport = () => typeof Storage !== "undefined";
 // invariant(window.ENV.SESSION_SECRET, "SESSION_SECRET must be set");
 
 export const sessionStorage = createCookieSessionStorage({
@@ -100,33 +100,33 @@ export async function logout(request: Request) {
   });
 }
 
-type MaybeTheme = Theme | undefined;
+// type MaybeTheme = Theme | undefined;
 
-export interface LocalStorageManager {
-  get(init?: Theme): MaybeTheme;
-  set(value: Theme): void;
-}
-const createSessionLocalStorage: LocalStorageManager = {
-  get(init?) {
-    if (!hasSupport()) return init;
-    try {
-      const value = localStorage.getItem(sessionStorageKey) as MaybeTheme;
-      return value ?? init;
-    } catch (error) {
-      if (__DEV__) {
-        console.log(error);
-      }
-      return init;
-    }
-  },
-  set(value) {
-    if (!hasSupport()) return;
-    try {
-      localStorage.setItem(sessionStorageKey, value);
-    } catch (error) {
-      if (__DEV__) {
-        console.log(error);
-      }
-    }
-  },
-};
+// export interface LocalStorageManager {
+//   get(init?: Theme): MaybeTheme;
+//   set(value: Theme): void;
+// }
+// const createSessionLocalStorage: LocalStorageManager = {
+//   get(init?) {
+//     if (!hasSupport()) return init;
+//     try {
+//       const value = localStorage.getItem(sessionStorageKey) as MaybeTheme;
+//       return value ?? init;
+//     } catch (error) {
+//       if (__DEV__) {
+//         console.log(error);
+//       }
+//       return init;
+//     }
+//   },
+//   set(value) {
+//     if (!hasSupport()) return;
+//     try {
+//       localStorage.setItem(sessionStorageKey, value);
+//     } catch (error) {
+//       if (__DEV__) {
+//         console.log(error);
+//       }
+//     }
+//   },
+// };

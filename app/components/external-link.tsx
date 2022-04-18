@@ -1,25 +1,26 @@
-import clsx from 'clsx'
-import * as React from 'react'
+import React from "react";
+
+import clsx from "clsx";
 
 function ExternalLink({
   href,
   children,
   className,
 }: {
-  href: string
-  className?: string
-  children: React.ReactNode
+  href: string;
+  className?: string;
+  children: React.ReactNode;
 }) {
   return (
     <a
-      className={clsx(className, 'flex items-center')}
+      className={clsx(className, "flex items-center")}
       href={href}
       target="_blank"
       rel="noopener noreferrer"
     >
       {children}
     </a>
-  )
+  );
 }
 
-export { ExternalLink }
+export { ExternalLink };
