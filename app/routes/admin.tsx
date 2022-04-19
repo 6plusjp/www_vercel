@@ -1,5 +1,3 @@
-import { Link, useLoaderData } from "remix";
-
 export default function Admin() {
   return (
     <div className="admin">
