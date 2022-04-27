@@ -1,11 +1,6 @@
 // import invariant from "tiny-invariant";
 import { formatHtml } from "./unified";
 
-// const SibApiV3Sdk = require("sib-api-v3-typescript");
-const mailchimp = require("@mailchimp/mailchimp_transactional")(
-  process.env.MAILCHIMP_API_KEY
-);
-
 interface Props {
   subject: string;
   body: string;
@@ -23,24 +18,37 @@ async function sendEmail(data: Props) {
     html = body;
   }
 
-  const message = {
-    name: name,
-    from_email: email,
-    subject: subject,
-    text: html,
-    to: [
-      {
-        email: "6plusjp@gmail.com",
-        type: "to",
-      },
-    ],
-  };
+  const Recipient = require("mailersend").Recipient;
+  const EmailParams = require("mailersend").EmailParams;
+  const MailerSend = require("mailersend");
 
-  const response = await mailchimp.messages.send({
-    message,
+  const mailersend = new MailerSend({
+    api_key: process.env.MAILERSEND_API_KEY,
   });
 
-  console.log(response);
+  const recipients = [new Recipient(email, name)];
+
+  const personalization = [
+    {
+      email: email,
+      data: {
+        body: body,
+        name: name,
+        email: email,
+        subject: subject,
+      },
+    },
+  ];
+
+  const emailParams = new EmailParams()
+    .setFrom("info@6plus.tech")
+    .setFromName("6+")
+    .setRecipients(recipients)
+    .setSubject("お問い合わせ内容のご確認")
+    .setTemplateId("3z0vklo6p8vl7qrx")
+    .setPersonalization(personalization);
+
+  mailersend.send(emailParams);
 }
 
 export { sendEmail };
