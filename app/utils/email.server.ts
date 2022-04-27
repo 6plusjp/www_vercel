@@ -32,7 +32,7 @@ async function sendEmail(data: Props) {
     {
       email: email,
       data: {
-        body: body,
+        body: html,
         name: name,
         email: email,
         subject: subject,
@@ -41,7 +41,7 @@ async function sendEmail(data: Props) {
   ];
 
   const emailParams = new EmailParams()
-    .setFrom("info@6plus.tech")
+    .setFrom("6plusjp@gmail.com")
     .setFromName("6+")
     .setRecipients(recipients)
     .setSubject("お問い合わせ内容のご確認")
