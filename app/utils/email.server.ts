@@ -41,7 +41,7 @@ async function sendEmail(data: Props) {
   ];
 
   const emailParams = new EmailParams()
-    .setFrom("6plusjp@gmail.com")
+    .setFrom("info@6plus.tech")
     .setFromName("6+")
     .setRecipients(recipients)
     .setSubject("お問い合わせ内容のご確認")
