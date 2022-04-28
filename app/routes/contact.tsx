@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  ActionFunction,
-  MetaFunction,
-  useActionData,
-  // LoaderFunction,
-} from "remix";
+import { ActionFunction, MetaFunction, useActionData } from "remix";
 import { json } from "remix";
 
 import clsx from "clsx";
@@ -25,7 +20,10 @@ import { Alert } from "~/components/alert";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
 import { useHydrated } from "~/utils/hydrated";
-import { sendEmail } from "~/utils/email.server";
+import {
+  // sendEmail,
+  testEmail,
+} from "~/utils/email.server";
 import { Button } from "~/components/button";
 
 const schema = z.object({
@@ -71,7 +69,7 @@ export const action: ActionFunction = async ({ request }) => {
   const result = await clientValidator.validate(await request.formData());
   if (result.error) return validationError(result.error, result.submittedData);
 
-  await sendEmail(result.data);
+  await testEmail();
   return json({
     status: "success",
     fields: result.data,

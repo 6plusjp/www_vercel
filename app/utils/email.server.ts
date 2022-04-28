@@ -1,4 +1,4 @@
-// import invariant from "tiny-invariant";
+import invariant from "tiny-invariant";
 import { formatHtml } from "./unified";
 
 interface Props {
@@ -22,6 +22,7 @@ async function sendEmail(data: Props) {
   const EmailParams = require("mailersend").EmailParams;
   const MailerSend = require("mailersend");
 
+  invariant(process.env.MAILERSEND_API_KEY, "MAILERSEND_API_KEY should be!");
   const mailersend = new MailerSend({
     api_key: process.env.MAILERSEND_API_KEY,
   });
@@ -48,7 +49,31 @@ async function sendEmail(data: Props) {
     .setTemplateId("3z0vklo6p8vl7qrx")
     .setPersonalization(personalization);
 
-  mailersend.send(emailParams);
+  const result = await mailersend.send(emailParams);
+  console.log(result);
+}
+async function testEmail() {
+  const Recipient = require("mailersend").Recipient;
+  const EmailParams = require("mailersend").EmailParams;
+  const MailerSend = require("mailersend");
+
+  invariant(process.env.MAILERSEND_API_KEY, "MAILERSEND_API_KEY should be!");
+  const mailersend = new MailerSend({
+    api_key: process.env.MAILERSEND_API_KEY,
+  });
+
+  const recipients = [new Recipient("magogappa@gmail.com", "shoma")];
+
+  const emailParams = new EmailParams()
+    .setFrom("info@6plus.tech")
+    .setFromName("6+")
+    .setRecipients(recipients)
+    .setSubject("お問い合わせ内容のご確認")
+    .setHtml("ddddddddddddd")
+    .setText("ddddddddddddd");
+
+  const result = await mailersend.send(emailParams);
+  console.log(result);
 }
 
-export { sendEmail };
+export { sendEmail, testEmail };

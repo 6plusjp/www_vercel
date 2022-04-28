@@ -1,7 +1,8 @@
 function getEnv() {
   return {
     NODE_ENV: process.env.NODE_ENV,
-    // SESSION_SECRET: process.env.SESSION_SECRET,
+    SESSION_SECRET: process.env.SESSION_SECRET,
+    MAILERSEND_API_KEY: process.env.MAILERSEND_API_KEY,
   };
 }
 
