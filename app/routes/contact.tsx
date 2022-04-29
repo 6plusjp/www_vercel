@@ -20,10 +20,7 @@ import { Alert } from "~/components/alert";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
 import { useHydrated } from "~/utils/hydrated";
-import {
-  // sendEmail,
-  testEmail,
-} from "~/utils/email.server";
+import { sendEmail } from "~/utils/email.server";
 import { Button } from "~/components/button";
 
 const schema = z.object({
@@ -36,7 +33,7 @@ const schema = z.object({
     .nonempty("メールアドレスは必須です")
     .email("メールアドレスの形式が正しくありません"),
   subject: z.enum(["仕事のご依頼", "ご質問", "その他"]),
-  body: z
+  text: z
     .string()
     .nonempty("お問い合わせ内容は必須です")
     .min(5, "お問い合わせ内容が短すぎます")
@@ -69,7 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
   const result = await clientValidator.validate(await request.formData());
   if (result.error) return validationError(result.error, result.submittedData);
 
-  await testEmail();
+  await sendEmail(result.data);
   return json({
     status: "success",
     fields: result.data,
@@ -83,13 +80,13 @@ export default function Contact() {
   return (
     <div className="bg-bp duration-500">
       <Navbar />
-      <Alert state="info" className="mx-auto mb-8 max-w-7xl">
-        現在、お問い合わせフォームはメンテナンス中です。
-        <br />
-        ご依頼、ご質問がある方はお手数をおかけしますが、
-        6plusjp6gmail.com（2つ目の6を@に）までご連絡ください。
-      </Alert>
       <main className="px-[5vw]">
+        <Alert state="info" className="mx-auto mb-8 max-w-7xl">
+          現在、お問い合わせフォームはメンテナンス中です。
+          <br />
+          ご依頼、ご質問がある方はお手数をおかけしますが、
+          6plusjp6gmail.com（2つ目の6を@に）までご連絡ください。
+        </Alert>
         <ValidatedForm
           id="validatedForm"
           method="post"
@@ -103,7 +100,7 @@ export default function Contact() {
             name: data?.fields.name ?? "",
             email: data?.fields.email ?? "",
             subject: data?.fields.subject,
-            body: data?.fields.body ?? "",
+            text: data?.fields.text ?? "",
           }}
         >
           <h1 className="mb-12 py-8 text-3xl font-bold text-tp sm:text-4xl">
@@ -133,7 +130,7 @@ export default function Contact() {
               <option value="その他">その他</option>
             </Select>
             <Textarea
-              name="body"
+              name="text"
               label="お問い合わせ内容"
               placeholder="I am writing to ask you to send us your company brochure and product catalog."
               rows={8}
