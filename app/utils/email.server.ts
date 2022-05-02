@@ -1,5 +1,4 @@
 import invariant from "tiny-invariant";
-// import { formatHtml } from "./unified";
 
 interface Props {
   subject: string;
