@@ -18,9 +18,9 @@ import noScriptCSS from "~/styles/no-script.css";
 import reachUi from "~/styles/vendors.css";
 
 import { getEnv } from "./utils/env.server";
+import type { Theme } from "./utils/theme";
 import {
   getThemeSession,
-  Theme,
   ThemeBody,
   ThemeProvider,
   ThemeScript,

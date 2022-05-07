@@ -1,14 +1,15 @@
 import * as React from "react";
-import { ActionFunction, MetaFunction, useActionData } from "remix";
+import type { ActionFunction, MetaFunction } from "remix";
+import { useActionData } from "remix";
 import { json } from "remix";
 
 import clsx from "clsx";
 import { z } from "zod";
+import type { ValidatorData } from "remix-validated-form";
 import {
   useIsSubmitting,
   ValidatedForm,
   validationError,
-  ValidatorData,
 } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
 

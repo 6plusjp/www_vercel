@@ -8,7 +8,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 
 import { formatDate } from "~/utils/format";
-import { getBlogPages, getBlogPost, MdxProps } from "~/utils/post.server";
+import type { MdxProps } from "~/utils/post.server";
+import { getBlogPages, getBlogPost } from "~/utils/post.server";
 import { getMeta } from "~/utils/seo";
 import { getDomainUrl, getUrl } from "~/utils/misc";
 

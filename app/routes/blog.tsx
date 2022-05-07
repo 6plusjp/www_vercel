@@ -6,7 +6,8 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import { PlusIcon, SearchIcon } from "@heroicons/react/outline";
 
-import { getBlogPages, MdxPropsWithoutCode } from "~/utils/post.server";
+import type { MdxPropsWithoutCode } from "~/utils/post.server";
+import { getBlogPages } from "~/utils/post.server";
 import { filterPosts } from "~/utils/search";
 
 import { Sidebar } from "~/components/sidebar";
