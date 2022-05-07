@@ -1,14 +1,14 @@
 import { createCookieSessionStorage, redirect } from "remix";
-
-// import invariant from "tiny-invariant";
+import invariant from "tiny-invariant";
 
 // import { Theme } from "./theme";
 // import { __DEV__ } from "./assertion";
 import { getRequiredServerEnvVar } from "./env.server";
+require("dotenv").config();
 
 const sessionStorageKey = "6+__session";
 // const hasSupport = () => typeof Storage !== "undefined";
-// invariant(window.ENV.SESSION_SECRET, "SESSION_SECRET must be set");
+invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
 
 export const sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -18,7 +18,7 @@ export const sessionStorage = createCookieSessionStorage({
     // maxAge: 3600,
     path: "/",
     sameSite: "lax",
-    secrets: [getRequiredServerEnvVar("SESSION_SECRET")],
+    secrets: [getRequiredServerEnvVar(process.env.SESSION_SECRET)],
     secure: true,
   },
 });

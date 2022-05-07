@@ -20,7 +20,7 @@ import { Alert } from "~/components/alert";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
 import { useHydrated } from "~/utils/hydrated";
-import { sendEmail } from "~/utils/email.server";
+import { sendEmail, sendEmailToOwner } from "~/utils/email.server";
 import { Button } from "~/components/button";
 
 const schema = z.object({
@@ -66,11 +66,26 @@ export const action: ActionFunction = async ({ request }) => {
   const result = await clientValidator.validate(await request.formData());
   if (result.error) return validationError(result.error, result.submittedData);
 
-  await sendEmail(result.data);
-  return json({
-    status: "success",
-    fields: result.data,
-  });
+  const response = await sendEmailToOwner(result.data);
+  if (response.ok) {
+    const response = await sendEmail(result.data);
+    if (response.ok) {
+      return json({
+        status: "success",
+        fields: result.data,
+      });
+    } else {
+      return json({
+        status: "error",
+        fields: result.data,
+      });
+    }
+  } else {
+    return json({
+      status: "error",
+      fields: result.data,
+    });
+  }
 };
 
 export default function Contact() {
@@ -81,19 +96,12 @@ export default function Contact() {
     <div className="bg-bp duration-500">
       <Navbar />
       <main className="px-[5vw]">
-        <Alert state="info" className="mx-auto mb-8 max-w-7xl">
-          現在、お問い合わせフォームはメンテナンス中です。
-          <br />
-          ご依頼、ご質問がある方はお手数をおかけしますが、
-          6plusjp6gmail.com（2つ目の6を@に）までご連絡ください。
-        </Alert>
         <ValidatedForm
           id="validatedForm"
           method="post"
           resetAfterSubmit
           name="contact"
           validator={clientValidator}
-          // fetcher={fetcher}
           className="mx-auto max-w-xl py-12 lg:max-w-7xl"
           noValidate={isHydrated}
           defaultValues={{
@@ -107,24 +115,14 @@ export default function Contact() {
             お問い合わせ
           </h1>
           <div className="grid gap-x-12 gap-y-4 lg:grid-cols-2">
-            <Input
-              name="name"
-              label="お名前 / 会社名"
-              placeholder="6+"
-              // defaultValue={fetcher.data?.fields.name ?? ""}
-            />
+            <Input name="name" label="お名前 / 会社名" placeholder="6+" />
             <Input
               type="email"
               label="メールアドレス"
               placeholder="6plusjp@example.com"
-              // defaultValue={fetcher.data?.fields.email ?? ""}
               name="email"
             />
-            <Select
-              name="subject"
-              label="件名"
-              // defaultValue={fetcher.data?.fields.subject ?? ""}
-            >
+            <Select name="subject" label="件名">
               <option value="仕事のご依頼">仕事のご依頼</option>
               <option value="ご質問">ご質問</option>
               <option value="その他">その他</option>
@@ -134,11 +132,14 @@ export default function Contact() {
               label="お問い合わせ内容"
               placeholder="I am writing to ask you to send us your company brochure and product catalog."
               rows={8}
-              // defaultValue={fetcher.data?.fields.body ?? ""}
             />
             {data?.status === "success" ? (
               <>
-                <Alert state="success">送信完了しました!</Alert>
+                <Alert state="success" className="w-max">
+                  完了しました!
+                  <br />
+                  お問い合わせ内容確認の為、自動送信メールをお送りいたします。
+                </Alert>
               </>
             ) : (
               <div className="my-8 flex items-end justify-center gap-4 sm:justify-between lg:col-span-2">
@@ -148,7 +149,11 @@ export default function Contact() {
               </div>
             )}
             {data?.status === "error" ? (
-              <Alert state="error">There was an error!</Alert>
+              <Alert state="error" className="w-max">
+                エラーが発生したため、送信できませんでした!
+                <br />
+                お手数ですがしばらくして再度お試しになるか、6plusjp6gmail.com（2つ目の6を@に）まで直接ご連絡ください。
+              </Alert>
             ) : null}
           </div>
         </ValidatedForm>
