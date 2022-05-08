@@ -38,7 +38,7 @@ async function getBlogPost(slug: string) {
     import("rehype-autolink-headings").then((mod) => mod.default),
   ]);
 
-  const source = await readContentFile("blog", `${slug}/index.mdx`);
+  const source = await readContentFile("blog", `${slug}\\/index.mdx?$`);
   if (!source) {
     throw new Response("Not Found", { status: 404 });
   }
@@ -106,7 +106,6 @@ async function getBlogPost(slug: string) {
         options.minify = true;
         // Set the `outdir` to a public location for this bundle.
         // options.outdir = resolve("build/_assets");
-        // options.outdir = path.resolve("api/_build/_assets");
         options.loader = {
           ...options.loader,
           ".png": "file",
@@ -115,7 +114,6 @@ async function getBlogPost(slug: string) {
         };
         // Set the public path to /img/about
         // options.publicPath = join("build/_assets");
-        // options.publicPath = path.join("api/_build/_assets");
         // Set write to true so that esbuild will output the files.
         // options.write = true;
 
