@@ -38,6 +38,7 @@ async function getBlogPost(slug: string) {
     import("rehype-autolink-headings").then((mod) => mod.default),
   ]);
 
+  // const indexRegex = new RegExp(`${slug}\\/index.mdx?$`);
   const source = await readContentFile("blog", `${slug}\\/index.mdx?$`);
   if (!source) {
     throw new Response("Not Found", { status: 404 });
@@ -89,7 +90,6 @@ async function getBlogPost(slug: string) {
     },
   };
 
-  // const indexRegex = new RegExp(`${slug}\\/index.mdx?$`)
   try {
     const { frontmatter, code } = await bundleMDX({
       source,
