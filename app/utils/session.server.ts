@@ -18,7 +18,7 @@ export const sessionStorage = createCookieSessionStorage({
     // maxAge: 3600,
     path: "/",
     sameSite: "lax",
-    secrets: [getRequiredServerEnvVar(process.env.SESSION_SECRET)],
+    secrets: [getRequiredServerEnvVar("SESSION_SECRET")],
     secure: true,
   },
 });
