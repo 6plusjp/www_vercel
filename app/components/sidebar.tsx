@@ -1,11 +1,12 @@
-import clsx from 'clsx'
-import * as React from 'react'
-import { Link, NavLink } from '@remix-run/react'
-import { ExternalLink } from './external-link'
-import { GitHubIcon } from './icons/github-icon'
-import { RssIcon } from './icons/rss-icon'
-import { TwitterIcon } from './icons/twitter-icon'
-import { ThemeToggle } from './toggle'
+import * as React from "react";
+import { Link, NavLink } from "remix";
+
+import { ExternalLink } from "./external-link";
+import { ThemeToggle } from "./toggle";
+
+import { GitHubIcon } from "./icons/github-icon";
+import { RssIcon } from "./icons/rss-icon";
+import { TwitterIcon } from "./icons/twitter-icon";
 
 function Sidebar({ children }: { children?: React.ReactNode }) {
   return (
@@ -13,19 +14,19 @@ function Sidebar({ children }: { children?: React.ReactNode }) {
       {children}
       <Desktop />
     </aside>
-  )
+  );
 }
 
 const NAV_LIST = [
-  { name: 'Home', to: '/' },
-  { name: 'Works', to: '/works' },
-  { name: 'Contact', to: '/contact' },
-  { name: 'Blog', to: '/blog' },
-]
+  { name: "Home", to: "/" },
+  { name: "Works", to: "/works" },
+  { name: "Contact", to: "/contact" },
+  { name: "Blog", to: "/blog" },
+];
 const LEGAL_LIST = [
-  { name: 'Privacy Policy', to: '/policy' },
-  { name: 'Terms of Use', to: '/service' },
-]
+  { name: "Privacy Policy", to: "/policy" },
+  { name: "Terms of Use", to: "/service" },
+];
 
 function Desktop() {
   return (
@@ -35,7 +36,7 @@ function Desktop() {
           Navigation
         </h4>
         <ul className="mb-3">
-          {NAV_LIST.map(link => {
+          {NAV_LIST.map((link) => {
             return (
               <li key={link.name} className="py-1 pl-2 text-sm">
                 <NavLink
@@ -43,14 +44,14 @@ function Desktop() {
                   prefetch="intent"
                   className={({ isActive }) =>
                     isActive
-                      ? 'w-auto text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp'
-                      : 'w-auto hover:text-hp focus:text-hp focus:outline-none'
+                      ? "w-auto text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp"
+                      : "w-auto hover:text-hp focus:text-hp focus:outline-none"
                   }
                 >
                   {link.name}
                 </NavLink>
               </li>
-            )
+            );
           })}
         </ul>
       </nav>
@@ -59,7 +60,7 @@ function Desktop() {
           Legal
         </h4>
         <ul className="mb-3">
-          {LEGAL_LIST.map(link => {
+          {LEGAL_LIST.map((link) => {
             return (
               <li key={link.name} className="py-1 pl-2 text-sm">
                 <NavLink
@@ -70,7 +71,7 @@ function Desktop() {
                   {link.name}
                 </NavLink>
               </li>
-            )
+            );
           })}
           <li className="py-1 pl-2 text-sm">
             <a
@@ -122,7 +123,7 @@ function Desktop() {
         <ThemeToggle size="sm" />
       </div>
     </>
-  )
+  );
 }
 
-export { Sidebar }
+export { Sidebar };

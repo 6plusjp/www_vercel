@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import { useMatches } from '@remix-run/react'
+import { useEffect, useState } from "react";
+import { useMatches } from "remix";
 
-let hydrating = true
+let hydrating = true;
 
 /**
  * Return a boolean indicating if the JS has been hydrated already.
@@ -21,14 +21,14 @@ let hydrating = true
  * ```
  */
 export function useHydrated() {
-  const [hydrated, setHydrated] = useState(() => !hydrating)
+  const [hydrated, setHydrated] = useState(() => !hydrating);
 
   useEffect(function hydrate() {
-    hydrating = false
-    setHydrated(true)
-  }, [])
+    hydrating = false;
+    setHydrated(true);
+  }, []);
 
-  return hydrated
+  return hydrated;
 }
 
 /**
@@ -52,25 +52,25 @@ export function useHydrated() {
  * };
  */
 export function useShouldHydrate() {
-  return useMatches().some(match => {
-    if (!match.handle) return false
+  return useMatches().some((match) => {
+    if (!match.handle) return false;
 
-    const { handle, data } = match
+    const { handle, data } = match;
 
     // handle must be an object to continue
-    if (typeof handle !== 'object') return false
-    if (handle === null) return false
-    if (Array.isArray(handle)) return false
+    if (typeof handle !== "object") return false;
+    if (handle === null) return false;
+    if (Array.isArray(handle)) return false;
 
     // get hydrate from handle (it may not exists)
     const hydrate = handle.hydrate as
       | undefined
       | boolean
-      | ((data: unknown) => boolean)
+      | ((data: unknown) => boolean);
 
-    if (!hydrate) return false
+    if (!hydrate) return false;
 
-    if (typeof hydrate === 'function') return hydrate(data)
-    return hydrate
-  })
+    if (typeof hydrate === "function") return hydrate(data);
+    return hydrate;
+  });
 }

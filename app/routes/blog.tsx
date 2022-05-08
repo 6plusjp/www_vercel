@@ -86,13 +86,13 @@ export default function Blog() {
   const matchingPosts = React.useMemo(() => {
     const filteredPosts = data.posts;
     return filterPosts(filteredPosts, regularQuery);
-  }, [data.posts, query, regularQuery]);
+  }, [data.posts, regularQuery]);
 
   const initialIndexToShow = PAGE_SIZE;
   const [indexToShow, setIndexToShow] = React.useState(initialIndexToShow);
   React.useEffect(() => {
     setIndexToShow(initialIndexToShow);
-  }, [query]);
+  }, [initialIndexToShow]);
 
   function toggleTag(tag: string) {
     setQuery((q) => {

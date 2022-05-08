@@ -1,6 +1,6 @@
 import { matchSorter, rankings as matchSorterRankings } from "match-sorter";
 
-import { MdxProps } from "./post.server";
+import type { MdxProps } from "./post.server";
 
 export function createSearch(value: string): string {
   const searchParams = new URLSearchParams({ sort: "top" });

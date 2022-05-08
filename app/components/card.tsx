@@ -1,12 +1,12 @@
-import * as React from 'react'
-import { motion } from 'framer-motion'
-import { Link } from '@remix-run/react'
-import { MdxProps } from '~/utils/post.server'
-import { formatDate } from '~/utils/format'
-import { PostImage } from './post-image'
+import * as React from "react";
+import { motion } from "framer-motion";
+import { Link } from "@remix-run/react";
+import type { MdxProps } from "~/utils/post.server";
+import { formatDate } from "~/utils/format";
+import { PostImage } from "./post-image";
 
 interface Props {
-  frontmatter: MdxProps['frontmatter']
+  frontmatter: MdxProps["frontmatter"];
 }
 const postVariants = {
   initial: { scale: 0.96, y: 30, opacity: 0 },
@@ -22,7 +22,7 @@ const postVariants = {
     opacity: 0,
     transition: { duration: 0.2, ease: [0.48, 0.15, 0.25, 0.96] },
   },
-}
+};
 function Card({ frontmatter }: Props) {
   return (
     <motion.article
@@ -62,7 +62,7 @@ function Card({ frontmatter }: Props) {
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              {frontmatter.categories?.map(category => {
+              {frontmatter.categories?.map((category) => {
                 return (
                   <span
                     key={category}
@@ -70,7 +70,7 @@ function Card({ frontmatter }: Props) {
                   >
                     {category}
                   </span>
-                )
+                );
               })}
             </div>
             <dl className="">
@@ -89,17 +89,17 @@ function Card({ frontmatter }: Props) {
         </div>
       </Link>
     </motion.article>
-  )
+  );
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error)
+  console.error(error);
   return (
-    <div className="rounded bg-error-100 text-error-500">
+    <div className="bg-error-100 text-error-500 rounded">
       <h2>Something went wrong</h2>
       <p></p>
     </div>
-  )
+  );
 }
 
-export { Card }
+export { Card };

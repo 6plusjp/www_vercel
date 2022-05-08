@@ -249,8 +249,8 @@ interface EnhanceMetaOptions {
   twitterSite: string;
 }
 const enhanceMeta = createMetaEnhancer({
-  siteName: "6-plus.jp",
-  baseURL: "https://6-plus.jp",
+  siteName: "6plus.tech",
+  baseURL: "https://6plus.tech",
   author: "Shoma Yamamoto",
   type: "website",
   twitterCard: "summary",
