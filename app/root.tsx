@@ -170,12 +170,9 @@ export function ErrorBoundary({ error }: { error: Error }) {
           <div className="space-y-24">
             <h1 className="bold mt-12 text-4xl">There was an error!</h1>
             <p className="text-xl">{error.message}</p>
-            <hr />
-            <p>
-              Hey, developer, you should replace this with what you want your
-              users to see.
-            </p>
           </div>
+          <hr />
+          <p>現在、何らかの理由でこのページは使用できません。</p>
         </Layout>
       </body>
     </html>
