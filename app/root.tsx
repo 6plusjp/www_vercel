@@ -167,8 +167,8 @@ export function ErrorBoundary({ error }: { error: Error }) {
       </head>
       <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
         <Layout>
-          <div className="space-y-8">
-            <h1 className="bold text-4xl">There was an error!</h1>
+          <div className="space-y-24">
+            <h1 className="bold mt-12 text-4xl">There was an error!</h1>
             <p className="text-xl">{error.message}</p>
             <hr />
             <p>
@@ -216,10 +216,12 @@ export function CatchBoundary() {
       </head>
       <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
         <Layout>
-          <h1 className="bold mb-8 text-4xl">
-            {caught.status}: {caught.statusText}
-          </h1>
-          {message}
+          <div className="space-y-24">
+            <h1 className="bold mb-8 mt-12 text-4xl">
+              {caught.status}: {caught.statusText}
+            </h1>
+            {message}
+          </div>
         </Layout>
       </body>
     </html>

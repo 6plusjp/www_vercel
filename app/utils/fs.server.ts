@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-// import path from "path";
+import path from "path";
 
 const CONTENT = `${__dirname}/../app/content`; // path.join(__dirname, "..", "app/content")
 
@@ -14,3 +14,5 @@ export const readContentFile = async (contentDir: string, file: string) => {
   const content = `${CONTENT}/${contentDir}/${file}`;
   return fs.readFile(content, "utf-8");
 };
+
+export const joinPath = (dir: string) => path.join(__dirname, dir);

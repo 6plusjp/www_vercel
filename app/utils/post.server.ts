@@ -3,7 +3,7 @@ import * as matter from "gray-matter";
 import type { TransformerOption } from "@cld-apis/types";
 
 import { m2toc } from "./unified";
-import { readContentFile, readContentDir } from "./fs.server";
+import { readContentFile, readContentDir, joinPath } from "./fs.server";
 
 export type MdxProps = {
   code: string;
@@ -39,7 +39,7 @@ async function getBlogPost(slug: string) {
   ]);
 
   // const indexRegex = new RegExp(`${slug}\\/index.mdx?$`);
-  const source = await readContentFile("blog", `${slug}\\/index.mdx?$`);
+  const source = await readContentFile("blog", `${slug}/index.mdx`);
   if (!source) {
     throw new Response("Not Found", { status: 404 });
   }
@@ -105,7 +105,7 @@ async function getBlogPost(slug: string) {
       esbuildOptions: (options) => {
         options.minify = true;
         // Set the `outdir` to a public location for this bundle.
-        // options.outdir = resolve("build/_assets");
+        options.outdir = joinPath("build/_assets");
         options.loader = {
           ...options.loader,
           ".png": "file",
