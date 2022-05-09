@@ -167,12 +167,10 @@ export function ErrorBoundary({ error }: { error: Error }) {
       </head>
       <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
         <Layout>
-          <div className="space-y-24">
-            <h1 className="bold mt-12 text-4xl">There was an error!</h1>
-            <p className="text-xl">{error.message}</p>
-          </div>
-          <hr />
-          <p>現在、何らかの理由でこのページは使用できません。</p>
+          <h1 className="bold my-12 text-4xl">There was an error!</h1>
+          <p className="mt-12 text-xl">{error.message}</p>
+          <hr className="my-8" />
+          <p>for users : 現在、何らかの理由でこのページは使用できません。</p>
         </Layout>
       </body>
     </html>
@@ -187,7 +185,7 @@ export function CatchBoundary() {
   switch (caught.status) {
     case 401:
       message = (
-        <p className="text-xl">
+        <p className="mt-12 text-xl">
           Oops! Looks like you tried to visit a page that you do not have access
           to.
         </p>
@@ -195,7 +193,7 @@ export function CatchBoundary() {
       break;
     case 404:
       message = (
-        <p className="text-xl">
+        <p className="mt-12 text-xl">
           Oops! Looks like you tried to visit a page that does not exist.
         </p>
       );
@@ -213,12 +211,10 @@ export function CatchBoundary() {
       </head>
       <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
         <Layout>
-          <div className="space-y-24">
-            <h1 className="bold mb-8 mt-12 text-4xl">
-              {caught.status}: {caught.statusText}
-            </h1>
-            {message}
-          </div>
+          <h1 className="bold my-12 mb-8 text-4xl">
+            {caught.status}: {caught.statusText}
+          </h1>
+          {message}
         </Layout>
       </body>
     </html>

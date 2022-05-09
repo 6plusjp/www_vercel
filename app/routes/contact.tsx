@@ -131,7 +131,7 @@ export default function Contact() {
             <Textarea
               name="text"
               label="お問い合わせ内容"
-              placeholder="I am writing to ask you to send us your company brochure and product catalog."
+              placeholder="I am writing to ask you to send us your company brochure and product catalog..."
               rows={8}
             />
             {data?.status === "success" ? (

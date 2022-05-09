@@ -15,6 +15,7 @@ import { Card } from "~/components/card";
 import { Tag } from "~/components/tag";
 import { Spacer } from "~/components/spacer";
 import { MobileMenu } from "~/components/navbar";
+import { Alert } from "~/components/alert";
 
 export const meta: MetaFunction = () => {
   return {
@@ -289,6 +290,11 @@ export default function Blog() {
               All the latest Tailwind CSS news, straight from the&nbsp;team.
             </p>
           </header>
+          <Alert state="warning">
+            <p>
+              現在、メンテナンス中です。ページ遷移出来ない可能性があります。
+            </p>
+          </Alert>
           <Spacer size="2xs" />
           {posts.length === 0 ? (
             <div className="flex items-center justify-center">
