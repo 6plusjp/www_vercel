@@ -29,12 +29,12 @@ export function Notification({ placement, state, children, className }: Props) {
           "border-error bg-error/20 text-error": state === "error",
         },
         {
-          "inset-x-6 top-6": placement === "top",
-          "left-6 top-6": placement === "topLeft",
-          "top-6 right-6": placement === "topRight",
-          "inset-x-6 bottom-6": placement === "bottom",
-          "bottom-6 left-6": placement === "bottomLeft",
-          "right-6 bottom-6": placement === "bottomRight",
+          "inset-x-6 top-6 mb-6": placement === "top",
+          "left-6 top-6 mr-6": placement === "topLeft",
+          "top-6 right-6 ml-6": placement === "topRight",
+          "inset-x-6 bottom-6 mt-6": placement === "bottom",
+          "bottom-6 left-6 mr-6": placement === "bottomLeft",
+          "right-6 bottom-6 ml-6": placement === "bottomRight",
         }
       )}
     >
