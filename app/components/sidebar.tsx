@@ -74,6 +74,14 @@ function Desktop() {
             );
           })}
           <li className="py-1 pl-2 text-sm">
+            <ExternalLink
+              className="hover:text-hp focus:text-hp focus:outline-none"
+              href="https://umami-6plus.up.railway.app/share/Ibl3yjOa/6plus.tech"
+            >
+              Analytics - umami
+            </ExternalLink>
+          </li>
+          <li className="py-1 pl-2 text-sm">
             <a
               className="hover:text-hp focus:text-hp focus:outline-none"
               href="/sitemap.xml"

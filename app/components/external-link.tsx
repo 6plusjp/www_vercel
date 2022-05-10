@@ -13,7 +13,7 @@ function ExternalLink({
 }) {
   return (
     <a
-      className={clsx(className, "flex items-center")}
+      className={clsx(className)}
       href={href}
       target="_blank"
       rel="noopener noreferrer"

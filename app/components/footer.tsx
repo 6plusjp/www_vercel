@@ -1,33 +1,33 @@
-import * as React from 'react'
-import clsx from 'clsx'
-import { Link, NavLink } from '@remix-run/react'
-import { ThemeToggle } from './toggle'
-import { GitHubIcon } from './icons/github-icon'
-import { TwitterIcon } from './icons/twitter-icon'
-import { RssIcon } from './icons/rss-icon'
-import { ExternalLink } from './external-link'
+import * as React from "react";
+import clsx from "clsx";
+import { Link, NavLink } from "@remix-run/react";
+import { ThemeToggle } from "./toggle";
+import { GitHubIcon } from "./icons/github-icon";
+import { TwitterIcon } from "./icons/twitter-icon";
+import { RssIcon } from "./icons/rss-icon";
+import { ExternalLink } from "./external-link";
 
 const NAV_LIST = [
-  { name: 'Home', to: '/' },
-  { name: 'Works', to: '/works' },
-  { name: 'Contact', to: '/contact' },
-  { name: 'Blog', to: '/blog' },
-]
+  { name: "Home", to: "/" },
+  { name: "Works", to: "/works" },
+  { name: "Contact", to: "/contact" },
+  { name: "Blog", to: "/blog" },
+];
 const LEGAL_LIST = [
-  { name: 'Privacy Policy', to: '/policy' },
-  { name: 'Terms of Use', to: '/service' },
-]
+  { name: "Privacy Policy", to: "/policy" },
+  { name: "Terms of Use", to: "/service" },
+];
 
 function Footer({ className }: { className?: string }) {
   return (
     <footer
-      className={clsx(className, 'relative w-full py-8')}
+      className={clsx(className, "relative w-full py-8")}
       role="contentinfo"
     >
       <div className="container mx-auto grid justify-evenly gap-8 px-[5vw] py-10 sm:grid-flow-col-dense">
         <nav className="flex flex-col whitespace-nowrap text-base text-tp">
           <h2 className="mb-3">NAVIGATION</h2>
-          {NAV_LIST.map(link => {
+          {NAV_LIST.map((link) => {
             return (
               <NavLink
                 to={link.to}
@@ -35,18 +35,18 @@ function Footer({ className }: { className?: string }) {
                 prefetch="intent"
                 className={({ isActive }) =>
                   isActive
-                    ? 'pl-2 text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp'
-                    : 'pl-2 hover:text-hp focus:text-hp focus:outline-none'
+                    ? "pl-2 text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp"
+                    : "pl-2 hover:text-hp focus:text-hp focus:outline-none"
                 }
               >
                 {link.name}
               </NavLink>
-            )
+            );
           })}
         </nav>
         <nav className="flex flex-col whitespace-nowrap text-base text-tp">
           <h2 className="mb-3">LEGAL</h2>
-          {LEGAL_LIST.map(link => {
+          {LEGAL_LIST.map((link) => {
             return (
               <NavLink
                 to={link.to}
@@ -54,14 +54,20 @@ function Footer({ className }: { className?: string }) {
                 prefetch="intent"
                 className={({ isActive }) =>
                   isActive
-                    ? 'pl-2 text-slate-500 dark:text-slate-400'
-                    : 'pl-2 hover:text-hp focus:text-hp focus:outline-none'
+                    ? "pl-2 text-slate-500 dark:text-slate-400"
+                    : "pl-2 hover:text-hp focus:text-hp focus:outline-none"
                 }
               >
                 {link.name}
               </NavLink>
-            )
+            );
           })}
+          <ExternalLink
+            className="pl-2 text-tp hover:text-hp focus:text-hp focus:outline-none"
+            href="https://umami-6plus.up.railway.app/share/Ibl3yjOa/6plus.tech"
+          >
+            Analytics - umami
+          </ExternalLink>
           <a
             className="pl-2 text-tp hover:text-hp focus:text-hp focus:outline-none"
             href="/sitemap.xml"
@@ -115,7 +121,7 @@ function Footer({ className }: { className?: string }) {
         <span className="">Copyright &copy; 2022 6+ All rights reserved. </span>
       </div>
     </footer>
-  )
+  );
 }
 
-export { Footer }
+export { Footer };
