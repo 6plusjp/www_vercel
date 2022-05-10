@@ -292,7 +292,7 @@ export default function Blog() {
           </header>
           <Alert state="warning">
             <p>
-              現在、メンテナンス中です。ページ遷移出来ない可能性があります。
+              現在、メンテナンス中です。内容等が変更される可能性があります。
             </p>
           </Alert>
           <Spacer size="2xs" />
