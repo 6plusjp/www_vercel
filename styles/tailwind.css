@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Inter';
-  src: url('/fonts/inter/Inter-Regular.woff2') format('woff2'),
-    url('/fonts/inter/Inter-Regular.woff') format('woff');
+  font-family: "Inter";
+  src: url("/fonts/inter/Inter-Regular.woff2") format("woff2"),
+    url("/fonts/inter/Inter-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -16,7 +16,7 @@
   @apply relative inline-block no-underline hover:text-hp focus:text-hp;
 }
 .underline-animation:after {
-  content: '';
+  content: "";
   @apply absolute bottom-0 left-0 h-[1px] w-full origin-bottom-right scale-x-0 bg-hp transition-transform;
 }
 .underline-animation:hover:after {
@@ -36,7 +36,7 @@
 @layer components {
   /* alert */
   .alert {
-    @apply flex w-full flex-col items-center justify-between gap-4 space-y-2 md:flex-row md:space-y-0;
+    @apply flex w-full items-center gap-4;
   }
   .alert > :where(*) {
     @apply flex items-center gap-2;
@@ -107,7 +107,7 @@
   .btn.loading:before {
     @apply mr-2 h-4 w-4 rounded-full border-2;
     animation: spin 2s linear infinite;
-    content: '';
+    content: "";
     border-top-color: transparent;
     border-left-color: transparent;
     border-bottom-color: currentColor;
@@ -129,10 +129,10 @@
   .btn-group {
     @apply flex flex-wrap;
   }
-  .btn-group > input[type='radio'].btn {
+  .btn-group > input[type="radio"].btn {
     @apply appearance-none;
   }
-  .btn-group > input[type='radio'].btn:before {
+  .btn-group > input[type="radio"].btn:before {
     content: attr(data-title);
   }
 
@@ -253,7 +253,7 @@
       rgba(255, 255, 255, 0.25),
       transparent
     );
-    content: '';
+    content: "";
   }
   .dark .animate-wave::after {
     background: linear-gradient(

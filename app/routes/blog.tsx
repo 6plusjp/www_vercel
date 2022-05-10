@@ -287,7 +287,7 @@ export default function Blog() {
               Welcome to 6+ blog
             </h1>
             <p className="text-lg text-slate-700 dark:text-slate-400 sm:text-center">
-              All the latest Tailwind CSS news, straight from the&nbsp;team.
+              All the latest web news.
             </p>
           </header>
           <Alert state="warning">

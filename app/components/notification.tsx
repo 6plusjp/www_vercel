@@ -1,3 +1,9 @@
+import {
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  InformationCircleIcon,
+  XCircleIcon,
+} from "@heroicons/react/outline";
 import clsx from "clsx";
 import * as React from "react";
 
@@ -21,7 +27,7 @@ export function Notification({ placement, state, children, className }: Props) {
     <div
       className={clsx(
         className,
-        "fixed rounded-lg border-4 px-4 py-2 text-base lg:text-lg",
+        "alert fixed w-auto rounded-lg border-2 px-4 py-2 text-base lg:text-lg",
         {
           "border-info bg-info/20 text-info": state === "info",
           "border-success bg-success/20 text-success": state === "success",
@@ -38,6 +44,15 @@ export function Notification({ placement, state, children, className }: Props) {
         }
       )}
     >
+      {state === "info" ? (
+        <InformationCircleIcon className="h-6 w-6 flex-shrink-0" />
+      ) : state === "success" ? (
+        <CheckCircleIcon className="h-6 w-6 flex-shrink-0" />
+      ) : state === "warning" ? (
+        <ExclamationCircleIcon className="h-6 w-6 flex-shrink-0" />
+      ) : state === "error" ? (
+        <XCircleIcon className="h-6 w-6 flex-shrink-0" />
+      ) : null}
       {children}
     </div>
   );

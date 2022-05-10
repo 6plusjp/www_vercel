@@ -27,14 +27,7 @@ function Navbar({ className }: { className?: string }) {
     <div className={clsx(className, "px-[5vw] py-4 sm:py-8 lg:py-12")}>
       <nav className="mx-auto flex max-w-screen-2xl items-center justify-between text-tp">
         <div className="basis-1/2 whitespace-nowrap text-4xl font-medium">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive ? "text-ts" : "hover:text-hp"
-            }
-          >
-            6+
-          </NavLink>
+          {/* logo */}
         </div>
         <ul className="hidden lg:flex">
           {LINKS.map((link) => {

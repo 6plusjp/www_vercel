@@ -36,7 +36,7 @@ export default function Index() {
         <ContactSection />
       </main>
       <Footer />
-      <Notification placement="bottomRight" state="info">
+      <Notification placement="bottomRight" state="warning">
         <p>最終調整中です。内容等が変更される可能性があります。</p>
       </Notification>
     </div>

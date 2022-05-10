@@ -111,6 +111,16 @@ function Footer({ className }: { className?: string }) {
                 className="fill-slate-500 hover:fill-[#f26522] focus:fill-[#f26522]"
               />
             </Link>
+            <ExternalLink
+              href="https://www.buymeacoffee.com/6plus"
+              className="rounded-sm bg-hp ring-hp hover:ring-2 focus:outline-none focus:ring-2"
+            >
+              <img
+                src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+                alt="Buy me a coffee"
+                className="m-1 h-7 w-7"
+              />
+            </ExternalLink>
           </div>
           <div className="noscript-hidden mx-auto">
             <ThemeToggle size="sm" />
