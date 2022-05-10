@@ -5,7 +5,6 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
-    "module": "esnext", // 動的import
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "target": "ES2019",
@@ -14,10 +13,9 @@
     "paths": {
       "~/*": ["./app/*"]
     },
-
-    // Remix takes care of building everything in `remix build`.
     "noEmit": true,
+    "module": "esnext",
     "forceConsistentCasingInFileNames": true,
-    "allowJs": false
+    "allowJs": true
   }
 }
