@@ -47,7 +47,7 @@ export const meta: MetaFunction = ({ parentsData }) => {
   const { requestInfo } = parentsData.root;
   const title = "Contact Me | 6+";
   const description =
-    "こちらはお問い合わせフォームになります。仕事のご依頼、ご質問、その他何でも構いません。気軽にご連絡ください。";
+    "お問い合わせはこちらから。仕事のご依頼、ご質問、その他何でも構いません。気軽にご連絡ください。";
 
   return {
     ...getMeta({

@@ -14,13 +14,14 @@ import { Notification } from "~/components/notification";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const { requestInfo } = parentsData.root;
-  const description = "はじめまして。";
+  const description = "フリーランスでフロントエンド開発しています。";
 
   return {
     ...getMeta({
       origin: requestInfo.origin,
       url: getUrl(requestInfo),
       description,
+      keywords: "JavaScript, TypeScript, React, Web Development",
     }),
   };
 };

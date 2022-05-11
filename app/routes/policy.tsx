@@ -9,7 +9,8 @@ import { getMeta } from "~/utils/seo";
 export const meta: MetaFunction = ({ parentsData }) => {
   const { requestInfo } = parentsData.root;
   const title = "Privacy Policy | 6+";
-  const description = "はじめまして。";
+  const description =
+    "お客様がサービスをご利用になる際は、はじめにプライバシーポリシーを確認してください。";
 
   return {
     ...getMeta({

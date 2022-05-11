@@ -16,11 +16,21 @@ import { Tag } from "~/components/tag";
 import { Spacer } from "~/components/spacer";
 import { MobileMenu } from "~/components/navbar";
 import { Alert } from "~/components/alert";
+import { getMeta } from "~/utils/seo";
+import { getUrl } from "~/utils/misc";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ parentsData }) => {
+  const { requestInfo } = parentsData.root;
+  const title = "Blog | 6+";
+  const description = "WEB開発関連の情報を発信しています。";
   return {
-    title: "Blog | 6+",
-    description: "Remix jokes app. Learn Remix and laugh at the same time!",
+    ...getMeta({
+      origin: requestInfo.origin,
+      url: getUrl(requestInfo),
+      title,
+      description,
+      keywords: "JavaScript, TypeScript, React, Web Development, Blog",
+    }),
   };
 };
 
