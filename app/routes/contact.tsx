@@ -135,13 +135,11 @@ export default function Contact() {
               rows={8}
             />
             {data?.status === "success" ? (
-              <>
-                <Alert state="success" className="w-max">
-                  完了しました!
-                  <br />
-                  お問い合わせ内容確認の為、自動送信メールをお送りいたします。
-                </Alert>
-              </>
+              <Alert state="success" className="lg:w-max">
+                完了しました!
+                <br />
+                お問い合わせ内容確認の為、自動送信メールをお送りいたします。
+              </Alert>
             ) : (
               <div className="my-8 flex items-end justify-center gap-4 sm:justify-between lg:col-span-2">
                 <div className="hidden w-28 sm:block"></div>
@@ -150,7 +148,7 @@ export default function Contact() {
               </div>
             )}
             {data?.status === "error" ? (
-              <Alert state="error" className="w-max">
+              <Alert state="error" className="lg:w-max">
                 エラーが発生したため、送信できませんでした!
                 <br />
                 お手数ですがしばらくして再度お試しになるか、6plusjp6gmail.com（2つ目の6を@に）まで直接ご連絡ください。
