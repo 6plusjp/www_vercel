@@ -220,7 +220,7 @@ function ErrorPanel({
 }) {
   return (
     <div role="alert" className="relative mt-8 px-11 py-8" id={id}>
-      <div className="absolute inset-0 rounded-lg bg-error-100" />
+      <div className="bg-error-100 absolute inset-0 rounded-lg" />
       <div className="relative text-lg font-medium text-tp">{children}</div>
     </div>
   );

@@ -19,8 +19,8 @@ export function HomeTitle() {
         <p className="mb-12 max-w-md py-6 text-base font-semibold text-ts md:text-lg">
           I&apos;m a front-end engineer specializing in building exceptional
           digital experiences. Currently, I&apos;m focused on building
-          accessible, human-centered products for a fast, slick, and resilient
-          user experience.
+          accessible, human-centered products for a fast and resilient user
+          experience.
         </p>
       </div>
     </header>

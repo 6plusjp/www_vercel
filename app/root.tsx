@@ -179,24 +179,15 @@ export function ErrorBoundary({ error }: { error: Error }) {
 
 // https://remix.run/docs/en/v1/api/conventions#catchboundary
 export function CatchBoundary() {
-  let caught = useCatch();
+  const caught = useCatch();
 
   let message;
   switch (caught.status) {
     case 401:
-      message = (
-        <p className="mt-12 text-xl">
-          Oops! Looks like you tried to visit a page that you do not have access
-          to.
-        </p>
-      );
+      message = <p className="mt-12 text-xl">アクセス権が必要なページです。</p>;
       break;
     case 404:
-      message = (
-        <p className="mt-12 text-xl">
-          Oops! Looks like you tried to visit a page that does not exist.
-        </p>
-      );
+      message = <p className="mt-12 text-xl">存在しないページです。</p>;
       break;
 
     default:
