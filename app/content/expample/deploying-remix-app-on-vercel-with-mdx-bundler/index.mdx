@@ -1,0 +1,186 @@
+---
+title: Deploying Remix app on Vercel with mdx-bundler
+description: mdx-bundler付きのRemixをVercelにデプロイする。
+lang: ja
+draft: true
+published: 2022-05-12
+updated:
+meta:
+  keywords:
+    - Remix
+    - Vercel
+categories:
+  - deploy
+  - remix
+bannerImgId:
+---
+
+## インストール
+
+- [Remix Docs](https://remix.run/docs/)
+- [Vercel Guides](https://vercel.com/guides/deploying-remix-with-vercel)
+
+どちらでも。
+vercel.json
+
+```json
+{
+  "build": {
+    "env": {
+      "ENABLE_FILE_SYSTEM_API": "1"
+    }
+  }
+}
+```
+
+### mdx-bundler
+
+https://github.com/kentcdodds/mdx-bundler
+
+```bash
+npm i mdx-bundler esbuild@0.12.9
+```
+
+esbuild を version 0.12.9 以下でインストールしないとエラーが発生する。<br/>
+[The package "esbuild-linux-64" could not be found, and is needed by esbuild.](https://github.com/kentcdodds/mdx-bundler/issues/154)
+
+```bash
+npm i -D esbuild
+```
+
+で解決したという人もいたが少なくとも私の環境では変化なし...
+
+## ファイルを追加
+
+出来れば root ディレクトリにファイルを置きたいが、デフォルトで Vercel には input されないので app ディレクトリ内に設置する。
+
+app/content/post1.mdx
+
+```mdx
+---
+title: Example Post
+published: 2021-02-13
+description: This is some description
+---
+
+# Wahoo
+
+import Demo from "./demo";
+
+Here's a **neat** demo:
+
+<Demo />
+```
+
+app/content/post2.mdx
+
+```mdx
+---
+title: Example Post 2
+published: 2022-02-13
+description: This is some description
+---
+
+# Wahoo 2
+
+import Demo from "./demo";
+
+Here's a **neat** demo 2:
+
+<Demo />
+```
+
+app/util/fs.server.ts
+
+```ts
+import fs from "fs/promises";
+
+const CONTENT = `${__dirname}/../app/content`;
+
+export const readContentDir = async () => fs.readdir(CONTENT);
+
+export const readContentFile = async (file: string) =>
+  fs.readFile(`${CONTENT}/${file}`, "utf-8");
+```
+
+app/route/index.tsx
+
+```tsx
+import type { LoaderFunction } from "remix";
+import { useLoaderData, json } from "remix";
+import { readContentDir } from "~/util/fs.server";
+
+export const loader: LoaderFunction = async () => {
+  const files = await readContentDir();
+  return json(files);
+};
+
+export default function Index() {
+  const files = useLoaderData();
+  return (
+    <div>
+      <h1>Your files</h1>
+      <ul>
+        {files.map((file) => (
+          <li key={file}>
+            <a href={"/" + file}>{file}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+app/route/$post.tsx
+
+```tsx
+import type { LoaderFunction } from "remix";
+import { useLoaderData, json } from "remix";
+import { getMDXComponent } from "mdx-bundler/client";
+import { readContentDir, readContentFile } from "~/util/fs.server";
+
+export const loader: LoaderFunction = async ({ params }) => {
+  const files = await readContentDir();
+  const fileName = files.find((f) => f === params.slug!);
+  if (!fileName) {
+    throw new Response("Not Found", { status: 404 });
+  }
+  const source = await readContentFile(fileName);
+  const data = await bundleMDX({
+    source,
+    files: {
+      "./demo.tsx": `
+import * as React from 'react'
+
+function Demo() {
+  return <div>Neat demo!</div>
+}
+
+export default Demo
+      `,
+    },
+  });
+  return json(data);
+};
+
+export default function Post() {
+  const { code, frontmatter } = useLoaderData();
+  const Component = React.useMemo(() => getMDXComponent(code), [code]);
+  return (
+    <>
+      <header>
+        <h1>{frontmatter.title}</h1>
+        <p>{frontmatter.description}</p>
+      </header>
+      <main>
+        <Component />
+      </main>
+    </>
+  );
+}
+```
+
+## 参考
+
+- [GitHub - david-crespo/remix-vercel-filesystem](https://github.com/david-crespo/remix-vercel-filesystem)
