@@ -4,7 +4,7 @@
   "version": "3.0.0",
   "description": "A remix version of 6plus portfolio",
   "author": "Shoma Yamamoto <6plusjp@gmail.com> (https://6plus.tech)",
-  "license": "",
+  "license": "MIT",
   "scripts": {
     "build": "npm run cleanup && run-s build:*",
     "build:css": "postcss styles --base styles --dir app/styles --env production",
@@ -41,7 +41,7 @@
     "clsx": "^1.1.1",
     "date-fns": "^2.28.0",
     "dotenv": "^16.0.0",
-    "esbuild": "^0.12.09",
+    "esbuild": "^0.12.9",
     "framer-motion": "^6.2.8",
     "fs-extra": "^10.0.1",
     "gray-matter": "^4.0.3",

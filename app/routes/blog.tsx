@@ -15,7 +15,6 @@ import { Card } from "~/components/card";
 import { Tag } from "~/components/tag";
 import { Spacer } from "~/components/spacer";
 import { MobileMenu } from "~/components/navbar";
-import { Alert } from "~/components/alert";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
 
@@ -300,11 +299,6 @@ export default function Blog() {
               All the latest web news.
             </p>
           </header>
-          <Alert state="warning">
-            <p>
-              現在、メンテナンス中です。内容等が変更される可能性があります。
-            </p>
-          </Alert>
           <Spacer size="2xs" />
           {posts.length === 0 ? (
             <div className="flex items-center justify-center">

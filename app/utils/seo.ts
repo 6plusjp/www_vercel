@@ -221,13 +221,13 @@ function getMetaImage({
   return `${origin}/public/images/social?${params.toString()}`;
 }
 
-function clearMeta(meta: Record<string, string>): Record<string, string> {
-  const entries = Object.entries(meta).filter(
-    ([key, value]) => typeof value !== "undefined" && value.trim() !== ""
-  );
+// function clearMeta(meta: Record<string, string>): Record<string, string> {
+//   const entries = Object.entries(meta).filter(
+//     ([key, value]) => typeof value !== "undefined" && value.trim() !== ""
+//   );
 
-  return Object.fromEntries(entries);
-}
+//   return Object.fromEntries(entries);
+// }
 
 // function deriveMetaFromMetadata(metadata): Record<string, string> {
 //   return clearMeta({
@@ -239,60 +239,60 @@ function clearMeta(meta: Record<string, string>): Record<string, string> {
 //   })
 // }
 
-interface EnhanceMetaOptions {
-  siteName: string;
-  baseURL: string;
-  pathname: string;
-  author: string;
-  type: string;
-  twitterCard: string;
-  twitterSite: string;
-}
-const enhanceMeta = createMetaEnhancer({
-  siteName: "6plus.tech",
-  baseURL: "https://6plus.tech",
-  author: "Shoma Yamamoto",
-  type: "website",
-  twitterCard: "summary",
-  twitterSite: "@6plusjp",
-});
-function createMetaEnhancer(
-  defaultOptions: Omit<EnhanceMetaOptions, "pathname">
-) {
-  return (
-    meta: Record<string, string>,
-    options: Partial<EnhanceMetaOptions> = {}
-  ): Record<string, string> => {
-    const {
-      siteName,
-      baseURL,
-      pathname,
-      author,
-      type,
-      twitterCard,
-      twitterSite,
-    } = { ...defaultOptions, ...options };
+// interface EnhanceMetaOptions {
+//   siteName: string;
+//   baseURL: string;
+//   pathname: string;
+//   author: string;
+//   type: string;
+//   twitterCard: string;
+//   twitterSite: string;
+// }
+// const enhanceMeta = createMetaEnhancer({
+//   siteName: "6plus.tech",
+//   baseURL: "https://6plus.tech",
+//   author: "Shoma Yamamoto",
+//   type: "website",
+//   twitterCard: "summary",
+//   twitterSite: "@6plusjp",
+// });
+// function createMetaEnhancer(
+//   defaultOptions: Omit<EnhanceMetaOptions, "pathname">
+// ) {
+//   return (
+//     meta: Record<string, string>,
+//     options: Partial<EnhanceMetaOptions> = {}
+//   ): Record<string, string> => {
+//     const {
+//       siteName,
+//       baseURL,
+//       pathname,
+//       author,
+//       type,
+//       twitterCard,
+//       twitterSite,
+//     } = { ...defaultOptions, ...options };
 
-    const title = meta.title ? `${meta.title} - ${siteName}` : siteName;
-    const url = pathname === "/" ? baseURL : `${baseURL}${pathname}`;
+//     const title = meta.title ? `${meta.title} - ${siteName}` : siteName;
+//     const url = pathname === "/" ? baseURL : `${baseURL}${pathname}`;
 
-    return clearMeta({
-      ...meta,
-      title,
-      author: meta.author ?? author,
-      "og:title": title,
-      "og:description": meta.description,
-      "og:image": meta.image,
-      "og:type": type,
-      "og:site_name": siteName,
-      "og:url": url,
-      "twitter:card": twitterCard,
-      "twitter:site": twitterSite,
-      "twitter:title": title,
-      "twitter:description": meta.description,
-      "twitter:image": meta.image,
-    });
-  };
-}
+//     return clearMeta({
+//       ...meta,
+//       title,
+//       author: meta.author ?? author,
+//       "og:title": title,
+//       "og:description": meta.description,
+//       "og:image": meta.image,
+//       "og:type": type,
+//       "og:site_name": siteName,
+//       "og:url": url,
+//       "twitter:card": twitterCard,
+//       "twitter:site": twitterSite,
+//       "twitter:title": title,
+//       "twitter:description": meta.description,
+//       "twitter:image": meta.image,
+//     });
+//   };
+// }
 
 export { getSitemapXml, getRobotsText, getMeta };

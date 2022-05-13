@@ -1,9 +1,9 @@
 ---
 title: Deploying Remix app on Vercel with mdx-bundler
-description: mdx-bundler付きのRemixをVercelにデプロイする。
+description: RemixをVercelにデプロイ。ブログ等におすすめです。
 lang: ja
 draft: true
-published: 2022-05-12
+published: 2022-05-13
 updated:
 meta:
   keywords:
@@ -17,44 +17,26 @@ bannerImgId:
 
 ## インストール
 
-- [Remix Docs](https://remix.run/docs/)
-- [Vercel Guides](https://vercel.com/guides/deploying-remix-with-vercel)
+### Remix
 
-どちらでも。
-vercel.json
-
-```json
-{
-  "build": {
-    "env": {
-      "ENABLE_FILE_SYSTEM_API": "1"
-    }
-  }
-}
+```bash
+npx create-remix@latest
 ```
 
-### mdx-bundler
+app の種類は Just the basics、deploy 先は Vercel を選びます。
 
-https://github.com/kentcdodds/mdx-bundler
+### mdx-bundler
 
 ```bash
 npm i mdx-bundler esbuild@0.12.9
 ```
 
-esbuild を version 0.12.9 以下でインストールしないとエラーが発生する。<br/>
+esbuild を version 0.12.9 以下でインストールしないとエラーが発生<br/>
 [The package "esbuild-linux-64" could not be found, and is needed by esbuild.](https://github.com/kentcdodds/mdx-bundler/issues/154)
-
-```bash
-npm i -D esbuild
-```
-
-で解決したという人もいたが少なくとも私の環境では変化なし...
 
 ## ファイルを追加
 
-出来れば root ディレクトリにファイルを置きたいが、デフォルトで Vercel には input されないので app ディレクトリ内に設置する。
-
-app/content/post1.mdx
+app/content/post.mdx
 
 ```mdx
 ---
@@ -72,24 +54,6 @@ Here's a **neat** demo:
 <Demo />
 ```
 
-app/content/post2.mdx
-
-```mdx
----
-title: Example Post 2
-published: 2022-02-13
-description: This is some description
----
-
-# Wahoo 2
-
-import Demo from "./demo";
-
-Here's a **neat** demo 2:
-
-<Demo />
-```
-
 app/util/fs.server.ts
 
 ```ts
@@ -103,11 +67,18 @@ export const readContentFile = async (file: string) =>
   fs.readFile(`${CONTENT}/${file}`, "utf-8");
 ```
 
-app/route/index.tsx
+app/util/mdx.server.ts
+
+```ts
+export { bundleMDX } from "mdx-bundler";
+```
+
+app/routes/index.tsx
 
 ```tsx
-import type { LoaderFunction } from "remix";
-import { useLoaderData, json } from "remix";
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
 import { readContentDir } from "~/util/fs.server";
 
 export const loader: LoaderFunction = async () => {
@@ -118,12 +89,12 @@ export const loader: LoaderFunction = async () => {
 export default function Index() {
   const files = useLoaderData();
   return (
-    <div>
-      <h1>Your files</h1>
+    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
+      <h1>Welcome to Remix</h1>
       <ul>
-        {files.map((file) => (
-          <li key={file}>
-            <a href={"/" + file}>{file}</a>
+        {files.map((file: string) => (
+          <li key={file.replace(/\.mdx$/, "")}>
+            <Link to={"/" + file.replace(/\.mdx$/, "")}>{file}</Link>
           </li>
         ))}
       </ul>
@@ -132,33 +103,33 @@ export default function Index() {
 }
 ```
 
-app/route/$post.tsx
+app/routes/$slug.tsx
 
 ```tsx
-import type { LoaderFunction } from "remix";
-import { useLoaderData, json } from "remix";
+import * as React from "react";
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { getMDXComponent } from "mdx-bundler/client";
-import { readContentDir, readContentFile } from "~/util/fs.server";
+import { bundleMDX } from "~/util/mdx.server";
+import { readContentFile } from "~/util/fs.server";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const files = await readContentDir();
-  const fileName = files.find((f) => f === params.slug!);
-  if (!fileName) {
+  const post = params.slug;
+  if (!post) {
     throw new Response("Not Found", { status: 404 });
   }
-  const source = await readContentFile(fileName);
+  const source = await readContentFile(`${post}.mdx`);
   const data = await bundleMDX({
     source,
     files: {
       "./demo.tsx": `
 import * as React from 'react'
-
 function Demo() {
   return <div>Neat demo!</div>
 }
-
 export default Demo
-      `,
+`,
     },
   });
   return json(data);
@@ -180,6 +151,27 @@ export default function Post() {
   );
 }
 ```
+
+remix.config.js
+
+```js
+module.exports = {
+  serverBuildTarget: "vercel",
+  server: process.env.NODE_ENV === "development" ? undefined : "./server.js",
+  ignoredRouteFiles: ["**/.*"],
+  serverDependenciesToBundle: [
+    // ここにunified等、使用するESMパッケージを
+    // https://remix.run/docs/en/v1/pages/gotchas#importing-esm-packages
+  ],
+};
+```
+
+## コード
+
+- [source code](https://github.com/6plusjp/deploying-remix-app-on-vercel-with-mdx-bundler)
+- [demo](https://deploying-remix-app-on-vercel-with-mdx-bundler.vercel.app/)
+
+リンクは予告なく変更、削除する場合があります。
 
 ## 参考
 
