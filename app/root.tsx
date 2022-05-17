@@ -66,7 +66,6 @@ export const meta: MetaFunction = ({ data }) => {
   };
 };
 
-// https://remix.run/api/app#links
 export const links: LinksFunction = () => {
   return [
     {

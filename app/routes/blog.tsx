@@ -296,7 +296,7 @@ export default function Blog() {
               Welcome to 6+ blog
             </h1>
             <p className="text-lg text-slate-700 dark:text-slate-400 sm:text-center">
-              All the latest web news.
+              WEB関連の情報をお届けしています。
             </p>
           </header>
           <Spacer size="2xs" />

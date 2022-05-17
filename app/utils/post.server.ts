@@ -99,6 +99,7 @@ async function getBlogPost(slug: string) {
           ...(options.rehypePlugins ?? []),
           rehypeSlug,
           [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
+          // rehypeShiki,
         ];
         return options;
       },

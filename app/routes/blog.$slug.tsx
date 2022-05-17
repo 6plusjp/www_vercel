@@ -18,6 +18,7 @@ import { Alert } from "~/components/alert";
 import { Spacer } from "~/components/spacer";
 import { PostImage } from "~/components/post-image";
 import { MobileMenu } from "~/components/navbar";
+import { ExternalLink } from "~/components/external-link";
 
 type LoaderData = {
   frontmatter: MdxProps["frontmatter"];
@@ -237,7 +238,7 @@ export default function MdxScreen() {
               className="not-prose pt-0 pb-12 lg:py-16"
             >
               {isDraft ? (
-                <Alert state="warning" className="mb-12">
+                <Alert state="info" className="mb-12">
                   このブログ記事は下書きの状態です。リンクや内容等が変更される可能性があります。
                 </Alert>
               ) : null}
@@ -300,11 +301,22 @@ export default function MdxScreen() {
               ) : null}
               <Component />
             </motion.article>
+            <Spacer size="base" />
+            <ExternalLink
+              className="flex items-center justify-around rounded bg-white dark:bg-black"
+              href="https://www.buymeacoffee.com/6plus"
+            >
+              <img
+                src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+                alt="Buy me a coffee"
+                className=""
+              />
+              <span>この記事が参考になれば幸いです。</span>
+            </ExternalLink>
             <section title="If you found this article helpful.">
               {/* {data.recommendations} */}
             </section>
           </motion.div>
-          <Spacer size="lg" />
         </div>
       </div>
     </>
