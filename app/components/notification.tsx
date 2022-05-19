@@ -27,7 +27,7 @@ export function Notification({ placement, state, children, className }: Props) {
     <div
       className={clsx(
         className,
-        "alert fixed w-auto rounded-lg border-2 px-4 py-2 text-base lg:text-lg",
+        "alert fixed w-auto rounded-lg border-2 px-2 py-1 text-base lg:px-4 lg:py-2 lg:text-lg",
         {
           "border-info bg-info/20 text-info": state === "info",
           "border-success bg-success/20 text-success": state === "success",

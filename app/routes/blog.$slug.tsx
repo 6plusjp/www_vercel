@@ -302,20 +302,20 @@ export default function MdxScreen() {
               <Component />
             </motion.article>
             <Spacer size="base" />
-            <ExternalLink
-              className="flex items-center justify-around rounded bg-white dark:bg-black"
-              href="https://www.buymeacoffee.com/6plus"
-            >
-              <img
-                src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
-                alt="Buy me a coffee"
-                className=""
-              />
-              <span>この記事が参考になれば幸いです。</span>
-            </ExternalLink>
             <section title="If you found this article helpful.">
               {/* {data.recommendations} */}
             </section>
+            <ExternalLink
+              className="not-prose"
+              href="https://www.buymeacoffee.com/6plus"
+            >
+              <img
+                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                height="50"
+                width="210"
+                alt="6plus support"
+              />
+            </ExternalLink>
           </motion.div>
         </div>
       </div>
