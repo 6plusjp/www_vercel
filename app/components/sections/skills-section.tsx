@@ -64,8 +64,8 @@ const LINKS = [
     svg: <GlobeIcon className="h-7 w-7" />,
     title: "Overseas Experience",
     paragraphs: [
-      "カナダでの就業経験",
-      "日本語リソースの少ない海外サービスの早期習熟",
+      "海外での就業経験",
+      "日本語リソースの少ないサービスの早期習熟",
     ],
   },
 ];
