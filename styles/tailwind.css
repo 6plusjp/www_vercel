@@ -276,7 +276,7 @@
   }
 
   /* toc */
-  .toc ul {
+  .toc {
     @apply mb-3;
   }
   .toc li {
