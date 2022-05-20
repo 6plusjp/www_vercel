@@ -103,7 +103,7 @@ export default function Contact() {
           resetAfterSubmit
           name="contact"
           validator={clientValidator}
-          className="mx-auto max-w-xl py-12 lg:max-w-7xl"
+          className="mx-auto max-w-xl lg:max-w-7xl"
           noValidate={isHydrated}
           defaultValues={{
             name: data?.fields.name ?? "",

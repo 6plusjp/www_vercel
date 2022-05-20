@@ -26,7 +26,7 @@ export default function Policy() {
   return (
     <div className="min-h-screen bg-bp duration-500">
       <Navbar />
-      <div className="mx-auto max-w-6xl space-y-12 py-12 px-[5vw] leading-loose text-ts">
+      <div className="mx-auto max-w-6xl space-y-12 px-[5vw] pb-12 leading-loose text-ts">
         <div className="block space-y-4 py-8 text-tp sm:flex sm:items-center sm:justify-between">
           <h1 className="text-3xl font-bold sm:text-4xl">
             プライバシーポリシー
