@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink } from "@remix-run/react";
+import { NavLink } from "remix";
 
 import clsx from "clsx";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -14,6 +14,7 @@ import {
 
 import { ThemeToggle } from "./toggle";
 import { MenuIcon } from "./icons/menu-icon";
+import { SixPlusIcon } from "./icons/six-plus-icon";
 
 const LINKS = [
   { name: "Home", to: "/" },
@@ -26,36 +27,38 @@ function Navbar({ className }: { className?: string }) {
   return (
     <div className={clsx(className, "px-[5vw] py-4 sm:py-8 lg:py-12")}>
       <nav className="mx-auto flex max-w-screen-2xl items-center justify-between text-tp">
-        <div className="basis-1/2 whitespace-nowrap text-4xl font-medium">
-          {/* logo */}
-        </div>
-        <ul className="hidden lg:flex">
-          {LINKS.map((link) => {
-            return (
-              <li
-                key={link.name}
-                className=" whitespace-nowrap px-5 py-2 text-lg font-medium"
-              >
-                <NavLink
-                  to={link.to}
-                  prefetch="intent"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp"
-                      : "underline-animation text-tp focus:outline-none"
-                  }
+        <NavLink to="/" prefetch="intent" className="">
+          <SixPlusIcon size={40} />
+        </NavLink>
+        <div className="flex items-center justify-center">
+          <ul className="mr-8 hidden lg:flex">
+            {LINKS.map((link) => {
+              return (
+                <li
+                  key={link.name}
+                  className=" whitespace-nowrap px-5 py-2 text-lg font-medium"
                 >
-                  {link.name}
-                </NavLink>
-              </li>
-            );
-          })}
-        </ul>
-        <div className="flex lg:hidden">
-          <MobileMenu />
-        </div>
-        <div className="noscript-hidden hidden lg:flex">
-          <ThemeToggle className=" self-center" />
+                  <NavLink
+                    to={link.to}
+                    prefetch="intent"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp"
+                        : "underline-animation text-tp focus:outline-none"
+                    }
+                  >
+                    {link.name}
+                  </NavLink>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="flex lg:hidden">
+            <MobileMenu />
+          </div>
+          <div className="noscript-hidden hidden lg:flex">
+            <ThemeToggle className=" self-center" />
+          </div>
         </div>
       </nav>
     </div>
