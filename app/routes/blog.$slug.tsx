@@ -301,7 +301,7 @@ export default function MdxScreen() {
               ) : null}
               <Component />
             </motion.article>
-            <Spacer size="base" />
+            <Spacer size="sm" />
             <section title="If you found this article helpful.">
               {/* {data.recommendations} */}
             </section>

@@ -68,6 +68,8 @@ export const readContentFile = async (file: string) =>
 ```
 
 app/util/mdx.server.ts
+直接インポートするとクライアントのバンドルに入れられてしまうので、専用ファイルを作り除外します。
+[Could not resolve node:fs](https://github.com/kentcdodds/mdx-bundler/issues/129)
 
 ```ts
 export { bundleMDX } from "mdx-bundler";
