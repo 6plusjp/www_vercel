@@ -37,5 +37,6 @@ module.exports = {
     "character-entities-legacy",
     "character-entities-html4",
     "html-whitespace-sensitive-tag-names",
+    // "refractor",
   ],
 };

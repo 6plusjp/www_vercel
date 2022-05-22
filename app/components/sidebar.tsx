@@ -25,7 +25,7 @@ const NAV_LIST = [
 ];
 const LEGAL_LIST = [
   { name: "Privacy Policy", to: "/policy" },
-  { name: "Terms of Use", to: "/service" },
+  { name: "Terms of Use", to: "/policy#terms" },
 ];
 
 function Desktop() {
