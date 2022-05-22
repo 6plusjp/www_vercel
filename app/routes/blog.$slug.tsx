@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useLoaderData, json, useParams, useCatch, Link } from "remix";
-import type { LoaderFunction, MetaFunction } from "remix";
+import type { LoaderFunction, MetaFunction, LinksFunction } from "remix";
 
 import { getMDXComponent } from "mdx-bundler/client";
 import * as dateFns from "date-fns";
@@ -127,6 +127,12 @@ export const meta: MetaFunction = ({ data, parentsData }) => {
       description: "お探しのブログページは見つかりませんでした😢",
     };
   }
+};
+
+export const links: LinksFunction = () => {
+  return [
+    // { rel: "stylesheet", href: tailwind },
+  ];
 };
 
 export default function MdxScreen() {
@@ -300,22 +306,22 @@ export default function MdxScreen() {
                 </nav>
               ) : null}
               <Component />
+              <Spacer size="sm" />
+              <ExternalLink
+                className="flex items-center justify-center"
+                href="https://www.buymeacoffee.com/6plus"
+              >
+                <img
+                  src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                  height="50"
+                  width="210"
+                  alt="6plus support"
+                />
+              </ExternalLink>
             </motion.article>
-            <Spacer size="sm" />
             <section title="If you found this article helpful.">
               {/* {data.recommendations} */}
             </section>
-            <ExternalLink
-              className="not-prose"
-              href="https://www.buymeacoffee.com/6plus"
-            >
-              <img
-                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                height="50"
-                width="210"
-                alt="6plus support"
-              />
-            </ExternalLink>
           </motion.div>
         </div>
       </div>

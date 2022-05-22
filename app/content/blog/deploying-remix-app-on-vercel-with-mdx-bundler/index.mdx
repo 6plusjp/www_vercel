@@ -31,12 +31,12 @@ app の種類は Just the basics、deploy 先は Vercel を選びます。
 npm i mdx-bundler esbuild@0.12.9
 ```
 
-esbuild を version 0.12.9 以下でインストールしてください。<br/>
+esbuild を version 0.12.9 以下でインストールしてください。
 Error: [The package "esbuild-linux-64" could not be found, and is needed by esbuild.](https://github.com/kentcdodds/mdx-bundler/issues/154)
 
 ## ファイルを追加
 
-#### app/content/post.mdx
+app/content/post.mdx:
 
 ```mdx
 ---
@@ -54,7 +54,7 @@ Here's a **neat** demo:
 <Demo />
 ```
 
-#### app/util/fs.server.ts
+app/util/fs.server.ts:
 
 ```ts
 import fs from "fs/promises";
@@ -67,16 +67,16 @@ export const readContentFile = async (file: string) =>
   fs.readFile(`${CONTENT}/${file}`, "utf-8");
 ```
 
-#### app/util/mdx.server.ts
-
-直接インポートするとクライアントバンドルに入れられてしまうので、専用ファイルを作り除外します。<br/>
-Error: [Could not resolve node:fs](https://github.com/kentcdodds/mdx-bundler/issues/129)
+app/util/mdx.server.ts:
 
 ```ts
 export { bundleMDX } from "mdx-bundler";
 ```
 
-#### app/routes/index.tsx
+直接インポートするとクライアントバンドルに入れられてしまうので、専用ファイルを作り除外します。
+Error: [Could not resolve node:fs](https://github.com/kentcdodds/mdx-bundler/issues/129)
+
+app/routes/index.tsx:
 
 ```tsx
 import type { LoaderFunction } from "@remix-run/node";
@@ -106,7 +106,7 @@ export default function Index() {
 }
 ```
 
-#### app/routes/$slug.tsx
+app/routes/$slug.tsx:
 
 ```tsx
 import * as React from "react";
@@ -155,7 +155,7 @@ export default function Post() {
 }
 ```
 
-#### remix.config.js
+remix.config.js:
 
 ```js
 module.exports = {

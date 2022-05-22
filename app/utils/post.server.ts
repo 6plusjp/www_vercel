@@ -32,10 +32,16 @@ export type MdxProps = {
 export type MdxPropsWithoutCode = Omit<MdxProps, "code">;
 
 async function getBlogPost(slug: string) {
-  const [remarkGfm, rehypeSlug, rehypeAutolinkHeadings] = await Promise.all([
+  const [
+    remarkGfm,
+    rehypeSlug,
+    rehypeAutolinkHeadings,
+    //  rehypePrism
+  ] = await Promise.all([
     import("remark-gfm").then((mod) => mod.default),
     import("rehype-slug").then((mod) => mod.default),
     import("rehype-autolink-headings").then((mod) => mod.default),
+    // import("rehype-prism-plus").then((mod) => mod.default),
   ]);
 
   // const indexRegex = new RegExp(`${slug}\\/index.mdx?$`);
@@ -99,7 +105,7 @@ async function getBlogPost(slug: string) {
           ...(options.rehypePlugins ?? []),
           rehypeSlug,
           [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
-          // rehypeShiki,
+          // [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
         ];
         return options;
       },
