@@ -20,6 +20,8 @@ import { PostImage } from "~/components/post-image";
 import { MobileMenu } from "~/components/navbar";
 import { ExternalLink } from "~/components/external-link";
 
+import prose from "~/styles/prose.css";
+
 type LoaderData = {
   frontmatter: MdxProps["frontmatter"];
   code: string;
@@ -131,7 +133,14 @@ export const meta: MetaFunction = ({ data, parentsData }) => {
 
 export const links: LinksFunction = () => {
   return [
-    // { rel: "stylesheet", href: tailwind },
+    {
+      rel: "preload",
+      as: "font",
+      href: "https://fonts.gstatic.com/s/sourcecodepro/v20/HI_SiYsKILxRpg3hIP6sJ7fM7PqlPevWnsUnxg.woff2",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    },
+    { rel: "stylesheet", href: prose },
   ];
 };
 

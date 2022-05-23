@@ -38,6 +38,12 @@ module.exports = {
     "character-entities-html4",
     "html-whitespace-sensitive-tag-names",
     "is-absolute-url",
-    // "refractor",
+    /^refractor.*/,
+    "parse-entities",
+    "character-reference-invalid",
+    "is-decimal",
+    "is-hexadecimal",
+    "is-alphanumerical",
+    "is-alphabetical",
   ],
 };

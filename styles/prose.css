@@ -1,5 +1,144 @@
-pre {
-  overflow-x: auto;
+code[class*="language-"],
+pre[class*="language-"] {
+  background: none;
+  font-family: Source Code Pro, ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, Liberation Mono, Courier New, monospace;
+  font-size: 1rem;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code */
+.light .prose code[class*="language-"] {
+  color: #2d2d2d;
+}
+.dark .prose code[class*="language-"] {
+  color: #b7bcbe;
+}
+
+/* Code blocks */
+.light .prose pre[class*="language-"] {
+  overflow: auto;
+  border-radius: 6px;
+  background: #fff;
+}
+.dark .prose pre[class*="language-"] {
+  overflow: auto;
+  border-radius: 6px;
+  background: #1e1e1e;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #2d2d2d;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: 0.1em;
+  border-radius: 0.3em;
+  white-space: normal;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #999;
+}
+
+/* Line number */
+.prose .line-number::before {
+  display: inline-block;
+  width: 1rem;
+  text-align: right;
+  margin-right: 16px;
+  margin-left: -8px;
+  content: attr(line);
+}
+.dark .prose .token.punctuation,
+.light .prose .line-number::before {
+  color: #ccc;
+}
+.light .prose .token.punctuation,
+.dark .prose .line-number::before {
+  color: #3f3f3f;
+}
+
+.token.tag,
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+  color: #e2777a;
+}
+
+.token.function-name {
+  color: #6196cc;
+}
+
+.token.boolean,
+.token.number,
+.token.function {
+  color: #f08d49;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+  color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin {
+  color: #cc99cd;
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+  color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #67cdcc;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.inserted {
+  color: green;
 }
 
 /**
@@ -7,12 +146,12 @@ pre {
  * 1. Make the element just wide enough to fit its content.
  * 2. Always fill the visible space in .code-highlight.
  */
-.code-highlight {
+.prose .code-highlight {
   float: left; /* 1 */
   min-width: 100%; /* 2 */
 }
 
-.code-line {
+.prose .code-line {
   display: block;
   padding-left: 16px;
   padding-right: 16px;
@@ -22,28 +161,18 @@ pre {
   border-left-color: rgba(31, 41, 55, 0); /* Set code block color */
 }
 
-.code-line.inserted {
+.prose .code-line.inserted {
   background-color: rgba(16, 185, 129, 0.2); /* Set inserted line (+) color */
 }
 
-.code-line.deleted {
+.prose .code-line.deleted {
   background-color: rgba(239, 68, 68, 0.2); /* Set deleted line (-) color */
 }
 
-.highlight-line {
+.prose .highlight-line {
   margin-left: -16px;
   margin-right: -16px;
   background-color: rgba(55, 65, 81, 0.5); /* Set highlight bg color */
   border-left-width: 4px;
   border-left-color: rgb(59, 130, 246); /* Set highlight accent border color */
-}
-
-.line-number::before {
-  display: inline-block;
-  width: 1rem;
-  text-align: right;
-  margin-right: 16px;
-  margin-left: -8px;
-  color: rgb(156, 163, 175); /* Line number color */
-  content: attr(line);
 }

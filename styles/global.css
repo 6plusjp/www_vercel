@@ -75,3 +75,7 @@ img {
 .dark img:not([src*=".svg"]) {
   filter: var(--image-filter);
 }
+
+:focus:not(:focus-visible) {
+  outline: none;
+}

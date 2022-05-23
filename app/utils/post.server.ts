@@ -37,13 +37,13 @@ async function getBlogPost(slug: string) {
     rehypeSlug,
     rehypeAutolinkHeadings,
     rehypeExternalLinks,
-    //  rehypePrism
+    rehypePrism,
   ] = await Promise.all([
     import("remark-gfm").then((mod) => mod.default),
     import("rehype-slug").then((mod) => mod.default),
     import("rehype-autolink-headings").then((mod) => mod.default),
     import("rehype-external-links").then((mod) => mod.default),
-    // import("rehype-prism-plus").then((mod) => mod.default),
+    import("rehype-prism-plus").then((mod) => mod.default),
   ]);
 
   // const indexRegex = new RegExp(`${slug}\\/index.mdx?$`);
@@ -108,7 +108,7 @@ async function getBlogPost(slug: string) {
           rehypeSlug,
           [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
           rehypeExternalLinks,
-          // [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
+          [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
         ];
         return options;
       },
