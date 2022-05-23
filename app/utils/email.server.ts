@@ -45,9 +45,9 @@ async function sendEmail(data: Props) {
 
 <body style="font-family: 'Noto Sans JP', Helvetica, Arial, sans-serif;">
   <div style="margin: 0 auto; max-width: 450px;">
-    <h2>
+    <h3>
       ${name} 様
-    </h2>
+    </h3>
     <h3>
       お問い合わせいただき誠にありがとうございます。
     </h3>

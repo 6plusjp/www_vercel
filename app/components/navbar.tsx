@@ -57,7 +57,7 @@ function Navbar({ className }: { className?: string }) {
             <MobileMenu />
           </div>
           <div className="noscript-hidden hidden lg:flex">
-            <ThemeToggle className=" self-center" />
+            <ThemeToggle className="self-center" />
           </div>
         </div>
       </nav>
