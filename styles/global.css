@@ -50,6 +50,9 @@ html {
   scrollbar-color: #5f6368 #3c4043;
   scrollbar-width: thin !important;
 }
+body {
+  overflow-x: hidden;
+}
 ::-webkit-scrollbar {
   width: 8px;
 }

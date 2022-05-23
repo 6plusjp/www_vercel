@@ -36,11 +36,13 @@ async function getBlogPost(slug: string) {
     remarkGfm,
     rehypeSlug,
     rehypeAutolinkHeadings,
+    rehypeExternalLinks,
     //  rehypePrism
   ] = await Promise.all([
     import("remark-gfm").then((mod) => mod.default),
     import("rehype-slug").then((mod) => mod.default),
     import("rehype-autolink-headings").then((mod) => mod.default),
+    import("rehype-external-links").then((mod) => mod.default),
     // import("rehype-prism-plus").then((mod) => mod.default),
   ]);
 
@@ -105,6 +107,7 @@ async function getBlogPost(slug: string) {
           ...(options.rehypePlugins ?? []),
           rehypeSlug,
           [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
+          rehypeExternalLinks,
           // [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
         ];
         return options;
