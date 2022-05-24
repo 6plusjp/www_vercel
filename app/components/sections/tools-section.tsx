@@ -42,7 +42,7 @@ const TAB_DATA = [
         svg: (
           <ExternalLink
             href="https://www.typescriptlang.org/"
-            className="ring-hp focus:outline-none focus:ring-2"
+            className="opacty-40 ring-hp contrast-[400] grayscale hover:opacity-100 hover:contrast-100 hover:grayscale-0 focus:outline-none"
           >
             <TSIcon className="mx-auto h-8 w-8 sm:h-24 sm:w-24" />
           </ExternalLink>
@@ -54,7 +54,7 @@ const TAB_DATA = [
         svg: (
           <ExternalLink
             href="https://www.python.org/"
-            className="ring-hp focus:outline-none focus:ring-2"
+            className="opacty-40 ring-hp contrast-[400] grayscale hover:opacity-100 hover:contrast-100 hover:grayscale-0 focus:outline-none"
           >
             <PythonIcon className="mx-auto h-8 w-8 sm:h-24 sm:w-24" />
           </ExternalLink>
@@ -72,7 +72,7 @@ const TAB_DATA = [
         svg: (
           <ExternalLink
             href="https://reactjs.org/"
-            className="ring-hp focus:outline-none focus:ring-2"
+            className="opacty-40 ring-hp contrast-[400] grayscale hover:opacity-100 hover:contrast-100 hover:grayscale-0 focus:outline-none"
           >
             <ReactIcon className="mx-auto h-8 w-8 sm:h-24 sm:w-24" />
           </ExternalLink>
@@ -84,7 +84,7 @@ const TAB_DATA = [
         svg: (
           <ExternalLink
             href="https://vuejs.org/"
-            className="ring-hp focus:outline-none focus:ring-2"
+            className="opacty-40 ring-hp contrast-[400] grayscale hover:opacity-100 hover:contrast-100 hover:grayscale-0 focus:outline-none"
           >
             <VueIcon className="mx-auto h-8 w-8 sm:h-24 sm:w-24" />
           </ExternalLink>
@@ -102,7 +102,7 @@ const TAB_DATA = [
         svg: (
           <ExternalLink
             href="https://www.figma.com/"
-            className="ring-hp focus:outline-none focus:ring-2"
+            className="opacty-40 ring-hp contrast-[400] grayscale hover:opacity-100 hover:contrast-100 hover:grayscale-0 focus:outline-none"
           >
             <FigmaIcon className="mx-auto h-8 w-8 sm:h-24 sm:w-24" />
           </ExternalLink>
@@ -114,7 +114,7 @@ const TAB_DATA = [
       //   svg: (
       //     <ExternalLink
       //       href="https://www.framer.com/"
-      //       className="ring-hp focus:outline-none focus:ring-2"
+      //       className="ring-hp focus:outline-none grayscale contrast-[400] opacty-40 hover:opacity-100 hover:contrast-100 hover:grayscale-0"
       //     >
       //       <FramerIcon className="mx-auto h-8 w-8 sm:h-24 sm:w-24" />
       //     </ExternalLink>
@@ -132,7 +132,7 @@ const TAB_DATA = [
         svg: (
           <ExternalLink
             href="https://slack.com/"
-            className="ring-hp focus:outline-none focus:ring-2"
+            className="opacty-40 ring-hp grayscale hover:opacity-100 hover:grayscale-0 focus:outline-none"
           >
             <SlackIcon className="mx-auto h-8 w-8 sm:h-24 sm:w-24" />
           </ExternalLink>

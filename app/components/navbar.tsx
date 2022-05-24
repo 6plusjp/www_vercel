@@ -28,7 +28,7 @@ function Navbar({ className }: { className?: string }) {
     <div className={clsx(className, "px-[5vw] py-4 sm:py-8 lg:py-12")}>
       <nav className="mx-auto flex max-w-screen-2xl items-center justify-between text-tp">
         <NavLink to="/" prefetch="intent" className="">
-          <SixPlusIcon size={40} />
+          <SixPlusIcon size={50} />
         </NavLink>
         <div className="flex items-center justify-center">
           <ul className="mr-8 hidden lg:flex">

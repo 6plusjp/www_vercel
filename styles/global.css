@@ -19,14 +19,6 @@
   --color-highlight-light: #ff8e3c;
   --color-highlight-light-sec: #d9376e;
 
-  /* .light */
-  --bg-primary: var(--color-base-200);
-  --bg-secondary: var(--color-base-100);
-  --text-primary: var(--color-base-800);
-  --text-secondary: var(--color-base-500);
-  --highlight-primary: var(--color-highlight-light);
-  --highlight-secondary: var(--color-highlight-light-sec);
-
   --image-filter: grayscale(15%);
 
   --font-JP: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo";
@@ -35,7 +27,15 @@
     "Segoe UI Emoji";
   --font-display: "Inter", var(--font-body);
 }
-
+.light {
+  /* .light */
+  --bg-primary: var(--color-base-200);
+  --bg-secondary: var(--color-base-100);
+  --text-primary: var(--color-base-800);
+  --text-secondary: var(--color-base-500);
+  --highlight-primary: var(--color-highlight-light);
+  --highlight-secondary: var(--color-highlight-light-sec);
+}
 .dark {
   /* .dark */
   --bg-primary: var(--color-base-700);
@@ -68,6 +68,7 @@ body {
     scroll-behavior: smooth;
   }
 }
+
 img {
   /* for alt text */
   text-indent: -9999px;
