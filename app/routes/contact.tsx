@@ -171,7 +171,7 @@ const SubmitButton = () => {
         "btn w-28 bg-hp text-base shadow sm:text-lg",
         isSubmitting
           ? "text-ts"
-          : "text-tp transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none dark:hover:border-white"
+          : "text-tp transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:text-hp hover:shadow-inner focus:border focus:border-black focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none dark:hover:border-white dark:focus:border-white"
       )}
       disabled={isSubmitting}
     >
@@ -184,7 +184,7 @@ const ResetButton = () => {
   return (
     <Button
       type="reset"
-      className="btn w-28 bg-bs text-base text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:shadow-inner focus:border dark:hover:border-white sm:text-lg"
+      className="btn w-28 bg-bs text-base text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:shadow-inner focus:border focus:border-black focus:outline-none dark:hover:border-white dark:focus:border-white sm:text-lg"
     >
       リセット
     </Button>
