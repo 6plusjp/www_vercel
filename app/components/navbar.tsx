@@ -117,7 +117,7 @@ function MobileMenuList() {
       {isExpanded ? (
         <MenuPopover
           position={(r) => ({
-            top: `calc(${Number(r?.top) + Number(r?.height)}px + 2.25rem)`, // 2.25 rem = py-9 from navbar
+            top: `calc(${Number(r?.top) + Number(r?.height)}px + 2rem)`, // 2 rem = py-8 from navbar
             bottom: 0,
             right: 0,
           })}

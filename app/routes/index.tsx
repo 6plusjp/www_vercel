@@ -10,7 +10,6 @@ import { ContactSection } from "~/components/sections/contact-section";
 
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
-import { Notification } from "~/components/notification";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const { requestInfo } = parentsData.root;
@@ -21,7 +20,7 @@ export const meta: MetaFunction = ({ parentsData }) => {
       origin: requestInfo.origin,
       url: getUrl(requestInfo),
       description,
-      keywords: "JavaScript, TypeScript, React, Web Development",
+      keywords: "JavaScript, TypeScript, React, Web Development, WEB開発",
     }),
   };
 };
@@ -37,9 +36,6 @@ export default function Index() {
         <ContactSection />
       </main>
       <Footer />
-      <Notification placement="bottomRight" state="warning">
-        <p>最終調整中です。内容等が変更される可能性があります。</p>
-      </Notification>
     </div>
   );
 }
