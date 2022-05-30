@@ -16,6 +16,16 @@
       "source": "/posts",
       "destination": "/blog",
       "permanent": false
+    },
+    {
+      "source": "/post",
+      "destination": "/blog",
+      "permanent": false
+    },
+    {
+      "source": "/oss",
+      "destination": "https://github.com/6plusjp",
+      "permanent": false
     }
   ]
 }
