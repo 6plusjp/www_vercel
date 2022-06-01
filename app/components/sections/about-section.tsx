@@ -22,11 +22,11 @@ export function AboutSection({ className }: { className?: string }) {
               <br />
               2020年から独学でWEBを学ぶ。
               <br />
-              高速で弾力性のあるユーザー体験の構築に重きを置きます。
+              高速で弾力性のあるユーザー体験の構築に重きを置く。
               <br />
               デジタル体験を加速させることで、世界をより豊かに。
               <br />
-              Remixでポートフォリオをリビルドしました。
+              Remixでポートフォリオをリビルド。
             </p>
           </div>
         </div>
