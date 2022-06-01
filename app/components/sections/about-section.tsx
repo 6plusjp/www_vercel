@@ -18,11 +18,11 @@ export function AboutSection({ className }: { className?: string }) {
               Shoma Yamamoto
             </h4>
             <p className="mb-8 text-base lg:text-lg">
-              大阪出身。
+              大阪出身。平成7年生まれ。
               <br />
               2020年から独学でWEBを学ぶ。
               <br />
-              高速で弾力性のあるユーザー体験の構築に重きを置く。
+              高速で弾力性のあるUXの構築に重きを置く。
               <br />
               デジタル体験を加速させることで、世界をより豊かに。
               <br />
