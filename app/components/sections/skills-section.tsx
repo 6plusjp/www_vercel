@@ -72,7 +72,7 @@ const LINKS = [
 
 export function SkillsSection() {
   return (
-    <section className="bg-bs py-16 px-[5vw] duration-500">
+    <section className="py-16 px-[5vw]">
       <div className="container mx-auto">
         <h2 className="py-4 text-center text-3xl font-bold text-tp sm:text-4xl">
           My Skills
@@ -91,7 +91,7 @@ function Desktop() {
     <div className="hidden gap-12 sm:grid md:grid-cols-2 lg:grid-cols-3">
       {LINKS.map((link, index) => (
         <div
-          className="rounded bg-bp px-8 py-10 ring-2 ring-hp ring-offset-4 ring-offset-bs"
+          className="rounded bg-bs px-8 py-10 ring-2 ring-hp ring-offset-4 ring-offset-bp"
           key={index}
         >
           <h3 className="mb-4 flex gap-4 text-xl text-tp">
@@ -145,7 +145,7 @@ function ArrowButton({ children, active }: Props) {
   return (
     <AccordionButton
       className={clsx(
-        "flex w-full justify-between rounded-sm bg-bp px-6 py-3 text-lg text-tp outline-none focus:text-hp",
+        "flex w-full justify-between rounded-sm bg-bs px-6 py-3 text-lg text-tp outline-none focus:text-hp",
         { "hover:text-hp": !active }
       )}
     >

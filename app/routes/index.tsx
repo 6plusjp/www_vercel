@@ -10,6 +10,7 @@ import { ContactSection } from "~/components/sections/contact-section";
 
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
+import { AboutSection } from "~/components/sections/about-section";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const { requestInfo } = parentsData.root;
@@ -31,11 +32,12 @@ export default function Index() {
       <Navbar />
       <main>
         <HomeTitle />
+        <AboutSection />
         <SkillsSection />
         <ToolsSection />
         <ContactSection />
       </main>
-      <Footer />
+      <Footer className="bg-bs duration-500" />
     </div>
   );
 }

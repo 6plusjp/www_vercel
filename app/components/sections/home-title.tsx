@@ -1,5 +1,3 @@
-import * as React from "react";
-
 export function HomeTitle() {
   return (
     <header className="flex min-h-[76vh] px-[8vw] text-tp lg:px-[16vw]">

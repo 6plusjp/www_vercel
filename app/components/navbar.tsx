@@ -32,7 +32,7 @@ function Navbar({ className }: { className?: string }) {
           prefetch="intent"
           className="ring-hp focus:outline-none focus:ring-2"
         >
-          <SixPlusIcon size={60} />
+          <SixPlusIcon size={55} />
         </NavLink>
         <div className="flex items-center justify-center">
           <ul className="mr-8 hidden lg:flex">

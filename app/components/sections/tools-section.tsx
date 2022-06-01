@@ -145,7 +145,7 @@ const TAB_DATA = [
 
 export function ToolsSection() {
   return (
-    <section className="py-16 px-[5vw]">
+    <section className="bg-bs py-16 px-[5vw] duration-500">
       <div className="container mx-auto">
         <h2 className="py-4 text-center text-3xl font-bold text-tp sm:text-4xl">
           My Tools
@@ -165,7 +165,7 @@ function Desktop() {
       className="hidden flex-col items-center justify-center space-y-8 sm:flex"
       orientation={TabsOrientation.Horizontal}
     >
-      <TabList className="group flex gap-2 rounded bg-bs p-2">
+      <TabList className="group flex gap-2 rounded bg-bp p-2">
         {TAB_DATA.map((tab, index) => (
           <Tab
             className="flex w-36 items-center justify-center gap-1 rounded-2xl bg-transparent py-2 text-lg text-tp ring-tp hover:bg-bp focus:outline-none focus:ring-2"
@@ -245,7 +245,7 @@ function ArrowButton({ children, active }: Props) {
   return (
     <AccordionButton
       className={clsx(
-        "flex w-full justify-between rounded-sm bg-bs px-6 py-3 text-lg text-tp outline-none focus:text-hp",
+        "flex w-full justify-between rounded-sm bg-bp px-6 py-3 text-lg text-tp outline-none focus:text-hp",
         { "hover:text-hp": !active }
       )}
     >
