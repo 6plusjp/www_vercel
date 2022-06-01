@@ -128,7 +128,7 @@ function Footer({ className }: { className?: string }) {
         </div>
       </div>
       <div className="mt-8 flex items-center justify-center text-sm text-tp">
-        <span className="">Copyright &copy; 2022 6+ All rights reserved. </span>
+        <span className="">Copyright &copy; 6+ All rights reserved. </span>
       </div>
     </footer>
   );

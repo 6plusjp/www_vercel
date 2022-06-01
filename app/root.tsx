@@ -242,7 +242,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       </div>
       <footer className="flex items-center justify-between px-6 py-9 text-sm lg:px-12">
         <div className="container mx-auto flex items-center justify-center">
-          <span>Copyright © 2022 6+ All rights reserved. </span>
+          <span>Copyright &copy; 6+ All rights reserved. </span>
         </div>
       </footer>
     </div>
