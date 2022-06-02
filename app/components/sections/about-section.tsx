@@ -20,7 +20,7 @@ export function AboutSection({ className }: { className?: string }) {
             <p className="mb-8 text-base lg:text-lg">
               大阪出身。平成7年生まれ。
               <br />
-              2020年から独学でWEBを学ぶ。
+              2020年から独力でWEBを学ぶ。
               <br />
               高速で弾力性のあるUXの構築に重きを置く。
               <br />
