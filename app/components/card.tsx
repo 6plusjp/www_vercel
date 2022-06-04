@@ -1,6 +1,6 @@
-import * as React from "react";
+import { Link } from "remix";
 import { motion } from "framer-motion";
-import { Link } from "@remix-run/react";
+
 import type { MdxProps } from "~/utils/post.server";
 import { formatDate } from "~/utils/format";
 import { PostImage } from "./post-image";
