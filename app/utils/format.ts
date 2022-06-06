@@ -1,4 +1,4 @@
-import { format, add, parseISO, addSeconds } from 'date-fns'
+import { add, addSeconds, format, parseISO } from "date-fns";
 
 function formatDate(dateString: string, shortOptions?: boolean) {
   return shortOptions
@@ -6,18 +6,24 @@ function formatDate(dateString: string, shortOptions?: boolean) {
         add(parseISO(dateString), {
           minutes: new Date().getTimezoneOffset(),
         }),
-        'PP'
+        "PP"
       )
     : format(
         add(parseISO(dateString), {
           minutes: new Date().getTimezoneOffset(),
         }),
-        'PPP'
-      )
+        "PPP"
+      );
+}
+
+function formatMonth(dateString: string, shortOptions?: boolean) {
+  return shortOptions
+    ? format(parseISO(dateString), "LLL, yyyy")
+    : format(parseISO(dateString), "LLLL, yyyy");
 }
 
 function formatTime(seconds: number) {
-  return format(addSeconds(new Date(0), seconds), 'mm:ss')
+  return format(addSeconds(new Date(0), seconds), "mm:ss");
 }
 
-export { formatDate, formatTime }
+export { formatDate, formatMonth, formatTime };

@@ -29,7 +29,6 @@ export type MdxProps = {
     socialImageTitle?: string;
   };
 };
-export type MdxPropsWithoutCode = Omit<MdxProps, "code">;
 
 async function getBlogPost(slug: string) {
   const [
@@ -48,9 +47,6 @@ async function getBlogPost(slug: string) {
 
   // const indexRegex = new RegExp(`${slug}\\/index.mdx?$`);
   const source = await readContentFile("blog", `${slug}/index.mdx`);
-  if (!source) {
-    throw new Response("Not Found", { status: 404 });
-  }
 
   const rehypeAutolinkHeadingsOptions = {
     behavior: "before",
@@ -140,13 +136,9 @@ async function getBlogPost(slug: string) {
 
 async function getBlogPages(contentDir: string) {
   const files = await readContentDir(contentDir);
-  const posts: Array<MdxPropsWithoutCode["frontmatter"]> = await Promise.all(
+  const posts: Array<MdxProps["frontmatter"]> = await Promise.all(
     files.map(async (filename) => {
       const source = await readContentFile(contentDir, `${filename}/index.mdx`);
-      if (!source) {
-        throw new Response("Not Found", { status: 404 });
-      }
-
       const { frontmatter } = await bundleMDX({
         source,
       });
@@ -186,6 +178,84 @@ async function getBlogPages(contentDir: string) {
   });
 }
 
+async function getWorksPage(slug: string) {
+  const [
+    remarkGfm,
+    rehypeSlug,
+    // rehypeAutolinkHeadings,
+    rehypeExternalLinks,
+    rehypePrism,
+  ] = await Promise.all([
+    import("remark-gfm").then((mod) => mod.default),
+    import("rehype-slug").then((mod) => mod.default),
+    // import("rehype-autolink-headings").then((mod) => mod.default),
+    import("rehype-external-links").then((mod) => mod.default),
+    import("rehype-prism-plus").then((mod) => mod.default),
+  ]);
+
+  const source = await readContentFile("works", `${slug}.mdx`);
+
+  try {
+    const { frontmatter, code } = await bundleMDX({
+      source,
+      mdxOptions: (options) => {
+        options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
+        options.rehypePlugins = [
+          ...(options.rehypePlugins ?? []),
+          rehypeSlug,
+          // [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
+          rehypeExternalLinks,
+          [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
+        ];
+        return options;
+      },
+      esbuildOptions: (options) => {
+        options.minify = true;
+        // Set the `outdir` to a public location for this bundle.
+        options.outdir = joinPath("build/_assets");
+        options.loader = {
+          ...options.loader,
+          ".png": "file",
+          ".jpg": "file",
+          ".jpeg": "file",
+        };
+        // Set the public path to /img/about
+        // options.publicPath = join("build/_assets");
+        // Set write to true so that esbuild will output the files.
+        // options.write = true;
+
+        return options;
+      },
+    });
+    return { frontmatter, code };
+  } catch (e) {
+    console.error(`Compilation error for slug: `, slug);
+    throw e;
+  }
+}
+
+async function getWorksPages(contentDir: string) {
+  const files = await readContentDir(contentDir);
+  const posts: Array<MdxProps["frontmatter"]> = await Promise.all(
+    files.map(async (filename) => {
+      const source = await readContentFile(contentDir, filename);
+      const { frontmatter } = await bundleMDX({
+        source,
+      });
+      return {
+        slug: filename.replace(/\.mdx$/, ""),
+        ...frontmatter,
+      };
+    })
+  );
+
+  return posts.sort((a, z) => {
+    const aTime = new Date(a.updated ?? a.published ?? "").getTime();
+    const zTime = new Date(z.updated ?? z.published ?? "").getTime();
+    return aTime > zTime ? -1 : aTime === zTime ? 0 : 1;
+  });
+}
+
 // type ImgBuilder = {
 //   (transformations?: TransformerOption): string;
 //   id: string;
@@ -196,4 +266,4 @@ export type ImgProps = {
   transformations?: TransformerOption;
 };
 
-export { getBlogPost, getBlogPages };
+export { getBlogPost, getBlogPages, getWorksPage, getWorksPages };
