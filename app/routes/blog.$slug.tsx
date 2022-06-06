@@ -1,17 +1,17 @@
 import * as React from "react";
-import { useLoaderData, json, useParams, useCatch, Link } from "remix";
+import { useLoaderData, json, useParams, Link } from "remix";
 import type { LoaderFunction, MetaFunction, LinksFunction } from "remix";
 
 import { getMDXComponent } from "mdx-bundler/client";
-import * as dateFns from "date-fns";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 
 import { formatDate } from "~/utils/format";
 import type { MdxProps } from "~/utils/post.server";
-import { getBlogPages, getBlogPost } from "~/utils/post.server";
+import { getBlogPost } from "~/utils/post.server";
 import { getMeta } from "~/utils/seo";
-import { getDomainUrl, getUrl } from "~/utils/misc";
+import { getUrl } from "~/utils/misc";
+import { NotFoundError } from "~/utils/error";
 
 import { Sidebar } from "~/components/sidebar";
 import { Alert } from "~/components/alert";
@@ -28,73 +28,22 @@ type LoaderData = {
   toc: string;
   // recoommendations: MdxPropsWithoutCode[]
 };
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const slug = params.slug || "index";
-  if (slug === "rss[.]xml") {
-    const posts = await getBlogPages("blog");
-    const blogUrl = `${getDomainUrl(request)}/blog`;
-    const rss = `
-    <rss xmlns:blogChannel="${blogUrl}" version="2.0">
-      <channel>
-        <title>6+ Blog</title>
-        <link>${blogUrl}</link>
-        <description>The 6+ Blog</description>
-        <language>ja</language>
-        <ttl>40</ttl>
-        ${posts
-          .map((post) =>
-            `
-            <item>
-              <title>${cdata(post.title ?? "Untitled Post")}</title>
-              <description>${cdata(
-                post.description ?? "This post is... indescribable"
-              )}</description>
-              <pubDate>${dateFns.format(
-                dateFns.add(
-                  post.updated
-                    ? dateFns.parseISO(post.updated)
-                    : post.published
-                    ? dateFns.parseISO(post.published)
-                    : Date.now(),
-                  { minutes: new Date().getTimezoneOffset() }
-                ),
-                "yyyy-MM-ii"
-              )}</pubDate>
-              <link>${blogUrl}/${post.slug}</link>
-              <guid>${blogUrl}/${post.slug}</guid>
-            </item>
-          `.trim()
-          )
-          .join("\n")}
-      </channel>
-    </rss>
-  `.trim();
-    function cdata(s: string) {
-      return `<![CDATA[${s}]]>`;
-    }
+  if (slug === "rss.xml") return null;
 
-    return new Response(rss, {
-      headers: {
-        "Content-Type": "application/xml",
-        "Content-Length": String(Buffer.byteLength(rss)),
-      },
-    });
-  }
+  const post = await getBlogPost(slug).catch((e) => {
+    console.error(e);
+    console.error("error in $slug for", slug);
+    throw NotFoundError();
+  });
 
-  const { frontmatter, code, toc } = await getBlogPost(slug);
-  // const recommendations = await getBlogRecommendations(request, {
-  //   limit: 3,
-  //   keywords: [
-  //     ...(page?.frontmatter.categories ?? []),
-  //     ...(page?.frontmatter.meta?.keywords ?? []),
-  //   ],
-  //   exclude: [slug],
-  // })
   const headers = {
     "Cache-Control": "private, max-age=3600",
     Vary: "Cookie",
   };
 
+  const { frontmatter, code, toc } = post;
   const data: LoaderData = {
     frontmatter,
     code,
@@ -110,8 +59,8 @@ export const meta: MetaFunction = ({ data, parentsData }) => {
     const { keywords = [], ...extraMeta } = data.frontmatter.meta ?? {};
     let title = data.frontmatter.title;
     const isDraft = data.frontmatter.draft;
-    if (isDraft) title = `下書き: ${title ?? "No Title"} | 6+ blog`;
-    else title = `${title ?? "No Title"} | 6+ blog`;
+    if (isDraft) title = `下書き: ${title ?? "No Title"} | 6+ Blog`;
+    else title = `${title ?? "No Title"} | 6+ Blog`;
     return {
       ...(isDraft ? { robots: "noindex" } : null),
       ...getMeta({
@@ -246,11 +195,11 @@ export default function MdxScreen() {
             initial="exit"
             animate="enter"
             exit="exit"
-            className="prose mx-auto dark:prose-invert sm:prose-lg lg:prose-xl lg:max-w-4xl"
+            className="prose prose-sm mx-auto max-w-4xl dark:prose-invert sm:prose-base lg:prose-lg"
           >
             <motion.header
               layoutId={`card-${slug}`}
-              className="not-prose pt-0 pb-12 lg:py-16"
+              className="not-prose pt-4 pb-12 lg:py-16"
             >
               {isDraft ? (
                 <Alert state="info" className="mb-12">
@@ -278,12 +227,12 @@ export default function MdxScreen() {
               </motion.div>
               <motion.div
                 variants={motionVariants.image}
-                className="not-prose relative rounded shadow-md"
+                className="relative rounded shadow-md"
                 layoutId={`image-container-${slug}`}
               >
                 {frontmatter.bannerImgId ? (
                   <PostImage
-                    page="post"
+                    page="page"
                     className="rounded"
                     imgId={frontmatter.bannerImgId}
                     alt={frontmatter.bannerAlt}
@@ -292,7 +241,7 @@ export default function MdxScreen() {
               </motion.div>
               <motion.div
                 variants={motionVariants.back}
-                className="not-prose mt-8"
+                className="not-prose mt-16"
               >
                 <Link
                   className="group flex gap-2 text-black dark:text-white"
@@ -300,7 +249,7 @@ export default function MdxScreen() {
                   to="/blog"
                 >
                   <ArrowLeftIcon className="h-6 w-6 transition-transform duration-300 group-hover:-translate-x-1" />
-                  <span className="text-base">Back to blog</span>
+                  <span className="text-base">Back to Blog</span>
                 </Link>
               </motion.div>
             </motion.header>
@@ -336,22 +285,4 @@ export default function MdxScreen() {
       </div>
     </>
   );
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
-  return (
-    <div className="min-h-screen bg-slate-200 px-6 duration-500 dark:bg-slate-800 lg:flex">
-      <div className="hidden flex-shrink-0 lg:block">
-        <Sidebar />
-      </div>
-      <div className="flex-grow rounded lg:z-[1] lg:h-full">{error}</div>
-    </div>
-  );
-}
-
-export function CatchBoundary() {
-  const caught = useCatch();
-  console.error("CatchBoundary", caught);
-  throw new Error(`Unhandled error: ${caught.status}`);
 }

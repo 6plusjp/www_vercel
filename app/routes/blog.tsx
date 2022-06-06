@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLoaderData, json, useSearchParams } from "remix";
 import type { MetaFunction, LoaderFunction } from "remix";
 
@@ -6,7 +6,9 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import { PlusIcon, SearchIcon } from "@heroicons/react/outline";
 
-import type { MdxPropsWithoutCode } from "~/utils/post.server";
+import { getMeta } from "~/utils/seo";
+import { getUrl } from "~/utils/misc";
+import type { MdxProps } from "~/utils/post.server";
 import { getBlogPages } from "~/utils/post.server";
 import { filterPosts } from "~/utils/search";
 
@@ -15,8 +17,6 @@ import { Card } from "~/components/card";
 import { Tag } from "~/components/tag";
 import { Spacer } from "~/components/spacer";
 import { MobileMenu } from "~/components/navbar";
-import { getMeta } from "~/utils/seo";
-import { getUrl } from "~/utils/misc";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const { requestInfo } = parentsData.root;
@@ -34,10 +34,10 @@ export const meta: MetaFunction = ({ parentsData }) => {
 };
 
 type LoaderData = {
-  posts: Array<MdxPropsWithoutCode["frontmatter"]>;
+  posts: Array<MdxProps["frontmatter"]>;
   tags: string[];
 };
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async () => {
   const posts = await getBlogPages("blog");
   const tags = new Set<string>();
   for (const post of posts) {
@@ -64,15 +64,15 @@ export default function Blog() {
   const queryKey = "q";
 
   const [searchParams] = useSearchParams();
-  const searchInputRef = React.useRef<HTMLInputElement>(null);
-  const ignoreInputKeyUp = React.useRef<boolean>(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const ignoreInputKeyUp = useRef<boolean>(false);
 
-  const [queryValue, setQuery] = React.useState<string>(() => {
+  const [queryValue, setQuery] = useState<string>(() => {
     return searchParams.get(queryKey) ?? "";
   });
   const query = queryValue.trim();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const currentSearchParams = new URLSearchParams(window.location.search);
     const oldQuery = currentSearchParams.get(queryKey) ?? "";
     if (queryValue === oldQuery) return;
@@ -93,14 +93,14 @@ export default function Blog() {
 
   const regularQuery = query;
 
-  const matchingPosts = React.useMemo(() => {
+  const matchingPosts = useMemo(() => {
     const filteredPosts = data.posts;
     return filterPosts(filteredPosts, regularQuery);
   }, [data.posts, regularQuery]);
 
   const initialIndexToShow = PAGE_SIZE;
-  const [indexToShow, setIndexToShow] = React.useState(initialIndexToShow);
-  React.useEffect(() => {
+  const [indexToShow, setIndexToShow] = useState(initialIndexToShow);
+  useEffect(() => {
     setIndexToShow(initialIndexToShow);
   }, [initialIndexToShow]);
 
