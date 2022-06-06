@@ -1,6 +1,6 @@
 import * as React from "react";
 import clsx from "clsx";
-import { Link, NavLink } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import { ThemeToggle } from "./toggle";
 import { GitHubIcon } from "./icons/github-icon";
 import { TwitterIcon } from "./icons/twitter-icon";
@@ -38,6 +38,7 @@ function Footer({ className }: { className?: string }) {
                     ? "pl-2 text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp"
                     : "pl-2 hover:text-hp focus:text-hp focus:outline-none"
                 }
+                end
               >
                 {link.name}
               </NavLink>
@@ -57,6 +58,7 @@ function Footer({ className }: { className?: string }) {
                     ? "pl-2 text-slate-500 dark:text-slate-400"
                     : "pl-2 hover:text-hp focus:text-hp focus:outline-none"
                 }
+                end
               >
                 {link.name}
               </NavLink>
@@ -99,18 +101,17 @@ function Footer({ className }: { className?: string }) {
                 className="fill-slate-500 hover:fill-[#1DA1F2] focus:fill-[#1DA1F2]"
               />
             </ExternalLink>
-            <Link
+            <ExternalLink
               className="ring-hp focus:outline-none focus:ring-2"
               aria-label="RSS"
-              target="_blank"
-              to="/blog/rss[.]xml"
+              href="https://6plus.tech/blog/rss.xml"
             >
               <span className="sr-only"> View RSS </span>
               <RssIcon
                 size={32}
                 className="fill-slate-500 hover:fill-[#f26522] focus:fill-[#f26522]"
               />
-            </Link>
+            </ExternalLink>
             <ExternalLink
               href="https://www.buymeacoffee.com/6plus"
               className="rounded-sm bg-hp ring-hp hover:ring-2 focus:outline-none focus:ring-2"

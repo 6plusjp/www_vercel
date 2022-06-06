@@ -1,6 +1,7 @@
 import { buildImageUrl, setConfig } from "cloudinary-build-url";
 import clsx from "clsx";
 import * as React from "react";
+
 import type { ImgProps } from "~/utils/post.server";
 import { Skeleton } from "./skeleton";
 
@@ -18,7 +19,7 @@ function PostImage({
   imgId: string;
   alt?: string;
   className?: string;
-  page?: string;
+  page: "page" | "blog" | "works";
 } & React.HTMLAttributes<HTMLDivElement>) {
   const [visible, setVisible] = React.useState(false);
   const imgRef = React.useRef<HTMLImageElement>(null);
@@ -42,14 +43,29 @@ function PostImage({
       "(min-width:1024px) and (max-width:1535px) 30vw",
       "25vw",
     ];
-  }
-  if (page === "post") {
+  } else if (page === "works") {
+    options.widths = [280, 560, 840];
+    options.sizes = [
+      "(max-width:767px) 80vw",
+      "(min-width:768px) and (max-width:1535px) 45vw",
+      "25vw",
+    ];
+  } else if (page === "page") {
     options.widths = [280, 560, 840, 1100];
     options.sizes = [
       "(max-width:767px) 95vw",
       "(min-width:768px) and (max-width:1023px) 740px",
       "(min-width:1024px) and (max-width:1279px) 80vw",
       "900px",
+    ];
+  } else {
+    options.widths = [280, 560, 840];
+    options.sizes = [
+      "(max-width:639px) 0vw",
+      "(min-width:640px) and (max-width:767px) 0vw",
+      "(min-width:768px) and (max-width:1023px) 45vw",
+      "(min-width:1024px) and (max-width:1535px) 30vw",
+      "(min-width:1536px) 25vw",
     ];
   }
 

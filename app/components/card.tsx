@@ -2,7 +2,7 @@ import { Link } from "remix";
 import { motion } from "framer-motion";
 
 import type { MdxProps } from "~/utils/post.server";
-import { formatDate } from "~/utils/format";
+import { formatDate, formatMonth } from "~/utils/format";
 import { PostImage } from "./post-image";
 
 interface Props {
@@ -51,7 +51,7 @@ function Card({ frontmatter }: Props) {
             </div>
           )}
         </motion.div>
-        <div className="w-full rounded bg-bp p-8 shadow ring-hp ring-offset-4 ring-offset-slate-200 duration-300 group-hover:ring-2 group-focus:ring-2 dark:ring-offset-slate-800 sm:p-12 md:bg-transparent md:p-0 md:shadow-none md:ring-transparent">
+        <div className="w-full rounded bg-bp p-8 shadow ring-hp ring-offset-4 ring-offset-slate-200 duration-300 group-hover:ring-2 group-focus:ring-2 dark:ring-offset-slate-800 sm:p-12 md:bg-transparent md:p-0 md:shadow-none md:ring-transparent md:ring-offset-transparent md:dark:ring-offset-transparent">
           <div>
             <h3 className="mb-4 text-2xl font-bold tracking-tight text-slate-900 line-clamp-2 dark:text-slate-200">
               {frontmatter.title}
@@ -66,7 +66,7 @@ function Card({ frontmatter }: Props) {
                 return (
                   <span
                     key={category}
-                    className="badge rounded-full bg-slate-300 text-black"
+                    className="badge rounded-full bg-slate-300 text-black line-clamp-1"
                   >
                     {category}
                   </span>
@@ -92,6 +92,69 @@ function Card({ frontmatter }: Props) {
   );
 }
 
+function WorksCard({ frontmatter }: Props) {
+  return (
+    <article>
+      <Link
+        to={`/works/${frontmatter.slug}`}
+        prefetch="intent"
+        className="group w-full flex-col focus:outline-none"
+      >
+        <div className="relative mb-6 block rounded shadow-md ring-hp ring-offset-4 ring-offset-bp transition duration-300 group-hover:ring-2 group-focus:ring-2 group-focus:ring-hp">
+          {frontmatter.bannerImgId ? (
+            <PostImage
+              className="rounded"
+              page="works"
+              imgId={frontmatter.bannerImgId}
+              alt={frontmatter.bannerAlt ?? frontmatter.title}
+            />
+          ) : (
+            <div className="aspect-none rounded bg-gradient-to-br from-slate-600 to-slate-500 md:aspect-h-9 md:aspect-w-16">
+              <span className="flex items-center justify-center">No Image</span>
+            </div>
+          )}
+        </div>
+        <div className="w-full">
+          <div>
+            <h3 className="mb-4 text-2xl font-bold tracking-tight text-slate-900 line-clamp-2 dark:text-slate-200">
+              {frontmatter.title}
+            </h3>
+            <p className="mb-6 text-base text-slate-800 line-clamp-3 dark:text-slate-300">
+              {frontmatter.description}
+            </p>
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              {frontmatter.categories?.map((category) => {
+                return (
+                  <span
+                    key={category}
+                    className="badge rounded-full bg-slate-300 text-black line-clamp-1"
+                  >
+                    {category}
+                  </span>
+                );
+              })}
+            </div>
+            <dl className="">
+              <dt className="sr-only">Date</dt>
+              <dd className="text-right text-sm leading-6 text-slate-700 dark:text-slate-400 lg:whitespace-nowrap">
+                <time dateTime={frontmatter.updated || frontmatter.published}>
+                  {frontmatter.updated
+                    ? `${formatMonth(frontmatter.updated, true)}`
+                    : frontmatter.published
+                    ? `${formatMonth(frontmatter.published, true)}`
+                    : null}
+                </time>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </Link>
+    </article>
+  );
+}
+
 export function ErrorBoundary({ error }: { error: Error }) {
   console.error(error);
   return (
@@ -102,4 +165,4 @@ export function ErrorBoundary({ error }: { error: Error }) {
   );
 }
 
-export { Card };
+export { Card, WorksCard };

@@ -47,6 +47,7 @@ function Desktop() {
                       ? "w-auto text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp"
                       : "w-auto hover:text-hp focus:text-hp focus:outline-none"
                   }
+                  end
                 >
                   {link.name}
                 </NavLink>
@@ -118,7 +119,7 @@ function Desktop() {
           className="ring-hp focus:outline-none focus:ring-2"
           aria-label="RSS"
           target="_blank"
-          to="/blog/rss[.]xml"
+          to="/blog/rss.xml"
         >
           <span className="sr-only"> View RSS </span>
           <RssIcon

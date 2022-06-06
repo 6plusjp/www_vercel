@@ -50,6 +50,7 @@ function Navbar({ className }: { className?: string }) {
                         ? "text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp"
                         : "underline-animation text-tp focus:outline-none"
                     }
+                    end
                   >
                     {link.name}
                   </NavLink>
