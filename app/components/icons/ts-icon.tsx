@@ -14,8 +14,8 @@ function TSIcon({ size = 24, className, title = "TypeScript" }: Props) {
       height={size}
       viewBox="0 0 128 128"
       xmlns="http://www.w3.org/2000/svg"
-      aria-label="ts icon"
     >
+      <title>TypeScript</title>
       <path fill="#fff" d="M22.67 47h99.67v73.67H22.67z" />
       <path
         data-name="original"
