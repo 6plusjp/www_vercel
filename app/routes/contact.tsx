@@ -120,7 +120,7 @@ export default function Contact() {
             <Input
               type="email"
               label="メールアドレス"
-              placeholder="6plusjp@example.com"
+              placeholder="6plus@example.com"
               name="email"
             />
             <Select name="subject" label="件名">

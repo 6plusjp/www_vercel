@@ -79,7 +79,7 @@ export default function Work() {
     <>
       <div className="min-h-screen bg-bp duration-500">
         <Navbar />
-        <div className="mx-auto max-w-6xl px-8">
+        <div className="prose prose-sm mx-auto px-8 dark:prose-invert sm:prose-base lg:prose-xl">
           <header className="not-prose pt-4 pb-12 lg:py-16">
             {isDraft ? (
               <Alert state="info" className="mb-12">
@@ -124,7 +124,7 @@ export default function Work() {
               </Link>
             </div>
           </header>
-          <article className="prose prose-sm dark:prose-invert sm:prose-base">
+          <article>
             <Component />
           </article>
           <Spacer size="base" />
