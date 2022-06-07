@@ -9,8 +9,7 @@ import { getMeta } from "~/utils/seo";
 export const meta: MetaFunction = ({ parentsData }) => {
   const { requestInfo } = parentsData.root;
   const title = "Privacy Policy | 6+";
-  const description =
-    "お客様がサービスをご利用になる際は、はじめにプライバシーポリシーを確認してください。";
+  const description = "策定日: Aug 23, 2021";
 
   return {
     ...getMeta({
@@ -32,7 +31,7 @@ export default function Policy() {
             プライバシーポリシー
           </h1>
           <p className="text-sm sm:self-end sm:text-base">
-            令和3年8月23日 策定
+            策定日: Aug 23, 2021
           </p>
         </div>
         <div className="space-y-4">
