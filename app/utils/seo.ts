@@ -169,12 +169,11 @@ function getRobotsText(request: Request): string {
 function getMeta({
   url,
   title = "6+ | Front-End Developer",
-  description = "Make the world better with software",
+  description = "DXの革新で世界をより豊かに。",
   origin,
   image = getMetaImage({
     origin,
     url,
-    words: title,
   }),
   keywords = "",
 }: {
@@ -206,19 +205,22 @@ function getMeta({
 
 function getMetaImage({
   origin,
-  words,
+  // words,
+  // featuredImage: img,
   url,
 }: {
   origin: string;
-  words: string;
+  // words: string;
+  // featuredImage: string;
   url: string;
 }) {
   const params = new URLSearchParams({
     type: "1",
-    words,
+    // words,
+    // img,
     url,
   });
-  return `${origin}/public/images/social?${params.toString()}`;
+  return `${origin}/img/social?${params.toString()}`;
 }
 
 // function clearMeta(meta: Record<string, string>): Record<string, string> {

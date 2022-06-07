@@ -120,12 +120,6 @@ function Document({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <Meta />
-        <script
-          async
-          defer
-          data-website-id="37cf2507-a08a-46af-97fb-2a27fa9fcda4"
-          src="https://umami-6plus.up.railway.app/umami.js"
-        />
         <link
           rel="canonical"
           href={removeTrailingSlash(
@@ -136,6 +130,12 @@ function Document({ children }: { children: React.ReactNode }) {
         <noscript>
           <link rel="stylesheet" href={noScriptCSS} />
         </noscript>
+        <script
+          async
+          data-website-id="37cf2507-a08a-46af-97fb-2a27fa9fcda4"
+          src="https://umami-6plus.up.railway.app/umami.js"
+          data-excluded-domains="localhost"
+        />
         <ThemeScript ssrTheme={Boolean(data.theme)} />
       </head>
       <body className="w-full antialiased">
