@@ -171,10 +171,11 @@ function getMeta({
   title = "6+ | Front-End Developer",
   description = "DXの革新で世界をより豊かに。",
   origin,
-  image = getMetaImage({
-    origin,
-    url,
-  }),
+  image,
+  // = getMetaImage({
+  //   origin,
+  //   url,
+  // })
   keywords = "",
 }: {
   origin: string;
@@ -188,40 +189,42 @@ function getMeta({
     title,
     description,
     keywords,
-    image,
     "og:url": url,
     "og:title": title,
     "og:description": description,
-    "og:image": image,
-    "twitter:card": image ? "summary_large_image" : "summary",
+    ...(image
+      ? {
+          "og:image": image,
+          "twitter:image": image,
+          "twitter:card": "summary_large_image",
+        }
+      : {}),
     "twitter:creator": "@6plusjp",
     "twitter:site": "@6plusjp",
     "twitter:title": title,
     "twitter:description": description,
-    "twitter:image": image,
     "twitter:alt": title,
   };
 }
 
-function getMetaImage({
-  origin,
-  // words,
-  // featuredImage: img,
-  url,
-}: {
-  origin: string;
-  // words: string;
-  // featuredImage: string;
-  url: string;
-}) {
-  const params = new URLSearchParams({
-    type: "1",
-    // words,
-    // img,
-    url,
-  });
-  return `${origin}/img/social?${params.toString()}`;
-}
+// function getMetaImage({
+//   origin,
+//   // words,
+//   url,
+// }: {
+//   origin: string;
+//   // words: string;
+//   // featuredImage: string;
+//   url: string;
+// }) {
+//   const params = new URLSearchParams({
+//     type: "1",
+//     // words,
+//     // img,
+//     url,
+//   });
+//   return `${origin}/images/social?${params.toString()}`;
+// }
 
 // function clearMeta(meta: Record<string, string>): Record<string, string> {
 //   const entries = Object.entries(meta).filter(
