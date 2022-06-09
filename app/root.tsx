@@ -11,6 +11,7 @@ import {
   json,
 } from "remix";
 import type { LoaderFunction, LinksFunction, MetaFunction } from "remix";
+import clsx from "clsx";
 
 import tailwind from "~/styles/tailwind.css";
 import global from "~/styles/global.css";
@@ -27,9 +28,13 @@ import {
   useTheme,
 } from "./utils/theme";
 import { getDomainUrl, getUrl, removeTrailingSlash } from "./utils/misc";
+import type { SEOHandle } from "./utils/seo";
 import { getMeta } from "./utils/seo";
-import clsx from "clsx";
 import { ExternalLink } from "./components/external-link";
+
+export const handle: SEOHandle & { id: string } = {
+  id: "root",
+};
 
 export type RootLoaderData = {
   ENV: ReturnType<typeof getEnv>;
@@ -62,7 +67,7 @@ export const meta: MetaFunction = ({ data }) => {
       origin: requestInfo?.origin ?? "",
       url: getUrl(requestInfo),
       keywords: "6+,ロクタス,React,JavaScript,TypeScript",
-      image: "/images/portfolio-v3-2022-05.png",
+      image: "public/images/portfolio-v3-2022-05.png",
     }),
   };
 };

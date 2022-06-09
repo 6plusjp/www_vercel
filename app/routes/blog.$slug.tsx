@@ -8,7 +8,9 @@ import { ArrowLeftIcon } from "@heroicons/react/outline";
 
 import { formatDate } from "~/utils/format";
 import type { MdxProps } from "~/utils/post.server";
+import { getBlogPages } from "~/utils/post.server";
 import { getBlogPost } from "~/utils/post.server";
+import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
 import { NotFoundError } from "~/utils/error";
@@ -21,6 +23,17 @@ import { MobileMenu } from "~/components/navbar";
 import { ExternalLink } from "~/components/external-link";
 
 import prose from "~/styles/prose.css";
+
+export const handle: SEOHandle = {
+  getSitemapEntries: async () => {
+    const pages = await getBlogPages("blog");
+    return pages
+      .filter((page) => !page.draft)
+      .map((page) => {
+        return { route: `/blog/${page.slug}`, priority: 0.7 };
+      });
+  },
+};
 
 type LoaderData = {
   frontmatter: MdxProps["frontmatter"];

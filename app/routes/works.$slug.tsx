@@ -14,9 +14,22 @@ import { NotFoundError } from "~/utils/error";
 import { formatMonth } from "~/utils/format";
 import { getUrl } from "~/utils/misc";
 import type { MdxProps } from "~/utils/post.server";
+import { getWorksPages } from "~/utils/post.server";
 import { getWorksPage } from "~/utils/post.server";
+import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
 import { Spacer } from "~/components/spacer";
+
+export const handle: SEOHandle = {
+  getSitemapEntries: async () => {
+    const pages = await getWorksPages("works");
+    return pages
+      .filter((page) => !page.draft)
+      .map((page) => {
+        return { route: `/works/${page.slug}`, priority: 0.7 };
+      });
+  },
+};
 
 type LoaderData = {
   frontmatter: MdxProps["frontmatter"];

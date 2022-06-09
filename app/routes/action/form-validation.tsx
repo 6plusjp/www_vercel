@@ -1,41 +1,46 @@
-import type { ActionFunction } from 'remix'
-import { Form, useActionData, json } from 'remix'
+import type { ActionFunction } from "remix";
+import { Form, useActionData, json } from "remix";
 
-import { z } from 'zod'
-import { validationError } from 'remix-validated-form'
-import { withZod } from '@remix-validated-form/with-zod'
+import { z } from "zod";
+import { validationError } from "remix-validated-form";
+import { withZod } from "@remix-validated-form/with-zod";
+import type { SEOHandle } from "~/utils/seo";
 
 const schema = withZod(
   z.object({
-    name: z.string().nonempty('お名前 / 会社名は必須です'),
+    name: z.string().nonempty("お名前 / 会社名は必須です"),
     email: z
       .string()
-      .nonempty('メールアドレスは必須です')
-      .email('メールアドレスの形式が正しくありません'),
-    subject: z.string().nonempty('件名は必須です'),
-    body: z.string().nonempty('本文は必須です')
+      .nonempty("メールアドレスは必須です")
+      .email("メールアドレスの形式が正しくありません"),
+    subject: z.string().nonempty("件名は必須です"),
+    body: z.string().nonempty("本文は必須です"),
   })
-)
+);
+
+export const handle: SEOHandle = {
+  getSitemapEntries: () => null,
+};
 
 export const action: ActionFunction = async ({ request }) => {
-  const formData = await schema.validate(await request.formData())
-  if (formData.error) return validationError(formData.error)
-  return json({ status: 'success', fields: formData.data, errors: {} })
-}
+  const formData = await schema.validate(await request.formData());
+  if (formData.error) return validationError(formData.error);
+  return json({ status: "success", fields: formData.data, errors: {} });
+};
 
 export default function NoJsFormRoute() {
-  const actionData = useActionData()
+  const actionData = useActionData();
   return (
-    <Form method='post' action='/newsletter/subscribe'>
+    <Form method="post" action="/newsletter/subscribe">
       <p>
-        <input type='text' name='email' /> <button type='submit'>送信</button>
+        <input type="text" name="email" /> <button type="submit">送信</button>
       </p>
 
-      {actionData.status === 'success' ? (
+      {actionData.status === "success" ? (
         <p>Thanks for subscribing!</p>
-      ) : actionData.status === 'error' ? (
+      ) : actionData.status === "error" ? (
         <p data-error>{actionData.data.error}</p>
       ) : null}
     </Form>
-  )
+  );
 }
