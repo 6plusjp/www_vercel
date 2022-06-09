@@ -184,13 +184,13 @@ async function getWorksPage(slug: string) {
     rehypeSlug,
     // rehypeAutolinkHeadings,
     rehypeExternalLinks,
-    rehypePrism,
+    // rehypePrism,
   ] = await Promise.all([
     import("remark-gfm").then((mod) => mod.default),
     import("rehype-slug").then((mod) => mod.default),
     // import("rehype-autolink-headings").then((mod) => mod.default),
     import("rehype-external-links").then((mod) => mod.default),
-    import("rehype-prism-plus").then((mod) => mod.default),
+    // import("rehype-prism-plus").then((mod) => mod.default),
   ]);
 
   const source = await readContentFile("works", `${slug}.mdx`);
@@ -205,27 +205,27 @@ async function getWorksPage(slug: string) {
           rehypeSlug,
           // [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
           rehypeExternalLinks,
-          [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
+          // [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
         ];
         return options;
       },
-      esbuildOptions: (options) => {
-        options.minify = true;
-        // Set the `outdir` to a public location for this bundle.
-        options.outdir = joinPath("build/_assets");
-        options.loader = {
-          ...options.loader,
-          ".png": "file",
-          ".jpg": "file",
-          ".jpeg": "file",
-        };
-        // Set the public path to /img/about
-        // options.publicPath = join("build/_assets");
-        // Set write to true so that esbuild will output the files.
-        // options.write = true;
+      // esbuildOptions: (options) => {
+      //   options.minify = true;
+      //   // Set the `outdir` to a public location for this bundle.
+      //   options.outdir = joinPath("build/_assets");
+      //   options.loader = {
+      //     ...options.loader,
+      //     ".png": "file",
+      //     ".jpg": "file",
+      //     ".jpeg": "file",
+      //   };
+      //   // Set the public path to /img/about
+      //   // options.publicPath = join("build/_assets");
+      //   // Set write to true so that esbuild will output the files.
+      //   // options.write = true;
 
-        return options;
-      },
+      //   return options;
+      // },
     });
     return { frontmatter, code };
   } catch (e) {
