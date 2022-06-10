@@ -101,8 +101,13 @@ export const links: LinksFunction = () => {
     { rel: "manifest", href: "/site.webmanifest" },
     {
       rel: "icon",
-      href: "/favicon.svg",
-      // media:"(prefers-color-scheme: dark)"
+      href: "/favicon-black.ico",
+      media: "(prefers-color-scheme: light)",
+    },
+    {
+      rel: "icon",
+      href: "/favicon-white.svg",
+      media: "(prefers-color-scheme: dark)",
     },
     { rel: "stylesheet", href: reachUi },
     { rel: "stylesheet", href: global },
