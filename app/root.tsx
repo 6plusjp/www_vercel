@@ -106,7 +106,7 @@ export const links: LinksFunction = () => {
     },
     {
       rel: "icon",
-      href: "/favicon-white.svg",
+      href: "/favicon-white.ico",
       media: "(prefers-color-scheme: dark)",
     },
     { rel: "stylesheet", href: reachUi },
