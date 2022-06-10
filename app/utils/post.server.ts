@@ -256,10 +256,6 @@ async function getWorksPages(contentDir: string) {
   });
 }
 
-// type ImgBuilder = {
-//   (transformations?: TransformerOption): string;
-//   id: string;
-// };
 export type ImgProps = {
   widths: number[];
   sizes: string[];
