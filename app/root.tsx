@@ -99,7 +99,11 @@ export const links: LinksFunction = () => {
       href: "/favicons/favicon-16x16.png",
     },
     { rel: "manifest", href: "/site.webmanifest" },
-    { rel: "icon", href: "/favicon.ico" },
+    {
+      rel: "icon",
+      href: "/favicon.svg",
+      // media:"(prefers-color-scheme: dark)"
+    },
     { rel: "stylesheet", href: reachUi },
     { rel: "stylesheet", href: global },
     { rel: "stylesheet", href: tailwind },
