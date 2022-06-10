@@ -85,7 +85,7 @@ async function sendEmail(data: Props) {
         <li>このメールにお心当たりのない場合は、誠に恐れ入りますが破棄いただきますよう、お願い申し上げます。</li>
         <li>本メールの送信元メールアドレスは、送信専用アドレスとなっております。このメールに返信されても、返信内容の確認およびご返答はできません。予めご了承ください。</li>
       </ul>
-      <p style="text-align: center; color: black; margin-top: 2rem;">Copyright &copy; 2022 <a style="color: #63A18F;" href="https://6plus.tech" target="_blank" rel="noopener noreferrer">6+</a> All rights reserved.</p>
+      <p style="text-align: center; color: black; margin-top: 2rem;">Copyright &copy; <a style="color: #63A18F;" href="https://6plus.tech" target="_blank" rel="noopener noreferrer">6+</a> All rights reserved.</p>
     </div>
   </div>
 </body>
