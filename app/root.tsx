@@ -67,7 +67,7 @@ export const meta: MetaFunction = ({ data }) => {
       origin: requestInfo?.origin ?? "",
       url: getUrl(requestInfo),
       keywords: "6+,ロクタス,React,JavaScript,TypeScript",
-      image: "public/images/portfolio-v3-2022-05.png",
+      image: "/images/portfolio-v3-2022-05.png",
     }),
   };
 };
