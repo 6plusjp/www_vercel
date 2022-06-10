@@ -9,8 +9,8 @@ import { Alert } from "~/components/alert";
 import { Footer } from "~/components/footer";
 import { Navbar } from "~/components/navbar";
 import { PostImage } from "~/components/post-image";
+import { Spacer } from "~/components/spacer";
 
-import { NotFoundError } from "~/utils/error";
 import { formatMonth } from "~/utils/format";
 import { getUrl } from "~/utils/misc";
 import type { MdxProps } from "~/utils/post.server";
@@ -18,7 +18,7 @@ import { getWorksPages } from "~/utils/post.server";
 import { getWorksPage } from "~/utils/post.server";
 import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
-import { Spacer } from "~/components/spacer";
+import { notFound } from "~/utils/responses";
 
 export const handle: SEOHandle = {
   getSitemapEntries: async () => {
@@ -41,7 +41,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const post = await getWorksPage(slug).catch((e) => {
     console.error(e);
     console.error("error in $slug for", slug);
-    throw NotFoundError();
+    throw notFound(slug);
   });
 
   const headers = {

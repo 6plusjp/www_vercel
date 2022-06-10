@@ -13,7 +13,7 @@ import { getBlogPost } from "~/utils/post.server";
 import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
-import { NotFoundError } from "~/utils/error";
+import { notFound } from "~/utils/responses";
 
 import { Sidebar } from "~/components/sidebar";
 import { Alert } from "~/components/alert";
@@ -48,7 +48,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   const post = await getBlogPost(slug).catch((e) => {
     console.error(e);
     console.error("error in $slug for", slug);
-    throw NotFoundError();
+    throw notFound(slug);
   });
 
   const headers = {
