@@ -1,6 +1,6 @@
+import { useRef, useState } from "react";
 import { buildImageUrl, setConfig } from "cloudinary-build-url";
 import clsx from "clsx";
-import * as React from "react";
 
 import type { ImgProps } from "~/utils/post.server";
 import { Skeleton } from "./skeleton";
@@ -21,8 +21,8 @@ function PostImage({
   className?: string;
   page: "page" | "blog" | "works";
 } & React.HTMLAttributes<HTMLDivElement>) {
-  const [visible, setVisible] = React.useState(false);
-  const imgRef = React.useRef<HTMLImageElement>(null);
+  const [visible, setVisible] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   const options: ImgProps = {
     widths: [],
