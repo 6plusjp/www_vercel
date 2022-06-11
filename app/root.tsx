@@ -228,7 +228,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       <header className="flex items-center justify-between px-6 py-9 lg:px-12">
         <div className="container mx-auto flex justify-between">
           <Link to="/">
-            <Icon size={60} />
+            <Icon size={50} />
           </Link>
           <nav aria-label="Main navigation" className="flex items-center gap-6">
             <Link
