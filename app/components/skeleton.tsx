@@ -1,5 +1,6 @@
-import * as React from 'react'
-import clsx from 'clsx'
+import type { HTMLAttributes, Ref } from "react";
+import { forwardRef } from "react";
+import clsx from "clsx";
 
 interface Props {
   /**
@@ -7,35 +8,35 @@ interface Props {
    * If `false` the animation effect is disabled.
    * @default 'pulse'
    */
-  animation?: 'pulse' | 'wave' | false
+  animation?: "pulse" | "wave" | false;
   /**
    * The type of content that will be rendered.
    * @default 'text'
    */
-  variant?: 'text' | 'rectangular' | 'circular'
+  variant?: "text" | "rectangular" | "circular";
 
-  children?: React.ReactNode
-  className?: string
+  children?: React.ReactNode;
+  className?: string;
 }
 
-const Skeleton = React.forwardRef(function Skeleton(
-  props: React.HTMLAttributes<HTMLSpanElement> & Props,
-  ref: React.Ref<HTMLSpanElement>
+const Skeleton = forwardRef(function Skeleton(
+  props: HTMLAttributes<HTMLSpanElement> & Props,
+  ref: Ref<HTMLSpanElement>
 ) {
-  const { animation = 'pulse', className, variant = 'text', ...rest } = props
+  const { animation = "pulse", className, variant = "text", ...rest } = props;
 
   return (
     <span
       ref={ref}
-      className={clsx(className, 'block', {
-        'animate-pulse': animation === 'pulse',
-        'animate-wave': animation === 'wave',
-        'my-0 h-auto rounded': variant === 'text',
-        'rounded-full': variant === 'circular',
+      className={clsx(className, "block", {
+        "animate-pulse": animation === "pulse",
+        "animate-wave": animation === "wave",
+        "my-0 h-auto rounded": variant === "text",
+        "rounded-full": variant === "circular",
       })}
       {...rest}
     />
-  )
-})
+  );
+});
 
-export { Skeleton }
+export { Skeleton };
