@@ -2,11 +2,6 @@
   "version": 3,
   "routes": [
     {
-      "src": "/redirect",
-      "status": 308,
-      "headers": { "Location": "https://example.com/" }
-    },
-    {
       "src": "/user",
       "dest": "/api/user"
     },
