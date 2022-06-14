@@ -7,28 +7,28 @@
   "cleanUrls": true,
   "redirects": [
     {
-      "src": "/user",
-      "dest": "/api/user"
+      "source": "/user",
+      "destination": "/api/user"
     },
     {
-      "src": "/posts",
-      "dest": "/blog"
+      "source": "/posts",
+      "destination": "/blog"
     },
     {
-      "src": "/post",
-      "dest": "/blog"
+      "source": "/post",
+      "destination": "/blog"
     },
     {
-      "src": "/oss",
-      "dest": "https://github.com/6plusjp"
+      "source": "/oss",
+      "destination": "https://github.com/6plusjp"
     },
     {
-      "src": "/rss",
-      "dest": "/blog/rss.xml"
+      "source": "/rss",
+      "destination": "/blog/rss.xml"
     },
     {
-      "src": "/feed",
-      "dest": "/blog/rss.xml"
+      "source": "/feed",
+      "destination": "/blog/rss.xml"
     }
   ],
   "headers": [
