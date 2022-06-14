@@ -168,40 +168,40 @@ function getRobotsText(request: Request): string {
 }
 
 // meta
-type MetaFields =
-  | "title"
-  | "description"
-  | "twitter:card"
-  | "twitter:title"
-  | "twitter:description"
-  | "twitter:creator"
-  | "twitter:image"
-  | "og:title"
-  | "og:description"
-  | "og:image"
-  | "og:url"
-  | "og:type";
+// type MetaFields =
+//   | "title"
+//   | "description"
+//   | "twitter:card"
+//   | "twitter:title"
+//   | "twitter:description"
+//   | "twitter:creator"
+//   | "twitter:image"
+//   | "og:title"
+//   | "og:description"
+//   | "og:image"
+//   | "og:url"
+//   | "og:type";
 
-const defaultTitle = "6+ | Front-End Developer";
-const defaultDescription =
-  "デジタル体験を加速させることで世界をより豊かにします。";
+// const defaultTitle = "6+ | Front-End Developer";
+// const defaultDescription =
+//   "デジタル体験を加速させることで世界をより豊かにします。";
 
-const defaultMeta: Partial<Record<MetaFields, string>> = {
-  title: defaultTitle,
-  description: defaultDescription,
-  "og:title": defaultTitle,
-  "og:description": defaultDescription,
-  "og:type": "website",
-  "twitter:creator": "@6plusjp",
-  "twitter:card": "summary",
-  "twitter:title": defaultTitle,
-  "twitter:description": defaultDescription,
-};
+// const defaultMeta: Partial<Record<MetaFields, string>> = {
+//   title: defaultTitle,
+//   description: defaultDescription,
+//   "og:title": defaultTitle,
+//   "og:description": defaultDescription,
+//   "og:type": "website",
+//   "twitter:creator": "@6plusjp",
+//   "twitter:card": "summary",
+//   "twitter:title": defaultTitle,
+//   "twitter:description": defaultDescription,
+// };
 
 function getMeta({
   url,
-  title,
-  description,
+  title = "6+ | Front-End Developer",
+  description = "デジタル体験を加速させることで世界をより豊かにします。",
   image,
   isArticle = false,
   keywords = "",
@@ -214,7 +214,7 @@ function getMeta({
   keywords?: string;
 }) {
   return {
-    ...defaultMeta,
+    // ...defaultMeta,
     title,
     description,
     keywords,
