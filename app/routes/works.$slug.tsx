@@ -13,7 +13,7 @@ import { Spacer } from "~/components/spacer";
 
 import { formatMonth } from "~/utils/format";
 import { getUrl } from "~/utils/misc";
-import type { MdxProps } from "~/utils/post.server";
+import type { Frontmatter } from "~/utils/post.server";
 import { getWorksPages } from "~/utils/post.server";
 import { getWorksPage } from "~/utils/post.server";
 import type { SEOHandle } from "~/utils/seo";
@@ -32,7 +32,7 @@ export const handle: SEOHandle = {
 };
 
 type LoaderData = {
-  frontmatter: MdxProps["frontmatter"];
+  frontmatter: Frontmatter;
   code: string;
 };
 
@@ -68,7 +68,6 @@ export const meta: MetaFunction = ({ data, parentsData }) => {
     return {
       ...(isDraft ? { robots: "noindex" } : null),
       ...getMeta({
-        origin: requestInfo.origin,
         url: getUrl(requestInfo),
         title,
         description: data.frontmatter.description,

@@ -8,7 +8,7 @@ import { PlusIcon, SearchIcon } from "@heroicons/react/outline";
 
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
-import type { MdxProps } from "~/utils/post.server";
+import type { Frontmatter } from "~/utils/post.server";
 import { getBlogPages } from "~/utils/post.server";
 import { filterPosts } from "~/utils/search";
 
@@ -24,7 +24,6 @@ export const meta: MetaFunction = ({ parentsData }) => {
   const description = "WEB開発関連の情報を発信しています。";
   return {
     ...getMeta({
-      origin: requestInfo.origin,
       url: getUrl(requestInfo),
       title,
       description,
@@ -34,7 +33,7 @@ export const meta: MetaFunction = ({ parentsData }) => {
 };
 
 type LoaderData = {
-  posts: Array<MdxProps["frontmatter"]>;
+  posts: Array<Frontmatter>;
   tags: string[];
 };
 export const loader: LoaderFunction = async () => {

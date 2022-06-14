@@ -1,26 +1,27 @@
-import { ActionFunction, json, redirect } from 'remix'
+import type { ActionFunction } from "remix";
+import { json, redirect } from "remix";
 
-import { getThemeSession, isTheme } from '~/utils/theme'
+import { getThemeSession, isTheme } from "~/utils/theme";
 
 export const action: ActionFunction = async ({ request }) => {
-  const session = await getThemeSession(request)
-  const requestText = await request.text()
-  const form = new URLSearchParams(requestText)
-  const theme = form.get('theme')
+  const session = await getThemeSession(request);
+  const requestText = await request.text();
+  const form = new URLSearchParams(requestText);
+  const theme = form.get("theme");
 
   if (!isTheme(theme))
     return json({
       success: false,
-      message: `theme value of ${theme} is not a valid theme.`
-    })
+      message: `theme value of ${theme} is not a valid theme.`,
+    });
 
-  session.setTheme(theme)
+  session.setTheme(theme);
   return json(
     { success: true },
     {
-      headers: { 'Set-Cookie': await session.commit() }
+      headers: { "Set-Cookie": await session.commit() },
     }
-  )
-}
+  );
+};
 
-export const loader = () => redirect('/', { status: 404 })
+export const loader = () => redirect("/", { status: 404 });

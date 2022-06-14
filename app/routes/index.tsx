@@ -18,7 +18,6 @@ export const meta: MetaFunction = ({ parentsData }) => {
 
   return {
     ...getMeta({
-      origin: requestInfo.origin,
       url: getUrl(requestInfo),
       description,
       keywords: "JavaScript, TypeScript, React, Web Development, WEB開発",

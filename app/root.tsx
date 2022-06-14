@@ -64,10 +64,8 @@ export const meta: MetaFunction = ({ data }) => {
   return {
     viewport: "width=device-width,initial-scale=1,viewport-fit=cover",
     ...getMeta({
-      origin: requestInfo?.origin ?? "",
       url: getUrl(requestInfo),
       keywords: "6+,ロクタス,React,JavaScript,TypeScript",
-      image: "/images/portfolio-v3-2022-05.png",
     }),
   };
 };
@@ -145,16 +143,17 @@ function Document({ children }: { children: React.ReactNode }) {
         <noscript>
           <link rel="stylesheet" href={noScriptCSS} />
         </noscript>
+        <ThemeScript ssrTheme={Boolean(data.theme)} />
+      </head>
+      <body className="w-full antialiased">
+        {children}
         <script
           async
           data-website-id="37cf2507-a08a-46af-97fb-2a27fa9fcda4"
           src="https://umami-6plus.up.railway.app/umami.js"
           data-excluded-domains="localhost"
+          data-spa="history"
         />
-        <ThemeScript ssrTheme={Boolean(data.theme)} />
-      </head>
-      <body className="w-full antialiased">
-        {children}
         <ScrollRestoration />
         <script
           dangerouslySetInnerHTML={{

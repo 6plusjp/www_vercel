@@ -51,7 +51,6 @@ export const meta: MetaFunction = ({ parentsData }) => {
 
   return {
     ...getMeta({
-      origin: requestInfo.origin,
       url: getUrl(requestInfo),
       title,
       description,

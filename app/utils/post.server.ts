@@ -4,33 +4,82 @@ import type { TransformerOption } from "@cld-apis/types";
 
 import { m2toc } from "./unified";
 import { readContentFile, readContentDir, joinPath } from "./fs.server";
+import LRUCache from "lru-cache";
 
-export type MdxProps = {
-  code: string;
-  frontmatter: {
-    title?: string;
-    description?: string;
-    slug?: string;
-    lang?: string;
-    categories?: string[];
+// export type MdxProps = {
+//   code: string;
+//   frontmatter: {
+//     title?: string;
+//     description?: string;
+//     slug?: string;
+//     lang?: string;
+//     categories?: string[];
 
-    draft?: boolean;
-    published?: string;
-    updated?: string;
+//     draft?: boolean;
+//     published?: string;
+//     updated?: string;
 
-    bannerImgId?: string;
-    bannerTitle?: string;
-    bannerAlt?: string;
-    bannerCredit?: string;
+//     bannerImgId?: string;
+//     bannerTitle?: string;
+//     bannerAlt?: string;
+//     bannerCredit?: string;
 
-    meta?: {
-      keywords?: string[];
-    };
-    socialImageTitle?: string;
+//     meta?: {
+//       keywords?: string[];
+//     };
+//     socialImageTitle?: string;
+//   };
+// };
+
+export interface Frontmatter {
+  title?: string;
+  description?: string;
+  slug?: string;
+  lang?: string;
+  categories?: string[];
+
+  draft?: boolean;
+  published?: string;
+  updated?: string;
+
+  bannerImgId?: string;
+  bannerTitle?: string;
+  bannerAlt?: string;
+  bannerCredit?: string;
+
+  meta?: {
+    keywords?: string[];
   };
-};
+  socialImageTitle?: string;
+}
 
-async function getBlogPost(slug: string) {
+interface PostData {
+  frontmatter: Frontmatter;
+  code: string;
+  toc?: string;
+}
+
+const defaultMaxAge = 1000 * 60 * 60 * 24 * 7;
+const cache = new LRUCache<string, Frontmatter>({
+  maxSize: process.env.NODE_ENV === "production" ? defaultMaxAge : 2500,
+});
+
+async function getPost(slug: string, contentDir?: string): Promise<PostData> {
+  let post: PostData;
+  if (cache.has(slug)) {
+    post = cache.get(slug);
+  } else {
+    post =
+      contentDir === "blog"
+        ? await getBlogPost(slug)
+        : await getWorksPage(slug);
+    if (post) {
+      cache.set(slug, post);
+    }
+  }
+  return post;
+}
+async function getBlogPost(slug: string): Promise<PostData> {
   const [
     remarkGfm,
     rehypeSlug,
@@ -45,7 +94,6 @@ async function getBlogPost(slug: string) {
     import("rehype-prism-plus").then((mod) => mod.default),
   ]);
 
-  // const indexRegex = new RegExp(`${slug}\\/index.mdx?$`);
   const source = await readContentFile("blog", `${slug}/index.mdx`);
 
   const rehypeAutolinkHeadingsOptions = {
@@ -136,7 +184,7 @@ async function getBlogPost(slug: string) {
 
 async function getBlogPages(contentDir: string) {
   const files = await readContentDir(contentDir);
-  const posts: Array<MdxProps["frontmatter"]> = await Promise.all(
+  const posts: Array<Frontmatter> = await Promise.all(
     files.map(async (filename) => {
       const source = await readContentFile(contentDir, `${filename}/index.mdx`);
       const { frontmatter } = await bundleMDX({
@@ -178,7 +226,7 @@ async function getBlogPages(contentDir: string) {
   });
 }
 
-async function getWorksPage(slug: string) {
+async function getWorksPage(slug: string): Promise<PostData> {
   const [
     remarkGfm,
     rehypeSlug,
@@ -236,7 +284,7 @@ async function getWorksPage(slug: string) {
 
 async function getWorksPages(contentDir: string) {
   const files = await readContentDir(contentDir);
-  const posts: Array<MdxProps["frontmatter"]> = await Promise.all(
+  const posts: Array<Frontmatter> = await Promise.all(
     files.map(async (filename) => {
       const source = await readContentFile(contentDir, filename);
       const { frontmatter } = await bundleMDX({

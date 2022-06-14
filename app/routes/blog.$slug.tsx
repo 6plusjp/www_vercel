@@ -7,7 +7,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 
 import { formatDate } from "~/utils/format";
-import type { MdxProps } from "~/utils/post.server";
+import type { Frontmatter } from "~/utils/post.server";
 import { getBlogPages } from "~/utils/post.server";
 import { getBlogPost } from "~/utils/post.server";
 import type { SEOHandle } from "~/utils/seo";
@@ -36,10 +36,9 @@ export const handle: SEOHandle = {
 };
 
 type LoaderData = {
-  frontmatter: MdxProps["frontmatter"];
+  frontmatter: Frontmatter;
   code: string;
-  toc: string;
-  // recoommendations: MdxPropsWithoutCode[]
+  toc?: string;
 };
 export const loader: LoaderFunction = async ({ params }) => {
   const slug = params.slug || "index";
@@ -61,7 +60,6 @@ export const loader: LoaderFunction = async ({ params }) => {
     frontmatter,
     code,
     toc,
-    // recommendations,
   };
   return json(data, { status: 200, headers });
 };
@@ -77,11 +75,11 @@ export const meta: MetaFunction = ({ data, parentsData }) => {
     return {
       ...(isDraft ? { robots: "noindex" } : null),
       ...getMeta({
-        origin: requestInfo.origin,
         url: getUrl(requestInfo),
         title,
         description: data.frontmatter.description,
         keywords: keywords.join(", "),
+        isArticle: true,
       }),
       ...extraMeta,
     };
