@@ -1,0 +1,27 @@
+{
+  "version": 3,
+  "routes": [
+    {
+      "src": "/redirect",
+      "status": 308,
+      "headers": { "Location": "https://example.com/" }
+    },
+    {
+      "src": "/user",
+      "dest": "/api/user"
+    },
+    {
+      "src": ["/posts", "/post"],
+      "dest": "/blog"
+    },
+    {
+      "src": "/oss",
+      "dest": "https://github.com/6plusjp"
+    },
+    {
+      "src": ["/rss", "/feed"],
+      "dest": "/blog/rss.xml"
+    }
+  ],
+  "cache": [".cache/**", "node_modules/**"]
+}
