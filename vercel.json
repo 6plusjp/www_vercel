@@ -1,11 +1,36 @@
 {
   "build": {
     "env": {
-      "ENABLE_FILE_SYSTEM_API": "1",
-      "ENABLE_VC_BUILD": "1"
+      "ENABLE_FILE_SYSTEM_API": "1"
     }
   },
   "cleanUrls": true,
+  "redirects": [
+    {
+      "src": "/user",
+      "dest": "/api/user"
+    },
+    {
+      "src": "/posts",
+      "dest": "/blog"
+    },
+    {
+      "src": "/post",
+      "dest": "/blog"
+    },
+    {
+      "src": "/oss",
+      "dest": "https://github.com/6plusjp"
+    },
+    {
+      "src": "/rss",
+      "dest": "/blog/rss.xml"
+    },
+    {
+      "src": "/feed",
+      "dest": "/blog/rss.xml"
+    }
+  ],
   "headers": [
     {
       "source": "/build/(.*)",
