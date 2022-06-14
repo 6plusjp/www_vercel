@@ -11,7 +11,11 @@
       "dest": "/api/user"
     },
     {
-      "src": ["/posts", "/post"],
+      "src": "/posts",
+      "dest": "/blog"
+    },
+    {
+      "src": "/post",
       "dest": "/blog"
     },
     {
@@ -19,7 +23,11 @@
       "dest": "https://github.com/6plusjp"
     },
     {
-      "src": ["/rss", "/feed"],
+      "src": "/rss",
+      "dest": "/blog/rss.xml"
+    },
+    {
+      "src": "/feed",
       "dest": "/blog/rss.xml"
     }
   ],
