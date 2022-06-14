@@ -66,6 +66,7 @@ export const meta: MetaFunction = ({ data }) => {
     ...getMeta({
       url: getUrl(requestInfo),
       keywords: "6+,ロクタス,React,JavaScript,TypeScript",
+      image:'/images/og.png'
     }),
   };
 };
