@@ -1,8 +1,10 @@
 import type { LoaderFunction } from "remix";
-import type { CanvasRenderingContext2D } from "canvas";
-import { createCanvas, loadImage } from "canvas";
+import type { SKRSContext2D } from "@napi-rs/canvas";
+import { createCanvas, Image } from "@napi-rs/canvas";
 
 import { toTitleCase } from "~/utils/string";
+import { readFileSync } from "fs-extra";
+import path from "~/utils/path.server";
 
 export const loader: LoaderFunction = async ({ params }) => {
   if (!params.id) {
@@ -80,7 +82,9 @@ const generateImg = async (id: string) => {
 
   // Draw the picture
   if (logoImage) {
-    const img = await loadImage(logoImage);
+    const data = readFileSync(path.resolve(logoImage));
+    const img = new Image(100, 100);
+    img.src = data;
     const x = margin;
     const y = brandText - radius + lineHeight / 2;
     ctx.drawImage(img, x, y, radius, radius);
@@ -102,11 +106,7 @@ const generateImg = async (id: string) => {
   return canvas.toBuffer("image/png");
 };
 
-const getLines = (
-  ctx: CanvasRenderingContext2D,
-  text: string,
-  maxWidth: number
-) => {
+const getLines = (ctx: SKRSContext2D, text: string, maxWidth: number) => {
   const words = text.split(" ");
   const lines = [];
   let currentLine = words[0];

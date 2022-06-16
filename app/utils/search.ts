@@ -1,6 +1,6 @@
 import { matchSorter, rankings as matchSorterRankings } from "match-sorter";
 
-import type { MdxProps } from "./post.server";
+import type { Frontmatter } from "./post.server";
 
 export function createSearch(value: string): string {
   const searchParams = new URLSearchParams({ sort: "top" });
@@ -33,10 +33,7 @@ export function getSearchOptions(searchParams: URLSearchParams): SearchOptions {
   };
 }
 
-export function filterPosts(
-  posts: Array<MdxProps["frontmatter"]>,
-  searchString: string
-) {
+export function filterPosts(posts: Array<Frontmatter>, searchString: string) {
   if (!searchString) return posts;
 
   const options = {
