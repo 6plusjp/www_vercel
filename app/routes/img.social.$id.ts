@@ -14,7 +14,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   return new Response(img, {
     status: 200,
     headers: {
-      "Content-Type": "image/png ",
+      "Content-Type": "image/png",
       "Cache-Control": "public, max-age=2419200",
     },
   });

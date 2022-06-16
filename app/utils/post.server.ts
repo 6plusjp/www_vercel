@@ -6,31 +6,6 @@ import { m2toc } from "./unified";
 import { readContentFile, readContentDir, joinPath } from "./fs.server";
 import LRUCache from "lru-cache";
 
-// export type MdxProps = {
-//   code: string;
-//   frontmatter: {
-//     title?: string;
-//     description?: string;
-//     slug?: string;
-//     lang?: string;
-//     categories?: string[];
-
-//     draft?: boolean;
-//     published?: string;
-//     updated?: string;
-
-//     bannerImgId?: string;
-//     bannerTitle?: string;
-//     bannerAlt?: string;
-//     bannerCredit?: string;
-
-//     meta?: {
-//       keywords?: string[];
-//     };
-//     socialImageTitle?: string;
-//   };
-// };
-
 export interface Frontmatter {
   title?: string;
   description?: string;
