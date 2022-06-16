@@ -242,20 +242,21 @@ export default function MdxScreen() {
                 className="relative rounded shadow-md"
                 layoutId={`image-container-${slug}`}
               >
-                {frontmatter.bannerImgId ? (
-                  <PostImage
-                    page="page"
-                    className="rounded"
-                    imgId={frontmatter.bannerImgId}
-                    alt={frontmatter.bannerAlt}
-                  />
-                ) : (
-                  <img
-                    src={`../img/social/${slug}`}
-                    className="rounded"
-                    alt={frontmatter.bannerAlt}
-                  />
-                )}
+                {
+                  frontmatter.bannerImgId ? (
+                    <PostImage
+                      page="page"
+                      className="rounded"
+                      imgId={frontmatter.bannerImgId}
+                      alt={frontmatter.bannerAlt}
+                    />
+                  ) : null
+                  // <img
+                  //   src={`../img/social/${slug}`}
+                  //   className="rounded"
+                  //   alt={frontmatter.bannerAlt}
+                  // />
+                }
               </motion.div>
               <motion.div
                 variants={motionVariants.back}
