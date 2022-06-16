@@ -237,23 +237,4 @@ function getMeta({
   };
 }
 
-// function getMetaImage({
-//   origin,
-//   // words,
-//   url,
-// }: {
-//   origin: string;
-//   // words: string;
-//   // featuredImage: string;
-//   url: string;
-// }) {
-//   const params = new URLSearchParams({
-//     type: "1",
-//     // words,
-//     // img,
-//     url,
-//   });
-//   return `${origin}/images/social?${params.toString()}`;
-// }
-
 export { getSitemapXml, getRobotsText, getMeta };
