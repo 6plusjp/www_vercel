@@ -64,7 +64,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   return json(data, { status: 200, headers });
 };
 
-export const meta: MetaFunction = ({ data, parentsData }) => {
+export const meta: MetaFunction = ({ data, parentsData, params }) => {
   const { requestInfo } = parentsData.root;
   if (data?.frontmatter) {
     const { keywords = [], ...extraMeta } = data.frontmatter.meta ?? {};
@@ -79,6 +79,7 @@ export const meta: MetaFunction = ({ data, parentsData }) => {
         title,
         description: data.frontmatter.description,
         keywords: keywords.join(", "),
+        image: `/img/social/${params.slug}`,
         isArticle: true,
       }),
       ...extraMeta,
@@ -248,7 +249,13 @@ export default function MdxScreen() {
                     imgId={frontmatter.bannerImgId}
                     alt={frontmatter.bannerAlt}
                   />
-                ) : null}
+                ) : (
+                  <img
+                    src={`../img/social/${slug}`}
+                    className="rounded"
+                    alt={frontmatter.bannerAlt}
+                  />
+                )}
               </motion.div>
               <motion.div
                 variants={motionVariants.back}

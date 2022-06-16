@@ -66,7 +66,7 @@ export const meta: MetaFunction = ({ data }) => {
     ...getMeta({
       url: getUrl(requestInfo),
       keywords: "6+,ロクタス,React,JavaScript,TypeScript",
-      image:'/images/og.png'
+      image: "/images/og.png",
     }),
   };
 };
@@ -173,6 +173,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
   return (
     <html lang="ja">
       <head>
+        <meta charSet="utf-8" />
         <title>Oh no...</title>
         <Links />
       </head>
@@ -207,6 +208,7 @@ export function CatchBoundary() {
   return (
     <html lang="ja">
       <head>
+        <meta charSet="utf-8" />
         <title>{`${caught.status} ${caught.statusText}`}</title>
         <Links />
       </head>

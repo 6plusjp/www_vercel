@@ -14,10 +14,16 @@ export const toKebabCase = (text: string) => {
 };
 
 export const toTitleCase = (text: string) => {
-  return text.replace(
-    /[A-Za-zÀ-ÖØ-öø-ÿ]\S*/g,
-    (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
-  );
+  const STRING_DECAMELIZE_REGEXP = /([a-z\d])([A-Z])/g;
+  const STRING_SEPARATORS_REGEXP = /(-|_|\.)/g;
+
+  return text
+    .replace(STRING_DECAMELIZE_REGEXP, "$1 $2")
+    .replace(STRING_SEPARATORS_REGEXP, " ")
+    .replace(
+      /\w\S*/g,
+      (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+    );
 };
 
 export const includes = (text?: string, search?: string[]) => {
