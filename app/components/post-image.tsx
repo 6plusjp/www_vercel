@@ -84,7 +84,6 @@ function PostImage({
             )}
           />
         )}
-        {/* <div className={`bg-[${bgColor}]`} /> */}
         <img
           ref={imgRef}
           src={buildImageUrl(imgId, {

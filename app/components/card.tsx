@@ -1,12 +1,12 @@
 import { Link } from "remix";
 import { motion } from "framer-motion";
 
-import type { MdxProps } from "~/utils/post.server";
+import type { Frontmatter } from "~/utils/post.server";
 import { formatDate, formatMonth } from "~/utils/format";
 import { PostImage } from "./post-image";
 
 interface Props {
-  frontmatter: MdxProps["frontmatter"];
+  frontmatter: Frontmatter;
 }
 const postVariants = {
   initial: { scale: 0.96, y: 30, opacity: 0 },
@@ -40,7 +40,7 @@ function Card({ frontmatter }: Props) {
         >
           {frontmatter.bannerImgId ? (
             <PostImage
-              className="rounded"
+              className="aspect-w-16 aspect-h-9 rounded"
               page="blog"
               imgId={frontmatter.bannerImgId}
               alt={frontmatter.bannerAlt ?? frontmatter.title}
