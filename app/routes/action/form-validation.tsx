@@ -8,13 +8,13 @@ import type { SEOHandle } from "~/utils/seo";
 
 const schema = withZod(
   z.object({
-    name: z.string().nonempty("お名前 / 会社名は必須です"),
+    name: z.string().min(1, "お名前 / 会社名は必須です"),
     email: z
       .string()
-      .nonempty("メールアドレスは必須です")
+      .min(1, "メールアドレスは必須です")
       .email("メールアドレスの形式が正しくありません"),
-    subject: z.string().nonempty("件名は必須です"),
-    body: z.string().nonempty("本文は必須です"),
+    subject: z.string().min(1, "件名は必須です"),
+    body: z.string().min(1, "本文は必須です"),
   })
 );
 

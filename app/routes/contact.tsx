@@ -1,7 +1,5 @@
-import * as React from "react";
 import type { ActionFunction, MetaFunction } from "remix";
-import { useActionData } from "remix";
-import { json } from "remix";
+import { json, useActionData } from "remix";
 
 import clsx from "clsx";
 import { z } from "zod";
@@ -17,26 +15,26 @@ import { Navbar } from "~/components/navbar";
 import { Input, Select, Textarea } from "~/components/form";
 import { Footer } from "~/components/footer";
 import { Alert } from "~/components/alert";
+import { Button } from "~/components/button";
 
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
 import { useHydrated } from "~/utils/hydrated";
 import { sendEmail, sendEmailToOwner } from "~/utils/email.server";
-import { Button } from "~/components/button";
 
 const schema = z.object({
   name: z
     .string()
-    .nonempty("お名前 / 会社名は必須です")
+    .min(1, { message: "お名前 / 会社名は必須です" })
     .max(30, "お名前 / 会社名が長すぎます"),
   email: z
     .string()
-    .nonempty("メールアドレスは必須です")
+    .min(1, { message: "メールアドレスは必須です" })
     .email("メールアドレスの形式が正しくありません"),
   subject: z.enum(["仕事のご依頼", "ご質問", "その他"]),
   text: z
     .string()
-    .nonempty("お問い合わせ内容は必須です")
+    .min(1, { message: "お問い合わせ内容は必須です" })
     .min(5, "お問い合わせ内容が短すぎます")
     .max(1000, "お問い合わせ内容が長すぎます"),
 });
@@ -114,7 +112,7 @@ export default function Contact() {
           <h1 className="mb-12 py-8 text-3xl font-bold text-tp sm:text-4xl">
             お問い合わせ
           </h1>
-          <div className="grid gap-x-12 gap-y-4 lg:grid-cols-2">
+          <div className="mb-8 grid gap-x-12 gap-y-4 lg:grid-cols-2">
             <Input name="name" label="お名前 / 会社名" placeholder="6+" />
             <Input
               type="email"
