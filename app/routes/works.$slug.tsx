@@ -14,8 +14,8 @@ import { Spacer } from "~/components/spacer";
 import { formatMonth } from "~/utils/format";
 import { getUrl } from "~/utils/misc";
 import type { Frontmatter } from "~/utils/post.server";
+import { getMdxPage } from "~/utils/post.server";
 import { getWorksPages } from "~/utils/post.server";
-import { getWorksPage } from "~/utils/post.server";
 import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
 import { notFound } from "~/utils/responses";
@@ -38,7 +38,7 @@ type LoaderData = {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const slug = params.slug || "index";
-  const post = await getWorksPage(slug).catch((e) => {
+  const post = await getMdxPage(slug, "works").catch((e) => {
     console.error(e);
     console.error("error in $slug for", slug);
     throw notFound(slug);
@@ -49,12 +49,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     Vary: "Cookie",
   };
 
-  const { frontmatter, code } = post;
-  const data: LoaderData = {
-    frontmatter,
-    code,
-  };
-  return json(data, { status: 200, headers });
+  return json(post, { status: 200, headers });
 };
 
 export const meta: MetaFunction = ({ data, parentsData }) => {

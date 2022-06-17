@@ -1,10 +1,9 @@
 import { bundleMDX } from "mdx-bundler";
 import * as matter from "gray-matter";
-import type { TransformerOption } from "@cld-apis/types";
+import LRUCache from "lru-cache";
 
 import { m2toc } from "./unified";
 import { readContentFile, readContentDir, joinPath } from "./fs.server";
-import LRUCache from "lru-cache";
 
 export interface Frontmatter {
   title?: string;
@@ -32,28 +31,34 @@ interface PostData {
   frontmatter: Frontmatter;
   code: string;
   toc?: string;
+  slug?: string;
 }
 
 const defaultMaxAge = 1000 * 60 * 60 * 24 * 7;
 const cache = new LRUCache<string, Frontmatter>({
   maxSize: process.env.NODE_ENV === "production" ? defaultMaxAge : 2500,
+  sizeCalculation: (value, key) => {
+    return 1;
+  },
 });
 
-async function getPost(slug: string, contentDir?: string): Promise<PostData> {
-  let post: PostData;
+export async function getMdxPage(
+  slug: string,
+  contentDir?: string
+): Promise<PostData | undefined> {
+  let post: PostData | undefined;
   if (cache.has(slug)) {
     post = cache.get(slug);
   } else {
     post =
-      contentDir === "blog"
-        ? await getBlogPost(slug)
-        : await getWorksPage(slug);
-    if (post) {
-      cache.set(slug, post);
-    }
+      contentDir === "works"
+        ? await getWorksPage(slug)
+        : await getBlogPost(slug);
+    post ? cache.set(slug, post) : cache.delete(slug);
   }
   return post;
 }
+
 async function getBlogPost(slug: string): Promise<PostData> {
   const [
     remarkGfm,
@@ -278,11 +283,5 @@ async function getWorksPages(contentDir: string) {
     return aTime > zTime ? -1 : aTime === zTime ? 0 : 1;
   });
 }
-
-export type ImgProps = {
-  widths: number[];
-  sizes: string[];
-  transformations?: TransformerOption;
-};
 
 export { getBlogPost, getBlogPages, getWorksPage, getWorksPages };

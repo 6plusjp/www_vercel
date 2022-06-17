@@ -8,8 +8,8 @@ import { ArrowLeftIcon } from "@heroicons/react/outline";
 
 import { formatDate } from "~/utils/format";
 import type { Frontmatter } from "~/utils/post.server";
+import { getMdxPage } from "~/utils/post.server";
 import { getBlogPages } from "~/utils/post.server";
-import { getBlogPost } from "~/utils/post.server";
 import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
@@ -44,7 +44,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   const slug = params.slug || "index";
   if (slug === "rss.xml") return null;
 
-  const post = await getBlogPost(slug).catch((e) => {
+  const post = await getMdxPage(slug).catch((e) => {
     console.error(e);
     console.error("error in $slug for", slug);
     throw notFound(slug);
@@ -55,13 +55,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     Vary: "Cookie",
   };
 
-  const { frontmatter, code, toc } = post;
-  const data: LoaderData = {
-    frontmatter,
-    code,
-    toc,
-  };
-  return json(data, { status: 200, headers });
+  return json(post, { status: 200, headers });
 };
 
 export const meta: MetaFunction = ({ data, parentsData, params }) => {

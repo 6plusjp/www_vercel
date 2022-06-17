@@ -1,20 +1,21 @@
 import type { LoaderFunction, MetaFunction } from "remix";
 import { json, useLoaderData } from "remix";
 import { useEffect, useState } from "react";
+
 import { PlusIcon } from "@heroicons/react/outline";
 
 import { Navbar } from "~/components/navbar";
 import { WorksCard } from "~/components/card";
-import { Footer } from "~/components/footer";
 import { Spacer } from "~/components/spacer";
+import { Footer } from "~/components/footer";
 
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
-import type { MdxProps } from "~/utils/post.server";
+import type { Frontmatter } from "~/utils/post.server";
 import { getWorksPages } from "~/utils/post.server";
 
 type LoaderData = {
-  posts: Array<MdxProps["frontmatter"]>;
+  posts: Array<Frontmatter>;
   tags: string[];
 };
 export const loader: LoaderFunction = async () => {
@@ -45,7 +46,6 @@ export const meta: MetaFunction = ({ parentsData }) => {
 
   return {
     ...getMeta({
-      origin: requestInfo.origin,
       url: getUrl(requestInfo),
       title,
     }),

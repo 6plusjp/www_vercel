@@ -1,39 +1,37 @@
-// import type { LoaderFunction } from "remix";
-// import type { SKRSContext2D } from "@napi-rs/canvas";
-// import { createCanvas, Image } from "@napi-rs/canvas";
+import type { LoaderFunction } from "remix";
 
 // import { toTitleCase } from "~/utils/string";
 // import { readFileSync } from "fs-extra";
 // import path from "~/utils/path.server";
 
-// export const loader: LoaderFunction = async ({ params }) => {
-//   if (!params.id) {
-//     return null;
-//   }
+export const loader: LoaderFunction = async ({ params }) => {
+  if (!params.id) {
+    return null;
+  }
 
-//   const img = await generateImg(params.id);
+  // const img = await generateImg(params.id);
 
-//   return new Response(img, {
-//     status: 200,
-//     headers: {
-//       "Content-Type": "image/png",
-//       "Cache-Control": "public, max-age=2419200",
-//     },
-//   });
-// };
+  return new Response(img, {
+    status: 200,
+    headers: {
+      "Content-Type": "image/png",
+      "Cache-Control": "public, max-age=2419200",
+    },
+  });
+};
 
-// const defaultProps = {
-//   width: 1200,
-//   height: 630,
-//   fontSize: 80,
-//   margin: 60,
-//   logoImage: "public/images/logo.png",
-//   author: "6+ Blog",
-//   radius: 140,
-//   font: "Inter",
-//   primaryColor: "#7f5af0",
-//   secondaryColor: "#2cb67d",
-// };
+const defaultProps = {
+  width: 1200,
+  height: 630,
+  fontSize: 80,
+  margin: 60,
+  logoImage: "public/images/logo.png",
+  author: "6+ Blog",
+  radius: 140,
+  font: "Inter",
+  primaryColor: "#7f5af0",
+  secondaryColor: "#2cb67d",
+};
 
 // const generateImg = async (id: string) => {
 //   const title = toTitleCase(id);
