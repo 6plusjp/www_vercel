@@ -46,15 +46,16 @@ export async function getMdxPage(
   slug: string,
   contentDir?: string
 ): Promise<PostData | undefined> {
+  const key = `${contentDir}:${slug}`;
   let post: PostData | undefined;
-  if (cache.has(slug)) {
-    post = cache.get(slug);
+  if (cache.has(key)) {
+    post = cache.get(key);
   } else {
     post =
       contentDir === "works"
         ? await getWorksPage(slug)
         : await getBlogPost(slug);
-    post ? cache.set(slug, post) : cache.delete(slug);
+    post ? cache.set(key, post) : cache.delete(key);
   }
   return post;
 }
