@@ -3,9 +3,9 @@ node_modules
 
 # Vercel
 .vercel
+.output
 
 # Remix build
-.cache
 /build/
 /public/build
 /api/index.js
@@ -15,4 +15,5 @@ node_modules
 /app/styles
 
 # Misc
+.cache
 .env
