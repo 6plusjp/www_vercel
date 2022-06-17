@@ -1,13 +1,20 @@
 import { useRef, useState } from "react";
+
 import { buildImageUrl, setConfig } from "cloudinary-build-url";
 import clsx from "clsx";
+import type { TransformerOption } from "@cld-apis/types";
 
-import type { ImgProps } from "~/utils/post.server";
 import { Skeleton } from "./skeleton";
 
 setConfig({
   cloudName: "six-plus-jp",
 });
+
+type ImgProps = {
+  widths: number[];
+  sizes: string[];
+  transformations?: TransformerOption;
+};
 
 function PostImage({
   imgId,
