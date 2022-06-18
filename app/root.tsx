@@ -62,6 +62,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const meta: MetaFunction = ({ data }) => {
   const requestInfo = data?.requestInfo;
   return {
+    charset: "utf-8",
     viewport: "width=device-width,initial-scale=1,viewport-fit=cover",
     ...getMeta({
       url: getUrl(requestInfo),
@@ -132,15 +133,19 @@ function Document({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" className={clsx("font-display", theme)}>
       <head>
-        <meta charSet="utf-8" />
         <Meta />
+        <Links />
+        {/* <style
+          dangerouslySetInnerHTML={{
+            __html: `@font-face{font-family:'Inter'}`,
+          }}
+        /> */}
         <link
           rel="canonical"
           href={removeTrailingSlash(
             `${data.requestInfo.origin}${data.requestInfo.path}`
           )}
         />
-        <Links />
         <noscript>
           <link rel="stylesheet" href={noScriptCSS} />
         </noscript>
