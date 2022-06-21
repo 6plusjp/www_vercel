@@ -22,6 +22,7 @@ import { SlackIcon } from "../icons/slack-icon";
 import { FigmaIcon } from "../icons/figma-icon";
 import { ChevronIcon } from "../icons/chevron-icon";
 import { TSIcon } from "../icons/ts-icon";
+import { Link } from "remix";
 
 const TAB_DESKTOP = [
   {
@@ -122,12 +123,20 @@ export function ToolsSection() {
   return (
     <section className="bg-bs py-16 px-[5vw] duration-500">
       <div className="container mx-auto">
-        <h2 className="py-4 text-center text-3xl font-bold text-tp sm:text-4xl">
-          My Tools
-        </h2>
-        <div className="py-16">
-          <Desktop />
-          <Mobile />
+        <div className="flex flex-col justify-center">
+          <h2 className="py-4 text-center text-3xl font-bold text-tp sm:text-4xl">
+            My Tools
+          </h2>
+          <div className="py-16">
+            <Desktop />
+            <Mobile />
+          </div>
+          <Link
+            to="/my/uses"
+            className="btn my-8 mx-auto bg-hp text-lg text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border focus:border-black focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none dark:hover:border-white dark:focus:border-white"
+          >
+            詳細
+          </Link>
         </div>
       </div>
     </section>
