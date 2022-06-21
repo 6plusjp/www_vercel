@@ -153,6 +153,7 @@ function Document({ children }: { children: React.ReactNode }) {
       </head>
       <body className="w-full antialiased">
         {children}
+        <ScrollRestoration />
         <script
           async
           data-website-id="37cf2507-a08a-46af-97fb-2a27fa9fcda4"
@@ -160,7 +161,6 @@ function Document({ children }: { children: React.ReactNode }) {
           data-excluded-domains="localhost"
           data-spa="history"
         />
-        <ScrollRestoration />
         <script
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
