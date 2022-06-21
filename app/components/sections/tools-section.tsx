@@ -132,7 +132,7 @@ export function ToolsSection() {
             <Mobile />
           </div>
           <Link
-            to="/my/uses"
+            to="/uses"
             className="btn my-8 mx-auto bg-hp text-lg text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border focus:border-black focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none dark:hover:border-white dark:focus:border-white"
           >
             詳細
