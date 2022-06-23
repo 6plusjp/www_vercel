@@ -188,7 +188,7 @@ export default function Blog() {
         </div>
       </div>
       <div className="min-h-screen bg-slate-200 px-6 duration-500 dark:bg-slate-800 lg:flex">
-        <div className="hidden flex-shrink-0 lg:block">
+        <div className="hidden shrink-0 lg:block">
           <Sidebar>
             <form
               action="/blog"
@@ -289,7 +289,7 @@ export default function Blog() {
             ) : null}
           </Sidebar>
         </div>
-        <div className="flex-grow pb-12 lg:h-full lg:py-12">
+        <div className="grow pb-12 lg:h-full lg:py-12">
           <header className="py-12">
             <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 sm:text-center sm:text-4xl xl:mb-8">
               Welcome to 6+ Blog

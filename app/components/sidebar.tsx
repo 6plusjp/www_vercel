@@ -1,5 +1,5 @@
-import * as React from "react";
 import { Link, NavLink } from "remix";
+import type { ReactNode } from "react";
 
 import { ExternalLink } from "./external-link";
 import { ThemeToggle } from "./toggle";
@@ -8,7 +8,7 @@ import { GitHubIcon } from "./icons/github-icon";
 import { RssIcon } from "./icons/rss-icon";
 import { TwitterIcon } from "./icons/twitter-icon";
 
-function Sidebar({ children }: { children?: React.ReactNode }) {
+function Sidebar({ children }: { children?: ReactNode }) {
   return (
     <aside className="sticky top-0 h-full max-h-screen w-64 overflow-y-auto overflow-x-hidden py-10 pl-6 pr-3 xl:w-80 xl:pr-5 2xl:w-96 2xl:pr-6">
       {children}

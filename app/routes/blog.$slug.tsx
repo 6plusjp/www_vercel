@@ -55,7 +55,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     Vary: "Cookie",
   };
 
-  return json(post, { status: 200, headers });
+  return json(post, { headers });
 };
 
 export const meta: MetaFunction = ({ data, parentsData, params }) => {
