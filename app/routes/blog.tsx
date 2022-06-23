@@ -136,7 +136,6 @@ export default function Blog() {
         <div className="flex max-w-screen-2xl items-center justify-between text-tp">
           <form
             action="/blog"
-            className=""
             method="GET"
             onSubmit={(e) => e.preventDefault()}
           >

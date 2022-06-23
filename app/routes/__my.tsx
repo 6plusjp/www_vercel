@@ -1,4 +1,3 @@
-// import type { LinksFunction } from "remix";
 import { Outlet } from "remix";
 
 export default function My() {
