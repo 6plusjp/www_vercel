@@ -1,8 +1,7 @@
-@import '@reach/tabs/styles.css';
-@import '@reach/accordion/styles.css';
-@import '@reach/menu-button/styles.css';
-@import '@reach/checkbox/styles.css';
-/* @import '@reach/dialog/styles.css'; */
+@import "@reach/tabs/styles.css";
+@import "@reach/accordion/styles.css";
+@import "@reach/menu-button/styles.css";
+@import "@reach/checkbox/styles.css";
 
 [data-reach-menu-items] {
   border: none;
@@ -16,7 +15,7 @@
   cursor: not-allowed;
 }
 
-[data-reach-accordion-button][data-state='open'] {
+[data-reach-accordion-button][data-state="open"] {
   cursor: default;
 }
 
