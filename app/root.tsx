@@ -1,3 +1,4 @@
+import type { LoaderFunction, LinksFunction, MetaFunction } from "remix";
 import {
   Links,
   Meta,
@@ -10,7 +11,6 @@ import {
   Link,
   json,
 } from "remix";
-import type { LoaderFunction, LinksFunction, MetaFunction } from "remix";
 import clsx from "clsx";
 
 import tailwind from "~/styles/tailwind.css";
@@ -30,6 +30,7 @@ import {
 import { getDomainUrl, getUrl, removeTrailingSlash } from "./utils/misc";
 import type { SEOHandle } from "./utils/seo";
 import { getMeta } from "./utils/seo";
+
 import { ExternalLink } from "./components/external-link";
 
 export const handle: SEOHandle & { id: string } = {
