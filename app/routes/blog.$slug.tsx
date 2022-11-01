@@ -1,6 +1,7 @@
-import * as React from "react";
-import { useLoaderData, json, useParams, Link } from "remix";
 import type { LoaderFunction, MetaFunction, LinksFunction } from "remix";
+import { json } from "remix";
+import { useLoaderData, useParams, Link } from "@remix-run/react";
+import { useMemo } from "react";
 
 import { getMDXComponent } from "mdx-bundler/client";
 import { motion, useReducedMotion } from "framer-motion";
@@ -103,7 +104,7 @@ export default function MdxScreen() {
   const { frontmatter, code, toc } = useLoaderData<LoaderData>();
   const { slug } = useParams();
   const isDraft = Boolean(frontmatter.draft);
-  const Component = React.useMemo(() => getMDXComponent(code), [code]);
+  const Component = useMemo(() => getMDXComponent(code), [code]);
 
   const shouldReduceMotion = useReducedMotion();
   const duration = shouldReduceMotion ? 0 : 0.5;
@@ -201,7 +202,7 @@ export default function MdxScreen() {
             initial="exit"
             animate="enter"
             exit="exit"
-            className="prose prose-sm mx-auto max-w-4xl dark:prose-invert sm:prose-base lg:prose-lg"
+            className="prose-sm prose mx-auto max-w-4xl dark:prose-invert sm:prose-base lg:prose-lg"
           >
             <motion.header
               layoutId={`card-${slug}`}

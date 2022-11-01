@@ -1,5 +1,5 @@
-import * as React from "react";
-import { NavLink } from "remix";
+import { useEffect } from "react";
+import { NavLink } from "@remix-run/react";
 
 import clsx from "clsx";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -101,7 +101,7 @@ function MobileMenuList() {
   const duration = shouldReduceMotion ? 0 : 0.15;
   const easing = "linear";
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isExpanded) {
       document.body.classList.add("fixed");
       document.body.classList.add("overflow-y-scroll");

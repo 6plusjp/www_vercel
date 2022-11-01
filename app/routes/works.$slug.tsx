@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import type { LoaderFunction, MetaFunction } from "remix";
-import { json, useLoaderData, Link } from "remix";
+import { useLoaderData, Link } from "@remix-run/react";
+import { json } from "remix";
 
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 import { getMDXComponent } from "mdx-bundler/client";
@@ -86,7 +87,7 @@ export default function Work() {
     <>
       <div className="min-h-screen bg-bp duration-500">
         <Navbar />
-        <div className="prose prose-sm mx-auto px-8 dark:prose-invert sm:prose-base lg:prose-xl">
+        <div className="prose-sm prose mx-auto px-8 dark:prose-invert sm:prose-base lg:prose-xl">
           <header className="not-prose pt-4 pb-12 lg:py-16">
             {isDraft ? (
               <Alert state="info" className="mb-12">

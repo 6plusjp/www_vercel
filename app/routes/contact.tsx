@@ -1,5 +1,6 @@
 import type { ActionFunction, MetaFunction } from "remix";
-import { json, useActionData } from "remix";
+import { useActionData } from "@remix-run/react";
+import { json } from "remix";
 
 import clsx from "clsx";
 import { z } from "zod";

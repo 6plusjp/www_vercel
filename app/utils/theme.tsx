@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import type { Dispatch, ReactNode, SetStateAction } from "react";
-import { useFetcher } from "remix";
+import { useFetcher } from "@remix-run/react";
 
 import { __DEV__ } from "./assertion";
 import { getSession, sessionStorage } from "./session.server";

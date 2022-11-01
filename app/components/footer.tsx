@@ -1,6 +1,7 @@
-import * as React from "react";
-import clsx from "clsx";
 import { NavLink } from "@remix-run/react";
+
+import clsx from "clsx";
+
 import { ThemeToggle } from "./toggle";
 import { GitHubIcon } from "./icons/github-icon";
 import { TwitterIcon } from "./icons/twitter-icon";

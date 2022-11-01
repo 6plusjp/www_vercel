@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { MetaFunction, LoaderFunction } from "remix";
-import { useLoaderData, json, useSearchParams } from "remix";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
+import { json } from "remix";
 
 import clsx from "clsx";
 import { motion } from "framer-motion";

@@ -1,4 +1,4 @@
-import { Link } from "remix";
+import { Link } from "@remix-run/react";
 import { motion } from "framer-motion";
 
 import type { Frontmatter } from "~/utils/post.server";

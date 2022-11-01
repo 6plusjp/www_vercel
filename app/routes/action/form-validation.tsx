@@ -1,5 +1,6 @@
 import type { ActionFunction } from "remix";
-import { Form, useActionData, json } from "remix";
+import { json } from "remix";
+import { Form, useActionData } from "@remix-run/react";
 
 import { z } from "zod";
 import { validationError } from "remix-validated-form";

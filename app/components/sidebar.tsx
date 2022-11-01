@@ -1,5 +1,5 @@
-import { Link, NavLink } from "remix";
 import type { ReactNode } from "react";
+import { Link, NavLink } from "@remix-run/react";
 
 import { ExternalLink } from "./external-link";
 import { ThemeToggle } from "./toggle";

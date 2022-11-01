@@ -1,4 +1,5 @@
 import type { LoaderFunction, LinksFunction, MetaFunction } from "remix";
+import { json } from "remix";
 import {
   Links,
   Meta,
@@ -9,8 +10,8 @@ import {
   useLoaderData,
   useCatch,
   Link,
-  json,
-} from "remix";
+} from "@remix-run/react";
+
 import clsx from "clsx";
 
 import tailwind from "~/styles/tailwind.css";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useMatches } from "remix";
+import { useMatches } from "@remix-run/react";
 
 let hydrating = true;
 

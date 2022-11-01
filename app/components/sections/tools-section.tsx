@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "@remix-run/react";
 
 import {
   Accordion,
@@ -22,7 +23,6 @@ import { SlackIcon } from "../icons/slack-icon";
 import { FigmaIcon } from "../icons/figma-icon";
 import { ChevronIcon } from "../icons/chevron-icon";
 import { TSIcon } from "../icons/ts-icon";
-import { Link } from "remix";
 
 const TAB_DESKTOP = [
   {

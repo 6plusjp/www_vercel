@@ -1,5 +1,6 @@
 import type { LoaderFunction, MetaFunction } from "remix";
-import { json, useLoaderData } from "remix";
+import { json } from "remix";
+import { useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
 import { PlusIcon } from "@heroicons/react/outline";
