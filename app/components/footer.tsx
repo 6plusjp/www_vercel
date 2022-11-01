@@ -64,12 +64,12 @@ function Footer({ className }: { className?: string }) {
               </NavLink>
             );
           })}
-          <ExternalLink
+          {/* <ExternalLink
             className="pl-2 text-tp hover:text-hp focus:text-hp focus:outline-none"
             href="https://umami-6plus.up.railway.app/share/Ibl3yjOa/6plus.tech"
           >
             Analytics - umami
-          </ExternalLink>
+          </ExternalLink> */}
           <a
             className="pl-2 text-tp hover:text-hp focus:text-hp focus:outline-none"
             href="/sitemap.xml"
