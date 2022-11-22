@@ -25,8 +25,6 @@ export function AboutSection({ className }: { className?: string }) {
               高速で弾力性のあるUXの構築に重きを置く。
               <br />
               デジタル体験を加速させることで、世界をより豊かに。
-              <br />
-              Remixでポートフォリオをリビルド。
             </p>
           </div>
         </div>

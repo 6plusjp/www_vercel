@@ -20,7 +20,6 @@ import { PythonIcon } from "../icons/python-icon";
 import { ReactIcon } from "../icons/react-icon";
 import { VueIcon } from "../icons/vue-icon";
 import { SlackIcon } from "../icons/slack-icon";
-import { FigmaIcon } from "../icons/figma-icon";
 import { ChevronIcon } from "../icons/chevron-icon";
 import { TSIcon } from "../icons/ts-icon";
 
@@ -45,11 +44,11 @@ const TAB_DESKTOP = [
     svg: <VueIcon className="mx-auto sm:h-24 sm:w-24" />,
     link: "https://vuejs.org",
   },
-  {
-    name: "Figma",
-    svg: <FigmaIcon className="mx-auto sm:h-24 sm:w-24" />,
-    link: "https://www.figma.com",
-  },
+  // {
+  //   name: "Figma",
+  //   svg: <FigmaIcon className="mx-auto sm:h-24 sm:w-24" />,
+  //   link: "https://www.figma.com",
+  // },
   {
     name: "slack",
     svg: <SlackIcon className="mx-auto sm:h-24 sm:w-24" />,
