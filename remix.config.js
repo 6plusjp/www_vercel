@@ -45,5 +45,7 @@ module.exports = {
     "is-hexadecimal",
     "is-alphanumerical",
     "is-alphabetical",
+    "is-plain-obj",
+    "trim-lines",
   ],
 };
