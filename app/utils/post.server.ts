@@ -1,9 +1,9 @@
 import { bundleMDX } from "mdx-bundler";
 import * as matter from "gray-matter";
-import LRUCache from "lru-cache";
 
 import { m2toc } from "./unified";
 import { readContentFile, readContentDir, joinPath } from "./fs.server";
+import { LRUCache } from "lru-cache";
 
 export interface Frontmatter {
   title?: string;
