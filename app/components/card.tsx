@@ -1,9 +1,10 @@
 import { Link } from "@remix-run/react";
+
 import { motion } from "framer-motion";
+import { PostImage } from "./post-image";
 
 import type { Frontmatter } from "~/utils/post.server";
 import { formatDate, formatMonth } from "~/utils/format";
-import { PostImage } from "./post-image";
 
 interface Props {
   frontmatter: Frontmatter;
@@ -40,7 +41,7 @@ function Card({ frontmatter }: Props) {
         >
           {frontmatter.bannerImgId ? (
             <PostImage
-              className="aspect-w-16 aspect-h-9 rounded"
+              className="aspect-h-9 aspect-w-16 rounded"
               page="blog"
               imgId={frontmatter.bannerImgId}
               alt={frontmatter.bannerAlt ?? frontmatter.title}
