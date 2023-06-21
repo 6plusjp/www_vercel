@@ -1,11 +1,22 @@
-import type { LoaderFunction, MetaFunction, LinksFunction } from "remix";
-import { json } from "remix";
+import type {
+  LoaderFunction,
+  MetaFunction,
+  LinksFunction,
+} from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { useLoaderData, useParams, Link } from "@remix-run/react";
 import { useMemo } from "react";
 
 import { getMDXComponent } from "mdx-bundler/client";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
+
+import { Sidebar } from "~/components/sidebar";
+import { Alert } from "~/components/alert";
+import { Spacer } from "~/components/spacer";
+import { PostImage } from "~/components/post-image";
+import { MobileMenu } from "~/components/navbar";
+import { ExternalLink } from "~/components/external-link";
 
 import { formatDate } from "~/utils/format";
 import type { Frontmatter } from "~/utils/post.server";
@@ -15,13 +26,6 @@ import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
 import { notFound } from "~/utils/responses";
-
-import { Sidebar } from "~/components/sidebar";
-import { Alert } from "~/components/alert";
-import { Spacer } from "~/components/spacer";
-import { PostImage } from "~/components/post-image";
-import { MobileMenu } from "~/components/navbar";
-import { ExternalLink } from "~/components/external-link";
 
 import prose from "~/styles/prose.css";
 
@@ -202,11 +206,11 @@ export default function MdxScreen() {
             initial="exit"
             animate="enter"
             exit="exit"
-            className="prose-sm prose mx-auto max-w-4xl dark:prose-invert sm:prose-base lg:prose-lg"
+            className="prose prose-sm mx-auto max-w-4xl dark:prose-invert sm:prose-base lg:prose-lg"
           >
             <motion.header
               layoutId={`card-${slug}`}
-              className="not-prose pt-4 pb-12 lg:py-16"
+              className="not-prose pb-12 pt-4 lg:py-16"
             >
               {isDraft ? (
                 <Alert state="info" className="mb-12">

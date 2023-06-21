@@ -1,4 +1,4 @@
-import { json, redirect } from "remix";
+import { json, redirect } from "@remix-run/node";
 
 export type ReplacerFunction = (key: string, value: unknown) => unknown;
 

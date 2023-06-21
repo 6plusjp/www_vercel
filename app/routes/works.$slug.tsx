@@ -1,7 +1,7 @@
-import { useMemo } from "react";
-import type { LoaderFunction, MetaFunction } from "remix";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
-import { json } from "remix";
+import { useMemo } from "react";
 
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 import { getMDXComponent } from "mdx-bundler/client";
@@ -87,8 +87,8 @@ export default function Work() {
     <>
       <div className="min-h-screen bg-bp duration-500">
         <Navbar />
-        <div className="prose-sm prose mx-auto px-8 dark:prose-invert sm:prose-base lg:prose-xl">
-          <header className="not-prose pt-4 pb-12 lg:py-16">
+        <div className="prose prose-sm mx-auto px-8 dark:prose-invert sm:prose-base lg:prose-xl">
+          <header className="not-prose pb-12 pt-4 lg:py-16">
             {isDraft ? (
               <Alert state="info" className="mb-12">
                 下書きの状態です。リンクや内容等が変更される可能性があります。

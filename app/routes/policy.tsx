@@ -1,4 +1,4 @@
-import type { MetaFunction } from "remix";
+import type { MetaFunction } from "@remix-run/node";
 
 import { Footer } from "~/components/footer";
 import { Navbar } from "~/components/navbar";

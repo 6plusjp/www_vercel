@@ -1,23 +1,23 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import type { MetaFunction, LoaderFunction } from "remix";
+import type { MetaFunction, LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
-import { json } from "remix";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import clsx from "clsx";
 import { motion } from "framer-motion";
 import { PlusIcon, SearchIcon } from "@heroicons/react/outline";
-
-import { getMeta } from "~/utils/seo";
-import { getUrl } from "~/utils/misc";
-import type { Frontmatter } from "~/utils/post.server";
-import { getBlogPages } from "~/utils/post.server";
-import { filterPosts } from "~/utils/search";
+import clsx from "clsx";
 
 import { Sidebar } from "~/components/sidebar";
 import { Card } from "~/components/card";
 import { Tag } from "~/components/tag";
 import { Spacer } from "~/components/spacer";
 import { MobileMenu } from "~/components/navbar";
+
+import { getMeta } from "~/utils/seo";
+import { getUrl } from "~/utils/misc";
+import type { Frontmatter } from "~/utils/post.server";
+import { getBlogPages } from "~/utils/post.server";
+import { filterPosts } from "~/utils/search";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const { requestInfo } = parentsData.root;
@@ -175,7 +175,7 @@ export default function Blog() {
                 }}
                 name="q"
                 placeholder="Search posts"
-                className="h-14 w-full border-2 border-slate-400 bg-bp py-4 px-12 text-lg font-medium text-tp focus:border-hp focus:outline-none"
+                className="h-14 w-full border-2 border-slate-400 bg-bp px-12 py-4 text-lg font-medium text-tp focus:border-hp focus:outline-none"
               />
               <span className="absolute inset-y-0 right-4 flex h-full items-center justify-between text-lg font-medium text-hp">
                 {matchingPosts.length}
@@ -234,7 +234,7 @@ export default function Blog() {
                     }}
                     name="q"
                     placeholder="Search posts"
-                    className="h-14 w-full border-2 border-slate-400 bg-bp py-4 px-12 text-lg font-medium text-tp focus:border-hp focus:outline-none"
+                    className="h-14 w-full border-2 border-slate-400 bg-bp px-12 py-4 text-lg font-medium text-tp focus:border-hp focus:outline-none"
                   />
                 </label>
 

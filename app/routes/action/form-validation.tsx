@@ -1,10 +1,12 @@
-import type { ActionFunction } from "remix";
-import { json } from "remix";
+import type { DataFunctionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 
 import { z } from "zod";
+import type { ValidatorData } from "remix-validated-form";
 import { validationError } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
+
 import type { SEOHandle } from "~/utils/seo";
 
 const schema = withZod(
@@ -19,28 +21,35 @@ const schema = withZod(
   })
 );
 
+interface ActionData {
+  status: "success" | "error";
+  fields: ValidatorData<typeof schema>;
+}
+
 export const handle: SEOHandle = {
   getSitemapEntries: () => null,
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: DataFunctionArgs) => {
   const formData = await schema.validate(await request.formData());
   if (formData.error) return validationError(formData.error);
+
   return json({ status: "success", fields: formData.data, errors: {} });
 };
 
 export default function NoJsFormRoute() {
-  const actionData = useActionData();
+  const actionData = useActionData<ActionData>();
+
   return (
     <Form method="post" action="/newsletter/subscribe">
       <p>
         <input type="text" name="email" /> <button type="submit">送信</button>
       </p>
 
-      {actionData.status === "success" ? (
+      {actionData?.status === "success" ? (
         <p>Thanks for subscribing!</p>
-      ) : actionData.status === "error" ? (
-        <p data-error>{actionData.data.error}</p>
+      ) : actionData?.status === "error" ? (
+        <p data-error>Error: </p>
       ) : null}
     </Form>
   );

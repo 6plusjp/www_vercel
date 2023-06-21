@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "remix";
+import type { LoaderFunction } from "@remix-run/node";
 import { format } from "date-fns";
 
 import { getBlogPages } from "~/utils/post.server";

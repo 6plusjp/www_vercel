@@ -1,8 +1,7 @@
-import type { ActionFunction, MetaFunction } from "remix";
 import { useActionData } from "@remix-run/react";
-import { json } from "remix";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 
-import clsx from "clsx";
 import { z } from "zod";
 import type { ValidatorData } from "remix-validated-form";
 import {
@@ -11,6 +10,7 @@ import {
   validationError,
 } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
+import clsx from "clsx";
 
 import { Navbar } from "~/components/navbar";
 import { Input, Select, Textarea } from "~/components/form";
