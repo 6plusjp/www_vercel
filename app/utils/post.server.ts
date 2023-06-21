@@ -35,7 +35,7 @@ interface PostData {
 }
 
 const defaultMaxAge = 1000 * 60 * 60 * 24 * 7;
-const cache = new LRUCache<string, Frontmatter>({
+const cache = new LRUCache<string, PostData>({
   maxSize: process.env.NODE_ENV === "production" ? defaultMaxAge : 2500,
   sizeCalculation: (value, key) => {
     return 1;
@@ -48,6 +48,7 @@ export async function getMdxPage(
 ): Promise<PostData | undefined> {
   const key = `${contentDir}:${slug}`;
   let post: PostData | undefined;
+
   if (cache.has(key)) {
     post = cache.get(key);
   } else {
@@ -57,6 +58,7 @@ export async function getMdxPage(
         : await getBlogPost(slug);
     post ? cache.set(key, post) : cache.delete(key);
   }
+
   return post;
 }
 
