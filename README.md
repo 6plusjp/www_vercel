@@ -1,9 +1,20 @@
-# Welcome to 6plus.tech
+## Introduction
 
-This repository contains the 6plus.tech source code. This repo is a work in progress, so we appreciate your patience as we figure things out.
+This repository contains the https://6plus.tech source code. This repo is a work in progress, so the contents may change suddenly.
 
-## Remix
+## Todo
 
-[Remix](https://remix.run) is a full stack web framework that lets you focus on the user interface and work back through web fundamentals to deliver a fast, slick, and resilient user experience that deploys to any Node.js server and even non-Node.js environments at the edge like Cloudflare Workers.
+- [ ] [Reach-UI Issue](https://github.com/reach/reach-ui/issues/916)
+  - [ ] update react to 18
+  - [ ] update framer-motion
+- [ ] add `@vercel/analytics` in package and fix `root.tsx`
+- [ ] update "what I use" page
+- [ ]
 
-Want to know more? Read the [Technical Explanation of Remix](https://remix.run/pages/technical-explanation)
+## Postponing
+
+- [ ] migration to pnpm
+- [ ] migration to remix_v2
+- [ ] implementing cypress tests
+- [ ] add `Dockerfile`
+- [ ]
