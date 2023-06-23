@@ -16,6 +16,7 @@ import {
   Link,
 } from "@remix-run/react";
 
+import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
 
 import tailwind from "~/styles/tailwind.css";
@@ -160,13 +161,13 @@ function Document({ children }: { children: React.ReactNode }) {
       <body className="w-full antialiased">
         {children}
         <ScrollRestoration />
-        <script
+        {/* <script
           async
           data-website-id="37cf2507-a08a-46af-97fb-2a27fa9fcda4"
           src="https://umami-6plus.up.railway.app/umami.js"
           data-excluded-domains="localhost"
           data-spa="history"
-        />
+        /> */}
         <script
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
@@ -174,6 +175,7 @@ function Document({ children }: { children: React.ReactNode }) {
         />
         <Scripts />
         <LiveReload />
+        <Analytics />
       </body>
     </html>
   );

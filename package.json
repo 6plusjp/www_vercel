@@ -39,6 +39,7 @@
     "@remix-run/react": "*",
     "@remix-run/vercel": "*",
     "@remix-validated-form/with-zod": "^2.0.1",
+    "@vercel/analytics": "^1.0.1",
     "@vercel/node": "^2.15.2",
     "canvas": "^2.9.1",
     "cloudinary-build-url": "^0.2.4",

@@ -7,7 +7,7 @@ This repository contains the https://6plus.tech source code. This repo is a work
 - [ ] [Reach-UI Issue](https://github.com/reach/reach-ui/issues/916)
   - [ ] update react to 18
   - [ ] update framer-motion
-- [ ] add `@vercel/analytics` in package and fix `root.tsx`
+- [x] add `@vercel/analytics` in package and fix `root.tsx`
 - [ ] update "what I use" page
 - [ ]
 
