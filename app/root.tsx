@@ -12,8 +12,9 @@ import {
   ScrollRestoration,
   Outlet,
   useLoaderData,
-  useCatch,
   Link,
+  useRouteError,
+  isRouteErrorResponse,
 } from "@remix-run/react";
 
 import { Analytics } from "@vercel/analytics/react";
@@ -181,61 +182,97 @@ function Document({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
-  return (
-    <html lang="ja">
-      <head>
-        <meta charSet="utf-8" />
-        <title>Oh no...</title>
-        <Links />
-      </head>
-      <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
-        <Layout>
-          <h1 className="bold my-12 text-4xl">There was an error!</h1>
-          <p className="mt-12 text-xl">{error.message}</p>
-          <hr className="my-8" />
-          <p>for users : 現在、何らかの理由でこのページは使用できません。</p>
-        </Layout>
-      </body>
-    </html>
-  );
-}
+export function ErrorBoundary() {
+  const error = useRouteError();
 
-export function CatchBoundary() {
-  const caught = useCatch();
-
-  let message;
-  switch (caught.status) {
-    case 401:
-      message = <p className="mt-12 text-xl">アクセス権が必要なページです。</p>;
-      break;
-    case 404:
-      message = <p className="mt-12 text-xl">存在しないページです。</p>;
-      break;
-
-    default:
-      throw new Error(caught.data || caught.statusText);
+  if (isRouteErrorResponse(error)) {
+    return (
+      <html lang="ja">
+        <head>
+          <meta charSet="utf-8" />
+          <title>Oh no...</title>
+          <Links />
+        </head>
+        <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
+          <Layout>
+            <h1 className="bold my-12 text-4xl">
+              {error.status} {error.statusText}
+            </h1>
+            <p className="mt-12 text-xl">{error.data}</p>
+          </Layout>
+        </body>
+      </html>
+    );
+  } else if (error instanceof Error) {
+    return (
+      <html lang="ja">
+        <head>
+          <meta charSet="utf-8" />
+          <title>Error</title>
+          <Links />
+        </head>
+        <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
+          <Layout>
+            <h1 className="bold my-12 text-4xl">There was an error!</h1>
+            <p className="mt-12 text-xl">{error.message}</p>
+            <p>The stack trace is:</p>
+            <pre>{error.stack}</pre>
+          </Layout>
+        </body>
+      </html>
+    );
+  } else {
+    return (
+      <html lang="ja">
+        <head>
+          <meta charSet="utf-8" />
+          <title>Unknown Error</title>
+          <Links />
+        </head>
+        <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
+          <Layout>
+            <h1 className="bold my-12 text-4xl">Unknown Error</h1>
+          </Layout>
+        </body>
+      </html>
+    );
   }
-
-  return (
-    <html lang="ja">
-      <head>
-        <meta charSet="utf-8" />
-        <title>{`${caught.status} ${caught.statusText}`}</title>
-        <Links />
-      </head>
-      <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
-        <Layout>
-          <h1 className="bold my-12 mb-8 text-4xl">
-            {caught.status}: {caught.statusText}
-          </h1>
-          {message}
-        </Layout>
-      </body>
-    </html>
-  );
 }
+
+// export function CatchBoundary() {
+//   const caught = useCatch();
+
+//   let message;
+//   switch (caught.status) {
+//     case 401:
+//       message = <p className="mt-12 text-xl">アクセス権が必要なページです。</p>;
+//       break;
+//     case 404:
+//       message = <p className="mt-12 text-xl">存在しないページです。</p>;
+//       break;
+
+//     default:
+//       throw new Error(caught.data || caught.statusText);
+//   }
+
+//   return (
+//     <html lang="ja">
+//       <head>
+//         <meta charSet="utf-8" />
+//         <title>{`${caught.status} ${caught.statusText}`}</title>
+//         <Links />
+//       </head>
+//       <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
+//         <Layout>
+//           <h1 className="bold my-12 mb-8 text-4xl">
+//             {caught.status}: {caught.statusText}
+//           </h1>
+//           {message}
+//         </Layout>
+//       </body>
+//     </html>
+//   );
+// }
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
