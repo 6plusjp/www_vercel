@@ -9,7 +9,6 @@ This repository contains the https://6plus.tech source code. This repo is a work
   - [ ] update framer-motion
 - [x] add `@vercel/analytics` in package and fix `root.tsx`
 - [ ] update "what I use" page
-- [ ]
 
 ## Postponing
 
@@ -17,4 +16,3 @@ This repository contains the https://6plus.tech source code. This repo is a work
 - [ ] migration to remix_v2
 - [ ] implementing cypress tests
 - [ ] add `Dockerfile`
-- [ ]
