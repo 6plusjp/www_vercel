@@ -1,4 +1,4 @@
-import type { EntryContext } from "remix";
+import type { EntryContext } from "@remix-run/node";
 import { isEqual } from "lodash";
 
 import { getDomainUrl, removeTrailingSlash } from "./misc";
