@@ -16,6 +16,7 @@ import {
   useRouteError,
   isRouteErrorResponse,
 } from "@remix-run/react";
+import { cssBundleHref } from "@remix-run/css-bundle";
 
 import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
@@ -119,6 +120,7 @@ export const links: LinksFunction = () => {
     { rel: "stylesheet", href: reachUi },
     { rel: "stylesheet", href: global },
     { rel: "stylesheet", href: tailwind },
+    ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   ];
 };
 
@@ -189,15 +191,28 @@ export function ErrorBoundary() {
       <html lang="ja">
         <head>
           <meta charSet="utf-8" />
-          <title>Oh no...</title>
+          <title>{error.statusText}</title>
           <Links />
         </head>
         <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
           <Layout>
-            <h1 className="bold my-12 text-4xl underline underline-offset-8">
-              {error.status} {error.statusText}
-            </h1>
-            <p className="mt-12 text-xl">{error.data}</p>
+            <main className="mx-auto max-w-3xl space-y-8 px-4 py-12 sm:p-12">
+              <div className="flex">
+                <h1 className="mr-4 border-r border-gray-500 pr-4 text-2xl font-bold sm:text-4xl">
+                  {error.status}
+                </h1>
+                <h2 className="text-2xl sm:text-4xl">{error.statusText}</h2>
+              </div>
+              <p className="text-lg">{error.data}</p>
+              <p className="text-lg">
+                <Link
+                  className="text-blue-500 underline hover:no-underline focus:no-underline"
+                  to="/"
+                >
+                  Go back to the home page
+                </Link>
+              </p>
+            </main>
           </Layout>
         </body>
       </html>
@@ -212,12 +227,24 @@ export function ErrorBoundary() {
         </head>
         <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
           <Layout>
-            <h1 className="bold my-12 text-4xl underline underline-offset-8">
-              There was an error!
-            </h1>
-            <p className="mt-12 text-xl">{error.message}</p>
-            <p>The stack trace is:</p>
-            <pre>{error.stack}</pre>
+            <main className="mx-auto max-w-3xl space-y-8 px-4 py-12 sm:p-12">
+              <h1 className="text-2xl underline underline-offset-8 sm:text-4xl">
+                There was an error!
+              </h1>
+              <p className="text-lg">{error.message}</p>
+              <div className="text-lg">
+                <p>The stack trace is:</p>
+                <pre>{error.stack}</pre>
+              </div>
+              <p className="text-lg">
+                <Link
+                  className="text-blue-500 underline hover:no-underline focus:no-underline"
+                  to="/"
+                >
+                  Go back to the home page
+                </Link>
+              </p>
+            </main>
           </Layout>
         </body>
       </html>
@@ -232,9 +259,19 @@ export function ErrorBoundary() {
         </head>
         <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
           <Layout>
-            <h1 className="bold my-12 text-4xl underline underline-offset-8">
-              Unknown Error
-            </h1>
+            <main className="mx-auto max-w-3xl space-y-8 px-4 py-12 sm:p-12">
+              <h1 className="text-2xl underline underline-offset-8 sm:text-4xl">
+                Unknown Error
+              </h1>
+              <p className="text-lg">
+                <Link
+                  className="text-blue-500 underline hover:no-underline focus:no-underline"
+                  to="/"
+                >
+                  Go back to the home page
+                </Link>
+              </p>
+            </main>
           </Layout>
         </body>
       </html>
