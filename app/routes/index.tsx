@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@vercel/remix";
 
 import { Navbar } from "~/components/navbar";
 import { Footer } from "~/components/footer";
@@ -6,10 +6,10 @@ import { HomeTitle } from "~/components/sections/home-title";
 import { SkillsSection } from "~/components/sections/skills-section";
 import { ToolsSection } from "~/components/sections/tools-section";
 import { ContactSection } from "~/components/sections/contact-section";
+import { AboutSection } from "~/components/sections/about-section";
 
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
-import { AboutSection } from "~/components/sections/about-section";
 
 export const meta: MetaFunction = ({ parentsData }) => {
   const { requestInfo } = parentsData.root;

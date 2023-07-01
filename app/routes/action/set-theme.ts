@@ -1,5 +1,5 @@
-import type { ActionFunction } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import type { ActionFunction } from "@vercel/remix";
+import { json, redirect } from "@vercel/remix";
 
 import { getThemeSession, isTheme } from "~/utils/theme";
 
@@ -16,6 +16,7 @@ export const action: ActionFunction = async ({ request }) => {
     });
 
   session.setTheme(theme);
+
   return json(
     { success: true },
     {

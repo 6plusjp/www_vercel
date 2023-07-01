@@ -1,4 +1,4 @@
-import type { EntryContext } from "@remix-run/node";
+import type { EntryContext } from "@vercel/remix";
 import { getSitemapXml, getRobotsText } from "./utils/seo";
 
 type Handler = (

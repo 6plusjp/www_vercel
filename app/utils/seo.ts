@@ -1,4 +1,5 @@
-import type { EntryContext } from "@remix-run/node";
+import type { EntryContext } from "@vercel/remix";
+
 import { isEqual } from "lodash";
 
 import { getDomainUrl, removeTrailingSlash } from "./misc";
@@ -147,6 +148,7 @@ const typeTextMap = {
   sitemap: "Sitemap",
   crawlDelay: "Crawl-delay",
 };
+
 function getRobotsText(request: Request): string {
   const policies: RobotsPolicy[] = [
     {

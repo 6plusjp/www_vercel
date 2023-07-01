@@ -1,5 +1,5 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
+import { json } from "@vercel/remix";
 import { useLoaderData, Link } from "@remix-run/react";
 import { useMemo } from "react";
 
@@ -23,6 +23,7 @@ import { notFound } from "~/utils/responses";
 export const handle: SEOHandle = {
   getSitemapEntries: async () => {
     const pages = await getWorksPages("works");
+
     return pages
       .filter((page) => !page.draft)
       .map((page) => {
@@ -54,12 +55,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const meta: MetaFunction = ({ data, parentsData }) => {
   const { requestInfo } = parentsData.root;
+
   if (data?.frontmatter) {
     const { keywords = [], ...extraMeta } = data.frontmatter.meta ?? {};
     let title = data.frontmatter.title;
+
     const isDraft = data.frontmatter.draft;
     if (isDraft) title = `下書き: ${title ?? "No Title"} | 6+ Works`;
     else title = `${title ?? "No Title"} | 6+ Works`;
+
     return {
       ...(isDraft ? { robots: "noindex" } : null),
       ...getMeta({
@@ -82,6 +86,7 @@ export default function Work() {
   const { frontmatter, code } = useLoaderData<LoaderData>();
   const isDraft = Boolean(frontmatter.draft);
   const Component = useMemo(() => getMDXComponent(code), [code]);
+
   return (
     <>
       <div className="min-h-screen bg-bp duration-500">

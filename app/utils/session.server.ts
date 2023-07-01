@@ -1,4 +1,4 @@
-import { createCookieSessionStorage, redirect } from "@remix-run/node";
+import { createCookieSessionStorage, redirect } from "@vercel/remix";
 import invariant from "tiny-invariant";
 
 // import { Theme } from "./theme";
@@ -55,6 +55,7 @@ export async function requireUserId(
     const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
     throw redirect(`/login?${searchParams}`);
   }
+
   return userId;
 }
 
@@ -80,6 +81,7 @@ export async function createUserSession({
 }) {
   const session = await getSession(request);
   session.set(USER_SESSION_KEY, userId);
+
   return redirect(redirectTo, {
     headers: {
       "Set-Cookie": await sessionStorage.commitSession(session, {
@@ -93,6 +95,7 @@ export async function createUserSession({
 
 export async function logout(request: Request) {
   const session = await getSession(request);
+
   return redirect("/", {
     headers: {
       "Set-Cookie": await sessionStorage.destroySession(session),

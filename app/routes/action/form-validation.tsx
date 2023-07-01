@@ -1,5 +1,5 @@
-import type { DataFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { DataFunctionArgs } from "@vercel/remix";
+import { json } from "@vercel/remix";
 import { Form, useActionData } from "@remix-run/react";
 
 import { z } from "zod";
