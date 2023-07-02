@@ -8,8 +8,6 @@ node_modules
 # Remix build
 /build/
 /public/build
-/api/index.js
-/api/index.js.map
 
 # Postcss build
 /app/styles
