@@ -1,12 +1,12 @@
-import * as React from "react";
+import { useState } from "react";
 
+import clsx from "clsx";
 import {
   Accordion,
   AccordionButton,
   AccordionItem,
   AccordionPanel,
 } from "@reach/accordion";
-import clsx from "clsx";
 import {
   BriefcaseIcon,
   DesktopComputerIcon,
@@ -72,7 +72,7 @@ const LINKS = [
 
 export function SkillsSection() {
   return (
-    <section className="py-16 px-[5vw]">
+    <section className="px-[5vw] py-16">
       <div className="container mx-auto">
         <h2 className="py-4 text-center text-3xl font-bold text-tp sm:text-4xl">
           My Skills
@@ -110,7 +110,8 @@ function Desktop() {
 }
 
 function Mobile() {
-  const [activeItem, setActiveItem] = React.useState(0);
+  const [activeItem, setActiveItem] = useState(0);
+
   return (
     <Accordion
       index={activeItem}
@@ -141,6 +142,7 @@ interface Props {
   children: React.ReactNode;
   active: boolean;
 }
+
 function ArrowButton({ children, active }: Props) {
   return (
     <AccordionButton

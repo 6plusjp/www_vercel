@@ -2,8 +2,8 @@ import type {
   LoaderFunction,
   MetaFunction,
   LinksFunction,
-} from "@remix-run/node";
-import { json } from "@remix-run/node";
+} from "@vercel/remix";
+import { json } from "@vercel/remix";
 import { useLoaderData, useParams, Link } from "@remix-run/react";
 import { useMemo } from "react";
 
@@ -20,8 +20,7 @@ import { ExternalLink } from "~/components/external-link";
 
 import { formatDate } from "~/utils/format";
 import type { Frontmatter } from "~/utils/post.server";
-import { getMdxPage } from "~/utils/post.server";
-import { getBlogPages } from "~/utils/post.server";
+import { getMdxPage, getBlogPages } from "~/utils/post.server";
 import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
@@ -32,6 +31,7 @@ import prose from "~/styles/prose.css";
 export const handle: SEOHandle = {
   getSitemapEntries: async () => {
     const pages = await getBlogPages("blog");
+
     return pages
       .filter((page) => !page.draft)
       .map((page) => {
@@ -45,6 +45,7 @@ type LoaderData = {
   code: string;
   toc?: string;
 };
+
 export const loader: LoaderFunction = async ({ params }) => {
   const slug = params.slug || "index";
   if (slug === "rss.xml") return null;
@@ -65,12 +66,15 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export const meta: MetaFunction = ({ data, parentsData, params }) => {
   const { requestInfo } = parentsData.root;
+
   if (data?.frontmatter) {
     const { keywords = [], ...extraMeta } = data.frontmatter.meta ?? {};
     let title = data.frontmatter.title;
+
     const isDraft = data.frontmatter.draft;
     if (isDraft) title = `下書き: ${title ?? "No Title"} | 6+ Blog`;
     else title = `${title ?? "No Title"} | 6+ Blog`;
+
     return {
       ...(isDraft ? { robots: "noindex" } : null),
       ...getMeta({
@@ -180,6 +184,7 @@ export default function MdxScreen() {
       },
     },
   };
+
   return (
     <>
       <div className="min-h-screen bg-slate-200 px-6 duration-500 dark:bg-slate-800 lg:flex">

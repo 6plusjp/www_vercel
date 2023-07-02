@@ -1,5 +1,5 @@
 import { renderToString } from "react-dom/server";
-import type { EntryContext } from "@remix-run/node";
+import type { EntryContext } from "@vercel/remix";
 import { RemixServer } from "@remix-run/react";
 
 import { otherRoutes } from "./other-routes.server";
@@ -31,7 +31,7 @@ export default async function handleRequest(
 }
 
 // TODO - add isbot & update react
-// import type { EntryContext } from "@remix-run/node";
+// import type { EntryContext } from "@vercel/remix";
 // import { RemixServer } from "@remix-run/react";
 // import { renderToPipeableStream } from "react-dom/server";
 

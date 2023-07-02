@@ -1,5 +1,5 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
+import { json } from "@vercel/remix";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
@@ -19,9 +19,11 @@ type LoaderData = {
   posts: Array<Frontmatter>;
   tags: string[];
 };
+
 export const loader: LoaderFunction = async () => {
   const posts = await getWorksPages("works");
   const tags = new Set<string>();
+
   for (const post of posts) {
     for (const category of post.categories ?? []) {
       tags.add(category);
@@ -64,6 +66,7 @@ export default function Works() {
   }, [initialIndexToShow]);
   const posts = data.posts.slice(0, indexToShow);
   const hasMorePosts = indexToShow < posts.length;
+
   return (
     <>
       <div className="relative min-h-screen bg-bp duration-500">

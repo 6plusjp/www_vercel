@@ -1,5 +1,5 @@
-import type { MetaFunction, LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { MetaFunction, LoaderFunction } from "@vercel/remix";
+import { json } from "@vercel/remix";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -23,6 +23,7 @@ export const meta: MetaFunction = ({ parentsData }) => {
   const { requestInfo } = parentsData.root;
   const title = "Blog | 6+";
   const description = "WEB開発関連の情報を発信しています。";
+
   return {
     ...getMeta({
       url: getUrl(requestInfo),
@@ -37,9 +38,11 @@ type LoaderData = {
   posts: Array<Frontmatter>;
   tags: string[];
 };
+
 export const loader: LoaderFunction = async () => {
   const posts = await getBlogPages("blog");
   const tags = new Set<string>();
+
   for (const post of posts) {
     for (const category of post.categories ?? []) {
       tags.add(category);

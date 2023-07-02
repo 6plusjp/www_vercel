@@ -1,6 +1,6 @@
 import { useActionData } from "@remix-run/react";
-import type { ActionFunction, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@vercel/remix";
+import { json } from "@vercel/remix";
 
 import { z } from "zod";
 import type { ValidatorData } from "remix-validated-form";
@@ -61,6 +61,7 @@ type ActionData = {
   status: "success" | "error";
   fields: ValidatorData<typeof clientValidator>;
 };
+
 export const action: ActionFunction = async ({ request }) => {
   const result = await clientValidator.validate(await request.formData());
   if (result.error) return validationError(result.error, result.submittedData);

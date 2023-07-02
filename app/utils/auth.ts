@@ -1,4 +1,4 @@
-import type { Session } from "@remix-run/node";
+import type { Session } from "@vercel/remix";
 
 /**
  * Create a random string in Base64 to be used as an authenticity token for
