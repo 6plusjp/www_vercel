@@ -1,4 +1,4 @@
-import type { Root } from "mdast";
+import type { Root } from "remark-gfm";
 
 const KS_RE = /{{([^}]*)}}/g;
 
