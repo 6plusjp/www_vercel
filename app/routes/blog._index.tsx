@@ -4,7 +4,7 @@ import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { motion } from "framer-motion";
-import { PlusIcon, SearchIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 
 import { Sidebar } from "~/components/sidebar";
@@ -166,7 +166,7 @@ export default function Blog() {
                   }
                 )}
               >
-                <SearchIcon className="h-4 w-4 text-ts" />
+                <MagnifyingGlassIcon className="h-4 w-4 text-ts" />
               </button>
               <input
                 ref={searchInputRef}
@@ -222,7 +222,7 @@ export default function Blog() {
                     }
                   )}
                 >
-                  <SearchIcon className="h-4 w-4 text-ts" />
+                  <MagnifyingGlassIcon className="h-4 w-4 text-ts" />
                 </button>
                 <label>
                   <input
