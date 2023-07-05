@@ -3,7 +3,7 @@ import { json } from "@vercel/remix";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
-import { PlusIcon } from "@heroicons/react/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 import { Navbar } from "~/components/navbar";
 import { WorksCard } from "~/components/card";

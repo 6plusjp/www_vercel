@@ -4,7 +4,7 @@ import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { motion } from "framer-motion";
-import { PlusIcon, SearchIcon } from "@heroicons/react/outline";
+import { PlusIcon, SearchIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 
 import { Sidebar } from "~/components/sidebar";

@@ -3,9 +3,8 @@ import {
   ExclamationCircleIcon,
   InformationCircleIcon,
   XCircleIcon,
-} from "@heroicons/react/outline";
+} from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import * as React from "react";
 
 interface Props {
   state: "info" | "success" | "warning" | "error";

@@ -1,9 +1,9 @@
-import * as React from "react";
+import { forwardRef } from "react";
 
 import clsx from "clsx";
+import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { useId } from "@reach/auto-id";
 import { useField } from "remix-validated-form";
-import { ExclamationCircleIcon } from "@heroicons/react/outline";
 
 function Label({ className, ...labelProps }: JSX.IntrinsicElements["label"]) {
   return (
@@ -15,7 +15,7 @@ function Label({ className, ...labelProps }: JSX.IntrinsicElements["label"]) {
 }
 
 type InputProps = JSX.IntrinsicElements["input"];
-const Input = React.forwardRef<
+const Input = forwardRef<
   HTMLInputElement,
   {
     defaultValue?: string | null;
@@ -72,7 +72,7 @@ const Input = React.forwardRef<
 });
 
 type TextareaProps = JSX.IntrinsicElements["textarea"];
-const Textarea = React.forwardRef<
+const Textarea = forwardRef<
   HTMLTextAreaElement,
   {
     defaultValue?: string | null;
@@ -124,7 +124,7 @@ const Textarea = React.forwardRef<
 });
 
 type SelectProps = JSX.IntrinsicElements["select"];
-const Select = React.forwardRef<
+const Select = forwardRef<
   HTMLSelectElement,
   {
     defaultValue?: string | null;

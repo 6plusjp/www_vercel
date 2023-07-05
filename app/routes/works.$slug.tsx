@@ -3,7 +3,7 @@ import { json } from "@vercel/remix";
 import { useLoaderData, Link } from "@remix-run/react";
 import { useMemo } from "react";
 
-import { ArrowLeftIcon } from "@heroicons/react/outline";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { getMDXComponent } from "mdx-bundler/client";
 
 import { Alert } from "~/components/alert";

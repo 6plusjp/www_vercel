@@ -3,9 +3,8 @@ import {
   ExclamationCircleIcon,
   InformationCircleIcon,
   XCircleIcon,
-} from "@heroicons/react/outline";
+} from "@heroicons/react/24/outline";
 import clsx from "clsx";
-import * as React from "react";
 
 interface Props {
   state: "info" | "success" | "warning" | "error";
@@ -37,10 +36,10 @@ export function Notification({ placement, state, children, className }: Props) {
         {
           "inset-x-6 top-6 mb-6": placement === "top",
           "left-6 top-6 mr-6": placement === "topLeft",
-          "top-6 right-6 ml-6": placement === "topRight",
+          "right-6 top-6 ml-6": placement === "topRight",
           "inset-x-6 bottom-6 mt-6": placement === "bottom",
           "bottom-6 left-6 mr-6": placement === "bottomLeft",
-          "right-6 bottom-6 ml-6": placement === "bottomRight",
+          "bottom-6 right-6 ml-6": placement === "bottomRight",
         }
       )}
     >

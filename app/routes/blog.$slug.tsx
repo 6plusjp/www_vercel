@@ -9,7 +9,7 @@ import { useMemo } from "react";
 
 import { getMDXComponent } from "mdx-bundler/client";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowLeftIcon } from "@heroicons/react/outline";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 import { Sidebar } from "~/components/sidebar";
 import { Alert } from "~/components/alert";
