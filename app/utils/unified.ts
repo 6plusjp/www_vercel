@@ -80,6 +80,7 @@ function mdast2toc() {
     let toc = null;
 
     root.children.forEach((node) => {
+      // FIXME - after changing the first line
       if (node.type === "heading" && node.data?.id === "table-of-contents") {
         addToToc = true;
         toc = [];
