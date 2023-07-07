@@ -9,18 +9,18 @@ import {
 } from "@reach/accordion";
 import {
   BriefcaseIcon,
-  DesktopComputerIcon,
-  GlobeIcon,
-  PencilAltIcon,
-  TerminalIcon,
-  TrendingUpIcon,
-} from "@heroicons/react/outline";
+  ComputerDesktopIcon,
+  GlobeAltIcon,
+  PencilSquareIcon,
+  CommandLineIcon,
+  ArrowTrendingUpIcon,
+} from "@heroicons/react/24/outline";
 
 import { ChevronIcon } from "../icons/chevron-icon";
 
 const LINKS = [
   {
-    svg: <DesktopComputerIcon className="h-7 w-7" />,
+    svg: <ComputerDesktopIcon className="h-7 w-7" />,
     title: "Coding",
     paragraphs: [
       "HTML、CSS、JavaScript（TypeScript）",
@@ -29,7 +29,7 @@ const LINKS = [
     ],
   },
   {
-    svg: <TerminalIcon className="h-7 w-7" />,
+    svg: <CommandLineIcon className="h-7 w-7" />,
     title: "UI/UX",
     paragraphs: [
       "あらゆるユーザーを考慮した、アクセシビリティを主軸に置いた設計",
@@ -45,7 +45,7 @@ const LINKS = [
     ],
   },
   {
-    svg: <PencilAltIcon className="h-7 w-7" />,
+    svg: <PencilSquareIcon className="h-7 w-7" />,
     title: "Content Writing",
     paragraphs: [
       "ブログのライティング",
@@ -53,7 +53,7 @@ const LINKS = [
     ],
   },
   {
-    svg: <TrendingUpIcon className="h-7 w-7" />,
+    svg: <ArrowTrendingUpIcon className="h-7 w-7" />,
     title: "Trending",
     paragraphs: [
       "RSSを駆使した情報収集",
@@ -61,7 +61,7 @@ const LINKS = [
     ],
   },
   {
-    svg: <GlobeIcon className="h-7 w-7" />,
+    svg: <GlobeAltIcon className="h-7 w-7" />,
     title: "Overseas Experience",
     paragraphs: [
       "海外での就業経験",

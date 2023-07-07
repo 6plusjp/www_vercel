@@ -24,6 +24,7 @@ export type SitemapEntry = {
     | "never";
   priority?: 0.0 | 0.1 | 0.2 | 0.3 | 0.4 | 0.5 | 0.6 | 0.7 | 0.8 | 0.9 | 1.0;
 };
+
 export type SEOHandle = {
   getSitemapEntries?: (
     request: Request
@@ -33,7 +34,10 @@ export type SEOHandle = {
     | null;
 };
 
-async function getSitemapXml(request: Request, remixContext: EntryContext) {
+export async function getSitemapXml(
+  request: Request,
+  remixContext: EntryContext
+) {
   const domainUrl = getDomainUrl(request);
 
   function getEntry({
@@ -149,7 +153,7 @@ const typeTextMap = {
   crawlDelay: "Crawl-delay",
 };
 
-function getRobotsText(request: Request): string {
+export function getRobotsText(request: Request): string {
   const policies: RobotsPolicy[] = [
     {
       type: "userAgent",
@@ -169,74 +173,170 @@ function getRobotsText(request: Request): string {
   }, "");
 }
 
-// meta
-// type MetaFields =
-//   | "title"
-//   | "description"
-//   | "twitter:card"
-//   | "twitter:title"
-//   | "twitter:description"
-//   | "twitter:creator"
-//   | "twitter:image"
-//   | "og:title"
-//   | "og:description"
-//   | "og:image"
-//   | "og:url"
-//   | "og:type";
+// function getMeta({
+//   url,
+//   title = "6+ | Front-End Developer",
+//   description = "デジタル体験を加速させることで世界をより豊かにします。",
+//   image,
+//   isArticle = false,
+//   keywords = "",
+// }: {
+//   url: string;
+//   title?: string;
+//   description?: string;
+//   image?: string;
+//   isArticle?: boolean;
+//   keywords?: string;
+// }) {
+//   return {
+//     // ...defaultMeta,
+//     title,
+//     description,
+//     keywords,
+//     "og:url": url,
+//     "og:title": title,
+//     "og:description": description,
+//     "og:type": isArticle ? "article" : "website",
+//     ...(image
+//       ? {
+//           "og:image": image,
+//           "twitter:image": image,
+//           "twitter:card": "summary_large_image",
+//         }
+//       : null),
+//     "twitter:creator": "@6plusjp",
+//     "twitter:site": "@6plusjp",
+//     "twitter:title": title,
+//     "twitter:description": description,
+//     "twitter:alt": title,
+//   };
+// }
 
-// const defaultTitle = "6+ | Front-End Developer";
-// const defaultDescription =
-//   "デジタル体験を加速させることで世界をより豊かにします。";
-
-// const defaultMeta: Partial<Record<MetaFields, string>> = {
-//   title: defaultTitle,
-//   description: defaultDescription,
-//   "og:title": defaultTitle,
-//   "og:description": defaultDescription,
-//   "og:type": "website",
-//   "twitter:creator": "@6plusjp",
-//   "twitter:card": "summary",
-//   "twitter:title": defaultTitle,
-//   "twitter:description": defaultDescription,
-// };
-
-function getMeta({
-  url,
-  title = "6+ | Front-End Developer",
-  description = "デジタル体験を加速させることで世界をより豊かにします。",
-  image,
-  isArticle = false,
-  keywords = "",
-}: {
-  url: string;
+interface MetaArgs {
   title?: string;
   description?: string;
-  image?: string;
-  isArticle?: boolean;
   keywords?: string;
-}) {
-  return {
-    // ...defaultMeta,
-    title,
-    description,
-    keywords,
-    "og:url": url,
-    "og:title": title,
-    "og:description": description,
-    "og:type": isArticle ? "article" : "website",
-    ...(image
-      ? {
-          "og:image": image,
-          "twitter:image": image,
-          "twitter:card": "summary_large_image",
-        }
-      : null),
-    "twitter:creator": "@6plusjp",
-    "twitter:site": "@6plusjp",
-    "twitter:title": title,
-    "twitter:description": description,
-    "twitter:alt": title,
-  };
+  author?: string;
+  image?: string;
+  url?: string;
+  isDraft?: boolean;
 }
 
-export { getSitemapXml, getRobotsText, getMeta };
+export const getMeta = ({
+  title = "6+ | Front-End Developer",
+  description = "デジタル体験を加速させることで世界をより豊かにします。",
+  keywords,
+  author,
+  image = "public/images/og.png",
+  url = "https://6plus.tech",
+  isDraft = false,
+}: MetaArgs) => {
+  return [
+    { title },
+
+    // Article Specific Metadata
+    {
+      name: "description",
+      content: description,
+    },
+    {
+      name: "keywords",
+      content: keywords ?? "None",
+    },
+    ...(author
+      ? [
+          {
+            name: "article-author",
+            content: author,
+          },
+          {
+            name: "robots",
+            content: isDraft ? "noindex" : "max-image-preview:large",
+          },
+        ]
+      : []),
+
+    // Open Graph Metadata
+    {
+      property: "og:type",
+      content: author ? "article" : "website",
+    },
+    {
+      property: "og:title",
+      content: title,
+    },
+    {
+      property: "og:description",
+      content: description,
+    },
+    {
+      property: "og:image",
+      content: image,
+    },
+    {
+      property: "og:site_name",
+      content: "6+",
+    },
+    {
+      property: "og:url",
+      content: url,
+    },
+    ...(author
+      ? [
+          {
+            property: "article:publisher",
+            content: "", // TODO -
+          },
+          {
+            property: "article:publisher_time",
+            content: "", // TODO - formatDateISO(published)
+          },
+        ]
+      : []),
+
+    // Twitter Card Metadata
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:url", content: url },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
+    { name: "twitter:image:src", content: image },
+    { name: "twitter:site", content: "@6plusjp" },
+  ];
+};
+
+// const mergeMeta = (
+//   overrideFn: V2_MetaFunction,
+//   appendFn?: V2_MetaFunction
+// ): V2_MetaFunction => {
+//   return (arg) => {
+//     // get meta from parent routes
+//     let mergedMeta = arg.matches.reduce((acc, match) => {
+//       return acc.concat(match.meta || []);
+//     }, [] as HtmlMetaDescriptor[]);
+
+//     // replace any parent meta with the same name or property with the override
+//     let overrides = overrideFn(arg);
+//     for (let override of overrides) {
+//       let index = mergedMeta.findIndex(
+//         (meta) =>
+//           ("name" in meta &&
+//             "name" in override &&
+//             meta.name === override.name) ||
+//           ("property" in meta &&
+//             "property" in override &&
+//             meta.property === override.property) ||
+//           ("title" in meta && "title" in override)
+//       );
+//       if (index !== -1) {
+//         mergedMeta.splice(index, 1, override);
+//       }
+//     }
+
+//     // append any additional meta
+//     if (appendFn) {
+//       mergedMeta = mergedMeta.concat(appendFn(arg));
+//     }
+
+//     return mergedMeta;
+//   };
+// };

@@ -9,11 +9,11 @@ import {
 } from "@reach/accordion";
 import clsx from "clsx";
 import {
-  ArchiveIcon,
-  ChatAltIcon,
-  CodeIcon,
-  ColorSwatchIcon,
-} from "@heroicons/react/outline";
+  ArchiveBoxIcon,
+  ChatBubbleLeftRightIcon,
+  CodeBracketIcon,
+  SwatchIcon,
+} from "@heroicons/react/24/outline";
 
 import { ExternalLink } from "../external-link";
 import { PythonIcon } from "../icons/python-icon";
@@ -58,7 +58,7 @@ const TAB_DESKTOP = [
 const TAB_MOBILE = [
   {
     label: "Language",
-    svg: <CodeIcon className="h-7 w-7" />,
+    svg: <CodeBracketIcon className="h-7 w-7" />,
     tools: [
       {
         name: "TypeScript",
@@ -72,7 +72,7 @@ const TAB_MOBILE = [
   },
   {
     label: "Framework",
-    svg: <ArchiveIcon className="h-7 w-7" />,
+    svg: <ArchiveBoxIcon className="h-7 w-7" />,
     tools: [
       {
         name: "React",
@@ -86,7 +86,7 @@ const TAB_MOBILE = [
   },
   {
     label: "Design",
-    svg: <ColorSwatchIcon className="h-7 w-7" />,
+    svg: <SwatchIcon className="h-7 w-7" />,
     tools: [
       {
         name: "Figma",
@@ -108,7 +108,7 @@ const TAB_MOBILE = [
   },
   {
     label: "Chat",
-    svg: <ChatAltIcon className="h-7 w-7" />,
+    svg: <ChatBubbleLeftRightIcon className="h-7 w-7" />,
     tools: [
       {
         name: "slack",
@@ -120,7 +120,7 @@ const TAB_MOBILE = [
 
 export function ToolsSection() {
   return (
-    <section className="bg-bs py-16 px-[5vw] duration-500">
+    <section className="bg-bs px-[5vw] py-16 duration-500">
       <div className="container mx-auto">
         <div className="flex flex-col justify-center">
           <h2 className="py-4 text-center text-3xl font-bold text-tp sm:text-4xl">
@@ -132,7 +132,7 @@ export function ToolsSection() {
           </div>
           <Link
             to="/uses"
-            className="btn my-8 mx-auto bg-hp text-lg text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border focus:border-black focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none dark:hover:border-white dark:focus:border-white"
+            className="btn mx-auto my-8 bg-hp text-lg text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:text-hp hover:shadow-inner focus:-translate-y-0.5 focus:border focus:border-black focus:bg-transparent focus:text-hp focus:shadow-inner focus:outline-none dark:hover:border-white dark:focus:border-white"
           >
             詳細
           </Link>

@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@vercel/remix";
+import type { V2_MetaFunction } from "@vercel/remix";
 
 import { Navbar } from "~/components/navbar";
 import { Footer } from "~/components/footer";
@@ -9,19 +9,13 @@ import { ContactSection } from "~/components/sections/contact-section";
 import { AboutSection } from "~/components/sections/about-section";
 
 import { getMeta } from "~/utils/seo";
-import { getUrl } from "~/utils/misc";
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const { requestInfo } = parentsData.root;
-  const description = "フリーランスでフロントエンド開発しています。";
-
-  return {
+export const meta: V2_MetaFunction = () => {
+  return [
     ...getMeta({
-      url: getUrl(requestInfo),
-      description,
-      keywords: "JavaScript, TypeScript, React, Web Development, WEB開発",
+      description: "フリーランスでフロントエンド開発しています。",
     }),
-  };
+  ];
 };
 
 export default function Index() {

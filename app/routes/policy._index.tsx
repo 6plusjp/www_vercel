@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@vercel/remix";
+import type { V2_MetaFunction } from "@vercel/remix";
 
 import { Footer } from "~/components/footer";
 import { Navbar } from "~/components/navbar";
@@ -6,19 +6,13 @@ import { Navbar } from "~/components/navbar";
 import { getUrl } from "~/utils/misc";
 import { getMeta } from "~/utils/seo";
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const { requestInfo } = parentsData.root;
-  const title = "Privacy Policy | 6+";
-  const description = "策定日: Aug 23, 2021";
-
-  return {
-    ...getMeta({
-      url: getUrl(requestInfo),
-      title,
-      description,
-    }),
-  };
-};
+export const meta: V2_MetaFunction = () => [
+  ...getMeta({
+    title: "Privacy Policy | 6+",
+    description: "策定日: Aug 23, 2021",
+    url: `${getUrl()}/policy`,
+  }),
+];
 
 export default function Policy() {
   return (

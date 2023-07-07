@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 
 import { buildImageUrl, setConfig } from "cloudinary-build-url";
 import clsx from "clsx";
-import type { TransformerOption } from "@cld-apis/types";
 
 import { Skeleton } from "./skeleton";
 
@@ -10,11 +9,17 @@ setConfig({
   cloudName: "six-plus-jp",
 });
 
-type ImgProps = {
+interface ImgProps {
   widths: number[];
   sizes: string[];
-  transformations?: TransformerOption;
-};
+  transformations?: {
+    background?: string;
+    resize?: {
+      type: string;
+      aspectRatio: string;
+    };
+  };
+}
 
 function PostImage({
   imgId,
@@ -82,7 +87,7 @@ function PostImage({
 
   return (
     <>
-      <div className="aspect-none md:aspect-w-16 md:aspect-h-9">
+      <div className="aspect-none md:aspect-h-9 md:aspect-w-16">
         {!visible && (
           <Skeleton
             animation="wave"

@@ -1,10 +1,10 @@
-import type { MetaFunction, LoaderFunction } from "@vercel/remix";
+import type { LoaderArgs, V2_MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { motion } from "framer-motion";
-import { PlusIcon, SearchIcon } from "@heroicons/react/outline";
+import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 
 import { Sidebar } from "~/components/sidebar";
@@ -14,32 +14,16 @@ import { Spacer } from "~/components/spacer";
 import { MobileMenu } from "~/components/navbar";
 
 import { getMeta } from "~/utils/seo";
-import { getUrl } from "~/utils/misc";
 import type { Frontmatter } from "~/utils/post.server";
 import { getBlogPages } from "~/utils/post.server";
 import { filterPosts } from "~/utils/search";
-
-export const meta: MetaFunction = ({ parentsData }) => {
-  const { requestInfo } = parentsData.root;
-  const title = "Blog | 6+";
-  const description = "WEB開発関連の情報を発信しています。";
-
-  return {
-    ...getMeta({
-      url: getUrl(requestInfo),
-      title,
-      description,
-      keywords: "JavaScript, TypeScript, React, Web Development, Blog",
-    }),
-  };
-};
 
 type LoaderData = {
   posts: Array<Frontmatter>;
   tags: string[];
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader = async (_: LoaderArgs) => {
   const posts = await getBlogPages("blog");
   const tags = new Set<string>();
 
@@ -61,6 +45,12 @@ export const loader: LoaderFunction = async () => {
     },
   });
 };
+
+export const meta: V2_MetaFunction<typeof loader> = () =>
+  getMeta({
+    title: "Blog | 6+",
+    description: "WEB開発関連の情報を発信しています。",
+  });
 
 export default function Blog() {
   const PAGE_SIZE = 6;
@@ -166,7 +156,7 @@ export default function Blog() {
                   }
                 )}
               >
-                <SearchIcon className="h-4 w-4 text-ts" />
+                <MagnifyingGlassIcon className="h-4 w-4 text-ts" />
               </button>
               <input
                 ref={searchInputRef}
@@ -222,7 +212,7 @@ export default function Blog() {
                     }
                   )}
                 >
-                  <SearchIcon className="h-4 w-4 text-ts" />
+                  <MagnifyingGlassIcon className="h-4 w-4 text-ts" />
                 </button>
                 <label>
                   <input

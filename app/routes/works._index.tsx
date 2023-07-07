@@ -1,9 +1,9 @@
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
+import type { LoaderArgs, V2_MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
-import { PlusIcon } from "@heroicons/react/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 import { Navbar } from "~/components/navbar";
 import { WorksCard } from "~/components/card";
@@ -11,16 +11,9 @@ import { Spacer } from "~/components/spacer";
 import { Footer } from "~/components/footer";
 
 import { getMeta } from "~/utils/seo";
-import { getUrl } from "~/utils/misc";
-import type { Frontmatter } from "~/utils/post.server";
 import { getWorksPages } from "~/utils/post.server";
 
-type LoaderData = {
-  posts: Array<Frontmatter>;
-  tags: string[];
-};
-
-export const loader: LoaderFunction = async () => {
+export const loader = async (_: LoaderArgs) => {
   const posts = await getWorksPages("works");
   const tags = new Set<string>();
 
@@ -43,21 +36,14 @@ export const loader: LoaderFunction = async () => {
   });
 };
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const { requestInfo } = parentsData.root;
-  const title = "Works | 6+";
-
-  return {
-    ...getMeta({
-      url: getUrl(requestInfo),
-      title,
-    }),
-  };
-};
+export const meta: V2_MetaFunction<typeof loader> = () =>
+  getMeta({
+    title: "Works | 6+",
+  });
 
 export default function Works() {
   const PAGE_SIZE = 6;
-  const data = useLoaderData<LoaderData>();
+  const data = useLoaderData<typeof loader>();
 
   const initialIndexToShow = PAGE_SIZE;
   const [indexToShow, setIndexToShow] = useState(initialIndexToShow);

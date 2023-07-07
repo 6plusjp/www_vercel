@@ -1,12 +1,11 @@
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderArgs } from "@vercel/remix";
 import { format } from "date-fns";
 
 import { getBlogPages } from "~/utils/post.server";
 import { getDomainUrl } from "~/utils/misc";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
   const posts = await getBlogPages("blog");
-
   const blogUrl = `${getDomainUrl(request)}/blog`;
 
   const rss = `

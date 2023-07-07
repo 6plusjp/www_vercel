@@ -1,5 +1,5 @@
 import { useActionData } from "@remix-run/react";
-import type { ActionFunction, MetaFunction } from "@vercel/remix";
+import type { ActionArgs, V2_MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 
 import { z } from "zod";
@@ -19,9 +19,9 @@ import { Alert } from "~/components/alert";
 import { Button } from "~/components/button";
 
 import { getMeta } from "~/utils/seo";
-import { getUrl } from "~/utils/misc";
 import { useHydrated } from "~/utils/hydrated";
 import { sendEmail, sendEmailToOwner } from "~/utils/email.server";
+import { getUrl } from "~/utils/misc";
 
 const schema = z.object({
   name: z
@@ -42,27 +42,21 @@ const schema = z.object({
 
 const clientValidator = withZod(schema);
 
-export const meta: MetaFunction = ({ parentsData }) => {
-  const { requestInfo } = parentsData.root;
-  const title = "Contact Me | 6+";
-  const description =
-    "お問い合わせはこちらから。仕事のご依頼、ご質問、その他何でも構いません。気軽にご連絡ください。";
-
-  return {
-    ...getMeta({
-      url: getUrl(requestInfo),
-      title,
-      description,
-    }),
-  };
-};
+export const meta: V2_MetaFunction = () => [
+  ...getMeta({
+    title: "Contact Me | 6+",
+    description:
+      "お問い合わせはこちらから。仕事のご依頼、ご質問、その他何でも構いません。気軽にご連絡ください。",
+    url: `${getUrl()}/contact`,
+  }),
+];
 
 type ActionData = {
   status: "success" | "error";
   fields: ValidatorData<typeof clientValidator>;
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: ActionArgs) => {
   const result = await clientValidator.validate(await request.formData());
   if (result.error) return validationError(result.error, result.submittedData);
 
