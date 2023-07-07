@@ -1,9 +1,9 @@
 import { bundleMDX } from "mdx-bundler";
 import * as matter from "gray-matter";
+import { LRUCache } from "lru-cache";
 
 import { m2toc } from "./unified";
-import { readContentFile, readContentDir, joinPath } from "./fs.server";
-import { LRUCache } from "lru-cache";
+import { readContentFile, readContentDir } from "./fs.server";
 
 export interface Frontmatter {
   title?: string;
@@ -31,7 +31,7 @@ interface PostData {
   frontmatter: Frontmatter;
   code: string;
   toc?: string;
-  slug?: string;
+  // slug?: string;
 }
 
 const defaultMaxAge = 1000 * 60 * 60 * 24 * 7;
@@ -47,7 +47,7 @@ export async function getMdxPage(
   contentDir?: string
 ): Promise<PostData | undefined> {
   const key = `${contentDir}:${slug}`;
-  let post: PostData | undefined;
+  let post;
 
   if (cache.has(key)) {
     post = cache.get(key);
@@ -62,7 +62,7 @@ export async function getMdxPage(
   return post;
 }
 
-async function getBlogPost(slug: string): Promise<PostData> {
+async function getBlogPost(slug: string): Promise<PostData | undefined> {
   const [
     remarkGfm,
     rehypeSlug,
@@ -126,7 +126,7 @@ async function getBlogPost(slug: string): Promise<PostData> {
   };
 
   try {
-    const { frontmatter, code } = await bundleMDX({
+    const { frontmatter, code } = await bundleMDX<Frontmatter>({
       source,
       mdxOptions: (options) => {
         options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
@@ -139,25 +139,9 @@ async function getBlogPost(slug: string): Promise<PostData> {
         ];
         return options;
       },
-      esbuildOptions: (options) => {
-        options.minify = true;
-        // Set the `outdir` to a public location for this bundle.
-        options.outdir = joinPath("build/_assets");
-        options.loader = {
-          ...options.loader,
-          ".png": "file",
-          ".jpg": "file",
-          ".jpeg": "file",
-        };
-        // Set the public path to /img/about
-        // options.publicPath = join("build/_assets");
-        // Set write to true so that esbuild will output the files.
-        // options.write = true;
-
-        return options;
-      },
     });
     const toc = await m2toc(matter.default(source).content);
+
     return { frontmatter, code, toc };
   } catch (e) {
     console.error(`Compilation error for slug: `, slug);
@@ -209,7 +193,7 @@ async function getBlogPages(contentDir: string) {
   });
 }
 
-async function getWorksPage(slug: string): Promise<PostData> {
+async function getWorksPage(slug: string) {
   const [
     remarkGfm,
     rehypeSlug,
@@ -227,7 +211,7 @@ async function getWorksPage(slug: string): Promise<PostData> {
   const source = await readContentFile("works", `${slug}.mdx`);
 
   try {
-    const { frontmatter, code } = await bundleMDX({
+    return await bundleMDX<Frontmatter>({
       source,
       mdxOptions: (options) => {
         options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
@@ -258,7 +242,6 @@ async function getWorksPage(slug: string): Promise<PostData> {
       //   return options;
       // },
     });
-    return { frontmatter, code };
   } catch (e) {
     console.error(`Compilation error for slug: `, slug);
     throw e;
