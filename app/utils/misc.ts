@@ -111,12 +111,13 @@ function getDomainUrl(request: Request) {
     throw new Error("Could not determine domain URL.");
   }
   const protocol = host.includes("localhost") ? "http" : "https";
+
   return `${protocol}://${host}`;
 }
 
 function getUrl(requestInfo?: { origin: string; path: string }) {
   return removeTrailingSlash(
-    `${requestInfo?.origin ?? "https://6-plus.jp"}${requestInfo?.path ?? ""}`
+    `${requestInfo?.origin ?? "https://6plus.tech"}${requestInfo?.path ?? ""}`
   );
 }
 
