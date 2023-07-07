@@ -1,8 +1,4 @@
-import type {
-  LoaderFunction,
-  MetaFunction,
-  LinksFunction,
-} from "@vercel/remix";
+import type { LinksFunction, LoaderArgs, V2_MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 import { useLoaderData, useParams, Link } from "@remix-run/react";
 import { useMemo } from "react";
@@ -19,7 +15,6 @@ import { MobileMenu } from "~/components/navbar";
 import { ExternalLink } from "~/components/external-link";
 
 import { formatDate } from "~/utils/format";
-import type { Frontmatter } from "~/utils/post.server";
 import { getMdxPage, getBlogPages } from "~/utils/post.server";
 import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
@@ -40,33 +35,21 @@ export const handle: SEOHandle = {
   },
 };
 
-type LoaderData = {
-  frontmatter: Frontmatter;
-  code: string;
-  toc?: string;
-};
-
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader = async ({ params }: LoaderArgs) => {
   const slug = params.slug || "index";
-  if (slug === "rss.xml") return null;
 
-  const post = await getMdxPage(slug).catch((e) => {
-    console.error(e);
-    console.error("error in $slug for", slug);
-    throw notFound(slug);
-  });
+  const post = await getMdxPage(slug);
+  if (!post) throw notFound(slug);
 
   const headers = {
     "Cache-Control": "private, max-age=3600",
     Vary: "Cookie",
   };
 
-  return json(post, { headers });
+  return json(post, { status: 200, headers });
 };
 
-export const meta: MetaFunction = ({ data, parentsData, params }) => {
-  const { requestInfo } = parentsData.root;
-
+export const meta: V2_MetaFunction<typeof loader> = ({ data, params }) => {
   if (data?.frontmatter) {
     const { keywords = [], ...extraMeta } = data.frontmatter.meta ?? {};
     let title = data.frontmatter.title;
@@ -75,23 +58,23 @@ export const meta: MetaFunction = ({ data, parentsData, params }) => {
     if (isDraft) title = `下書き: ${title ?? "No Title"} | 6+ Blog`;
     else title = `${title ?? "No Title"} | 6+ Blog`;
 
-    return {
-      ...(isDraft ? { robots: "noindex" } : null),
+    return [
       ...getMeta({
-        url: getUrl(requestInfo),
         title,
         description: data.frontmatter.description,
         keywords: keywords.join(", "),
         image: `/img/social/${params.slug}`,
-        isArticle: true,
+        url: `${getUrl()}/blog/${params.slug}`,
+        isDraft,
       }),
-      ...extraMeta,
-    };
+      extraMeta,
+    ];
   } else {
-    return {
-      title: "お探しのブログページは見つかりませんでした",
-      description: "お探しのブログページは見つかりませんでした😢",
-    };
+    return [
+      {
+        title: "お探しのブログページは見つかりませんでした",
+      },
+    ];
   }
 };
 
@@ -109,7 +92,7 @@ export const links: LinksFunction = () => {
 };
 
 export default function MdxScreen() {
-  const { frontmatter, code, toc } = useLoaderData<LoaderData>();
+  const { frontmatter, code, toc } = useLoaderData<typeof loader>();
   const { slug } = useParams();
   const isDraft = Boolean(frontmatter.draft);
   const Component = useMemo(() => getMDXComponent(code), [code]);

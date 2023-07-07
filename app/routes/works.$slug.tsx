@@ -1,4 +1,4 @@
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
+import type { LoaderArgs, V2_MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 import { useLoaderData, Link } from "@remix-run/react";
 import { useMemo } from "react";
@@ -14,7 +14,6 @@ import { Spacer } from "~/components/spacer";
 
 import { formatMonth } from "~/utils/format";
 import { getUrl } from "~/utils/misc";
-import type { Frontmatter } from "~/utils/post.server";
 import { getMdxPage, getWorksPages } from "~/utils/post.server";
 import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
@@ -32,18 +31,10 @@ export const handle: SEOHandle = {
   },
 };
 
-type LoaderData = {
-  frontmatter: Frontmatter;
-  code: string;
-};
-
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader = async ({ params }: LoaderArgs) => {
   const slug = params.slug || "index";
-  const post = await getMdxPage(slug, "works").catch((e) => {
-    console.error(e);
-    console.error("error in $slug for", slug);
-    throw notFound(slug);
-  });
+  const post = await getMdxPage(slug, "works");
+  if (!post) throw notFound(slug);
 
   const headers = {
     "Cache-Control": "private, max-age=3600",
@@ -53,9 +44,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return json(post, { status: 200, headers });
 };
 
-export const meta: MetaFunction = ({ data, parentsData }) => {
-  const { requestInfo } = parentsData.root;
-
+export const meta: V2_MetaFunction<typeof loader> = ({ data, params }) => {
   if (data?.frontmatter) {
     const { keywords = [], ...extraMeta } = data.frontmatter.meta ?? {};
     let title = data.frontmatter.title;
@@ -64,26 +53,27 @@ export const meta: MetaFunction = ({ data, parentsData }) => {
     if (isDraft) title = `下書き: ${title ?? "No Title"} | 6+ Works`;
     else title = `${title ?? "No Title"} | 6+ Works`;
 
-    return {
-      ...(isDraft ? { robots: "noindex" } : null),
+    return [
       ...getMeta({
-        url: getUrl(requestInfo),
         title,
         description: data.frontmatter.description,
         keywords: keywords.join(", "),
+        url: `${getUrl()}/works/${params.slug}`,
+        isDraft,
       }),
-      ...extraMeta,
-    };
+      extraMeta,
+    ];
   } else {
-    return {
-      title: "お探しのページは見つかりませんでした",
-      description: "お探しのページは見つかりませんでした😢",
-    };
+    return [
+      {
+        title: "お探しのページは見つかりませんでした",
+      },
+    ];
   }
 };
 
 export default function Work() {
-  const { frontmatter, code } = useLoaderData<LoaderData>();
+  const { frontmatter, code } = useLoaderData<typeof loader>();
   const isDraft = Boolean(frontmatter.draft);
   const Component = useMemo(() => getMDXComponent(code), [code]);
 

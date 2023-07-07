@@ -1,8 +1,4 @@
-import type {
-  LoaderFunction,
-  LinksFunction,
-  MetaFunction,
-} from "@vercel/remix";
+import type { LinksFunction, LoaderArgs, V2_MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 import {
   Links,
@@ -27,7 +23,6 @@ import noScriptCSS from "~/styles/no-script.css";
 import reachUi from "~/styles/vendors.css";
 
 import { getEnv } from "./utils/env.server";
-import type { Theme } from "./utils/theme";
 import {
   getThemeSession,
   ThemeBody,
@@ -45,18 +40,9 @@ export const handle: SEOHandle & { id: string } = {
   id: "root",
 };
 
-export type RootLoaderData = {
-  ENV: ReturnType<typeof getEnv>;
-  requestInfo: {
-    origin: string;
-    path: string;
-  };
-  theme: Theme | null;
-};
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
   const { getTheme } = await getThemeSession(request);
-
-  const data: RootLoaderData = {
+  const data = {
     ENV: getEnv(),
     requestInfo: {
       origin: getDomainUrl(request),
@@ -68,18 +54,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json(data);
 };
 
-export const meta: MetaFunction = ({ data }) => {
-  const requestInfo = data?.requestInfo;
-  return {
-    charset: "utf-8",
-    viewport: "width=device-width,initial-scale=1,viewport-fit=cover",
-    ...getMeta({
-      url: getUrl(requestInfo),
-      keywords: "6+,ロクタス,React,JavaScript,TypeScript",
-      image: "/images/og.png",
-    }),
-  };
-};
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) =>
+  getMeta({
+    keywords: "6+,ロクタス,React,TypeScript",
+    image: "/images/og.png",
+    url: getUrl(data?.requestInfo),
+  });
 
 export const links: LinksFunction = () => {
   return [
@@ -125,7 +105,8 @@ export const links: LinksFunction = () => {
 };
 
 export default function App() {
-  const data = useLoaderData<RootLoaderData>();
+  const data = useLoaderData<typeof loader>();
+
   return (
     <ThemeProvider specifiedTheme={data.theme}>
       <Document>
@@ -137,11 +118,14 @@ export default function App() {
 }
 
 function Document({ children }: { children: React.ReactNode }) {
-  const data = useLoaderData();
+  const data = useLoaderData<typeof loader>();
   const [theme] = useTheme();
+
   return (
     <html lang="ja" className={clsx("font-display", theme)}>
       <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
         {/* <style
@@ -170,11 +154,11 @@ function Document({ children }: { children: React.ReactNode }) {
           data-excluded-domains="localhost"
           data-spa="history"
         /> */}
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
           }}
-        />
+        /> */}
         <Scripts />
         <LiveReload />
         <Analytics />
@@ -196,7 +180,7 @@ export function ErrorBoundary() {
         </head>
         <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
           <Layout>
-            <main className="mx-auto max-w-3xl space-y-8 px-4 py-12 sm:p-12">
+            <main className="mx-auto max-w-6xl space-y-8 px-4 py-12 sm:p-12">
               <div className="flex">
                 <h1 className="mr-4 border-r border-gray-500 pr-4 text-2xl font-bold sm:text-4xl">
                   {error.status}
@@ -227,14 +211,14 @@ export function ErrorBoundary() {
         </head>
         <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
           <Layout>
-            <main className="mx-auto max-w-3xl space-y-8 px-4 py-12 sm:p-12">
+            <main className="mx-auto max-w-6xl space-y-8 px-4 py-12 sm:p-12">
               <h1 className="text-2xl underline underline-offset-8 sm:text-4xl">
                 There was an error!
               </h1>
               <p className="text-lg">{error.message}</p>
               <div className="text-lg">
                 <p>The stack trace is:</p>
-                <pre>{error.stack}</pre>
+                <pre className="overflow-x-auto px-1 py-4">{error.stack}</pre>
               </div>
               <p className="text-lg">
                 <Link
@@ -259,7 +243,7 @@ export function ErrorBoundary() {
         </head>
         <body className="flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-900 text-gray-200">
           <Layout>
-            <main className="mx-auto max-w-3xl space-y-8 px-4 py-12 sm:p-12">
+            <main className="mx-auto max-w-6xl space-y-8 px-4 py-12 sm:p-12">
               <h1 className="text-2xl underline underline-offset-8 sm:text-4xl">
                 Unknown Error
               </h1>
