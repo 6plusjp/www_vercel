@@ -1,20 +1,21 @@
-import type { Root } from "remark-gfm";
+import type { Root } from "mdast";
+
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkGfm from "remark-gfm";
+import remarkRehype from "remark-rehype";
+import rehypeRaw from "rehype-raw";
+import rehypeStringify from "rehype-stringify";
+import rehypeFormat from "rehype-format";
+import { toc } from "mdast-util-toc";
 
 const KS_RE = /{{([^}]*)}}/g;
 
-async function makeProcessor() {
-  const { unified } = await import("unified");
-  const { default: remarkParse } = await import("remark-parse");
-  const { default: remarkGfm } = await import("remark-gfm");
-  const { default: remark2rehype } = await import("remark-rehype");
-  const { default: rehypeRaw } = await import("rehype-raw");
-  const { default: rehypeStringify } = await import("rehype-stringify");
-  const { default: rehypeFormat } = await import("rehype-format");
-
+const makeProcessor = () => {
   const processor = unified()
     .use(remarkParse)
     .use(remarkGfm)
-    .use(remark2rehype, {
+    .use(remarkRehype, {
       // handlers: localizedHandlers,
       allowDangerousHtml: true,
     })
@@ -23,47 +24,31 @@ async function makeProcessor() {
     .use(rehypeFormat);
 
   return processor;
-}
+};
 
-// function makeProcessor() {
-//   const processor = unified()
-//     .use(remarkParse)
-//     .use(remarkGfm)
-//     .use(remark2rehype, {
-//       // handlers: localizedHandlers,
-//       allowDangerousHtml: true,
-//     })
-//     .use(rehypeRaw)
-//     .use(rehypeStringify, { allowDangerousHtml: true })
-//     .use(rehypeFormat)
-
-//   return processor
-// }
-
-async function m2h(md: string) {
+export const md2html = async (md: string) => {
   const ksEncoded = encodeKS(md);
-  const processor = await makeProcessor();
+  const processor = makeProcessor();
 
   const file = await processor.process(ksEncoded);
   return decodeKS(String(file));
-}
+};
 
-async function m2toc(md: string) {
-  const { unified } = await import("unified");
-  const { default: remarkParse } = await import("remark-parse");
-  const { default: remarkGfm } = await import("remark-gfm");
-  const { default: remark2rehype } = await import("remark-rehype");
-  const { default: rehypeRaw } = await import("rehype-raw");
-  const { default: rehypeStringify } = await import("rehype-stringify");
-  const { default: rehypeFormat } = await import("rehype-format");
+// export const md2htmlSync = async (md: string) => {
+//   const ksEncoded = encodeKS(md);
+//   const processor = makeProcessor();
 
+//   const file = await processor.processSync(ksEncoded);
+//   return decodeKS(String(file));
+// }
+
+export const md2toc = async (md: string) => {
   const ksEncoded = encodeKS(md);
   const processor = unified()
     .use(remarkParse)
     .use(remarkGfm)
-    .use(mdast2toc)
-    .use(remark2rehype, {
-      // handlers: localizedHandlers,
+    .use(remarkExtractToc)
+    .use(remarkRehype, {
       allowDangerousHtml: true,
     })
     .use(rehypeRaw)
@@ -72,45 +57,19 @@ async function m2toc(md: string) {
 
   const file = await processor.process(ksEncoded);
   return decodeKS(String(file));
-}
+};
 
-function mdast2toc() {
-  const findExistingToc = (root: Root) => {
-    let addToToc = false;
-    let toc = null;
-
-    root.children.forEach((node) => {
-      // FIXME - after changing the first line
-      if (node.type === "heading" && node.data?.id === "table-of-contents") {
-        addToToc = true;
-        toc = [];
-      } else if (addToToc) {
-        if (node.type !== "heading") {
-          toc.push(node);
-        } else {
-          addToToc = false;
-        }
-      }
+function remarkExtractToc() {
+  return async function transformer(node: Root) {
+    const { map } = toc(node, {
+      maxDepth: 3,
+      tight: true,
     });
 
-    return toc;
-  };
-
-  return async function transformer(node: Root) {
-    const { toc } = await import("mdast-util-toc");
-    const existingToc = findExistingToc(node);
-    if (existingToc) {
-      node.children = existingToc;
+    if (map) {
+      node.children = [map];
     } else {
-      const result = toc(node, {
-        maxDepth: 3,
-        tight: true,
-      });
-      if (result.map) {
-        node.children = [result.map];
-      } else {
-        node.children = [];
-      }
+      node.children = [];
     }
   };
 }
@@ -129,22 +88,16 @@ function decodeKS(raw: string) {
   );
 }
 
-async function formatHtml(html: string) {
-  const ksEncoded = encodeKS(html);
+// export async function formatHtml(html: string) {
+//   const ksEncoded = encodeKS(html);
+//   const processor = unified()
+//     .use(rehypeParse, { fragment: true })
+//     .use(rehypeStringify, { allowDangerousHtml: true })
+//     .use(rehypeFormat);
 
-  const { unified } = await import("unified");
-  const { default: rehypeParse } = await import("rehype-parse");
-  const { default: rehypeStringify } = await import("rehype-stringify");
-  const { default: rehypeFormat } = await import("rehype-format");
-
-  const processor = unified()
-    .use(rehypeParse, { fragment: true })
-    .use(rehypeStringify, { allowDangerousHtml: true })
-    .use(rehypeFormat);
-
-  const file = processor.processSync(ksEncoded);
-  return decodeKS(String(file));
-}
+//   const file = processor.processSync(ksEncoded);
+//   return decodeKS(String(file));
+// }
 
 // const prettyAST = (node, depth = 0) => {
 //   if (!node) {
@@ -195,10 +148,3 @@ async function formatHtml(html: string) {
 //       console.log("done: index.html");
 //     });
 // };
-
-export {
-  m2h,
-  m2toc,
-  formatHtml,
-  // rehypeShiki
-};

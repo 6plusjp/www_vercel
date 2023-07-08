@@ -1,9 +1,33 @@
 import { bundleMDX } from "mdx-bundler";
 import * as matter from "gray-matter";
 import { LRUCache } from "lru-cache";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import remarkGfm from "remark-gfm";
+import rehypeExternalLinks from "rehype-external-links";
+import rehypePrism from "rehype-prism-plus";
 
-import { m2toc } from "./unified";
+import { md2toc } from "./unified";
 import { readContentFile, readContentDir } from "./fs.server";
+import path from "path";
+
+// https://github.com/kentcdodds/mdx-bundler/blob/main/README.md#nextjs-esbuild-enoent
+if (process.platform === "win32") {
+  process.env.ESBUILD_BINARY_PATH = path.join(
+    process.cwd(),
+    "node_modules",
+    "esbuild",
+    "esbuild.exe"
+  );
+} else {
+  process.env.ESBUILD_BINARY_PATH = path.join(
+    process.cwd(),
+    "node_modules",
+    "esbuild",
+    "bin",
+    "esbuild"
+  );
+}
 
 export interface Frontmatter {
   title?: string;
@@ -63,21 +87,21 @@ export async function getMdxPage(
 }
 
 async function getBlogPost(slug: string): Promise<PostData | undefined> {
-  const [
-    remarkGfm,
-    rehypeSlug,
-    rehypeAutolinkHeadings,
-    rehypeExternalLinks,
-    rehypePrism,
-  ] = await Promise.all([
-    import("remark-gfm").then((mod) => mod.default),
-    import("rehype-slug").then((mod) => mod.default),
-    import("rehype-autolink-headings").then((mod) => mod.default),
-    import("rehype-external-links").then((mod) => mod.default),
-    import("rehype-prism-plus").then((mod) => mod.default),
-  ]);
+  // const [
+  //   remarkGfm,
+  //   rehypeSlug,
+  //   rehypeAutolinkHeadings,
+  //   rehypeExternalLinks,
+  //   rehypePrism,
+  // ] = await Promise.all([
+  //   import("remark-gfm").then((mod) => mod.default),
+  //   import("rehype-slug").then((mod) => mod.default),
+  //   import("rehype-autolink-headings").then((mod) => mod.default),
+  //   import("rehype-external-links").then((mod) => mod.default),
+  //   import("rehype-prism-plus").then((mod) => mod.default),
+  // ]);
 
-  const source = await readContentFile("blog", `${slug}/index.mdx`);
+  const source = readContentFile("blog", `${slug}/index.mdx`);
 
   const rehypeAutolinkHeadingsOptions = {
     behavior: "before",
@@ -140,7 +164,7 @@ async function getBlogPost(slug: string): Promise<PostData | undefined> {
         return options;
       },
     });
-    const toc = await m2toc(matter.default(source).content);
+    const toc = await md2toc(matter.default(source).content);
 
     return { frontmatter, code, toc };
   } catch (e) {
@@ -150,10 +174,10 @@ async function getBlogPost(slug: string): Promise<PostData | undefined> {
 }
 
 async function getBlogPages(contentDir: string) {
-  const files = await readContentDir(contentDir);
+  const files = readContentDir(contentDir);
   const posts: Array<Frontmatter> = await Promise.all(
     files.map(async (filename) => {
-      const source = await readContentFile(contentDir, `${filename}/index.mdx`);
+      const source = readContentFile(contentDir, `${filename}/index.mdx`);
       const { frontmatter } = await bundleMDX({
         source,
       });
@@ -194,21 +218,21 @@ async function getBlogPages(contentDir: string) {
 }
 
 async function getWorksPage(slug: string) {
-  const [
-    remarkGfm,
-    rehypeSlug,
-    // rehypeAutolinkHeadings,
-    rehypeExternalLinks,
-    // rehypePrism,
-  ] = await Promise.all([
-    import("remark-gfm").then((mod) => mod.default),
-    import("rehype-slug").then((mod) => mod.default),
-    // import("rehype-autolink-headings").then((mod) => mod.default),
-    import("rehype-external-links").then((mod) => mod.default),
-    // import("rehype-prism-plus").then((mod) => mod.default),
-  ]);
+  // const [
+  //   remarkGfm,
+  //   rehypeSlug,
+  //   // rehypeAutolinkHeadings,
+  //   rehypeExternalLinks,
+  //   // rehypePrism,
+  // ] = await Promise.all([
+  //   import("remark-gfm").then((mod) => mod.default),
+  //   import("rehype-slug").then((mod) => mod.default),
+  //   // import("rehype-autolink-headings").then((mod) => mod.default),
+  //   import("rehype-external-links").then((mod) => mod.default),
+  //   // import("rehype-prism-plus").then((mod) => mod.default),
+  // ]);
 
-  const source = await readContentFile("works", `${slug}.mdx`);
+  const source = readContentFile("works", `${slug}.mdx`);
 
   try {
     return await bundleMDX<Frontmatter>({
@@ -218,29 +242,10 @@ async function getWorksPage(slug: string) {
         options.rehypePlugins = [
           ...(options.rehypePlugins ?? []),
           rehypeSlug,
-          // [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
           rehypeExternalLinks,
-          // [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
         ];
         return options;
       },
-      // esbuildOptions: (options) => {
-      //   options.minify = true;
-      //   // Set the `outdir` to a public location for this bundle.
-      //   options.outdir = joinPath("build/_assets");
-      //   options.loader = {
-      //     ...options.loader,
-      //     ".png": "file",
-      //     ".jpg": "file",
-      //     ".jpeg": "file",
-      //   };
-      //   // Set the public path to /img/about
-      //   // options.publicPath = join("build/_assets");
-      //   // Set write to true so that esbuild will output the files.
-      //   // options.write = true;
-
-      //   return options;
-      // },
     });
   } catch (e) {
     console.error(`Compilation error for slug: `, slug);
@@ -249,10 +254,10 @@ async function getWorksPage(slug: string) {
 }
 
 async function getWorksPages(contentDir: string) {
-  const files = await readContentDir(contentDir);
+  const files = readContentDir(contentDir);
   const posts: Array<Frontmatter> = await Promise.all(
     files.map(async (filename) => {
-      const source = await readContentFile(contentDir, filename);
+      const source = readContentFile(contentDir, filename);
       const { frontmatter } = await bundleMDX({
         source,
       });

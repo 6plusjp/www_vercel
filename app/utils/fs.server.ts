@@ -1,21 +1,18 @@
-import { readdir, readFile } from "fs-extra";
-// import fs from "fs/promises";
-import path from "./path.server";
+import { readdirSync, readFileSync } from "fs-extra";
+import path from "path";
 
 const CONTENT = `${__dirname}/../app/content`; // path.join(__dirname, "..", "app/content")
 
-export const readContentDir = async (contentDir: string) => {
+export const readContentDir = (contentDir: string) => {
   // const content = path.join(CONTENT, contentDir);
   const content = `${CONTENT}/${contentDir}`;
-  return readdir(content);
+  return readdirSync(content);
 };
 
-export const readContentFile = async (contentDir: string, file: string) => {
+export const readContentFile = (contentDir: string, file: string) => {
   // const content = path.join(CONTENT, contentDir, file);
   const content = `${CONTENT}/${contentDir}/${file}`;
-  return readFile(content, "utf-8");
+  return readFileSync(content, "utf-8");
 };
 
 export const joinPath = (dir: string) => path.join(__dirname, dir);
-
-// export default fs;
