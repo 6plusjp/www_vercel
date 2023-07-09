@@ -16,7 +16,7 @@ const NAV_LIST = [
 ];
 const LEGAL_LIST = [
   { name: "Privacy Policy", to: "/policy" },
-  { name: "Terms of Use", to: "/policy#terms" },
+  { name: "Terms of Use", to: "/terms" },
 ];
 
 function Footer({ className }: { className?: string }) {
