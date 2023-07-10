@@ -17,7 +17,7 @@ if (process.platform === "win32") {
     process.cwd(),
     "node_modules",
     "esbuild",
-    "esbuild.exe"
+    "esbuild.exe",
   );
 } else {
   process.env.ESBUILD_BINARY_PATH = path.join(
@@ -25,7 +25,7 @@ if (process.platform === "win32") {
     "node_modules",
     "esbuild",
     "bin",
-    "esbuild"
+    "esbuild",
   );
 }
 
@@ -46,8 +46,12 @@ export interface Frontmatter {
   bannerCredit?: string;
 
   meta?: {
+    title?: string;
+    description?: string;
     keywords?: string[];
+    author?: string;
   };
+
   socialImageTitle?: string;
 }
 
@@ -68,7 +72,7 @@ const cache = new LRUCache<string, PostData>({
 
 export async function getMdxPage(
   slug: string,
-  contentDir?: string
+  contentDir?: string,
 ): Promise<PostData | undefined> {
   const key = `${contentDir}:${slug}`;
   let post;
@@ -185,7 +189,7 @@ async function getBlogPages(contentDir: string) {
         slug: filename.replace(/\.mdx$/, ""),
         ...frontmatter,
       };
-    })
+    }),
   );
 
   // for (const postDir of dir) {
@@ -265,7 +269,7 @@ async function getWorksPages(contentDir: string) {
         slug: filename.replace(/\.mdx$/, ""),
         ...frontmatter,
       };
-    })
+    }),
   );
 
   return posts.sort((a, z) => {
