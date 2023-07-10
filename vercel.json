@@ -2,6 +2,10 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/home",
+      "destination": "/"
+    },
+    {
       "source": "/user",
       "destination": "/api/user"
     },
