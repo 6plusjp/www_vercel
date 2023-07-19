@@ -51,8 +51,10 @@ export const loader = async ({ params }: LoaderArgs) => {
 
 export const meta: V2_MetaFunction<typeof loader> = ({ data, params }) => {
   if (data?.frontmatter) {
-    const { keywords = [], ...extraMeta } = data.frontmatter.meta ?? {};
-    let title = data.frontmatter.title;
+    const { keywords = [], author } = data.frontmatter.meta ?? {};
+    let title = data.frontmatter.meta?.title ?? data.frontmatter.title;
+    const description =
+      data.frontmatter.meta?.description ?? data.frontmatter.description;
 
     const isDraft = data.frontmatter.draft;
     if (isDraft) title = `下書き: ${title ?? "No Title"} | 6+ Blog`;
@@ -61,13 +63,13 @@ export const meta: V2_MetaFunction<typeof loader> = ({ data, params }) => {
     return [
       ...getMeta({
         title,
-        description: data.frontmatter.description,
+        description,
         keywords: keywords.join(", "),
         image: `/img/social/${params.slug}`,
         url: `${getUrl()}/blog/${params.slug}`,
+        author,
         isDraft,
       }),
-      extraMeta,
     ];
   } else {
     return [
