@@ -73,6 +73,7 @@
     "zod": "^3.17.3"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@remix-run/dev": "^1.19.0",
     "@remix-run/eslint-config": "^1.19.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
