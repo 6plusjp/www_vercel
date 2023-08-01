@@ -9,7 +9,26 @@ describe("Contact page", () => {
     cy.visit("/contact");
   });
 
-  it("submit shouldn't without filling in", () => {
+  it("validation should support each fields", () => {
+    //TODO - replace find Func with the same as findText Func
+    cy.get("input[name=name]").focus().blur();
+    cy.get('[data-cy="error-message"]').should(
+      "contain",
+      "お名前 / 会社名は必須です",
+    );
+    cy.get("input[name=email]").focus().blur();
+    cy.get('[data-cy="error-message"]').should(
+      "contain",
+      "メールアドレスは必須です",
+    );
+    cy.get("textarea[name=text]").focus().blur();
+    cy.get('[data-cy="error-message"]').should(
+      "contain",
+      "お問い合わせ内容は必須です",
+    );
+  });
+
+  it("shouldn't submit without filling in a form", () => {
     cy.get('[data-cy="submit"]').click();
 
     cy.get('[data-cy="error-message"]').should(($error) => {
@@ -17,7 +36,7 @@ describe("Contact page", () => {
     });
   });
 
-  it("passes", () => {
+  it("should be cleare the form when the page is reloaded", () => {
     const username = customFaker.person.fullName();
     const email = customFaker.internet.email();
     const subject = ["仕事のご依頼", "ご質問", "その他"];
@@ -31,9 +50,10 @@ describe("Contact page", () => {
 
     cy.reload();
 
-    cy.get("input[name=name]").should("contain", username);
-    cy.get("input[name=email]").should("contain", email);
-    cy.get("select[name=subject]").should("contain", subject[subjectIndex]);
-    cy.get("textarea[name=text]").should("contain", text);
+    //TODO - decide if reloading keeps the information
+    cy.get("input[name=name]").should("not.contain", username);
+    cy.get("input[name=email]").should("not.contain", email);
+    cy.get("select[name=subject]").should("contain", subject[0]);
+    cy.get("textarea[name=text]").should("not.contain", text);
   });
 });
