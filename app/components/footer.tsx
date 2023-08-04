@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import { ThemeToggle } from "./toggle";
 import { GitHubIcon } from "./icons/github-icon";
-import { TwitterIcon } from "./icons/twitter-icon";
+// import { TwitterIcon } from "./icons/twitter-icon";
 import { RssIcon } from "./icons/rss-icon";
 import { ExternalLink } from "./external-link";
 
@@ -91,7 +91,7 @@ function Footer({ className }: { className?: string }) {
                 className="fill-slate-500 hover:fill-[#333] focus:fill-[#333]"
               />
             </ExternalLink>
-            <ExternalLink
+            {/* <ExternalLink
               className="ring-hp focus:outline-none focus:ring-2"
               aria-label="Twitter"
               href="https://twitter.com"
@@ -101,7 +101,7 @@ function Footer({ className }: { className?: string }) {
                 size={32}
                 className="fill-slate-500 hover:fill-[#1DA1F2] focus:fill-[#1DA1F2]"
               />
-            </ExternalLink>
+            </ExternalLink> */}
             <ExternalLink
               className="ring-hp focus:outline-none focus:ring-2"
               aria-label="RSS"
