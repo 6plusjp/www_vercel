@@ -19,6 +19,7 @@ interface InputProps {
   label: string;
   type?: string;
   value?: string;
+  placeholder?: string;
   hideErrors?: boolean;
   "data-cy"?: string;
   form?: string;
@@ -31,6 +32,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     label,
     type = "text",
     value,
+    placeholder,
     hideErrors: noErrors,
     "data-cy": dataTestId,
     form,
@@ -62,12 +64,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             ? name
             : "off"
         }
+        data-cy={dataTestId}
         {...getInputProps({
           form,
           type,
           ref,
           id: name,
           value: actualValue,
+          placeholder,
           disabled,
         })}
       />
@@ -75,114 +79,94 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   );
 });
 
-type TextareaProps = JSX.IntrinsicElements["textarea"];
-const Textarea = forwardRef<
-  HTMLTextAreaElement,
-  {
-    defaultValue?: string | null;
-    name: string;
-    label: string;
-    className?: string;
-    description?: React.ReactNode;
-    id?: string;
-  } & TextareaProps
->(function Textarea(
-  { defaultValue, name, label, className, description, id, ...props },
-  ref,
-) {
-  const suffix = useId();
-  const inputId = id ?? `${name}--${suffix}`;
-  const errorId = `${inputId}-error`;
-  const descriptionId = `${inputId}-description`;
-  const { getInputProps, error } = useField(name);
+interface TextareaProps {
+  name: string;
+  label: string;
+  placeholder?: string;
+  value?: string;
+  "data-cy"?: string;
+  rows?: number;
+}
 
-  return (
-    <div className={clsx("mb-8", className)}>
-      <div className="mb-4 flex items-baseline justify-between gap-2">
-        <Label htmlFor={inputId} className="">
-          {label}
-        </Label>
-        {error ? (
-          <InputError id={errorId}>{error}</InputError>
-        ) : description ? (
-          <div id={descriptionId} className="text-lg text-tp">
-            {description}
-          </div>
-        ) : null}
+const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+  function Textarea(
+    { name, label, placeholder, "data-cy": dataTestId, rows },
+
+    ref,
+  ) {
+    const suffix = useId();
+    const inputId = `${name}--${suffix}`;
+    const errorId = `${inputId}-error`;
+    const { getInputProps, error } = useField(name);
+
+    return (
+      <div className="mb-8">
+        <div className="mb-4 flex items-baseline justify-between gap-2">
+          <Label htmlFor={inputId} className="">
+            {label}
+          </Label>
+          {error && <InputError id={errorId}>{error}</InputError>}
+        </div>
+        <textarea
+          className={clsx(
+            "w-full appearance-none rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8",
+          )}
+          required
+          aria-required="true"
+          aria-describedby={error ? errorId : undefined}
+          rows={rows}
+          data-cy={dataTestId}
+          {...getInputProps({ id: name, placeholder, ref })}
+        />
       </div>
-      <textarea
-        className={clsx(
-          "w-full appearance-none rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8",
-        )}
-        {...(props as TextareaProps)}
-        required
-        defaultValue={defaultValue}
-        aria-required="true"
-        aria-describedby={
-          error ? errorId : description ? descriptionId : undefined
-        }
-        {...getInputProps({ ref, id: inputId })}
-      />
-    </div>
-  );
-});
+    );
+  },
+);
 
-type SelectProps = JSX.IntrinsicElements["select"];
-const Select = forwardRef<
-  HTMLSelectElement,
-  {
-    defaultValue?: string | null;
-    name: string;
-    label: string;
-    className?: string;
-    description?: React.ReactNode;
-    id?: string;
-  } & SelectProps
->(function Select(
-  { defaultValue, name, label, className, description, id, ...props },
+type SelectProps = {
+  name: string;
+  label: string;
+  placeholder?: string;
+  multiple?: boolean;
+  "data-cy"?: string;
+  children?: React.ReactNode;
+};
+
+const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
+  { name, label, placeholder, multiple, "data-cy": dataTestId, children },
   ref,
 ) {
   const suffix = useId();
-  const inputId = id ?? `${name}--${suffix}`;
+  const inputId = `${name}--${suffix}`;
   const errorId = `${inputId}-error`;
-  const descriptionId = `${inputId}-description`;
   const { getInputProps, error } = useField(name);
 
   return (
-    <div className={clsx("mb-8", className)}>
+    <div className="mb-8">
       <div className="mb-4 flex items-baseline justify-between gap-2">
-        <Label htmlFor={inputId} className="">
-          {label}
-        </Label>
-        {error ? (
-          <InputError id={errorId}>{error}</InputError>
-        ) : description ? (
-          <div id={descriptionId} className="text-lg text-tp">
-            {description}
-          </div>
-        ) : null}
+        <Label htmlFor={inputId}>{label}</Label>
+        {error && <InputError id={errorId}>{error}</InputError>}
       </div>
       <select
         className={clsx(
           "w-full appearance-none rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8 cursor-pointer",
         )}
-        {...(props as SelectProps)}
         required
-        defaultValue={defaultValue}
         aria-required="true"
-        aria-describedby={
-          error ? errorId : description ? descriptionId : undefined
-        }
-        {...getInputProps({ ref, id: inputId })}
-      />
+        aria-describedby={error ? errorId : undefined}
+        data-cy={dataTestId}
+        {...getInputProps({ placeholder, multiple, ref })}
+      >
+        {children}
+      </select>
     </div>
   );
 });
 
 interface InputErrorProps {
   id: string;
-  children?: string;
   "data-cy"?: string;
+  children?: string;
 }
 
 function InputError({ children, id, "data-cy": dataTestId }: InputErrorProps) {
