@@ -9,55 +9,52 @@ function Label({ className, ...labelProps }: JSX.IntrinsicElements["label"]) {
   return (
     <label
       {...labelProps}
-      className={clsx("inline-block text-lg text-tp", className)}
+      className={clsx("inline-block text-lg text-tp cursor-pointer", className)}
     />
   );
 }
 
-type InputProps = JSX.IntrinsicElements["input"];
-const Input = forwardRef<
-  HTMLInputElement,
+interface InputProps {
+  name: string;
+  label: string;
+  type?: string;
+  value?: string;
+  hideErrors?: boolean;
+  "data-cy"?: string;
+  form?: string;
+  disabled?: boolean;
+}
+
+const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
-    defaultValue?: string | null;
-    name: string;
-    label: string;
-    className?: string;
-    description?: React.ReactNode;
-    id?: string;
-  } & InputProps
->(function Input(
-  { defaultValue, name, label, className, description, id, ...props },
+    name,
+    label,
+    type = "text",
+    value,
+    hideErrors: noErrors,
+    "data-cy": dataTestId,
+    form,
+    disabled,
+  },
   ref,
 ) {
-  const prefix = useId();
-  const inputId = id ?? `${prefix}-${name}`;
+  const suffix = useId();
+  const inputId = `${name}--${suffix}`;
   const errorId = `${inputId}-error`;
-  const descriptionId = `${inputId}-description`;
-  const { getInputProps, error } = useField(name);
+  const actualValue = value ?? (type === "checkbox" ? "on" : undefined);
+  const { getInputProps, error } = useField(name, { formId: form });
 
   return (
-    <div className={clsx("mb-8", className)}>
+    <div className="mb-8">
       <div className="mb-4 flex items-baseline justify-between gap-2">
-        <Label htmlFor={inputId} className="">
-          {label}
-        </Label>
-        {error ? (
-          <InputError id={errorId}>{error}</InputError>
-        ) : description ? (
-          <div id={descriptionId} className="text-lg text-tp">
-            {description}
-          </div>
-        ) : null}
+        <Label htmlFor={inputId}>{label}</Label>
+        {error && !noErrors && <InputError id={errorId}>{error}</InputError>}
       </div>
       <input
         className="w-full appearance-none rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8"
-        {...(props as InputProps)}
         required
-        defaultValue={defaultValue}
         aria-required="true"
-        aria-describedby={
-          error ? errorId : description ? descriptionId : undefined
-        }
+        aria-describedby={error ? errorId : undefined}
         autoComplete={
           name === "name"
             ? "name organization"
@@ -65,7 +62,14 @@ const Input = forwardRef<
             ? name
             : "off"
         }
-        {...getInputProps({ ref, id: inputId })}
+        {...getInputProps({
+          form,
+          type,
+          ref,
+          id: name,
+          value: actualValue,
+          disabled,
+        })}
       />
     </div>
   );
@@ -86,8 +90,8 @@ const Textarea = forwardRef<
   { defaultValue, name, label, className, description, id, ...props },
   ref,
 ) {
-  const prefix = useId();
-  const inputId = id ?? `${prefix}-${name}`;
+  const suffix = useId();
+  const inputId = id ?? `${name}--${suffix}`;
   const errorId = `${inputId}-error`;
   const descriptionId = `${inputId}-description`;
   const { getInputProps, error } = useField(name);
@@ -138,8 +142,8 @@ const Select = forwardRef<
   { defaultValue, name, label, className, description, id, ...props },
   ref,
 ) {
-  const prefix = useId();
-  const inputId = id ?? `${prefix}-${name}`;
+  const suffix = useId();
+  const inputId = id ?? `${name}--${suffix}`;
   const errorId = `${inputId}-error`;
   const descriptionId = `${inputId}-description`;
   const { getInputProps, error } = useField(name);
@@ -160,7 +164,7 @@ const Select = forwardRef<
       </div>
       <select
         className={clsx(
-          "w-full appearance-none rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8",
+          "w-full appearance-none rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8 cursor-pointer",
         )}
         {...(props as SelectProps)}
         required
@@ -178,9 +182,10 @@ const Select = forwardRef<
 interface InputErrorProps {
   id: string;
   children?: string;
+  "data-cy"?: string;
 }
 
-function InputError({ children, id }: InputErrorProps) {
+function InputError({ children, id, "data-cy": dataTestId }: InputErrorProps) {
   if (!children) {
     return null;
   }
@@ -190,7 +195,7 @@ function InputError({ children, id }: InputErrorProps) {
       role="alert"
       id={id}
       className="inline-flex text-sm text-error"
-      data-cy="error-message"
+      data-cy={dataTestId ?? id}
     >
       <ExclamationCircleIcon className="h-5 w-5" />
       {children}
