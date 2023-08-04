@@ -69,7 +69,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           form,
           type,
           ref,
-          id: name,
+          id: inputId,
           value: actualValue,
           placeholder,
           disabled,
@@ -116,7 +116,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           aria-describedby={error ? errorId : undefined}
           rows={rows}
           data-cy={dataTestId}
-          {...getInputProps({ id: name, placeholder, ref })}
+          {...getInputProps({ id: inputId, placeholder, ref })}
         />
       </div>
     );
@@ -155,7 +155,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
         aria-required="true"
         aria-describedby={error ? errorId : undefined}
         data-cy={dataTestId}
-        {...getInputProps({ placeholder, multiple, ref })}
+        {...getInputProps({ id: inputId, placeholder, multiple, ref })}
       >
         {children}
       </select>
