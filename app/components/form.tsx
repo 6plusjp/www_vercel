@@ -27,7 +27,7 @@ const Input = forwardRef<
   } & InputProps
 >(function Input(
   { defaultValue, name, label, className, description, id, ...props },
-  ref
+  ref,
 ) {
   const prefix = useId();
   const inputId = id ?? `${prefix}-${name}`;
@@ -84,7 +84,7 @@ const Textarea = forwardRef<
   } & TextareaProps
 >(function Textarea(
   { defaultValue, name, label, className, description, id, ...props },
-  ref
+  ref,
 ) {
   const prefix = useId();
   const inputId = id ?? `${prefix}-${name}`;
@@ -108,7 +108,7 @@ const Textarea = forwardRef<
       </div>
       <textarea
         className={clsx(
-          "w-full appearance-none rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8"
+          "w-full appearance-none rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8",
         )}
         {...(props as TextareaProps)}
         required
@@ -136,7 +136,7 @@ const Select = forwardRef<
   } & SelectProps
 >(function Select(
   { defaultValue, name, label, className, description, id, ...props },
-  ref
+  ref,
 ) {
   const prefix = useId();
   const inputId = id ?? `${prefix}-${name}`;
@@ -160,7 +160,7 @@ const Select = forwardRef<
       </div>
       <select
         className={clsx(
-          "w-full appearance-none rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8"
+          "w-full appearance-none rounded-lg bg-bs px-8 py-6 text-lg font-medium text-tp placeholder-slate-400 ring-hp ring-offset-4 ring-offset-bp transition duration-300 focus:outline-none focus:ring-2 disabled:text-ts sm:px-10 sm:py-8",
         )}
         {...(props as SelectProps)}
         required
@@ -177,15 +177,21 @@ const Select = forwardRef<
 
 interface InputErrorProps {
   id: string;
-  children?: string | null;
+  children?: string;
 }
+
 function InputError({ children, id }: InputErrorProps) {
   if (!children) {
     return null;
   }
 
   return (
-    <p role="alert" id={id} className="inline-flex text-sm text-error">
+    <p
+      role="alert"
+      id={id}
+      className="inline-flex text-sm text-error"
+      data-cy="error-message"
+    >
       <ExclamationCircleIcon className="h-5 w-5" />
       {children}
     </p>
@@ -203,7 +209,7 @@ function ButtonGroup({
     <div
       className={clsx(
         className,
-        "flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0"
+        "flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0",
       )}
     >
       {children}
