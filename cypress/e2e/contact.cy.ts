@@ -26,6 +26,7 @@ describe("Contact page", () => {
 
   it("shouldn't submit without filling in a form", () => {
     cy.get('[data-cy="submit"]').click();
+    cy.get("input[name=name]").should("be.focused");
     cy.get('[data-cy="error-message"]')
       .as("error")
       .should(($error) => {
@@ -36,7 +37,7 @@ describe("Contact page", () => {
     cy.contains("必須です").should("not.exist");
   });
 
-  it("should be cleare the form when the page is reloaded", () => {
+  it("should not be cleared the form when the page is reloaded", () => {
     const username = customFaker.person.fullName();
     const email = customFaker.internet.email();
     const subject = ["仕事のご依頼", "ご質問", "その他"];
@@ -50,10 +51,9 @@ describe("Contact page", () => {
 
     cy.reload();
 
-    //TODO - decide if reloading keeps the information
-    cy.contains(username).should("not.exist");
-    cy.contains(email).should("not.exist");
-    cy.contains(subject[0]).should("exist");
-    cy.contains(text).should("not.exist");
+    cy.contains(username).should("exist");
+    cy.contains(email).should("exist");
+    cy.contains(subject[subjectIndex]).should("exist");
+    cy.contains(text).should("exist");
   });
 });
