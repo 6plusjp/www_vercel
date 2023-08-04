@@ -7,33 +7,33 @@ describe("Contact page", () => {
 
   beforeEach(() => {
     cy.visit("/contact");
+    cy.get('[data-cy="reset"]').click();
   });
 
   it("validation should support each fields", () => {
-    //TODO - replace find Func with the same as findText Func
-    cy.get("input[name=name]").focus().blur();
-    cy.get('[data-cy="error-message"]').should(
-      "contain",
-      "お名前 / 会社名は必須です",
-    );
-    cy.get("input[name=email]").focus().blur();
-    cy.get('[data-cy="error-message"]').should(
-      "contain",
-      "メールアドレスは必須です",
-    );
-    cy.get("textarea[name=text]").focus().blur();
-    cy.get('[data-cy="error-message"]').should(
-      "contain",
-      "お問い合わせ内容は必須です",
-    );
+    cy.get("input[name=name]").as("name").focus();
+    cy.get("@name").blur();
+    cy.contains("お名前 / 会社名は必須です").should("exist");
+
+    cy.get("input[name=email]").as("email").focus();
+    cy.get("@email").blur();
+    cy.contains("メールアドレスは必須です").should("exist");
+
+    cy.get("textarea[name=text]").as("text").focus();
+    cy.get("@text").blur();
+    cy.contains("お問い合わせ内容は必須です").should("exist");
   });
 
   it("shouldn't submit without filling in a form", () => {
     cy.get('[data-cy="submit"]').click();
+    cy.get('[data-cy="error-message"]')
+      .as("error")
+      .should(($error) => {
+        expect($error).to.have.length(3);
+      });
 
-    cy.get('[data-cy="error-message"]').should(($error) => {
-      expect($error).to.have.length(3);
-    });
+    cy.get('[data-cy="reset"]').click();
+    cy.contains("必須です").should("not.exist");
   });
 
   it("should be cleare the form when the page is reloaded", () => {
@@ -51,9 +51,9 @@ describe("Contact page", () => {
     cy.reload();
 
     //TODO - decide if reloading keeps the information
-    cy.get("input[name=name]").should("not.contain", username);
-    cy.get("input[name=email]").should("not.contain", email);
-    cy.get("select[name=subject]").should("contain", subject[0]);
-    cy.get("textarea[name=text]").should("not.contain", text);
+    cy.contains(username).should("not.exist");
+    cy.contains(email).should("not.exist");
+    cy.contains(subject[0]).should("exist");
+    cy.contains(text).should("not.exist");
   });
 });
