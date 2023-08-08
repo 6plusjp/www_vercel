@@ -106,10 +106,12 @@ function EnResume() {
               Yamamoto
             </h1>
             <p className="text-base md:text-xl mb-4">
-              A web developer driven by the skill of acquiring new skills.
-              Familiar with most major tech stacks and platforms. Immense care
-              for user experience and accessibility. Believe communication is
-              the key to every successful project delivered.
+              Self-taught, dedicated and highly motivated Web Developer with a
+              passion for the acquisition of new skills and knowledge. Familiar
+              with most major technology stacks and platforms. Strong focus on
+              user experience and accessibility. Believe that committing to
+              share expectations and goals with a team is key to any successful
+              project delivered.
             </p>
             <ul className="flex flex-wrap text-[#757d94]">
               <li className="pr-2 border-r border-[#757d94]">Web Developer</li>
@@ -137,8 +139,23 @@ function EnResume() {
                 <div className="text-[#757d94]">Apr 2020 - Current</div>
               </div>
               <div className="space-y-2 md:w-2/3">
-                <div className="italic">Front-End Developing</div>
+                <div className="italic">Web Developer</div>
                 <ul className="list-inside list-disc space-y-1">
+                  <li>
+                    As the tech lead for the Patient Growth team, I really wore
+                    many hats and helped with many things but my main areas of
+                    focus were defining the technical vision, reducing tech
+                    debt, mentoring, and working with the product, marketing,
+                    and customer enablement teams to prioritize features. I also
+                    improved processes and empowered the team in order to
+                    increase test coverage and reduce bugs. Additionally I built
+                    Opencare's first design library with the design team, and
+                    built a custom analytics package to simplify integrating
+                    analytics across the multiple apps (Snowplow, Fullstory,
+                    Heap, Optimizely). Tech stack was predominantly React,
+                    Typescript, Jest/React Testing Library, and
+                    styled-components, using a rest API built in Node.
+                  </li>
                   <li>
                     Review students marketing projects and suggest changes and
                     improvements.
@@ -149,30 +166,6 @@ function EnResume() {
                   </li>
                   <li>
                     Helped startup founders increase growth by as much as 10x.
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="flex flex-col md:flex-row space-y-1 md:space-y-0">
-              <div className="space-y-1 md:space-y-2 md:w-1/3">
-                <h2 className="font-bold">Apple</h2>
-                <div className="text-[#757d94]">2020 - 2022</div>
-              </div>
-              <div className="space-y-2 md:w-2/3">
-                <div className="italic">Front-End Developing</div>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>
-                    Growth marketing consulting, with a focus on customer
-                    acquisition.
-                  </li>
-                  <li>
-                    Projects covered landing page optimization, paid
-                    advertising, content marketing, and search engine
-                    optimization.
-                  </li>
-                  <li>
-                    Clients included Google, Microsoft, Casper, Away, and
-                    Stripe.
                   </li>
                 </ul>
               </div>
@@ -196,19 +189,18 @@ function EnResume() {
                     className="hover:opacity-70"
                     href="https://www.omu.ac.jp/en/"
                   >
-                    (Osaka Metropolitan University)
+                    (now Osaka Metropolitan University)
                   </ExternalLink>
                 </h2>
                 <div className="text-[#757d94]">2015 - 2020</div>
               </div>
               <div className="space-y-2 md:w-2/3">
                 <div className="italic">
-                  College of Life, Environment, and Advanced Sciences
+                  Science, College of Life, Environment, and Advanced Sciences
                 </div>
                 <ul className="list-inside list-disc space-y-1">
                   <li>
-                    Leave of absence and year of study abroad at personal
-                    expense.
+                    Leave of absence and study abroad year at personal expense.
                   </li>
                   <li>Withdrawn from school for personal reasons.</li>
                 </ul>
@@ -240,6 +232,7 @@ function EnResume() {
                 <div className="font-bold">Other</div>
                 <ul>
                   <li>Git</li>
+                  <li>REST API</li>
                   <li>Linux</li>
                   <li>Unit testing</li>
                 </ul>
@@ -255,185 +248,7 @@ function EnResume() {
 function JpResume() {
   return (
     <>
-      <div className="text-gray-500 bg-white px-6 py-12 md:p-14 lg:py-20 lg:px-24 overflow-hidden">
-        <div className="space-y-10 md:gap-16 grid md:grid-cols-3">
-          <header className="block space-y-4 md:col-span-3 md:flex md:items-center md:justify-center md:gap-12">
-            <div className="space-y-2 text-hs">
-              <h1 className="text-3xl font-bold md:text-5xl">
-                Shoma
-                <br />
-                Yamamoto
-              </h1>
-              <div className="flex items-center space-x-2">
-                <HeadingLine />
-                <div className="text-lg font-medium">Web Developer</div>
-              </div>
-            </div>
-            <p className="">
-              Digital marketing specialist with six years of experience working
-              as a teacher, consultant, and employee. Familiar with most major
-              digital marketing techniques and platforms.
-            </p>
-          </header>
-
-          <div className="space-y-10 md:col-span-2">
-            <section className="space-y-4">
-              <HeadingTitle>Work Experience</HeadingTitle>
-              <div className="space-y-2">
-                <h2 className="text-hs font-bold text-3xl">Freelance</h2>
-                <div className="font-bold">
-                  Front-End Developing | Apr 2020 - Current
-                </div>
-              </div>
-              <div>
-                <ul>
-                  <li>
-                    Review students marketing projects and suggest changes and
-                    improvements.
-                  </li>
-                  <li>
-                    Topics include paid advertising, content marketing, landing
-                    page copy/design/optimization, and more.
-                  </li>
-                  <li>
-                    Helped startup founders increase growth by as much as 10x.
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <ul>
-                  <li>
-                    Growth marketing consulting, with a focus on customer
-                    acquisition.
-                  </li>
-                  <li>
-                    Projects covered landing page optimization, paid
-                    advertising, content marketing, and search engine
-                    optimization.
-                  </li>
-                  <li>
-                    Clients included Google, Microsoft, Casper, Away, and
-                    Stripe.
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <ul>
-                  <li>
-                    Helped existing Google Ads customers increase spend
-                    efficiency by up to 200%.
-                  </li>
-                  <li>
-                    Signed new clients totaling over three million dollars in
-                    yearly spend.
-                  </li>
-                </ul>
-              </div>
-            </section>
-            <section className="space-y-4">
-              <HeadingTitle>Education</HeadingTitle>
-              <div className="space-y-2">
-                <h2 className="text-hs font-bold text-3xl">
-                  Osaka Prefecture University
-                </h2>
-                <div className="font-bold">
-                  BS Business - Marketing Focus | 2015 - 2020
-                </div>
-              </div>
-            </section>
-          </div>
-
-          <div className="space-y-12 md:col-span-1 md:row-start-2">
-            <section className="space-y-4">
-              <HeadingMiniTitle>Contact Info</HeadingMiniTitle>
-              <ul>
-                <li>Osaka, JP</li>
-                <li>
-                  <ExternalLink href="http://github.com/6plusjp">
-                    github.com/6plusjp
-                  </ExternalLink>
-                </li>
-                <li>6plusjp@email.com</li>
-              </ul>
-            </section>
-            <section className="space-y-4">
-              <HeadingMiniTitle>Skills</HeadingMiniTitle>
-              <div>
-                <div className="font-semibold">General</div>
-                <ul>
-                  <li>Google Ads</li>
-                  <li>Facebook Ads</li>
-                  <li>LinkedIn Ads</li>
-                  <li></li>
-                </ul>
-              </div>
-              <div>
-                <div className="font-semibold">Languages</div>
-                <ul>
-                  <li>JavaScript, TypeScript</li>
-                  <li>Python</li>
-                  <li>Rust</li>
-                  <li>PHP</li>
-                </ul>
-              </div>
-              <div>
-                <div className="font-semibold">Libraries</div>
-                <ul>
-                  <li>Google Ads</li>
-                  <li>Facebook Ads</li>
-                  <li>LinkedIn Ads</li>
-                  <li></li>
-                </ul>
-              </div>
-              <div>
-                <div className="font-semibold">Other</div>
-                <ul>
-                  <li>Git</li>
-                  <li>Linux</li>
-                  <li>Unit testing</li>
-                </ul>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-function HeadingTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <div className="flex items-center text-hs space-x-2">
-        <HeadingLine />
-        <h2 className="text-xl font-bold">{children}</h2>
-        <HeadingLine />
-      </div>
-    </>
-  );
-}
-function HeadingMiniTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <div className="flex items-center text-hs text-lg">
-        <HeadingMiniLine />
-        <h2 className="font-bold">{children}</h2>
-      </div>
-    </>
-  );
-}
-
-function HeadingLine() {
-  return (
-    <>
-      <div className="h-0.5 w-14 bg-hs" />
-    </>
-  );
-}
-function HeadingMiniLine() {
-  return (
-    <>
-      <div className="h-0.5 w-6 mr-2 bg-hs" />
+      <div className="text-gray-500 bg-white aspect-w-5 aspect-h-7"></div>
     </>
   );
 }
