@@ -1,12 +1,10 @@
 import type { EntryContext } from "@vercel/remix";
-
 import { isEqual } from "lodash";
-
 import { getDomainUrl, removeTrailingSlash } from "./misc";
 
 // sitemap
 function typedBoolean<T>(
-  value: T
+  value: T,
 ): value is Exclude<T, "" | 0 | false | null | undefined> {
   return Boolean(value);
 }
@@ -27,7 +25,7 @@ export type SitemapEntry = {
 
 export type SEOHandle = {
   getSitemapEntries?: (
-    request: Request
+    request: Request,
   ) =>
     | Promise<Array<SitemapEntry | null> | null>
     | Array<SitemapEntry | null>
@@ -36,7 +34,7 @@ export type SEOHandle = {
 
 export async function getSitemapXml(
   request: Request,
-  remixContext: EntryContext
+  remixContext: EntryContext,
 ) {
   const domainUrl = getDomainUrl(request);
 
@@ -104,7 +102,7 @@ export async function getSitemapXml(
 
         const entry: SitemapEntry = { route: removeTrailingSlash(path) };
         return entry;
-      })
+      }),
     )
   )
     .flatMap((z) => z)
@@ -113,13 +111,13 @@ export async function getSitemapXml(
   const sitemapEntries: Array<SitemapEntry> = [];
   for (const entry of rawSitemapEntries) {
     const existingEntryForRoute = sitemapEntries.find(
-      (e) => e.route === entry.route
+      (e) => e.route === entry.route,
     );
     if (existingEntryForRoute) {
       if (!isEqual(existingEntryForRoute, entry)) {
         console.warn(
           `Duplicate route for ${entry.route} with different sitemap data`,
-          { entry, existingEntryForRoute }
+          { entry, existingEntryForRoute },
         );
       }
     } else {
@@ -155,16 +153,18 @@ const typeTextMap = {
 
 export function getRobotsText(request: Request): string {
   const policies: RobotsPolicy[] = [
+    // for GPTBot
+    { type: "userAgent", value: "GPTBot" },
+    { type: "disallow", value: "/" },
+    // default
     {
       type: "userAgent",
       value: "*",
     },
-    {
-      type: "allow",
-      value: "/",
-    },
+    { type: "disallow", value: "/admin/" },
+    { type: "disallow", value: "/action/" },
+    // sitemap
     { type: "sitemap", value: `${getDomainUrl(request)}/sitemap.xml` },
-    { type: "disallow", value: "/admin" },
   ];
 
   return policies.reduce((acc, policy) => {
@@ -173,6 +173,7 @@ export function getRobotsText(request: Request): string {
   }, "");
 }
 
+// deprecated v1 meta
 // function getMeta({
 //   url,
 //   title = "6+ | Front-End Developer",
@@ -212,6 +213,7 @@ export function getRobotsText(request: Request): string {
 //   };
 // }
 
+// v2 meta
 interface MetaArgs {
   title?: string;
   description?: string;
