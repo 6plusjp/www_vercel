@@ -1,16 +1,16 @@
 import type { LinksFunction, LoaderArgs, V2_MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 import {
-  Links,
-  Meta,
-  Scripts,
-  LiveReload,
-  ScrollRestoration,
-  Outlet,
-  useLoaderData,
-  Link,
-  useRouteError,
   isRouteErrorResponse,
+  Link,
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import { cssBundleHref } from "@remix-run/css-bundle";
 
@@ -136,7 +136,7 @@ function Document({ children }: { children: React.ReactNode }) {
         <link
           rel="canonical"
           href={removeTrailingSlash(
-            `${data.requestInfo.origin}${data.requestInfo.path}`
+            `${data.requestInfo.origin}${data.requestInfo.path}`,
           )}
         />
         <noscript>
