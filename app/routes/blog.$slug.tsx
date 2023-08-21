@@ -1,6 +1,6 @@
 import type { LinksFunction, LoaderArgs, V2_MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
-import { useLoaderData, useParams, Link } from "@remix-run/react";
+import { Link, useLoaderData, useParams } from "@remix-run/react";
 import { useMemo } from "react";
 
 import { getMDXComponent } from "mdx-bundler/client";
@@ -15,7 +15,7 @@ import { MobileMenu } from "~/components/navbar";
 import { ExternalLink } from "~/components/external-link";
 
 import { formatDate } from "~/utils/format";
-import { getMdxPage, getBlogPages } from "~/utils/post.server";
+import { getBlogPages, getMdxPage } from "~/utils/post.server";
 import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
 import { getUrl } from "~/utils/misc";
