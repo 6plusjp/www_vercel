@@ -48,5 +48,6 @@ module.exports = {
     "trim-lines",
     "estree-util-is-identifier-name",
     "@ungap/structured-clone",
+    "devlop",
   ],
 };
