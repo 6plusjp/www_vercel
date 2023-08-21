@@ -1,7 +1,7 @@
 import { readdir, readFile } from "fs-extra";
 import path from "path";
 
-const contentPath = "content";
+const contentPath = "app/content";
 
 export const readContentDir = async (contentDir: string) => {
   const content = path.join(process.cwd(), contentPath, contentDir);
