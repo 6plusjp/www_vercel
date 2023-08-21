@@ -141,12 +141,6 @@ function Document({ children }: { children: React.ReactNode }) {
       <body className="w-full antialiased">
         {children}
         <ScrollRestoration />
-        {/* //NOTE - delete after determining if necessary */}
-        {/* <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-          }}
-        /> */}
         <Scripts />
         <LiveReload />
         <Analytics />
