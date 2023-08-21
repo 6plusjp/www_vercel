@@ -8,26 +8,8 @@ import rehypeExternalLinks from "rehype-external-links";
 import rehypePrism from "rehype-prism-plus";
 
 import { md2toc } from "./unified";
-import { readContentFile, readContentDir } from "./fs.server";
+import { readContentDir, readContentFile } from "./fs.server";
 import path from "path";
-
-// https://github.com/kentcdodds/mdx-bundler/blob/main/README.md#nextjs-esbuild-enoent
-if (process.platform === "win32") {
-  process.env.ESBUILD_BINARY_PATH = path.join(
-    process.cwd(),
-    "node_modules",
-    "esbuild",
-    "esbuild.exe",
-  );
-} else {
-  process.env.ESBUILD_BINARY_PATH = path.join(
-    process.cwd(),
-    "node_modules",
-    "esbuild",
-    "bin",
-    "esbuild",
-  );
-}
 
 export interface Frontmatter {
   title?: string;
@@ -59,21 +41,48 @@ interface PostData {
   frontmatter: Frontmatter;
   code: string;
   toc?: string;
-  // slug?: string;
 }
 
-const defaultMaxAge = 1000 * 60 * 60 * 24 * 7;
+// interface MdxData {
+//   code: string;
+//   frontmatter: Frontmatter;
+//   errors: string[];
+//   matter: Omit<matter.GrayMatterFile<string>, "data"> & {
+//     data: Frontmatter;
+//   };
+// }
+
+// https://github.com/kentcdodds/mdx-bundler/blob/main/README.md#nextjs-esbuild-enoent
+if (process.platform === "win32") {
+  process.env.ESBUILD_BINARY_PATH = path.join(
+    process.cwd(),
+    "node_modules",
+    "esbuild",
+    "esbuild.exe",
+  );
+} else {
+  process.env.ESBUILD_BINARY_PATH = path.join(
+    process.cwd(),
+    "node_modules",
+    "esbuild",
+    "bin",
+    "esbuild",
+  );
+}
+
+const DEFAULT_MAX_AGE = 1000 * 60 * 60 * 24 * 7;
+
 const cache = new LRUCache<string, PostData>({
-  maxSize: process.env.NODE_ENV === "production" ? defaultMaxAge : 2500,
-  sizeCalculation: (value, key) => {
+  maxSize: process.env.NODE_ENV === "production" ? DEFAULT_MAX_AGE : 2500,
+  sizeCalculation: () => {
     return 1;
   },
 });
 
-export async function getMdxPage(
+export const getMdxPage = async (
   slug: string,
   contentDir?: string,
-): Promise<PostData | undefined> {
+): Promise<PostData | undefined> => {
   const key = `${contentDir}:${slug}`;
   let post;
 
@@ -88,25 +97,32 @@ export async function getMdxPage(
   }
 
   return post;
-}
+};
 
-async function getBlogPost(slug: string): Promise<PostData | undefined> {
-  // const [
-  //   remarkGfm,
-  //   rehypeSlug,
-  //   rehypeAutolinkHeadings,
-  //   rehypeExternalLinks,
-  //   rehypePrism,
-  // ] = await Promise.all([
-  //   import("remark-gfm").then((mod) => mod.default),
-  //   import("rehype-slug").then((mod) => mod.default),
-  //   import("rehype-autolink-headings").then((mod) => mod.default),
-  //   import("rehype-external-links").then((mod) => mod.default),
-  //   import("rehype-prism-plus").then((mod) => mod.default),
-  // ]);
+const getWorksPage = async (slug: string) => {
+  const source = await readContentFile("works", `${slug}.mdx`);
 
-  const source = readContentFile("blog", `${slug}/index.mdx`);
+  try {
+    return await bundleMDX<Frontmatter>({
+      source,
+      mdxOptions: (options) => {
+        options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
+        options.rehypePlugins = [
+          ...(options.rehypePlugins ?? []),
+          rehypeSlug,
+          rehypeExternalLinks,
+        ];
+        return options;
+      },
+    });
+  } catch (error) {
+    console.error(`Compilation error for slug: `, slug);
+    throw error;
+  }
+};
 
+const getBlogPost = async (slug: string) => {
+  const source = await readContentFile("blog", `${slug}/index.mdx`);
   const rehypeAutolinkHeadingsOptions = {
     behavior: "before",
     properties: {
@@ -171,100 +187,21 @@ async function getBlogPost(slug: string): Promise<PostData | undefined> {
     const toc = await md2toc(matter.default(source).content);
 
     return { frontmatter, code, toc };
-  } catch (e) {
+  } catch (error) {
     console.error(`Compilation error for slug: `, slug);
-    throw e;
+    throw error;
   }
-}
+};
 
-async function getBlogPages(contentDir: string) {
-  const files = readContentDir(contentDir);
-  const posts: Array<Frontmatter> = await Promise.all(
+export const getWorksPages = async (contentDir: string) => {
+  const files = await readContentDir(contentDir);
+  const posts: Frontmatter[] = await Promise.all(
     files.map(async (filename) => {
-      const source = readContentFile(contentDir, `${filename}/index.mdx`);
-      const { frontmatter } = await bundleMDX({
+      const source = await readContentFile(contentDir, filename);
+      const { frontmatter } = await bundleMDX<Frontmatter>({
         source,
       });
-      return {
-        slug: filename.replace(/\.mdx$/, ""),
-        ...frontmatter,
-      };
-    }),
-  );
 
-  // for (const postDir of dir) {
-  //   const contentPath = join(dirPath, postDir);
-  //   const postPath = join(contentPath, `index.mdx`);
-  //   const slug = postDir;
-
-  //   const source = await readFile(postPath, "utf-8").catch(() => {
-  //     console.error(`Missing .mdx for "${slug}"`);
-  //   });
-  //   if (!source) continue;
-
-  //   const mdx = await bundleMDX({
-  //     cwd: contentPath,
-  //     source,
-  //   }).catch((e) => console.error(e, `\n\nError bundleMDX for "${slug}"`));
-  //   if (!mdx) {
-  //     console.error(`Couldn't bundleMDX for "${slug}"`);
-  //     continue;
-  //   }
-  //   // if (!mdx.frontmatter.slug) mdx.frontmatter.slug = slug
-  //   posts.push({ slug, ...mdx.frontmatter });
-  // }
-
-  return posts.sort((a, z) => {
-    const aTime = new Date(a.updated ?? a.published ?? "").getTime();
-    const zTime = new Date(z.updated ?? z.published ?? "").getTime();
-    return aTime > zTime ? -1 : aTime === zTime ? 0 : 1;
-  });
-}
-
-async function getWorksPage(slug: string) {
-  // const [
-  //   remarkGfm,
-  //   rehypeSlug,
-  //   // rehypeAutolinkHeadings,
-  //   rehypeExternalLinks,
-  //   // rehypePrism,
-  // ] = await Promise.all([
-  //   import("remark-gfm").then((mod) => mod.default),
-  //   import("rehype-slug").then((mod) => mod.default),
-  //   // import("rehype-autolink-headings").then((mod) => mod.default),
-  //   import("rehype-external-links").then((mod) => mod.default),
-  //   // import("rehype-prism-plus").then((mod) => mod.default),
-  // ]);
-
-  const source = readContentFile("works", `${slug}.mdx`);
-
-  try {
-    return await bundleMDX<Frontmatter>({
-      source,
-      mdxOptions: (options) => {
-        options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
-        options.rehypePlugins = [
-          ...(options.rehypePlugins ?? []),
-          rehypeSlug,
-          rehypeExternalLinks,
-        ];
-        return options;
-      },
-    });
-  } catch (e) {
-    console.error(`Compilation error for slug: `, slug);
-    throw e;
-  }
-}
-
-async function getWorksPages(contentDir: string) {
-  const files = readContentDir(contentDir);
-  const posts: Array<Frontmatter> = await Promise.all(
-    files.map(async (filename) => {
-      const source = readContentFile(contentDir, filename);
-      const { frontmatter } = await bundleMDX({
-        source,
-      });
       return {
         slug: filename.replace(/\.mdx$/, ""),
         ...frontmatter,
@@ -277,6 +214,27 @@ async function getWorksPages(contentDir: string) {
     const zTime = new Date(z.updated ?? z.published ?? "").getTime();
     return aTime > zTime ? -1 : aTime === zTime ? 0 : 1;
   });
-}
+};
 
-export { getBlogPost, getBlogPages, getWorksPage, getWorksPages };
+export const getBlogPages = async (contentDir: string) => {
+  const files = await readContentDir(contentDir);
+  const posts: Frontmatter[] = await Promise.all(
+    files.map(async (filename) => {
+      const source = await readContentFile(contentDir, `${filename}/index.mdx`);
+      const { frontmatter } = await bundleMDX<Frontmatter>({
+        source,
+      });
+
+      return {
+        slug: filename.replace(/\.mdx$/, ""),
+        ...frontmatter,
+      };
+    }),
+  );
+
+  return posts.sort((a, z) => {
+    const aTime = new Date(a.updated ?? a.published ?? "").getTime();
+    const zTime = new Date(z.updated ?? z.published ?? "").getTime();
+    return aTime > zTime ? -1 : aTime === zTime ? 0 : 1;
+  });
+};

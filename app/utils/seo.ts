@@ -1,15 +1,10 @@
 import type { EntryContext } from "@vercel/remix";
 import { isEqual } from "lodash";
+
 import { getDomainUrl, removeTrailingSlash } from "./misc";
 
-// sitemap
-function typedBoolean<T>(
-  value: T,
-): value is Exclude<T, "" | 0 | false | null | undefined> {
-  return Boolean(value);
-}
-
-export type SitemapEntry = {
+//SECTION - sitemap.xml
+type SitemapEntry = {
   route: string;
   lastmod?: string;
   changefreq?:
@@ -108,7 +103,7 @@ export async function getSitemapXml(
     .flatMap((z) => z)
     .filter(typedBoolean);
 
-  const sitemapEntries: Array<SitemapEntry> = [];
+  const sitemapEntries: SitemapEntry[] = [];
   for (const entry of rawSitemapEntries) {
     const existingEntryForRoute = sitemapEntries.find(
       (e) => e.route === entry.route,
@@ -137,7 +132,14 @@ export async function getSitemapXml(
     `.trim();
 }
 
-// robots
+function typedBoolean<T>(
+  value: T,
+): value is Exclude<T, "" | 0 | false | null | undefined> {
+  return Boolean(value);
+}
+//!SECTION
+
+//SECTION - robots.txt
 type RobotsPolicy = {
   type: "allow" | "disallow" | "sitemap" | "crawlDelay" | "userAgent";
   value: string;
@@ -167,12 +169,14 @@ export function getRobotsText(request: Request): string {
     { type: "sitemap", value: `${getDomainUrl(request)}/sitemap.xml` },
   ];
 
-  return policies.reduce((acc, policy) => {
+  return policies.reduce((accumulator, policy) => {
     const { type, value } = policy;
-    return `${acc}${typeTextMap[type]}: ${value}\n`;
+    return `${accumulator}${typeTextMap[type]}: ${value}\n`;
   }, "");
 }
+//!SECTION
 
+//SECTION - meta
 // deprecated v1 meta
 // function getMeta({
 //   url,
@@ -235,7 +239,6 @@ export const getMeta = ({
 }: MetaArgs) => {
   return [
     { title },
-
     // Article Specific Metadata
     {
       name: "description",
@@ -257,7 +260,6 @@ export const getMeta = ({
           },
         ]
       : []),
-
     // Open Graph Metadata
     {
       property: "og:type",
@@ -295,7 +297,6 @@ export const getMeta = ({
           },
         ]
       : []),
-
     // Twitter Card Metadata
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:url", content: url },
@@ -305,40 +306,4 @@ export const getMeta = ({
     { name: "twitter:site", content: "@6plusjp" },
   ];
 };
-
-// const mergeMeta = (
-//   overrideFn: V2_MetaFunction,
-//   appendFn?: V2_MetaFunction
-// ): V2_MetaFunction => {
-//   return (arg) => {
-//     // get meta from parent routes
-//     let mergedMeta = arg.matches.reduce((acc, match) => {
-//       return acc.concat(match.meta || []);
-//     }, [] as HtmlMetaDescriptor[]);
-
-//     // replace any parent meta with the same name or property with the override
-//     let overrides = overrideFn(arg);
-//     for (let override of overrides) {
-//       let index = mergedMeta.findIndex(
-//         (meta) =>
-//           ("name" in meta &&
-//             "name" in override &&
-//             meta.name === override.name) ||
-//           ("property" in meta &&
-//             "property" in override &&
-//             meta.property === override.property) ||
-//           ("title" in meta && "title" in override)
-//       );
-//       if (index !== -1) {
-//         mergedMeta.splice(index, 1, override);
-//       }
-//     }
-
-//     // append any additional meta
-//     if (appendFn) {
-//       mergedMeta = mergedMeta.concat(appendFn(arg));
-//     }
-
-//     return mergedMeta;
-//   };
-// };
+//!SECTION

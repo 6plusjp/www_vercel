@@ -1,16 +1,16 @@
 import type { LinksFunction, LoaderArgs, V2_MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 import {
-  Links,
-  Meta,
-  Scripts,
-  LiveReload,
-  ScrollRestoration,
-  Outlet,
-  useLoaderData,
-  Link,
-  useRouteError,
   isRouteErrorResponse,
+  Link,
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import { cssBundleHref } from "@remix-run/css-bundle";
 
@@ -56,7 +56,6 @@ export const loader = async ({ request }: LoaderArgs) => {
 
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) =>
   getMeta({
-    keywords: "6+,ロクタス,React,TypeScript",
     image: "/images/og.png",
     url: getUrl(data?.requestInfo),
   });
@@ -128,15 +127,10 @@ function Document({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
-        {/* <style
-          dangerouslySetInnerHTML={{
-            __html: `@font-face{font-family:'Inter'}`,
-          }}
-        /> */}
         <link
           rel="canonical"
           href={removeTrailingSlash(
-            `${data.requestInfo.origin}${data.requestInfo.path}`
+            `${data.requestInfo.origin}${data.requestInfo.path}`,
           )}
         />
         <noscript>
@@ -147,18 +141,6 @@ function Document({ children }: { children: React.ReactNode }) {
       <body className="w-full antialiased">
         {children}
         <ScrollRestoration />
-        {/* <script
-          async
-          data-website-id="37cf2507-a08a-46af-97fb-2a27fa9fcda4"
-          src="https://umami-6plus.up.railway.app/umami.js"
-          data-excluded-domains="localhost"
-          data-spa="history"
-        /> */}
-        {/* <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-          }}
-        /> */}
         <Scripts />
         <LiveReload />
         <Analytics />

@@ -1,18 +1,18 @@
-import { readdirSync, readFileSync } from "fs-extra";
-import path from "path";
+import { readdir, readFile } from "fs-extra";
 
-const CONTENT = `${__dirname}/../app/content`; // path.join(__dirname, "..", "app/content")
+const contentPath = "../content";
 
-export const readContentDir = (contentDir: string) => {
-  // const content = path.join(CONTENT, contentDir);
-  const content = `${CONTENT}/${contentDir}`;
-  return readdirSync(content);
+// https://www.themosaad.com/blog/loading-static-file-remix-vercel
+export const readContentDir = async (contentDir: string) => {
+  const content = __dirname + `/${contentPath}/${contentDir}`;
+  const data = await readdir(content);
+
+  return data;
 };
 
-export const readContentFile = (contentDir: string, file: string) => {
-  // const content = path.join(CONTENT, contentDir, file);
-  const content = `${CONTENT}/${contentDir}/${file}`;
-  return readFileSync(content, "utf-8");
-};
+export const readContentFile = async (contentDir: string, file: string) => {
+  const content = __dirname + `/${contentPath}/${contentDir}/${file}`;
+  const data = await readFile(content, "utf8");
 
-export const joinPath = (dir: string) => path.join(__dirname, dir);
+  return data.toString();
+};
