@@ -94,7 +94,7 @@ export default function Resume() {
   );
 }
 
-function EnResume() {
+const EnResume = () => {
   return (
     <>
       <div className="text-[#232E53] bg-white px-6 py-12 md:p-14 lg:py-20 lg:px-24 overflow-hidden shadow">
@@ -243,12 +243,12 @@ function EnResume() {
       </div>
     </>
   );
-}
+};
 
-function JpResume() {
+const JpResume = () => {
   return (
     <>
       <div className="text-gray-500 bg-white aspect-w-5 aspect-h-7"></div>
     </>
   );
-}
+};
