@@ -8,7 +8,6 @@ module.exports = {
   // assetsBuildDirectory: "public/build",
   // publicPath: "/build/",
   future: {
-    // TODO - enable these
     v2_dev: true,
     v2_errorBoundary: true,
     v2_headers: true,
