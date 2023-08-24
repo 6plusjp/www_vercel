@@ -4,7 +4,7 @@ import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { motion } from "framer-motion";
-import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 
 import { Sidebar } from "~/components/sidebar";
@@ -153,7 +153,7 @@ export default function Blog() {
                   {
                     "cursor-pointer": query !== "",
                     "cursor-default": query === "",
-                  }
+                  },
                 )}
               >
                 <MagnifyingGlassIcon className="h-4 w-4 text-ts" />
@@ -209,7 +209,7 @@ export default function Blog() {
                     {
                       "cursor-pointer": query !== "",
                       "cursor-default": query === "",
-                    }
+                    },
                   )}
                 >
                   <MagnifyingGlassIcon className="h-4 w-4 text-ts" />

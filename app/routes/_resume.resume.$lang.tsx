@@ -7,7 +7,7 @@ import { ExternalLink } from "~/components/external-link";
 import { SixPlusIcon } from "~/components/icons/six-plus-icon";
 import { Alert } from "~/components/alert";
 
-export const loader = async ({ params }: LoaderArgs) => {
+export const loader = ({ params }: LoaderArgs) => {
   if (params.lang !== "en" && params.lang !== "jp")
     throw notFound("お探しのページは見つかりませんでした。");
 
