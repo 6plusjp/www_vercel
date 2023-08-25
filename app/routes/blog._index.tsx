@@ -19,7 +19,7 @@ import { getBlogPages } from "~/utils/post.server";
 import { filterPosts } from "~/utils/search";
 
 type LoaderData = {
-  posts: Array<Frontmatter>;
+  posts: Frontmatter[];
   tags: string[];
 };
 

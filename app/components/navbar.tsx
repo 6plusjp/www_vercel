@@ -6,10 +6,10 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   Menu,
   MenuButton,
+  MenuItems,
   MenuLink,
   MenuPopover,
   useMenuButtonContext,
-  MenuItems,
 } from "@reach/menu-button";
 
 import { ThemeToggle } from "./toggle";
@@ -80,7 +80,7 @@ function MobileMenu() {
             <MenuButton
               className={clsx(
                 state,
-                "menu-toggle my-auto inline-flex items-center justify-center ring-hp transition focus:outline-none focus:ring-2"
+                "menu-toggle my-auto inline-flex items-center justify-center ring-hp transition focus:outline-none focus:ring-2",
               )}
             >
               <span className="sr-only">menu toggle</span>
