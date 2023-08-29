@@ -3,6 +3,7 @@ import { json } from "@vercel/remix";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
+import { motion } from "framer-motion";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 import { Navbar } from "~/components/navbar";
@@ -61,13 +62,25 @@ export default function Works() {
           <h1 className="mb-12 py-8 text-3xl font-bold text-tp sm:text-4xl">
             Works
           </h1>
-          <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 2xl:grid-cols-3">
-            {posts.map((post) => (
-              <WorksCard frontmatter={post} key={post.slug} />
-            ))}
-          </div>
+          {posts.length === 0 ? (
+            <div className="flex items-center justify-center">
+              <p className="text-tp">{`作品が見つかりませんでした。`}</p>
+            </div>
+          ) : (
+            <motion.div
+              initial="initial"
+              animate="enter"
+              exit="exit"
+              variants={{ exit: { transition: { staggerChildren: 0.1 } } }}
+              className="grid gap-x-8 gap-y-16 md:grid-cols-2 2xl:grid-cols-3"
+            >
+              {posts.map((post) => (
+                <WorksCard frontmatter={post} key={post.slug} />
+              ))}
+            </motion.div>
+          )}
           <Spacer size="base" />
-          {hasMorePosts ? (
+          {hasMorePosts && (
             <div className="my-12 w-full text-center">
               <button
                 className="btn group gap-2 rounded-full text-lg text-tp transition focus:outline-none"
@@ -77,7 +90,7 @@ export default function Works() {
                 <PlusIcon className="h-6 w-6 duration-300 group-hover:rotate-90 group-focus:rotate-90" />
               </button>
             </div>
-          ) : null}
+          )}
         </div>
         <Footer className="bg-bs duration-500" />
       </div>

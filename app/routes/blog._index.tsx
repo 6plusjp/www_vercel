@@ -236,27 +236,6 @@ export default function Blog() {
                 </span>
               </div>
             </form>
-            {/* {data.contents ? (
-              <nav className="mb-8 text-tp">
-                <h4 className="mb-2 py-1 pt-0 text-base font-medium uppercase">
-                  Contents
-                </h4>
-                <ul className="mb-3">
-                  {data.contents.map(content => {
-                    return (
-                      <li key={content} className="group py-1 pl-2 text-sm">
-                        <NavLink
-                          to={`#${toKebabCase(content)}`}
-                          className="w-auto outline-none hover:text-hp focus:text-hp"
-                        >
-                          {content}
-                        </NavLink>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </nav>
-            ) : null} */}
             {data.tags.length > 0 ? (
               <>
                 <nav className="mb-8 text-tp">
@@ -312,7 +291,7 @@ export default function Blog() {
             </motion.div>
           )}
           <Spacer size="2xs" />
-          {hasMorePosts ? (
+          {hasMorePosts && (
             <div className="my-12 w-full text-center">
               <button
                 className="btn group gap-2 rounded-full text-lg text-tp transition focus:outline-none"
@@ -322,7 +301,7 @@ export default function Blog() {
                 <PlusIcon className="h-6 w-6 duration-300 group-hover:rotate-90 group-focus:rotate-90" />
               </button>
             </div>
-          ) : null}
+          )}
         </div>
       </div>
     </>
