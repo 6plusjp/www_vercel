@@ -3,7 +3,6 @@ import { json } from "@vercel/remix";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
-import { motion } from "framer-motion";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 import { Navbar } from "~/components/navbar";
@@ -64,20 +63,14 @@ export default function Works() {
           </h1>
           {posts.length === 0 ? (
             <div className="flex items-center justify-center">
-              <p className="text-tp">{`作品が見つかりませんでした。`}</p>
+              <p className="text-tp">作品が見つかりませんでした。</p>
             </div>
           ) : (
-            <motion.div
-              initial="initial"
-              animate="enter"
-              exit="exit"
-              variants={{ exit: { transition: { staggerChildren: 0.1 } } }}
-              className="grid gap-x-8 gap-y-16 md:grid-cols-2 2xl:grid-cols-3"
-            >
+            <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 2xl:grid-cols-3">
               {posts.map((post) => (
                 <WorksCard frontmatter={post} key={post.slug} />
               ))}
-            </motion.div>
+            </div>
           )}
           <Spacer size="base" />
           {hasMorePosts && (
