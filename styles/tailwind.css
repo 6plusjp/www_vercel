@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Inter";
-  src: url("/fonts/inter/Inter-Regular.woff2") format("woff2"),
-    url("/fonts/inter/Inter-Regular.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* underline */
 .underline-animation {
   @apply relative inline-block no-underline hover:text-hp focus:text-hp;
@@ -27,10 +18,13 @@
 }
 
 @layer base {
-  /* Paragraphs should have a bottom margin to separate them, by default.
-  p {
-    @apply mb-3;
-  } */
+  @font-face {
+    font-family: "Inter";
+    src: url("/fonts/inter/Inter-Regular.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block; /* This property will help us not flash unstyled text for a couple hundred milliseconds, and then it would act like font-display: swap */
+  }
 }
 
 @layer components {
@@ -158,7 +152,9 @@
     fill: transparent;
     stroke-linecap: square;
     stroke-dashoffset: auto;
-    transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+    transition:
+      stroke-dasharray 400ms,
+      stroke-dashoffset 400ms;
   }
   .menu-toggle .top {
     stroke-dasharray: 25 172;

@@ -71,7 +71,6 @@ module.exports = {
 
       fontFamily: {
         display: ["Inter", "var(--font-body)"],
-        // 'body': ['"Open Sans"'],
       },
 
       typography: ({ theme }: { theme: any }) => ({

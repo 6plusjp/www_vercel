@@ -45,7 +45,7 @@
 
   "crons": [
     {
-      "path": "/api/cron",
+      "path": "/api/cron?key=k6p1uesj9y",
       "schedule": "0 10 * * *"
     }
   ]

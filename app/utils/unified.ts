@@ -21,7 +21,8 @@ export const md2html = async (md: string) => {
   return decodeKS(file.toString());
 };
 
-const makeProcessor = () => {
+//FIXME - (https://github.com/unifiedjs/unified/issues/227)
+function makeProcessor() {
   const processor = unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -33,21 +34,21 @@ const makeProcessor = () => {
     .use(rehypeStringify);
 
   return processor;
-};
+}
 
-const encodeKS = (raw: string) => {
+function encodeKS(raw: string) {
   return raw.replace(
     KS_RE,
     (_, ks) => `{{${Buffer.from(ks).toString("base64")}}}`,
   );
-};
+}
 
-const decodeKS = (raw: string) => {
+function decodeKS(raw: string) {
   return raw.replace(
     KS_RE,
     (_, ks) => `{{${Buffer.from(ks, "base64").toString()}}}`,
   );
-};
+}
 
 export const md2toc = async (md: string) => {
   const ksEncoded = encodeKS(md);
@@ -57,7 +58,7 @@ export const md2toc = async (md: string) => {
   return decodeKS(file.toString());
 };
 
-const makeTocProcessor = () => {
+function makeTocProcessor() {
   const processor = unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -70,18 +71,18 @@ const makeTocProcessor = () => {
     .use(rehypeStringify);
 
   return processor;
-};
+}
 
-const remarkExtractToc = (
+function remarkExtractToc(
   options: Options = {
     maxDepth: 3,
     tight: true,
   },
-) => {
+) {
   return (node: Root) => {
     const { map } = toc(node as any, options);
 
     if (!map) return;
     node.children = [map];
   };
-};
+}

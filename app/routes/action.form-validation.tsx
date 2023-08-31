@@ -18,7 +18,7 @@ const schema = withZod(
       .email("メールアドレスの形式が正しくありません"),
     subject: z.string().min(1, "件名は必須です"),
     body: z.string().min(1, "本文は必須です"),
-  })
+  }),
 );
 
 interface ActionData {

@@ -21,7 +21,7 @@ export const action = async ({ request }: ActionArgs) => {
     { success: true },
     {
       headers: { "Set-Cookie": await session.commit() },
-    }
+    },
   );
 };
 

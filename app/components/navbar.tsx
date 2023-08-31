@@ -6,10 +6,10 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   Menu,
   MenuButton,
+  MenuItems,
   MenuLink,
   MenuPopover,
   useMenuButtonContext,
-  MenuItems,
 } from "@reach/menu-button";
 
 import { ThemeToggle } from "./toggle";
@@ -23,54 +23,52 @@ const LINKS = [
   { name: "Blog", to: "/blog" },
 ];
 
-function Navbar({ className }: { className?: string }) {
-  return (
-    <div className={clsx(className, "px-[5vw] py-4 sm:py-8 lg:py-12")}>
-      <nav className="mx-auto flex max-w-screen-2xl items-center justify-between text-tp">
-        <NavLink
-          to="/"
-          prefetch="intent"
-          className="ring-hp focus:outline-none focus:ring-2"
-        >
-          <SixPlusIcon size={55} />
-        </NavLink>
-        <div className="flex items-center justify-center">
-          <ul className="mr-8 hidden lg:flex">
-            {LINKS.map((link) => {
-              return (
-                <li
-                  key={link.name}
-                  className=" whitespace-nowrap px-5 py-2 text-lg font-medium"
+export const Navbar = ({ className }: { className?: string }) => (
+  <div className={clsx(className, "px-[5vw] py-4 sm:py-8 lg:py-12")}>
+    <nav className="mx-auto flex max-w-screen-2xl items-center justify-between text-tp">
+      <NavLink
+        to="/"
+        prefetch="intent"
+        className="ring-hp focus:outline-none focus:ring-2"
+      >
+        <SixPlusIcon size={55} />
+      </NavLink>
+      <div className="flex items-center justify-center">
+        <ul className="mr-8 hidden lg:flex">
+          {LINKS.map((link) => {
+            return (
+              <li
+                key={link.name}
+                className=" whitespace-nowrap px-5 py-2 text-lg font-medium"
+              >
+                <NavLink
+                  to={link.to}
+                  prefetch="intent"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp"
+                      : "underline-animation text-tp focus:outline-none"
+                  }
+                  end
                 >
-                  <NavLink
-                    to={link.to}
-                    prefetch="intent"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-slate-500 focus:text-hp focus:outline-none dark:text-slate-400 dark:focus:text-hp"
-                        : "underline-animation text-tp focus:outline-none"
-                    }
-                    end
-                  >
-                    {link.name}
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
-          <div className="flex lg:hidden">
-            <MobileMenu />
-          </div>
-          <div className="noscript-hidden hidden lg:flex">
-            <ThemeToggle className="self-center" />
-          </div>
+                  {link.name}
+                </NavLink>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="flex lg:hidden">
+          <MobileMenu />
         </div>
-      </nav>
-    </div>
-  );
-}
+        <div className="noscript-hidden hidden lg:flex">
+          <ThemeToggle className="self-center" />
+        </div>
+      </div>
+    </nav>
+  </div>
+);
 
-function MobileMenu() {
+export function MobileMenu() {
   return (
     <Menu>
       {({ isExpanded }) => {
@@ -80,7 +78,7 @@ function MobileMenu() {
             <MenuButton
               className={clsx(
                 state,
-                "menu-toggle my-auto inline-flex items-center justify-center ring-hp transition focus:outline-none focus:ring-2"
+                "menu-toggle my-auto inline-flex items-center justify-center ring-hp transition focus:outline-none focus:ring-2",
               )}
             >
               <span className="sr-only">menu toggle</span>
@@ -97,9 +95,7 @@ function MobileMenu() {
 
 function MobileMenuList() {
   const { isExpanded } = useMenuButtonContext();
-  const shouldReduceMotion = useReducedMotion();
-  const duration = shouldReduceMotion ? 0 : 0.15;
-  const easing = "linear";
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (isExpanded) {
@@ -114,8 +110,8 @@ function MobileMenuList() {
   }, [isExpanded]);
 
   return (
-    <AnimatePresence>
-      {isExpanded ? (
+    <AnimatePresence initial={false}>
+      {isExpanded && (
         <MenuPopover
           position={(r) => ({
             top: `calc(${Number(r?.top) + Number(r?.height)}px + 2rem)`, // 2 rem = py-8 from navbar
@@ -129,8 +125,8 @@ function MobileMenuList() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -50, opacity: 0 }}
             transition={{
-              duration: duration,
-              ease: easing,
+              duration: reducedMotion ? 0 : 0.2,
+              ease: "linear",
             }}
             className="h-full pb-8"
           >
@@ -156,9 +152,7 @@ function MobileMenuList() {
             </MenuItems>
           </motion.div>
         </MenuPopover>
-      ) : null}
+      )}
     </AnimatePresence>
   );
 }
-
-export { Navbar, MobileMenu };

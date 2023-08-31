@@ -288,7 +288,7 @@ export default function MdxScreen() {
             <section title="If you found this article helpful.">
               {/* {data.recommendations} */}
             </section>
-          </motion.div>
+          </motion.div>{" "}
         </div>
       </div>
     </>

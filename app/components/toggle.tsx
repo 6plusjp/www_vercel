@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
+import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 
-import { useTheme, themes, Themed } from "~/utils/theme";
+import { Themed, themes, useTheme } from "~/utils/theme";
 
 function ThemeToggle({
   className,
@@ -17,7 +17,7 @@ function ThemeToggle({
       className={clsx(
         className,
         "inline-flex items-center justify-center overflow-hidden rounded-sm border-2 border-slate-400 outline-none transition hover:border-hp focus:border-hp",
-        { "h-14 w-14": size === "md", "h-12 w-12": size === "sm" }
+        { "h-14 w-14": size === "md", "h-12 w-12": size === "sm" },
       )}
     >
       <div
