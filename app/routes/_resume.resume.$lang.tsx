@@ -122,7 +122,7 @@ function EnResume() {
               <li className="pl-2">
                 <ExternalLink
                   className="hover:opacity-70"
-                  href="http://github.com/6plusjp"
+                  href="https://github.com/6plusjp"
                 >
                   github.com/6plusjp
                 </ExternalLink>
@@ -139,33 +139,23 @@ function EnResume() {
                 <div className="text-[#757d94]">Apr 2020 - Current</div>
               </div>
               <div className="space-y-2 md:w-2/3">
-                <div className="italic">Web Developer</div>
+                <div className="italic">
+                  Web Developer - Web apps and websites creation. Graphic
+                  design. Product development.
+                </div>
                 <ul className="list-inside list-disc space-y-1">
                   <li>
-                    As the tech lead for the Patient Growth team, I really wore
-                    many hats and helped with many things but my main areas of
-                    focus were defining the technical vision, reducing tech
-                    debt, mentoring, and working with the product, marketing,
-                    and customer enablement teams to prioritize features. I also
-                    improved processes and empowered the team in order to
-                    increase test coverage and reduce bugs. Additionally I built
-                    Opencare's first design library with the design team, and
-                    built a custom analytics package to simplify integrating
-                    analytics across the multiple apps (Snowplow, Fullstory,
-                    Heap, Optimizely). Tech stack was predominantly React,
-                    Typescript, Jest/React Testing Library, and
-                    styled-components, using a rest API built in Node.
+                    Tech stack is predominantly React, Typescript, Jest/React
+                    Testing Library and Tailwind CSS, using a rest API built in
+                    Node.
                   </li>
                   <li>
-                    Review students marketing projects and suggest changes and
-                    improvements.
+                    Selected tech stack and libraries according to the
+                    specifications of the site requested by the clients.
                   </li>
                   <li>
-                    Topics include paid advertising, content marketing, landing
-                    page copy/design/optimization, and more.
-                  </li>
-                  <li>
-                    Helped startup founders increase growth by as much as 10x.
+                    Topics include content marketing, landing page
+                    copy/design/optimization, and more.
                   </li>
                 </ul>
               </div>
