@@ -8,7 +8,7 @@ import { SixPlusIcon } from "~/components/icons/six-plus-icon";
 import { Alert } from "~/components/alert";
 
 export const loader = ({ params }: LoaderArgs) => {
-  if (params.lang !== "en" && params.lang !== "jp")
+  if (params.lang !== "en" && params.lang !== "ja")
     throw notFound("お探しのページは見つかりませんでした。");
 
   return json(params.lang);
@@ -59,7 +59,7 @@ export default function Resume() {
               Inspired by
               <br />
               <ExternalLink
-                className="font-bold text-gray-600"
+                className="font-bold text-xl text-gray-600"
                 href="https://standardresume.co"
               >
                 Standard Resume
@@ -238,7 +238,148 @@ function EnResume() {
 function JpResume() {
   return (
     <>
-      <div className="text-gray-500 bg-white aspect-w-5 aspect-h-7"></div>
+      <div className="text-gray-500 bg-white px-4 py-12 md:px-16 md:py-28 shadow">
+        <div className="space-y-10">
+          <header>
+            <h1 className="font-bold text-2xl text-center">
+              職務経歴書（簡易版）
+            </h1>
+            <div className="justify-end items-center flex gap-x-1">
+              <div className="text-right">
+                <h3>氏名: 山本 尚摩</h3>
+                <Link to="/">
+                  <h3>site: 6plus.tech</h3>
+                </Link>
+              </div>
+            </div>
+          </header>
+          <section>
+            <h2 className="font-bold text-lg">【職務要約】</h2>
+            <p>
+              株式会社○○○○○に入社後、約x年間、自社サービスのシステム開発に従事し、要件定義や設計などの上流工程から、開発やテストまでを一貫して担当しています。20xx年からは女性向け通販サイト新規構築のプロジェクトリーダーを担当。全体の進捗管理や、企画部門、営業部門との調整なども行いました。結果として、サイトリリース後約xカ月で検索順位x位にまで上昇させ、利用者数も目標のxxxで達成できています。
+            </p>
+          </section>
+          <section>
+            <h2 className="font-bold text-lg">【活かせる経験・知識・技術】</h2>
+            <ul>
+              <li>・PHP、Javaのプログラミング</li>
+              <li>・約xx名規模のリーダー経験</li>
+              <li>・新規サイト構築の経験</li>
+            </ul>
+          </section>
+          <section>
+            <h2 className="font-bold text-lg">【職務経歴】</h2>
+            <table className="table-auto">
+              <thead>
+                <tr>
+                  <th>20xx年xx月～現在 女性向け通販サイトの開発</th>
+                  <th>開発環境</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    【プロジェクト概要】
+                    女性向け雑貨、洋服の販売、コンテンツやコラム配信などの通販サイトの新規構築。
+                    【担当フェーズ】
+                    要件定義、設計、開発、テスト、運用保守、進捗管理
+                    【業務内容】 ・ユーザーごとのおすすめ機能を実装
+                    ・ターゲットに合わせたビジュアルの設計
+                    ・突発的な改修にも対応できるように設計
+                    ・サイト内検索機能の最適化 ・サーバ関連の運用
+                    【実績・取り組み】
+                    ・サイトリリース後、約xカ月で検索順位x位に上昇。
+                    ・リリース後の目標利用者数xxx％を達成。
+                  </td>
+                  <td>
+                    【言語】 PHP JavaScript CSS 【OS】 Windows 【DB】 SQL Server
+                    Oracle 【フレームワーク】 Laravel
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table className="table-auto">
+              <thead>
+                <tr>
+                  <th>20xx年xx月～20xx年xx月 会場予約サイトの改修</th>
+                  <th>開発環境</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    【プロジェクト概要】
+                    ユーザビリティと店舗情報管理の利便性を向上させるためのリニューアルを実施。
+                    【担当フェーズ】 設計、開発、テスト、運用保守 【業務内容】
+                    ・予約状況のレスポンスを高速化させるためのUI設計
+                    ・登録店舗側を考慮し、サイト経由ではない予約も一緒に管理できるようにデータを設計
+                    【実績・取り組み】
+                    ・レスポンスの高速化など利便性が向上したことにより、リニューアル後の利用ユーザー数が前年比xx増加。
+                    ・登録店舗数もリニューアル後、xx増加。
+                  </td>
+                  <td>
+                    【言語】 PHP JavaScript 【OS】 Windows Linux 【DB】 SQL
+                    Server Oracle 【フレームワーク】 Laravel
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+          <section>
+            <h2 className="font-bold text-lg">【習得スキル】</h2>
+            <table className="table-auto">
+              <tr>
+                <th>OS</th>
+                <td>Windows</td>
+                <td>x年xヶ月</td>
+                <td>環境設計・構築が可能</td>
+              </tr>
+              <tr>
+                <th></th>
+                <td>Linux</td>
+                <td>x年xヶ月</td>
+                <td>環境設計・構築が可能</td>
+              </tr>
+              <tr>
+                <th>言語</th>
+                <td>JavaScript（TypeScript）</td>
+                <td>x年xヶ月</td>
+                <td>最適なコード記述と、指示、改修が可能</td>
+              </tr>
+              <tr>
+                <th></th>
+                <td>Rust</td>
+                <td>x年xヶ月</td>
+                <td>基本的なプログラミングが可能</td>
+              </tr>
+              <tr>
+                <th></th>
+                <td>Python</td>
+                <td>x年xヶ月</td>
+                <td>基本的なプログラミングが可能</td>
+              </tr>
+              <tr>
+                <th>フレームワーク</th>
+                <td>Windows</td>
+                <td>x年xヶ月</td>
+                <td>環境設計・構築が可能</td>
+              </tr>
+              <tr>
+                <th></th>
+                <td>Windows</td>
+                <td>x年xヶ月</td>
+                <td>環境設計・構築が可能</td>
+              </tr>
+              <tr>
+                <th></th>
+                <td>Windows</td>
+                <td>x年xヶ月</td>
+                <td>環境設計・構築が可能</td>
+              </tr>
+            </table>
+          </section>
+        </div>
+      </div>
     </>
   );
 }
