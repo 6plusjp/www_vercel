@@ -59,7 +59,7 @@ export default function Resume() {
               Inspired by
               <br />
               <ExternalLink
-                className="font-bold text-xl text-gray-600"
+                className="font-bold text-lg text-gray-600"
                 href="https://standardresume.co"
               >
                 Standard Resume
@@ -236,16 +236,16 @@ function EnResume() {
 }
 
 function JpResume() {
+  //TODO - change the layout itself to make it more stylish
   return (
     <>
       <div className="text-gray-500 bg-white px-4 py-12 md:px-16 md:py-28 shadow">
         <div className="space-y-10">
           <header>
-            <h1 className="font-bold text-2xl text-center">
-              職務経歴書（簡易版）
-            </h1>
+            <h1 className="font-bold text-2xl text-center">職務経歴書</h1>
             <div className="justify-end items-center flex gap-x-1">
               <div className="text-right">
+                <h3>2023年9月現在</h3>
                 <h3>氏名: 山本 尚摩</h3>
                 <Link to="/">
                   <h3>site: 6plus.tech</h3>
@@ -253,27 +253,31 @@ function JpResume() {
               </div>
             </div>
           </header>
-          <section>
-            <h2 className="font-bold text-lg">【職務要約】</h2>
+          <section className="space-y-4">
+            <h2 className="font-bold text-lg text-hs">【職務要約】</h2>
             <p>
               株式会社○○○○○に入社後、約x年間、自社サービスのシステム開発に従事し、要件定義や設計などの上流工程から、開発やテストまでを一貫して担当しています。20xx年からは女性向け通販サイト新規構築のプロジェクトリーダーを担当。全体の進捗管理や、企画部門、営業部門との調整なども行いました。結果として、サイトリリース後約xカ月で検索順位x位にまで上昇させ、利用者数も目標のxxxで達成できています。
             </p>
           </section>
-          <section>
-            <h2 className="font-bold text-lg">【活かせる経験・知識・技術】</h2>
+          <section className="space-y-4">
+            <h2 className="font-bold text-lg text-hs">
+              【活かせる経験・知識・技術】
+            </h2>
             <ul>
               <li>・PHP、Javaのプログラミング</li>
               <li>・約xx名規模のリーダー経験</li>
               <li>・新規サイト構築の経験</li>
             </ul>
           </section>
-          <section>
-            <h2 className="font-bold text-lg">【職務経歴】</h2>
+          <section className="space-y-4">
+            <h2 className="font-bold text-lg text-hs">【職務経歴】</h2>
             <table className="table-auto">
-              <thead>
+              <thead className="text-left">
                 <tr>
-                  <th>20xx年xx月～現在 女性向け通販サイトの開発</th>
-                  <th>開発環境</th>
+                  <th className="p-4">
+                    20xx年xx月～現在 女性向け通販サイトの開発
+                  </th>
+                  <th className="p-4">開発環境</th>
                 </tr>
               </thead>
               <tbody>
@@ -299,10 +303,12 @@ function JpResume() {
               </tbody>
             </table>
             <table className="table-auto">
-              <thead>
+              <thead className="text-left">
                 <tr>
-                  <th>20xx年xx月～20xx年xx月 会場予約サイトの改修</th>
-                  <th>開発環境</th>
+                  <th className="p-4">
+                    20xx年xx月～20xx年xx月 会場予約サイトの改修
+                  </th>
+                  <th className="p-4">開発環境</th>
                 </tr>
               </thead>
               <tbody>
@@ -325,57 +331,87 @@ function JpResume() {
               </tbody>
             </table>
           </section>
-          <section>
-            <h2 className="font-bold text-lg">【習得スキル】</h2>
+          <section className="space-y-4">
+            <h2 className="font-bold text-lg text-hs">【習得スキル】</h2>
             <table className="table-auto">
-              <tr>
-                <th>OS</th>
-                <td>Windows</td>
-                <td>x年xヶ月</td>
-                <td>環境設計・構築が可能</td>
-              </tr>
-              <tr>
-                <th></th>
-                <td>Linux</td>
-                <td>x年xヶ月</td>
-                <td>環境設計・構築が可能</td>
-              </tr>
-              <tr>
-                <th>言語</th>
-                <td>JavaScript（TypeScript）</td>
-                <td>x年xヶ月</td>
-                <td>最適なコード記述と、指示、改修が可能</td>
-              </tr>
-              <tr>
-                <th></th>
-                <td>Rust</td>
-                <td>x年xヶ月</td>
-                <td>基本的なプログラミングが可能</td>
-              </tr>
-              <tr>
-                <th></th>
-                <td>Python</td>
-                <td>x年xヶ月</td>
-                <td>基本的なプログラミングが可能</td>
-              </tr>
-              <tr>
-                <th>フレームワーク</th>
-                <td>Windows</td>
-                <td>x年xヶ月</td>
-                <td>環境設計・構築が可能</td>
-              </tr>
-              <tr>
-                <th></th>
-                <td>Windows</td>
-                <td>x年xヶ月</td>
-                <td>環境設計・構築が可能</td>
-              </tr>
-              <tr>
-                <th></th>
-                <td>Windows</td>
-                <td>x年xヶ月</td>
-                <td>環境設計・構築が可能</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th className="border text-left p-4" rowSpan={4}>
+                    OS
+                  </th>
+                </tr>
+                <tr>
+                  <td className="border p-3">Windows</td>
+                  <td className="border p-3">x年xヶ月</td>
+                  <td className="border p-3">環境設計・構築が可能</td>
+                </tr>
+                <tr>
+                  <td className="border p-3">Linux</td>
+                  <td className="border p-3">x年xヶ月</td>
+                  <td className="border p-3">環境設計・構築が可能</td>
+                </tr>
+                <tr>
+                  <td className="border p-3">AIX</td>
+                  <td className="border p-3">x年xヶ月</td>
+                  <td className="border p-3">環境設計・構築が可能</td>
+                </tr>
+                <tr>
+                  <th className="border text-left p-4" rowSpan={5}>
+                    言語
+                  </th>
+                </tr>
+                <tr>
+                  <td className="border p-3">PHP</td>
+                  <td className="border p-3">x年xカ月</td>
+                  <td className="border p-3">
+                    最適なコード記述と、指示、改修が可能
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border p-3">Java</td>
+                  <td className="border p-3">x年xカ月</td>
+                  <td className="border p-3">
+                    最適なコード記述と、指示、改修が可能
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border p-3">JavaScript</td>
+                  <td className="border p-3">x年xカ月</td>
+                  <td className="border p-3">
+                    最適なコード記述と、指示、改修が可能
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border p-3">CSS</td>
+                  <td className="border p-3">x年xカ月</td>
+                  <td className="border p-3">基本的なプログラミングが可能</td>
+                </tr>
+                <tr>
+                  <th className="border text-left p-4" rowSpan={3}>
+                    DB
+                  </th>
+                </tr>
+                <tr>
+                  <td className="border p-3">SQL Server</td>
+                  <td className="border p-3">x年xカ月</td>
+                  <td className="border p-3">基本的な環境構築が可能</td>
+                </tr>
+                <tr>
+                  <td className="border p-3">Oracle</td>
+                  <td className="border p-3">x年xカ月</td>
+                  <td className="border p-3">基本的な環境構築が可能</td>
+                </tr>
+                <tr>
+                  <th className="border text-left p-4" rowSpan={2}>
+                    フレームワーク
+                  </th>
+                </tr>
+                <tr>
+                  <td className="border p-3">Laravel</td>
+                  <td className="border p-3">x年xカ月</td>
+                  <td className="border p-3">基本的な環境構築が可能</td>
+                </tr>
+              </tbody>
             </table>
           </section>
         </div>
