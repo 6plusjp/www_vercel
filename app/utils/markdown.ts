@@ -1,9 +1,10 @@
-export const extractFrontmatter = (markdown: string) => {
-  const match = /---\r?\n([\s\S]+?)\r?\n---/.exec(markdown);
-  if (!match) return { metadata: {}, body: markdown };
+export const separateMarkdown = (markdown: string) => {
+  const frontmatterRegex = /---\r?\n([\s\S]+?)\r?\n---/;
+  const matchingArray = frontmatterRegex.exec(markdown);
+  if (!matchingArray) return { metadata: {}, body: markdown };
 
-  const frontmatter = match[1];
-  const body = markdown.slice(match[0].length);
+  const frontmatter = matchingArray[1];
+  const body = markdown.slice(matchingArray[0].length);
 
   const metadata: Record<string, string> = {};
   frontmatter.split("\n").forEach((pair) => {
@@ -16,3 +17,14 @@ export const extractFrontmatter = (markdown: string) => {
 
   return { metadata, body };
 };
+
+export const slugify = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/&#39;/g, "")
+    .replace(/&lt;/g, "")
+    .replace(/&gt;/g, "")
+    .replace(/[^a-z0-9-$]/g, "-")
+    .replace(/-{2,}/g, "-")
+    .replace(/^-/, "")
+    .replace(/-$/, "");
