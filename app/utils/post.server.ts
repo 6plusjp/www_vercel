@@ -1,10 +1,16 @@
 import { bundleMDX } from "mdx-bundler";
 import * as matter from "gray-matter";
 import { LRUCache } from "lru-cache";
+
+// @ts-expect-error
 import rehypeSlug from "rehype-slug";
+// @ts-expect-error
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+// @ts-expect-error
 import remarkGfm from "remark-gfm";
+// @ts-expect-error
 import rehypeExternalLinks from "rehype-external-links";
+// @ts-expect-error
 import rehypePrism from "rehype-prism-plus";
 
 import { md2toc } from "./unified";
@@ -102,95 +108,63 @@ export const getMdxPage = async (
 const getWorksPage = async (slug: string) => {
   const source = await readContentFile("works", `${slug}.mdx`);
 
-  try {
-    return await bundleMDX<Frontmatter>({
-      source,
-      mdxOptions: (options) => {
-        options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
-        options.rehypePlugins = [
-          ...(options.rehypePlugins ?? []),
-          rehypeSlug,
-          rehypeExternalLinks,
-        ];
-        return options;
-      },
-    });
-  } catch (error) {
-    console.error(`Compilation error for slug: `, slug);
-    throw error;
-  }
+  return await bundleMDX<Frontmatter>({
+    source,
+    mdxOptions: (options) => {
+      options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
+      options.rehypePlugins = [
+        ...(options.rehypePlugins ?? []),
+        rehypeSlug,
+        rehypeExternalLinks,
+      ];
+      return options;
+    },
+  });
 };
 
 const getBlogPost = async (slug: string) => {
   const source = await readContentFile("blog", `${slug}/index.mdx`);
-  const rehypeAutolinkHeadingsOptions = {
-    behavior: "before",
-    properties: {
-      ariaHidden: true,
-      tabIndex: -1,
-      className: [
-        "absolute",
-        "inset-y-0",
-        "-left-6",
-        "flex",
-        "items-center",
-        "border-0",
-        "group-hover:opacity-100",
-        "opacity-0",
-      ],
-    },
-    content: {
-      type: "element",
-      tagName: "svg",
-      properties: {
-        xmlns: "http://www.w3.org/2000/svg",
-        className: ["h-6", "w-6"],
-        fill: "currentColor",
-        viewBox: "0 0 20 20",
-      },
-      children: [
-        {
-          type: "element",
-          tagName: "path",
-          properties: {
-            d: "M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z",
-            "fill-rule": "evenodd",
-            "clip-rule": "evenodd",
+
+  const { frontmatter, code } = await bundleMDX<Frontmatter>({
+    source,
+    mdxOptions: (options) => {
+      options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
+      options.rehypePlugins = [
+        ...(options.rehypePlugins ?? []),
+        rehypeSlug,
+        [
+          rehypeAutolinkHeadings,
+          {
+            properties: {
+              ariaHidden: true,
+              tabIndex: -1,
+              className: [
+                "before:content-['#']",
+                "before:left-4",
+                "before:inline-block",
+                "text-slate-500",
+                "mr-1",
+              ],
+            },
+            content: {
+              type: "element",
+              tagName: "span",
+              properties: {
+                className: ["sr-only"],
+              },
+              children: [{ type: "text", value: "permalink" }],
+            },
           },
-        },
-      ],
+        ],
+        rehypeExternalLinks,
+        [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
+      ];
+      return options;
     },
-    group: {
-      type: "element",
-      tagName: "div",
-      properties: {
-        className: ["group", "flex", "whitespace-pre-wrap", "relative"],
-      },
-    },
-  };
+  });
+  const toc = await md2toc(matter.default(source).content);
 
-  try {
-    const { frontmatter, code } = await bundleMDX<Frontmatter>({
-      source,
-      mdxOptions: (options) => {
-        options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkGfm];
-        options.rehypePlugins = [
-          ...(options.rehypePlugins ?? []),
-          rehypeSlug,
-          [rehypeAutolinkHeadings, rehypeAutolinkHeadingsOptions],
-          rehypeExternalLinks,
-          [rehypePrism, { ignoreMissing: true, showLineNumbers: true }],
-        ];
-        return options;
-      },
-    });
-    const toc = await md2toc(matter.default(source).content);
-
-    return { frontmatter, code, toc };
-  } catch (error) {
-    console.error(`Compilation error for slug: `, slug);
-    throw error;
-  }
+  return { frontmatter, code, toc };
 };
 
 export const getWorksPages = async (contentDir: string) => {
@@ -201,9 +175,8 @@ export const getWorksPages = async (contentDir: string) => {
       const { frontmatter } = await bundleMDX<Frontmatter>({
         source,
       });
-
       return {
-        slug: filename.replace(/\.mdx$/, ""),
+        slug: removeExtension(filename),
         ...frontmatter,
       };
     }),
@@ -226,7 +199,7 @@ export const getBlogPages = async (contentDir: string) => {
       });
 
       return {
-        slug: filename.replace(/\.mdx$/, ""),
+        slug: removeExtension(filename),
         ...frontmatter,
       };
     }),
@@ -238,3 +211,7 @@ export const getBlogPages = async (contentDir: string) => {
     return aTime > zTime ? -1 : aTime === zTime ? 0 : 1;
   });
 };
+
+function removeExtension(file: string) {
+  return file.replace(/\.md(x?)$/, "");
+}
