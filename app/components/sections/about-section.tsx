@@ -5,7 +5,7 @@ export function AboutSection({ className }: { className?: string }) {
     <section
       className={clsx(
         className,
-        "bg-bs py-16 text-center text-ts duration-500"
+        "bg-bs py-16 text-center text-ts duration-500",
       )}
     >
       <div className="container mx-auto px-[5vw]">
@@ -14,9 +14,9 @@ export function AboutSection({ className }: { className?: string }) {
             About Me
           </h2>
           <div className="py-16 text-left">
-            <h4 className="mb-4 text-lg font-bold text-tp sm:text-xl lg:text-2xl">
+            <h3 className="mb-4 text-lg font-bold text-tp sm:text-xl lg:text-2xl">
               Shoma Yamamoto
-            </h4>
+            </h3>
             <p className="mb-8 text-base lg:text-lg">
               大阪出身。平成7年生まれ。
               <br />
