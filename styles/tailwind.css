@@ -23,7 +23,7 @@
     src: url("/fonts/inter/Inter-Regular.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
-    font-display: block; /* This property will help us not flash unstyled text for a couple hundred milliseconds, and then it would act like font-display: swap */
+    font-display: optional; /* https://web.dev/preload-optional-fonts */
   }
 }
 

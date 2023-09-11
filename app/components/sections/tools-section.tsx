@@ -178,14 +178,15 @@ function Mobile() {
             as="ul"
             className="list-inside list-disc space-y-2 p-2 text-base text-ts"
           >
-            {tab.tools.map((tool, index) => (
-              <ExternalLink
-                href={tool.link}
-                key={index}
-                className="hover:text-hp focus:text-hp focus:outline-none"
-              >
-                <li>{tool.name}</li>
-              </ExternalLink>
+            {tab.tools.map((tool) => (
+              <li key={tool.name}>
+                <ExternalLink
+                  href={tool.link}
+                  className="hover:text-hp focus:text-hp focus:outline-none"
+                >
+                  {tool.name}
+                </ExternalLink>
+              </li>
             ))}
           </AccordionPanel>
         </AccordionItem>
@@ -203,7 +204,7 @@ function ArrowButton({ children, active }: Props) {
     <AccordionButton
       className={clsx(
         "flex w-full justify-between rounded-sm bg-bp px-6 py-3 text-lg text-tp outline-none focus:text-hp",
-        { "hover:text-hp": !active }
+        { "hover:text-hp": !active },
       )}
     >
       <h4 className="inline-flex gap-2">{children}</h4>

@@ -8,12 +8,12 @@ import {
   AccordionPanel,
 } from "@reach/accordion";
 import {
+  ArrowTrendingUpIcon,
   BriefcaseIcon,
+  CommandLineIcon,
   ComputerDesktopIcon,
   GlobeAltIcon,
   PencilSquareIcon,
-  CommandLineIcon,
-  ArrowTrendingUpIcon,
 } from "@heroicons/react/24/outline";
 
 import { ChevronIcon } from "../icons/chevron-icon";
@@ -148,7 +148,7 @@ function ArrowButton({ children, active }: Props) {
     <AccordionButton
       className={clsx(
         "flex w-full justify-between rounded-sm bg-bs px-6 py-3 text-lg text-tp outline-none focus:text-hp",
-        { "hover:text-hp": !active }
+        { "hover:text-hp": !active },
       )}
     >
       <h4 className="inline-flex gap-2">{children}</h4>

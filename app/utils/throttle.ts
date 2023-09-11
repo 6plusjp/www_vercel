@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
  * useThrottle
@@ -10,40 +10,40 @@ import { useState, useEffect, useCallback, useRef } from 'react'
  */
 function useThrottle(
   callbackFn: Function,
-  timeout: number = 300
+  timeout: number = 300,
 ): [(...args: any) => any, boolean] {
-  const [ready, setReady] = useState(true)
-  const timerRef = useRef<number | undefined>(undefined)
+  const [ready, setReady] = useState(true);
+  const timerRef = useRef<number | undefined>(undefined);
 
-  if (!callbackFn || typeof callbackFn !== 'function') {
+  if (!callbackFn || typeof callbackFn !== "function") {
     throw new Error(
-      'As a first argument, you need to pass a function to useThrottle hook.'
-    )
+      "As a first argument, you need to pass a function to useThrottle hook.",
+    );
   }
 
   const throttledFunction = useCallback(
     (...args) => {
       if (!ready) {
-        return
+        return;
       }
 
-      setReady(false)
-      callbackFn(...args)
+      setReady(false);
+      callbackFn(...args);
     },
-    [ready, callbackFn]
-  )
+    [ready, callbackFn],
+  );
 
   useEffect(() => {
     if (!ready) {
       timerRef.current = window.setTimeout(() => {
-        setReady(true)
-      }, timeout)
+        setReady(true);
+      }, timeout);
 
-      return () => window.clearTimeout(timerRef.current)
+      return () => window.clearTimeout(timerRef.current);
     }
-  }, [ready, timeout])
+  }, [ready, timeout]);
 
-  return [throttledFunction, ready]
+  return [throttledFunction, ready];
 }
 
-export { useThrottle }
+export { useThrottle };
