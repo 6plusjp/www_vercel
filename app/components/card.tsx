@@ -60,7 +60,7 @@ export const Card = ({ frontmatter }: Props) => (
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-1 flex-wrap">
             {frontmatter.categories?.map((category) => {
               return (
                 <span
@@ -77,9 +77,9 @@ export const Card = ({ frontmatter }: Props) => (
             <dd className="text-right text-sm leading-6 text-slate-700 dark:text-slate-400 lg:whitespace-nowrap">
               <time dateTime={frontmatter.updated || frontmatter.published}>
                 {frontmatter.updated
-                  ? `更新日: ${formatDate(frontmatter.updated, true)}`
+                  ? `更新: ${formatDate(frontmatter.updated, true)}`
                   : frontmatter.published
-                  ? `公開日: ${formatDate(frontmatter.published, true)}`
+                  ? `公開: ${formatDate(frontmatter.published, true)}`
                   : null}
               </time>
             </dd>
