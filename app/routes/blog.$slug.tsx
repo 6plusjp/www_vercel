@@ -215,9 +215,9 @@ export default function MdxScreen() {
                       dateTime={frontmatter.updated || frontmatter.published}
                     >
                       {frontmatter.updated
-                        ? `更新日: ${formatDate(frontmatter.updated)}`
+                        ? `更新: ${formatDate(frontmatter.updated)}`
                         : frontmatter.published
-                        ? `公開日: ${formatDate(frontmatter.published)}`
+                        ? `公開: ${formatDate(frontmatter.published)}`
                         : null}
                     </time>
                   </dd>
