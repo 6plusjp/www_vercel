@@ -1,6 +1,6 @@
 import type { LoaderArgs, V2_MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
-import { useLoaderData, Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { useMemo } from "react";
 
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
@@ -108,9 +108,15 @@ export default function Work() {
             <div className="relative rounded shadow-md">
               {frontmatter.bannerImgId ? (
                 <PostImage
-                  page="page"
                   className="rounded"
                   imgId={frontmatter.bannerImgId}
+                  widths={[280, 560, 840, 1100]}
+                  sizes={[
+                    "(max-width:767px) 95vw",
+                    "(min-width:768px) and (max-width:1023px) 740px",
+                    "(min-width:1024px) and (max-width:1279px) 80vw",
+                    "900px",
+                  ].join(", ")}
                   alt={frontmatter.bannerAlt}
                 />
               ) : null}

@@ -40,8 +40,13 @@ export const Card = ({ frontmatter }: Props) => (
         {frontmatter.bannerImgId ? (
           <PostImage
             className="aspect-h-9 aspect-w-16 rounded"
-            page="blog"
             imgId={frontmatter.bannerImgId}
+            sizes={[
+              "(max-width:767px) 0vw",
+              "(min-width:768px) and (max-width:1023px) 45vw",
+              "(min-width:1024px) and (max-width:1535px) 30vw",
+              "25vw",
+            ].join(", ")}
             alt={frontmatter.bannerAlt ?? frontmatter.title}
           />
         ) : (
@@ -101,8 +106,12 @@ export const WorksCard = ({ frontmatter }: Props) => (
         {frontmatter.bannerImgId ? (
           <PostImage
             className="rounded"
-            page="works"
             imgId={frontmatter.bannerImgId}
+            sizes={[
+              "(max-width:767px) 80vw",
+              "(min-width:768px) and (max-width:1535px) 45vw",
+              "25vw",
+            ].join(", ")}
             alt={frontmatter.bannerAlt ?? frontmatter.title}
           />
         ) : (
@@ -121,7 +130,7 @@ export const WorksCard = ({ frontmatter }: Props) => (
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-1">
             {frontmatter.categories?.map((category) => {
               return (
                 <span
@@ -133,7 +142,7 @@ export const WorksCard = ({ frontmatter }: Props) => (
               );
             })}
           </div>
-          <dl className="">
+          <dl>
             <dt className="sr-only">Date</dt>
             <dd className="text-right text-sm leading-6 text-slate-700 dark:text-slate-400 lg:whitespace-nowrap">
               <time dateTime={frontmatter.updated || frontmatter.published}>

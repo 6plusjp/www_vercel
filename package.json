@@ -72,6 +72,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@cld-apis/types": "^0.1.6",
     "@faker-js/faker": "^8.0.2",
     "@remix-run/dev": "^1.19.3",
     "@remix-run/eslint-config": "^1.19.3",

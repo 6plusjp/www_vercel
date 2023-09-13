@@ -1,172 +1,92 @@
-import { useRef, useState } from "react";
+import { forwardRef, useState } from "react";
 
-import { buildImageUrl, setConfig } from "cloudinary-build-url";
+import { buildImageUrl } from "cloudinary-build-url";
+import type { CldOptions, Resize } from "@cld-apis/types";
 import clsx from "clsx";
 
 import { Skeleton } from "./skeleton";
 
-setConfig({
-  cloudName: "six-plus-jp",
-});
+const CLOUD_NAME = "six-plus-jp";
+const defaultWidths = [280, 560, 840];
+const defaultSizes = [
+  "(max-width:639px) 0vw",
+  "(min-width:640px) and (max-width:767px) 0vw",
+  "(min-width:768px) and (max-width:1023px) 45vw",
+  "(min-width:1024px) and (max-width:1535px) 30vw",
+  "(min-width:1536px) 25vw",
+].join(", ");
 
-interface ImgProps {
-  widths: number[];
-  sizes: string[];
-  transformations?: {
-    background?: string;
-    resize?: {
-      type: string;
-      aspectRatio: string;
-    };
-  };
-}
-
-function PostImage({
-  imgId,
-  alt,
-  className,
-  page,
-  ...rest
-}: {
+interface ImgProps extends React.ComponentPropsWithoutRef<"img"> {
   imgId: string;
-  alt?: string;
-  className?: string;
-  page: "page" | "blog" | "works";
-} & React.HTMLAttributes<HTMLDivElement>) {
-  const [visible, setVisible] = useState(false);
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  const options: ImgProps = {
-    widths: [],
-    sizes: [],
-    transformations: {
-      // background: 'rgb:e6e9ee',
-      resize: {
-        type: "fill",
-        aspectRatio: "16:9",
-      },
-    },
-  };
-  if (page === "blog") {
-    options.widths = [280, 560, 840];
-    options.sizes = [
-      "(max-width:767px) 0vw",
-      "(min-width:768px) and (max-width:1023px) 45vw",
-      "(min-width:1024px) and (max-width:1535px) 30vw",
-      "25vw",
-    ];
-  } else if (page === "works") {
-    options.widths = [280, 560, 840];
-    options.sizes = [
-      "(max-width:767px) 80vw",
-      "(min-width:768px) and (max-width:1535px) 45vw",
-      "25vw",
-    ];
-  } else if (page === "page") {
-    options.widths = [280, 560, 840, 1100];
-    options.sizes = [
-      "(max-width:767px) 95vw",
-      "(min-width:768px) and (max-width:1023px) 740px",
-      "(min-width:1024px) and (max-width:1279px) 80vw",
-      "900px",
-    ];
-  } else {
-    options.widths = [280, 560, 840];
-    options.sizes = [
-      "(max-width:639px) 0vw",
-      "(min-width:640px) and (max-width:767px) 0vw",
-      "(min-width:768px) and (max-width:1023px) 45vw",
-      "(min-width:1024px) and (max-width:1535px) 30vw",
-      "(min-width:1536px) 25vw",
-    ];
-  }
-
-  const { widths, sizes, transformations } = options;
-
-  const averageSize = Math.ceil(widths.reduce((a, s) => a + s) / widths.length);
-
-  return (
-    <>
-      <div className="aspect-none md:aspect-h-9 md:aspect-w-16">
-        {!visible && (
-          <Skeleton
-            animation="wave"
-            className={clsx(
-              "h-full w-full bg-slate-300 transition-opacity dark:bg-slate-700"
-            )}
-          />
-        )}
-        <img
-          ref={imgRef}
-          src={buildImageUrl(imgId, {
-            quality: "auto",
-            format: "auto",
-            ...transformations,
-            transformations: {
-              resize: { width: averageSize, ...transformations?.resize },
-            },
-          })}
-          alt={alt ?? ""}
-          onLoad={() => setVisible(true)}
-          srcSet={widths
-            .map((width) =>
-              [
-                buildImageUrl(imgId, {
-                  quality: "auto",
-                  format: "auto",
-                  ...transformations,
-                  transformations: {
-                    resize: { width, ...transformations?.resize },
-                  },
-                }),
-                `${width}w`,
-              ].join(" ")
-            )
-            .join(", ")}
-          sizes={sizes.join(", ")}
-          className={clsx(
-            className,
-            "h-full w-full object-cover object-center text-transparent"
-          )}
-          {...rest}
-        />
-        <noscript>
-          <img
-            srcSet={widths
-              .map((width) =>
-                [
-                  buildImageUrl(imgId, {
-                    quality: "auto",
-                    format: "auto",
-                    ...transformations,
-                    transformations: {
-                      resize: { width, ...transformations?.resize },
-                    },
-                  }),
-                  `${width}w`,
-                ].join(" ")
-              )
-              .join(", ")}
-            sizes={sizes.join(", ")}
-            alt={alt ?? ""}
-            src={buildImageUrl(imgId, {
-              quality: "auto",
-              format: "auto",
-              ...transformations,
-              transformations: {
-                resize: { width: averageSize, ...transformations?.resize },
-              },
-            })}
-            className={clsx(
-              className,
-              "h-full w-full object-cover object-center text-center transition"
-            )}
-            {...rest}
-          />
-        </noscript>
-      </div>
-    </>
-  );
+  widths?: number[];
+  buildUrlProps?: CldOptions;
 }
 
-export { PostImage };
+export const PostImage = forwardRef<HTMLImageElement, ImgProps>(
+  function PostImage(
+    {
+      imgId,
+      className,
+      widths = defaultWidths,
+      sizes = defaultSizes,
+      buildUrlProps,
+      alt,
+      ...props
+    },
+    ref,
+  ) {
+    const [visible, setVisible] = useState(false);
+    const averageSize = Math.ceil(
+      widths.reduce((prev, current) => prev + current) / widths.length,
+    );
+
+    const getImgUrl = ({ width }: Resize) =>
+      buildImageUrl(imgId, {
+        cloud: { ...buildUrlProps?.cloud, cloudName: CLOUD_NAME },
+        transformations: {
+          ...buildUrlProps?.transformations,
+          resize: {
+            ...buildUrlProps?.transformations?.resize,
+            width,
+          },
+        },
+      });
+
+    const Img = () => (
+      <img
+        ref={ref}
+        className={clsx(
+          className,
+          "h-full w-full object-cover object-center text-transparent",
+        )}
+        src={getImgUrl({ width: averageSize })}
+        alt={alt ?? ""}
+        srcSet={widths
+          .map((width) => [getImgUrl({ width }), `${width}w`].join(" "))
+          .join(", ")}
+        sizes={sizes}
+        onLoad={() => setVisible(true)}
+        {...props}
+      />
+    );
+
+    return (
+      <>
+        <div className="aspect-none md:aspect-h-9 md:aspect-w-16">
+          {!visible && (
+            <Skeleton
+              animation="wave"
+              className={clsx(
+                "h-full w-full bg-slate-300 transition-opacity dark:bg-slate-700",
+              )}
+            />
+          )}
+          <Img />
+          <noscript>
+            <Img />
+          </noscript>
+        </div>
+      </>
+    );
+  },
+);
