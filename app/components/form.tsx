@@ -5,11 +5,11 @@ import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { useId } from "@reach/auto-id";
 import { useField } from "remix-validated-form";
 
-function Label({ className, ...labelProps }: JSX.IntrinsicElements["label"]) {
+function Label({ className, ...labelProps }: React.ComponentProps<"label">) {
   return (
     <label
-      {...labelProps}
       className={clsx("inline-block text-lg text-tp cursor-pointer", className)}
+      {...labelProps}
     />
   );
 }
