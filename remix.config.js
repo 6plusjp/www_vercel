@@ -48,5 +48,6 @@ module.exports = {
     "estree-util-is-identifier-name",
     "@ungap/structured-clone",
     "devlop",
+    "longest-streak",
   ],
 };
