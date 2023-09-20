@@ -64,7 +64,7 @@
     "rehype-stringify": "^10.0.0",
     "remark-gfm": "^4.0.0",
     "remark-parse": "^11.0.0",
-    "remark-rehype": "^10.1.0",
+    "remark-rehype": "^11.0.0",
     "remark-stringify": "^11.0.0",
     "remix-validated-form": "^5.1.0",
     "tiny-invariant": "^1.2.0",
@@ -73,7 +73,7 @@
   },
   "devDependencies": {
     "@cld-apis/types": "^0.1.6",
-    "@faker-js/faker": "^8.0.2",
+    "@faker-js/faker": "^8.1.0",
     "@remix-run/dev": "^1.19.3",
     "@remix-run/eslint-config": "^1.19.3",
     "@tailwindcss/aspect-ratio": "^0.4.2",
