@@ -1,4 +1,3 @@
-@import "@reach/accordion/styles.css";
 @import "@reach/menu-button/styles.css";
 @import "@reach/checkbox/styles.css";
 
@@ -12,10 +11,6 @@
 [data-reach-menu-item][aria-disabled] {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-[data-reach-accordion-button][data-state="open"] {
-  cursor: default;
 }
 
 [data-reach-tab-list] {

@@ -1,26 +1,19 @@
-import { useState } from "react";
+import { forwardRef } from "react";
 
-import clsx from "clsx";
-import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
-} from "@reach/accordion";
+import * as Accordion from "@radix-ui/react-accordion";
 import {
   ArrowTrendingUpIcon,
   BriefcaseIcon,
+  ChevronDownIcon,
   CommandLineIcon,
   ComputerDesktopIcon,
   GlobeAltIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 
-import { ChevronIcon } from "../icons/chevron-icon";
-
 const LINKS = [
   {
-    svg: <ComputerDesktopIcon className="h-7 w-7" />,
+    svg: <ComputerDesktopIcon className="h-7 w-7 text-ts" />,
     title: "Coding",
     paragraphs: [
       "HTML、CSS、JavaScript（TypeScript）",
@@ -29,7 +22,7 @@ const LINKS = [
     ],
   },
   {
-    svg: <CommandLineIcon className="h-7 w-7" />,
+    svg: <CommandLineIcon className="h-7 w-7 text-ts" />,
     title: "UI/UX",
     paragraphs: [
       "あらゆるユーザーを考慮した、アクセシビリティを主軸に置いた設計",
@@ -37,7 +30,7 @@ const LINKS = [
     ],
   },
   {
-    svg: <BriefcaseIcon className="h-7 w-7" />,
+    svg: <BriefcaseIcon className="h-7 w-7 text-ts" />,
     title: "Business Branding",
     paragraphs: [
       "SEOの内部施策を理解したURL設計、ページネーション、動的なタグ付け",
@@ -45,7 +38,7 @@ const LINKS = [
     ],
   },
   {
-    svg: <PencilSquareIcon className="h-7 w-7" />,
+    svg: <PencilSquareIcon className="h-7 w-7 text-ts" />,
     title: "Content Writing",
     paragraphs: [
       "ブログのライティング",
@@ -53,7 +46,7 @@ const LINKS = [
     ],
   },
   {
-    svg: <ArrowTrendingUpIcon className="h-7 w-7" />,
+    svg: <ArrowTrendingUpIcon className="h-7 w-7 text-ts" />,
     title: "Trending",
     paragraphs: [
       "RSSを駆使した情報収集",
@@ -61,7 +54,7 @@ const LINKS = [
     ],
   },
   {
-    svg: <GlobeAltIcon className="h-7 w-7" />,
+    svg: <GlobeAltIcon className="h-7 w-7 text-ts" />,
     title: "Overseas Experience",
     paragraphs: [
       "海外での就業経験",
@@ -110,53 +103,51 @@ function Desktop() {
 }
 
 function Mobile() {
-  const [activeItem, setActiveItem] = useState(0);
-
   return (
-    <Accordion
-      index={activeItem}
-      onChange={(index: number) => setActiveItem(index)}
+    <Accordion.Root
       className="flex flex-col space-y-6 sm:hidden"
+      type="single"
+      defaultValue="Coding"
+      collapsible
     >
-      {LINKS.map((link, index) => (
-        <AccordionItem className="space-y-4" key={index}>
-          <ArrowButton active={activeItem === index}>
-            {link.svg}
-            {link.title}
-          </ArrowButton>
-          <AccordionPanel
-            as="ul"
-            className="list-inside list-disc space-y-2 p-2 text-base text-ts"
-          >
-            {link.paragraphs.map((paragraph, index) => (
-              <li key={index}>{paragraph}</li>
-            ))}
-          </AccordionPanel>
-        </AccordionItem>
+      {LINKS.map(({ svg, title, paragraphs }) => (
+        <Accordion.Item className="space-y-4" key={title} value={title}>
+          <AccordionTrigger>
+            {svg}
+            {title}
+          </AccordionTrigger>
+          <Accordion.Content>
+            <ul className="list-inside list-disc space-y-2 p-2 text-base text-ts">
+              {paragraphs.map((paragraph, index) => (
+                <li key={index}>{paragraph}</li>
+              ))}
+            </ul>
+          </Accordion.Content>
+        </Accordion.Item>
       ))}
-    </Accordion>
+    </Accordion.Root>
   );
 }
 
-interface Props {
-  children: React.ReactNode;
-  active: boolean;
-}
-
-function ArrowButton({ children, active }: Props) {
+const AccordionTrigger = forwardRef<
+  HTMLButtonElement,
+  React.ComponentPropsWithRef<"button">
+>(function AccordionTrigger({ children, ...props }, ref) {
   return (
-    <AccordionButton
-      className={clsx(
-        "flex w-full justify-between rounded-sm bg-bs px-6 py-3 text-lg text-tp outline-none focus:text-hp",
-        { "hover:text-hp": !active },
-      )}
-    >
-      <h4 className="inline-flex gap-2">{children}</h4>
-      <ChevronIcon
-        direction={active ? "up" : "down"}
-        size={18}
-        className="self-center ease-out"
-      />
-    </AccordionButton>
+    <Accordion.Header className="flex w-full rounded-sm bg-bs text-lg text-tp">
+      <Accordion.Trigger
+        className="group flex w-full items-center justify-between outline-none focus:text-hp px-6 py-3"
+        ref={ref}
+        {...props}
+      >
+        <span className="flex gap-2 items-center justify-center">
+          {children}
+        </span>
+        <ChevronDownIcon
+          className="w-6 h-6 group-data-[state=open]:rotate-180 text-ts"
+          aria-hidden
+        />
+      </Accordion.Trigger>
+    </Accordion.Header>
   );
-}
+});

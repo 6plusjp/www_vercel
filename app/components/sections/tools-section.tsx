@@ -1,16 +1,11 @@
-import { useState } from "react";
+import { forwardRef } from "react";
 import { Link } from "@remix-run/react";
 
-import {
-  Accordion,
-  AccordionButton,
-  AccordionItem,
-  AccordionPanel,
-} from "@reach/accordion";
-import clsx from "clsx";
+import * as Accordion from "@radix-ui/react-accordion";
 import {
   ArchiveBoxIcon,
   ChatBubbleLeftRightIcon,
+  ChevronDownIcon,
   CodeBracketIcon,
   SwatchIcon,
 } from "@heroicons/react/24/outline";
@@ -20,7 +15,6 @@ import { PythonIcon } from "../icons/python-icon";
 import { ReactIcon } from "../icons/react-icon";
 import { VueIcon } from "../icons/vue-icon";
 import { SlackIcon } from "../icons/slack-icon";
-import { ChevronIcon } from "../icons/chevron-icon";
 import { TSIcon } from "../icons/ts-icon";
 
 const TAB_DESKTOP = [
@@ -58,7 +52,7 @@ const TAB_DESKTOP = [
 const TAB_MOBILE = [
   {
     label: "Language",
-    svg: <CodeBracketIcon className="h-7 w-7" />,
+    svg: <CodeBracketIcon className="h-7 w-7 text-ts" />,
     tools: [
       {
         name: "TypeScript",
@@ -72,7 +66,7 @@ const TAB_MOBILE = [
   },
   {
     label: "Framework",
-    svg: <ArchiveBoxIcon className="h-7 w-7" />,
+    svg: <ArchiveBoxIcon className="h-7 w-7 text-ts" />,
     tools: [
       {
         name: "React",
@@ -86,7 +80,7 @@ const TAB_MOBILE = [
   },
   {
     label: "Design",
-    svg: <SwatchIcon className="h-7 w-7" />,
+    svg: <SwatchIcon className="h-7 w-7 text-ts" />,
     tools: [
       {
         name: "Figma",
@@ -108,7 +102,7 @@ const TAB_MOBILE = [
   },
   {
     label: "Chat",
-    svg: <ChatBubbleLeftRightIcon className="h-7 w-7" />,
+    svg: <ChatBubbleLeftRightIcon className="h-7 w-7 text-ts" />,
     tools: [
       {
         name: "slack",
@@ -161,58 +155,58 @@ function Desktop() {
 }
 
 function Mobile() {
-  const [activeItem, setActiveItem] = useState(0);
   return (
-    <Accordion
-      index={activeItem}
-      onChange={(index: number) => setActiveItem(index)}
+    <Accordion.Root
       className="flex flex-col space-y-6 sm:hidden"
+      type="single"
+      defaultValue="Language"
+      collapsible
     >
-      {TAB_MOBILE.map((tab, index) => (
-        <AccordionItem className="space-y-4" key={index}>
-          <ArrowButton active={activeItem === index}>
-            {tab.svg}
-            {tab.label}
-          </ArrowButton>
-          <AccordionPanel
-            as="ul"
-            className="list-inside list-disc space-y-2 p-2 text-base text-ts"
-          >
-            {tab.tools.map((tool) => (
-              <li key={tool.name}>
-                <ExternalLink
-                  href={tool.link}
-                  className="hover:text-hp focus:text-hp focus:outline-none"
-                >
-                  {tool.name}
-                </ExternalLink>
-              </li>
-            ))}
-          </AccordionPanel>
-        </AccordionItem>
+      {TAB_MOBILE.map(({ svg, label, tools }) => (
+        <Accordion.Item className="space-y-4" key={label} value={label}>
+          <AccordionTrigger>
+            {svg}
+            {label}
+          </AccordionTrigger>
+          <Accordion.Content>
+            <ul className="list-inside list-disc space-y-2 p-2 text-base text-ts">
+              {tools.map(({ name, link }) => (
+                <li key={name}>
+                  <ExternalLink
+                    className="outline-none focus:ring ring-hp hover:text-hp"
+                    href={link}
+                  >
+                    {name}
+                  </ExternalLink>
+                </li>
+              ))}
+            </ul>
+          </Accordion.Content>
+        </Accordion.Item>
       ))}
-    </Accordion>
+    </Accordion.Root>
   );
 }
 
-interface Props {
-  children: React.ReactNode;
-  active: boolean;
-}
-function ArrowButton({ children, active }: Props) {
+const AccordionTrigger = forwardRef<
+  HTMLButtonElement,
+  React.ComponentPropsWithRef<"button">
+>(function AccordionTrigger({ children, ...props }, ref) {
   return (
-    <AccordionButton
-      className={clsx(
-        "flex w-full justify-between rounded-sm bg-bp px-6 py-3 text-lg text-tp outline-none focus:text-hp",
-        { "hover:text-hp": !active },
-      )}
-    >
-      <h4 className="inline-flex gap-2">{children}</h4>
-      <ChevronIcon
-        direction={active ? "up" : "down"}
-        size={18}
-        className="self-center ease-out"
-      />
-    </AccordionButton>
+    <Accordion.Header className="flex w-full rounded-sm bg-bp text-lg text-tp">
+      <Accordion.Trigger
+        className="group flex w-full items-center justify-between outline-none focus:text-hp px-6 py-3"
+        ref={ref}
+        {...props}
+      >
+        <span className="flex gap-2 items-center justify-center">
+          {children}
+        </span>
+        <ChevronDownIcon
+          className="w-6 h-6 group-data-[state=open]:rotate-180 text-ts"
+          aria-hidden
+        />
+      </Accordion.Trigger>
+    </Accordion.Header>
   );
-}
+});
