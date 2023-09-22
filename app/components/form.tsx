@@ -1,8 +1,7 @@
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 
 import clsx from "clsx";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
-import { useId } from "@reach/auto-id";
 import { useField } from "remix-validated-form";
 
 function Label({ className, ...labelProps }: React.ComponentProps<"label">) {
