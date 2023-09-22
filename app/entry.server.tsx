@@ -1,153 +1,141 @@
-import { renderToString } from "react-dom/server";
+/**
+ * By default, Remix will handle generating the HTTP Response for you.
+ * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
+ * For more information, see https://remix.run/file-conventions/entry.server
+ */
+
 import type { EntryContext } from "@vercel/remix";
+import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
+import { renderToPipeableStream } from "react-dom/server";
+
+import isbot from "isbot";
+import { PassThrough } from "stream";
 
 import { otherRoutes } from "./other-routes.server";
+
+const ABORT_DELAY = 5_000;
 
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext
+  remixContext: EntryContext,
 ) {
   for (const handler of otherRoutes) {
     const otherRouteResponse = await handler(request, remixContext);
     if (otherRouteResponse) return otherRouteResponse;
   }
 
-  const markup = renderToString(
-    <RemixServer context={remixContext} url={request.url} />
-  );
+  return isbot(request.headers.get("user-agent"))
+    ? handleBotRequest(
+        request,
+        responseStatusCode,
+        responseHeaders,
+        remixContext,
+      )
+    : handleBrowserRequest(
+        request,
+        responseStatusCode,
+        responseHeaders,
+        remixContext,
+      );
+}
 
-  const html = `<!DOCTYPE html>${markup}`;
+function handleBotRequest(
+  request: Request,
+  responseStatusCode: number,
+  responseHeaders: Headers,
+  remixContext: EntryContext,
+) {
+  return new Promise((resolve, reject) => {
+    let shellRendered = false;
+    const { pipe, abort } = renderToPipeableStream(
+      <RemixServer
+        context={remixContext}
+        url={request.url}
+        abortDelay={ABORT_DELAY}
+      />,
+      {
+        onAllReady() {
+          shellRendered = true;
+          const body = new PassThrough();
+          const stream = createReadableStreamFromReadable(body);
 
-  responseHeaders.set("Content-Type", "text/html");
-  responseHeaders.set("Content-Length", String(Buffer.byteLength(html)));
+          responseHeaders.set("Content-Type", "text/html");
 
-  return new Response(html, {
-    status: responseStatusCode,
-    headers: responseHeaders,
+          resolve(
+            new Response(stream, {
+              headers: responseHeaders,
+              status: responseStatusCode,
+            }),
+          );
+
+          pipe(body);
+        },
+        onShellError(err: unknown) {
+          reject(err);
+        },
+        onError(err: unknown) {
+          responseStatusCode = 500;
+          // Log streaming rendering errors from inside the shell.  Don't log
+          // errors encountered during initial shell rendering since they'll
+          // reject and get logged in handleDocumentRequest.
+          if (shellRendered) {
+            console.error(err);
+          }
+        },
+      },
+    );
+    setTimeout(abort, ABORT_DELAY);
   });
 }
 
-// TODO - add isbot & update react
-// import type { EntryContext } from "@vercel/remix";
-// import { RemixServer } from "@remix-run/react";
-// import { renderToPipeableStream } from "react-dom/server";
+function handleBrowserRequest(
+  request: Request,
+  responseStatusCode: number,
+  responseHeaders: Headers,
+  remixContext: EntryContext,
+) {
+  return new Promise((resolve, reject) => {
+    let shellRendered = false;
+    const { pipe, abort } = renderToPipeableStream(
+      <RemixServer
+        context={remixContext}
+        url={request.url}
+        abortDelay={ABORT_DELAY}
+      />,
+      {
+        onShellReady() {
+          shellRendered = true;
+          const body = new PassThrough();
+          const stream = createReadableStreamFromReadable(body);
 
-// import isbot from "isbot";
-// import { PassThrough } from "stream";
+          responseHeaders.set("Content-Type", "text/html");
 
-// import { otherRoutes } from "./other-routes.server";
+          resolve(
+            new Response(stream, {
+              headers: responseHeaders,
+              status: responseStatusCode,
+            }),
+          );
 
-// const ABORT_DELAY = 5000;
-
-// export default async function handleRequest(
-//   request: Request,
-//   responseStatusCode: number,
-//   responseHeaders: Headers,
-//   remixContext: EntryContext
-// ) {
-//   for (const handler of otherRoutes) {
-//     const otherRouteResponse = await handler(request, remixContext);
-//     if (otherRouteResponse) return otherRouteResponse;
-//   }
-
-//   return isbot(request.headers.get("user-agent"))
-//     ? handleBotRequest(
-//         request,
-//         responseStatusCode,
-//         responseHeaders,
-//         remixContext
-//       )
-//     : handleBrowserRequest(
-//         request,
-//         responseStatusCode,
-//         responseHeaders,
-//         remixContext
-//       );
-// }
-
-// function handleBotRequest(
-//   request: Request,
-//   responseStatusCode: number,
-//   responseHeaders: Headers,
-//   remixContext: EntryContext
-// ) {
-//   return new Promise((resolve, reject) => {
-//     const { pipe, abort } = renderToPipeableStream(
-//       <RemixServer
-//         context={remixContext}
-//         url={request.url}
-//         abortDelay={ABORT_DELAY}
-//       />,
-//       {
-//         onAllReady() {
-//           const body = new PassThrough();
-
-//           responseHeaders.set("Content-Type", "text/html");
-
-//           resolve(
-//             // FIXME: type error
-//             new Response(body, {
-//               headers: responseHeaders,
-//               status: responseStatusCode,
-//             })
-//           );
-
-//           pipe(body);
-//         },
-//         onShellError(err: unknown) {
-//           reject(err);
-//         },
-//         onError(err: unknown) {
-//           console.error(err);
-//           responseStatusCode = 500;
-//         },
-//       }
-//     );
-//     setTimeout(abort, ABORT_DELAY);
-//   });
-// }
-
-// function handleBrowserRequest(
-//   request: Request,
-//   responseStatusCode: number,
-//   responseHeaders: Headers,
-//   remixContext: EntryContext
-// ) {
-//   return new Promise((resolve, reject) => {
-//     const { pipe, abort } = renderToPipeableStream(
-//       <RemixServer
-//         context={remixContext}
-//         url={request.url}
-//         abortDelay={ABORT_DELAY}
-//       />,
-//       {
-//         onShellReady() {
-//           const body = new PassThrough();
-
-//           responseHeaders.set("Content-Type", "text/html");
-
-//           resolve(
-//             // FIXME: type error
-//             new Response(body, {
-//               headers: responseHeaders,
-//               status: responseStatusCode,
-//             })
-//           );
-
-//           pipe(body);
-//         },
-//         onShellError(err: unknown) {
-//           reject(err);
-//         },
-//         onError(err: unknown) {
-//           console.error(err);
-//           responseStatusCode = 500;
-//         },
-//       }
-//     );
-//     setTimeout(abort, ABORT_DELAY);
-//   });
-// }
+          pipe(body);
+        },
+        onShellError(err: unknown) {
+          reject(err);
+        },
+        onError(err: unknown) {
+          responseStatusCode = 500;
+          // Log streaming rendering errors from inside the shell.  Don't log
+          // errors encountered during initial shell rendering since they'll
+          // reject and get logged in handleDocumentRequest.
+          if (shellRendered) {
+            console.error(err);
+          }
+        },
+      },
+    );
+    setTimeout(abort, ABORT_DELAY);
+  });
+}

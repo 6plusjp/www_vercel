@@ -1,10 +1,10 @@
 import { Link } from "@remix-run/react";
-import type { V2_MetaFunction } from "@vercel/remix";
+import type { MetaFunction } from "@vercel/remix";
 
 import { getUrl } from "~/utils/misc";
 import { getMeta } from "~/utils/seo";
 
-export const meta: V2_MetaFunction = () => [
+export const meta: MetaFunction = () => [
   ...getMeta({
     title: "Terms of Use | 6+",
     description:

@@ -1,4 +1,8 @@
-import type { LinksFunction, LoaderArgs, V2_MetaFunction } from "@vercel/remix";
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@vercel/remix";
 import { json } from "@vercel/remix";
 import {
   isRouteErrorResponse,
@@ -20,7 +24,6 @@ import clsx from "clsx";
 import tailwind from "~/styles/tailwind.css";
 import global from "~/styles/global.css";
 import noScriptCSS from "~/styles/no-script.css";
-import reachUi from "~/styles/vendors.css";
 
 import { getEnv } from "./utils/env.server";
 import {
@@ -41,7 +44,7 @@ export const handle: SEOHandle & { id: string } = {
   id: "root",
 };
 
-export const loader = async ({ request }: LoaderArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { getTheme } = await getThemeSession(request);
   const data = {
     ENV: getEnv(),
@@ -55,7 +58,7 @@ export const loader = async ({ request }: LoaderArgs) => {
   return json(data);
 };
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data }) =>
+export const meta: MetaFunction<typeof loader> = ({ data }) =>
   getMeta({
     image: "/images/og.png",
     url: getUrl(data?.requestInfo),
@@ -97,7 +100,6 @@ export const links: LinksFunction = () => {
       href: "/favicon-white.ico",
       media: "(prefers-color-scheme: dark)",
     },
-    { rel: "stylesheet", href: reachUi },
     { rel: "stylesheet", href: global },
     { rel: "stylesheet", href: tailwind },
     ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),

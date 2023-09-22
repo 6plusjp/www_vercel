@@ -1,4 +1,8 @@
-import type { LinksFunction, LoaderArgs, V2_MetaFunction } from "@vercel/remix";
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@vercel/remix";
 import { json } from "@vercel/remix";
 import { Link, useLoaderData, useParams } from "@remix-run/react";
 import { useMemo } from "react";
@@ -35,7 +39,7 @@ export const handle: SEOHandle = {
   },
 };
 
-export const loader = async ({ params }: LoaderArgs) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   const slug = params.slug || "index";
 
   const post = await getMdxPage(slug);
@@ -49,7 +53,7 @@ export const loader = async ({ params }: LoaderArgs) => {
   return json(post, { status: 200, headers });
 };
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data, params }) => {
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   if (data?.frontmatter) {
     const { keywords = [], author } = data.frontmatter.meta ?? {};
     let title = data.frontmatter.meta?.title ?? data.frontmatter.title;

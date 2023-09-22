@@ -1,5 +1,5 @@
 import { useActionData } from "@remix-run/react";
-import type { ActionArgs, V2_MetaFunction } from "@vercel/remix";
+import type { ActionFunctionArgs, MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 
 import { z } from "zod";
@@ -42,7 +42,7 @@ const schema = z.object({
 
 const clientValidator = withZod(schema);
 
-export const meta: V2_MetaFunction = () => [
+export const meta: MetaFunction = () => [
   ...getMeta({
     title: "Contact Me | 6+",
     description:
@@ -56,7 +56,7 @@ type ActionData = {
   fields: ValidatorData<typeof clientValidator>;
 };
 
-export const action = async ({ request }: ActionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const result = await clientValidator.validate(await request.formData());
   if (result.error) return validationError(result.error, result.submittedData);
 

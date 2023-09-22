@@ -1,10 +1,10 @@
-import type { LoaderArgs } from "@vercel/remix";
+import type { LoaderFunctionArgs } from "@vercel/remix";
 import { format } from "date-fns";
 
 import { getBlogPages } from "~/utils/post.server";
 import { getDomainUrl } from "~/utils/misc";
 
-export const loader = async ({ request }: LoaderArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const posts = await getBlogPages("blog");
   const blogUrl = `${getDomainUrl(request)}/blog`;
 
@@ -21,25 +21,25 @@ export const loader = async ({ request }: LoaderArgs) => {
             <item>
               <title>${post.title ?? "Untitled Post"}</title>
               <description>${cdata(
-                post.description ?? "This post is... indescribable"
+                post.description ?? "This post is... indescribable",
               )}</description>
               <pubDate>${
                 post.updated
                   ? format(
                       new Date(post.updated),
-                      "E, d MMM yyyy HH:mm:ss XXXXX"
+                      "E, d MMM yyyy HH:mm:ss XXXXX",
                     )
                   : post.published
                   ? format(
                       new Date(post.published),
-                      "E, d MMM yyyy HH:mm:ss XXXXX"
+                      "E, d MMM yyyy HH:mm:ss XXXXX",
                     )
                   : format(Date.now(), "E, d MMM yyyy HH:mm:ss XXXXX")
               }</pubDate>
               <link>${blogUrl}/${post.slug}</link>
               <guid>${blogUrl}/${post.slug}</guid>
             </item>
-          `.trim()
+          `.trim(),
           )
           .join("\n")}
       </channel>
