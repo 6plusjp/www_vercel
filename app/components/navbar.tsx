@@ -1,23 +1,14 @@
-import { useEffect } from "react";
 import { NavLink } from "@remix-run/react";
 
+import * as Menu from "@radix-ui/react-dropdown-menu";
 import clsx from "clsx";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import {
-  Menu,
-  MenuButton,
-  MenuItems,
-  MenuLink,
-  MenuPopover,
-  useMenuButtonContext,
-} from "@reach/menu-button";
 
 import { ThemeToggle } from "./toggle";
 import { MenuIcon } from "./icons/menu-icon";
 import { SixPlusIcon } from "./icons/six-plus-icon";
 
 const LINKS = [
-  { name: "Home", to: "/" },
+  { name: "Home", to: "/", svg: <SixPlusIcon size={55} /> },
   { name: "Works", to: "/works" },
   { name: "Contact", to: "/contact" },
   { name: "Blog", to: "/blog" },
@@ -27,11 +18,11 @@ export const Navbar = ({ className }: { className?: string }) => (
   <div className={clsx(className, "px-[5vw] py-4 sm:py-8 lg:py-12")}>
     <nav className="mx-auto flex max-w-screen-2xl items-center justify-between text-tp">
       <NavLink
-        to="/"
+        to={LINKS[0].to}
         prefetch="intent"
         className="ring-hp focus:outline-none focus:ring-2"
       >
-        <SixPlusIcon size={55} />
+        {LINKS[0].svg}
       </NavLink>
       <div className="flex items-center justify-center">
         <ul className="mr-8 hidden lg:flex">
@@ -68,91 +59,51 @@ export const Navbar = ({ className }: { className?: string }) => (
   </div>
 );
 
-export function MobileMenu() {
-  return (
-    <Menu>
-      {({ isExpanded }) => {
-        const state = isExpanded ? "active" : "";
-        return (
-          <>
-            <MenuButton
-              className={clsx(
-                state,
-                "menu-toggle my-auto inline-flex items-center justify-center ring-hp transition focus:outline-none focus:ring-2",
-              )}
+export const MobileMenu = () => (
+  <Menu.Root>
+    <Menu.Trigger asChild>
+      <button
+        className={clsx(
+          "menu-toggle my-auto inline-flex items-center justify-center ring-hp transition focus:outline-none focus:ring-2",
+          "data-[state=open]:active",
+        )}
+        aria-label="menu toggle"
+      >
+        <MenuIcon className="text-tp" />
+      </button>
+    </Menu.Trigger>
+    <Menu.Portal>
+      <Menu.Content className="bg-bs shadow-xl p-6 rounded-md data-[side=top]:animate-slideDownAndFade data-[side=bottom]:animate-slideUpAndFade">
+        <Menu.Group className="space-y-2">
+          {LINKS.map((link) => (
+            <NavLink
+              to={link.to}
+              prefetch="intent"
+              key={link.to}
+              className="text-lg"
             >
-              <span className="sr-only">menu toggle</span>
-              <MenuIcon className="text-tp" />
-            </MenuButton>
-
-            <MobileMenuList />
-          </>
-        );
-      }}
-    </Menu>
-  );
-}
-
-function MobileMenuList() {
-  const { isExpanded } = useMenuButtonContext();
-  const reducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (isExpanded) {
-      document.body.classList.add("fixed");
-      document.body.classList.add("overflow-y-scroll");
-      document.body.style.height = "100vh";
-    } else {
-      document.body.classList.remove("fixed");
-      document.body.classList.remove("overflow-y-scroll");
-      document.body.style.removeProperty("height");
-    }
-  }, [isExpanded]);
-
-  return (
-    <AnimatePresence initial={false}>
-      {isExpanded && (
-        <MenuPopover
-          position={(r) => ({
-            top: `calc(${Number(r?.top) + Number(r?.height)}px + 2rem)`, // 2 rem = py-8 from navbar
-            bottom: 0,
-            right: 0,
-          })}
-          className="z-50 block"
-        >
-          <motion.div
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -50, opacity: 0 }}
-            transition={{
-              duration: reducedMotion ? 0 : 0.2,
-              ease: "linear",
-            }}
-            className="h-full pb-8"
-          >
-            <MenuItems className="flex min-w-[30vw] flex-col bg-bs text-center shadow-xl outline-none">
-              {LINKS.map((link) => (
-                <MenuLink
-                  key={link.to}
-                  as={NavLink}
-                  to={link.to}
-                  prefetch="intent"
-                  className={({ isActive }: { isActive: boolean }) =>
-                    isActive
-                      ? "py-3 text-lg text-slate-500 focus:outline-none dark:text-slate-300"
-                      : "py-3 text-lg text-tp hover:text-hp focus:outline-none"
+              {({ isActive, isPending }) => (
+                <Menu.Item
+                  className={
+                    isPending
+                      ? "outline-none cursor-not-allowed py-1"
+                      : isActive
+                      ? "outline-none text-slate-500 dark:text-slate-300 cursor-not-allowed py-1 data-[highlighted]:line-through"
+                      : "outline-none text-tp hover:text-hp py-1 data-[highlighted]:text-hp"
                   }
                 >
                   {link.name}
-                </MenuLink>
-              ))}
-              <div className="noscript-hidden py-6">
-                <ThemeToggle />
-              </div>
-            </MenuItems>
-          </motion.div>
-        </MenuPopover>
-      )}
-    </AnimatePresence>
-  );
-}
+                </Menu.Item>
+              )}
+            </NavLink>
+          ))}
+          {/* //FIXME -keyboard navigation and tab key operations do not focus */}
+          <Menu.Item className="noscript-hidden focus:outline-none items-center justify-center flex py-3">
+            <ThemeToggle />
+          </Menu.Item>
+        </Menu.Group>
+        <Menu.Arrow className="fill-bs" />
+      </Menu.Content>
+    </Menu.Portal>
+  </Menu.Root>
+);
