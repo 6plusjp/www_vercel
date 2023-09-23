@@ -1,4 +1,8 @@
-import type { LinksFunction, LoaderArgs, V2_MetaFunction } from "@vercel/remix";
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@vercel/remix";
 import { json } from "@vercel/remix";
 import {
   isRouteErrorResponse,
@@ -20,7 +24,6 @@ import clsx from "clsx";
 import tailwind from "~/styles/tailwind.css";
 import global from "~/styles/global.css";
 import noScriptCSS from "~/styles/no-script.css";
-import reachUi from "~/styles/vendors.css";
 
 import { getEnv } from "./utils/env.server";
 import {
@@ -35,12 +38,13 @@ import type { SEOHandle } from "./utils/seo";
 import { getMeta } from "./utils/seo";
 
 import { ExternalLink } from "./components/external-link";
+import { SkipContent } from "./components/skip-content";
 
 export const handle: SEOHandle & { id: string } = {
   id: "root",
 };
 
-export const loader = async ({ request }: LoaderArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { getTheme } = await getThemeSession(request);
   const data = {
     ENV: getEnv(),
@@ -54,7 +58,7 @@ export const loader = async ({ request }: LoaderArgs) => {
   return json(data);
 };
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data }) =>
+export const meta: MetaFunction<typeof loader> = ({ data }) =>
   getMeta({
     image: "/images/og.png",
     url: getUrl(data?.requestInfo),
@@ -96,7 +100,6 @@ export const links: LinksFunction = () => {
       href: "/favicon-white.ico",
       media: "(prefers-color-scheme: dark)",
     },
-    { rel: "stylesheet", href: reachUi },
     { rel: "stylesheet", href: global },
     { rel: "stylesheet", href: tailwind },
     ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -139,6 +142,7 @@ function Document({ children }: { children: React.ReactNode }) {
         <ThemeScript ssrTheme={Boolean(data.theme)} />
       </head>
       <body className="w-full antialiased">
+        <SkipContent />
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -247,43 +251,48 @@ export function ErrorBoundary() {
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-full flex-1 flex-col">
-      <header className="flex items-center justify-between px-6 py-9 lg:px-12">
-        <div className="container mx-auto flex justify-between">
-          <Link to="/">
-            <Icon size={50} />
-          </Link>
-          <nav aria-label="Main navigation" className="flex items-center gap-6">
-            <Link
-              className="mx-2 text-sm font-semibold opacity-80 last:mr-0 hover:opacity-100 sm:mx-4"
-              to="/"
-            >
-              Home
+    <>
+      <div className="flex h-full flex-1 flex-col">
+        <header className="flex items-center justify-between px-6 py-9 lg:px-12">
+          <div className="container mx-auto flex justify-between">
+            <Link to="/">
+              <Icon size={50} />
             </Link>
-            <ExternalLink
-              className="mx-2 text-sm font-semibold opacity-80 last:mr-0 hover:opacity-100 sm:mx-4"
-              href="https://remix.run/docs"
+            <nav
+              aria-label="Main navigation"
+              className="flex items-center gap-6"
             >
-              Remix Docs
-            </ExternalLink>
-            <ExternalLink
-              className="mx-2 text-sm font-semibold opacity-80 last:mr-0 hover:opacity-100 sm:mx-4"
-              href="https://github.com/remix-run/remix"
-            >
-              Remix GitHub
-            </ExternalLink>
-          </nav>
+              <Link
+                className="mx-2 text-sm font-semibold opacity-80 last:mr-0 hover:opacity-100 sm:mx-4"
+                to="/"
+              >
+                Home
+              </Link>
+              <ExternalLink
+                className="mx-2 text-sm font-semibold opacity-80 last:mr-0 hover:opacity-100 sm:mx-4"
+                href="https://remix.run/docs"
+              >
+                Remix Docs
+              </ExternalLink>
+              <ExternalLink
+                className="mx-2 text-sm font-semibold opacity-80 last:mr-0 hover:opacity-100 sm:mx-4"
+                href="https://github.com/remix-run/remix"
+              >
+                Remix GitHub
+              </ExternalLink>
+            </nav>
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col">
+          <div className="container mx-auto text-base">{children}</div>
         </div>
-      </header>
-      <div className="flex flex-1 flex-col">
-        <div className="container mx-auto text-base">{children}</div>
+        <footer className="flex items-center justify-between px-6 py-9 text-sm lg:px-12">
+          <div className="container mx-auto flex items-center justify-center">
+            <span>Copyright &copy; 6+ All rights reserved. </span>
+          </div>
+        </footer>
       </div>
-      <footer className="flex items-center justify-between px-6 py-9 text-sm lg:px-12">
-        <div className="container mx-auto flex items-center justify-center">
-          <span>Copyright &copy; 6+ All rights reserved. </span>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 }
 

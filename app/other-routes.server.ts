@@ -1,9 +1,9 @@
 import type { EntryContext } from "@vercel/remix";
-import { getSitemapXml, getRobotsText } from "./utils/seo";
+import { getRobotsText, getSitemapXml } from "./utils/seo";
 
 type Handler = (
   request: Request,
-  remixContext: EntryContext
+  remixContext: EntryContext,
 ) => Promise<Response | null> | null;
 
 const pathedRoutes: Record<string, Handler> = {

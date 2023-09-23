@@ -1,9 +1,9 @@
-import type { ActionArgs } from "@vercel/remix";
+import type { ActionFunctionArgs } from "@vercel/remix";
 import { json, redirect } from "@vercel/remix";
 
 import { getThemeSession, isTheme } from "~/utils/theme";
 
-export const action = async ({ request }: ActionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await getThemeSession(request);
   const requestText = await request.text();
   const form = new URLSearchParams(requestText);

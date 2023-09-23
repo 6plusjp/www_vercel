@@ -1,4 +1,4 @@
-import type { V2_MetaFunction } from "@vercel/remix";
+import type { MetaFunction } from "@vercel/remix";
 
 import { Navbar } from "~/components/navbar";
 import { Footer } from "~/components/footer";
@@ -10,7 +10,7 @@ import { AboutSection } from "~/components/sections/about-section";
 
 import { getMeta } from "~/utils/seo";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     ...getMeta({
       description: "フリーランスでフロントエンド開発しています。",

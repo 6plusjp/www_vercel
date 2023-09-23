@@ -6,13 +6,13 @@ node_modules
 .output
 
 # Remix build
-/build/
+/build
 /public/build
 
 # Postcss build
 /app/styles
 
 # Misc
-.cache
+/.cache
 .env
 TODO.md

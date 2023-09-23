@@ -1,4 +1,4 @@
-import type { LoaderArgs, V2_MetaFunction } from "@vercel/remix";
+import type { LoaderFunctionArgs, MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 import { useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ import { Footer } from "~/components/footer";
 import { getMeta } from "~/utils/seo";
 import { getWorksPages } from "~/utils/post.server";
 
-export const loader = async (_: LoaderArgs) => {
+export const loader = async (_: LoaderFunctionArgs) => {
   const posts = await getWorksPages("works");
   const tags = new Set<string>();
 
@@ -36,7 +36,7 @@ export const loader = async (_: LoaderArgs) => {
   });
 };
 
-export const meta: V2_MetaFunction<typeof loader> = () =>
+export const meta: MetaFunction<typeof loader> = () =>
   getMeta({
     title: "Works | 6+",
   });

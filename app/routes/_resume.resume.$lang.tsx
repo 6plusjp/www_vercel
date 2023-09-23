@@ -1,5 +1,5 @@
 import { json } from "@vercel/remix";
-import type { LinksFunction, LoaderArgs } from "@vercel/remix";
+import type { LinksFunction, LoaderFunctionArgs } from "@vercel/remix";
 import { Link, useLoaderData } from "@remix-run/react";
 
 import { notFound } from "~/utils/responses";
@@ -7,7 +7,7 @@ import { ExternalLink } from "~/components/external-link";
 import { SixPlusIcon } from "~/components/icons/six-plus-icon";
 import { Alert } from "~/components/alert";
 
-export const loader = ({ params }: LoaderArgs) => {
+export const loader = ({ params }: LoaderFunctionArgs) => {
   if (params.lang !== "en" && params.lang !== "ja")
     throw notFound("お探しのページは見つかりませんでした。");
 

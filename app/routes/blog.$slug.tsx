@@ -1,4 +1,8 @@
-import type { LinksFunction, LoaderArgs, V2_MetaFunction } from "@vercel/remix";
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@vercel/remix";
 import { json } from "@vercel/remix";
 import { Link, useLoaderData, useParams } from "@remix-run/react";
 import { useMemo } from "react";
@@ -35,7 +39,7 @@ export const handle: SEOHandle = {
   },
 };
 
-export const loader = async ({ params }: LoaderArgs) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   const slug = params.slug || "index";
 
   const post = await getMdxPage(slug);
@@ -49,7 +53,7 @@ export const loader = async ({ params }: LoaderArgs) => {
   return json(post, { status: 200, headers });
 };
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data, params }) => {
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   if (data?.frontmatter) {
     const { keywords = [], author } = data.frontmatter.meta ?? {};
     let title = data.frontmatter.meta?.title ?? data.frontmatter.title;
@@ -231,21 +235,20 @@ export default function MdxScreen() {
                 className="relative rounded shadow-md"
                 layoutId={`image-container-${slug}`}
               >
-                {
-                  frontmatter.bannerImgId ? (
-                    <PostImage
-                      page="page"
-                      className="rounded"
-                      imgId={frontmatter.bannerImgId}
-                      alt={frontmatter.bannerAlt}
-                    />
-                  ) : null
-                  // <img
-                  //   src={`../img/social/${slug}`}
-                  //   className="rounded"
-                  //   alt={frontmatter.bannerAlt}
-                  // />
-                }
+                {frontmatter.bannerImgId ? (
+                  <PostImage
+                    className="rounded"
+                    imgId={frontmatter.bannerImgId}
+                    widths={[280, 560, 840, 1100]}
+                    sizes={[
+                      "(max-width:767px) 95vw",
+                      "(min-width:768px) and (max-width:1023px) 740px",
+                      "(min-width:1024px) and (max-width:1279px) 80vw",
+                      "900px",
+                    ].join(", ")}
+                    alt={frontmatter.bannerAlt}
+                  />
+                ) : null}
               </motion.div>
               <motion.div
                 variants={motionVariants.back}

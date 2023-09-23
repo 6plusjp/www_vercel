@@ -1,4 +1,4 @@
-import type { LoaderArgs, V2_MetaFunction } from "@vercel/remix";
+import type { LoaderFunctionArgs, MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -23,7 +23,7 @@ type LoaderData = {
   tags: string[];
 };
 
-export const loader = async (_: LoaderArgs) => {
+export const loader = async (_: LoaderFunctionArgs) => {
   const posts = await getBlogPages("blog");
   const tags = new Set<string>();
 
@@ -46,7 +46,7 @@ export const loader = async (_: LoaderArgs) => {
   });
 };
 
-export const meta: V2_MetaFunction<typeof loader> = () =>
+export const meta: MetaFunction<typeof loader> = () =>
   getMeta({
     title: "Blog | 6+",
     description: "WEB開発関連の情報を発信しています。",
@@ -249,7 +249,7 @@ export default function Blog() {
                         <Tag
                           key={tag}
                           tag={tag}
-                          onClick={() => toggleTag(tag)}
+                          onChange={() => toggleTag(tag)}
                           selected={selected}
                           disabled={!visibleTags.has(tag) && !selected}
                         />

@@ -2,15 +2,10 @@ import { bundleMDX } from "mdx-bundler";
 import * as matter from "gray-matter";
 import { LRUCache } from "lru-cache";
 
-// @ts-expect-error
 import rehypeSlug from "rehype-slug";
-// @ts-expect-error
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-// @ts-expect-error
 import remarkGfm from "remark-gfm";
-// @ts-expect-error
 import rehypeExternalLinks from "rehype-external-links";
-// @ts-expect-error
 import rehypePrism from "rehype-prism-plus";
 
 import { md2toc } from "./unified";

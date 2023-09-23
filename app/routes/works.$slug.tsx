@@ -1,6 +1,6 @@
-import type { LoaderArgs, V2_MetaFunction } from "@vercel/remix";
+import type { LoaderFunctionArgs, MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
-import { useLoaderData, Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { useMemo } from "react";
 
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
@@ -31,7 +31,7 @@ export const handle: SEOHandle = {
   },
 };
 
-export const loader = async ({ params }: LoaderArgs) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   const slug = params.slug || "index";
   const post = await getMdxPage(slug, "works");
   if (!post) throw notFound(slug);
@@ -44,7 +44,7 @@ export const loader = async ({ params }: LoaderArgs) => {
   return json(post, { status: 200, headers });
 };
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data, params }) => {
+export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   if (data?.frontmatter) {
     const { keywords = [], ...extraMeta } = data.frontmatter.meta ?? {};
     let title = data.frontmatter.title;
@@ -108,9 +108,15 @@ export default function Work() {
             <div className="relative rounded shadow-md">
               {frontmatter.bannerImgId ? (
                 <PostImage
-                  page="page"
                   className="rounded"
                   imgId={frontmatter.bannerImgId}
+                  widths={[280, 560, 840, 1100]}
+                  sizes={[
+                    "(max-width:767px) 95vw",
+                    "(min-width:768px) and (max-width:1023px) 740px",
+                    "(min-width:1024px) and (max-width:1279px) 80vw",
+                    "900px",
+                  ].join(", ")}
                   alt={frontmatter.bannerAlt}
                 />
               ) : null}
