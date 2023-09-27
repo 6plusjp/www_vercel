@@ -21,18 +21,15 @@ export const meta = () => {
 export const links: LinksFunction = () => {
   return [
     // {
-    //   rel: "preconnect",
-    //   href: "https://fonts.googleapis.com",
-    //   crossOrigin: "anonymous",
-    // },
-    // {
-    //   rel: "preconnect",
-    //   href: "https://fonts.gstatic.com",
+    //   rel: "stylesheet",
+    //   href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap",
     //   crossOrigin: "anonymous",
     // },
     {
-      rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap",
+      rel: "preload",
+      as: "font",
+      href: "/fonts/dm-serif-display/DMSerifDisplay-Regular.woff2",
+      type: "font/woff2",
       crossOrigin: "anonymous",
     },
   ];
