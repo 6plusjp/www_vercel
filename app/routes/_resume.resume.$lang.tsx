@@ -20,13 +20,13 @@ export const meta = () => {
 
 export const links: LinksFunction = () => {
   return [
-    // {
-    //   rel: "preload",
-    //   as: "font",
-    //   href: "/fonts/dm-serif-display/DMSerifDisplay-Regular.woff2",
-    //   type: "font/woff2",
-    //   crossOrigin: "anonymous",
-    // },
+    {
+      rel: "preload",
+      as: "font",
+      href: "/fonts/dm-serif-display/DMSerifDisplay-Regular.woff2",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    },
   ];
 };
 
