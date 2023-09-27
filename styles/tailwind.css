@@ -25,6 +25,14 @@
     font-style: normal;
     font-display: optional; /* https://web.dev/preload-optional-fonts */
   }
+  @font-face {
+    font-family: "DM Serif Display";
+    src: url("/fonts/dm-serif-display/DMSerifDisplay-Regular.woff2")
+      format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: optional; /* https://web.dev/preload-optional-fonts */
+  }
 }
 
 @layer components {
