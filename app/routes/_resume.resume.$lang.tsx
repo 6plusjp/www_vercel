@@ -80,7 +80,7 @@ export default function Resume() {
             </Link>
           </div>
         </div>
-        {lang === "en" ? <EnResume /> : <JpResume />}
+        {lang === "en" ? <EnResume /> : <JaResume />}
       </div>
     </>
   );
@@ -227,7 +227,7 @@ function EnResume() {
   );
 }
 
-function JpResume() {
+function JaResume() {
   //TODO - change the layout itself to make it more stylish
   return (
     <>
