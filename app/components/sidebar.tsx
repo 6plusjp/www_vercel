@@ -6,7 +6,6 @@ import { ThemeToggle } from "./toggle";
 
 import { GitHubIcon } from "./icons/github-icon";
 import { RssIcon } from "./icons/rss-icon";
-import { TwitterIcon } from "./icons/twitter-icon";
 
 function Sidebar({ children }: { children?: ReactNode }) {
   return (
@@ -74,14 +73,6 @@ function Desktop() {
               </li>
             );
           })}
-          {/* <li className="py-1 pl-2 text-sm">
-            <ExternalLink
-              className="hover:text-hp focus:text-hp focus:outline-none"
-              href="https://umami-6plus.up.railway.app/share/Ibl3yjOa/6plus.tech"
-            >
-              Analytics - umami
-            </ExternalLink>
-          </li> */}
           <li className="py-1 pl-2 text-sm">
             <a
               className="hover:text-hp focus:text-hp focus:outline-none"
@@ -102,17 +93,6 @@ function Desktop() {
           <GitHubIcon
             size={32}
             className="fill-slate-500 hover:fill-[#333] focus:fill-[#333]"
-          />
-        </ExternalLink>
-        <ExternalLink
-          className="ring-hp focus:outline-none focus:ring-2"
-          aria-label="Twitter"
-          href="https://twitter.com"
-        >
-          <span className="sr-only"> View on Twitter </span>
-          <TwitterIcon
-            size={32}
-            className="fill-slate-500 hover:fill-[#1DA1F2] focus:fill-[#1DA1F2]"
           />
         </ExternalLink>
         <Link
