@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs } from "@vercel/remix";
 import {
   Document,
-  // Font,
+  Font,
   Link,
   Page,
   renderToStream,
@@ -11,7 +11,6 @@ import {
 } from "@react-pdf/renderer";
 import { notFound, pdf } from "~/utils/responses";
 
-// import Inter from "/public/fonts/inter/Inter-Regular.ttf";
 // import DMSerifDisplay from "/public/fonts/dm-serif-display/DMSerifDisplay-Regular.ttf";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -39,14 +38,11 @@ async function generatePDF(lang: string): Promise<Buffer> {
 }
 
 function PDFDocument() {
-  // Font.register({
-  //   family: "Inter",
-  //   src: Inter,
-  //   // `${__dirname.replace(
-  //   //   "/build",
-  //   //   "/public/fonts",
-  //   // )}/inter/Inter-Regular.woff2`,
-  // });
+  //FIXME - make the fonts well applied
+  Font.register({
+    family: "Inter",
+    src: "https://api.fontsource.org/v1/fonts/inter",
+  });
   // Font.register({
   //   family: "DM Serif Display",
   //   src: DMSerifDisplay,
@@ -54,7 +50,7 @@ function PDFDocument() {
 
   const styles = StyleSheet.create({
     page: {
-      // fontFamily: "Inter",
+      fontFamily: "Inter",
       fontSize: 16,
       color: "#232E53",
       paddingVertical: 60,

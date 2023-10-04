@@ -21,9 +21,9 @@ import { cssBundleHref } from "@remix-run/css-bundle";
 import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
 
-import tailwind from "~/styles/tailwind.css";
-import global from "~/styles/global.css";
-import noScriptCSS from "~/styles/no-script.css";
+import "./styles/tailwind.css";
+import "./styles/global.css";
+import noScriptCSS from "./styles/no-script.css";
 
 import { getEnv } from "./utils/env.server";
 import {
@@ -66,10 +66,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) =>
 
 export const links: LinksFunction = () => {
   return [
+    ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
     {
       rel: "preload",
-      as: "font",
       href: "/fonts/inter/Inter-Regular.woff2",
+      as: "font",
       type: "font/woff2",
       crossOrigin: "anonymous",
     },
@@ -100,9 +101,6 @@ export const links: LinksFunction = () => {
       href: "/favicon-white.ico",
       media: "(prefers-color-scheme: dark)",
     },
-    { rel: "stylesheet", href: global },
-    { rel: "stylesheet", href: tailwind },
-    ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   ];
 };
 

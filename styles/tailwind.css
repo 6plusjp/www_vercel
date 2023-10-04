@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: "Inter";
+    src: url("/fonts/inter/Inter-Regular.woff2") format("woff2");
+    font-style: normal;
+    font-display: optional; /* https://web.dev/preload-optional-fonts */
+  }
+  @font-face {
+    font-family: "DM Serif Display";
+    src: url("/fonts/dm-serif-display/DMSerifDisplay-Regular.woff2")
+      format("woff2");
+    font-style: normal;
+    font-display: optional; /* https://web.dev/preload-optional-fonts */
+  }
+}
+
 /* underline */
 .underline-animation {
   @apply relative inline-block no-underline hover:text-hp focus:text-hp;
@@ -15,24 +31,6 @@
 }
 .underline-animation:focus:after {
   @apply origin-bottom-left scale-x-100;
-}
-
-@layer base {
-  @font-face {
-    font-family: "Inter";
-    src: url("/fonts/inter/Inter-Regular.woff2") format("woff2");
-    font-weight: normal;
-    font-style: normal;
-    font-display: optional; /* https://web.dev/preload-optional-fonts */
-  }
-  @font-face {
-    font-family: "DM Serif Display";
-    src: url("/fonts/dm-serif-display/DMSerifDisplay-Regular.woff2")
-      format("woff2");
-    font-weight: normal;
-    font-style: normal;
-    font-display: optional; /* https://web.dev/preload-optional-fonts */
-  }
 }
 
 @layer components {

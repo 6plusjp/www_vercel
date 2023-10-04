@@ -1,5 +1,5 @@
 import { json } from "@vercel/remix";
-import type { LinksFunction, LoaderFunctionArgs } from "@vercel/remix";
+import type { LoaderFunctionArgs } from "@vercel/remix";
 import { Link, useLoaderData } from "@remix-run/react";
 
 import { notFound } from "~/utils/responses";
@@ -16,18 +16,6 @@ export const loader = ({ params }: LoaderFunctionArgs) => {
 
 export const meta = () => {
   return [{ title: "Shoma Yamamoto's Resume | 6+" }];
-};
-
-export const links: LinksFunction = () => {
-  return [
-    {
-      rel: "preload",
-      as: "font",
-      href: "/fonts/dm-serif-display/DMSerifDisplay-Regular.woff2",
-      type: "font/woff2",
-      crossOrigin: "anonymous",
-    },
-  ];
 };
 
 export default function Resume() {
@@ -92,7 +80,7 @@ function EnResume() {
       <div className="text-[#232E53] bg-white px-6 py-12 md:p-14 lg:py-20 lg:px-24 overflow-hidden shadow">
         <div className="space-y-10">
           <header>
-            <h1 className="text-4xl md:text-5xl font-['DM_Serif_Display',serif] !leading-[.9] text-hs mb-8">
+            <h1 className="text-4xl md:text-5xl font-dm-serif-display !leading-[.9] text-hs mb-8">
               Shoma
               <br />
               Yamamoto
@@ -122,7 +110,7 @@ function EnResume() {
             </ul>
           </header>
           <section className="space-y-8">
-            <h2 className="text-2xl md:text-3xl text-hs font-['DM_Serif_Display',serif]">
+            <h2 className="text-2xl md:text-3xl text-hs font-dm-serif-display">
               Work Experience
             </h2>
             <div className="flex flex-col md:flex-row space-y-1 md:space-y-0">
@@ -154,7 +142,7 @@ function EnResume() {
             </div>
           </section>
           <section className="space-y-8">
-            <h2 className="text-2xl md:text-3xl text-hs font-['DM_Serif_Display',serif]">
+            <h2 className="text-2xl md:text-3xl text-hs font-dm-serif-display">
               Education
             </h2>
             <div className="flex flex-col md:flex-row space-y-1 md:space-y-0">
@@ -190,7 +178,7 @@ function EnResume() {
             </div>
           </section>
           <section className="space-y-8 md:flex block md:space-y-0">
-            <h2 className="text-2xl md:text-3xl text-hs font-['DM_Serif_Display',serif] md:w-1/3">
+            <h2 className="text-2xl md:text-3xl text-hs font-dm-serif-display md:w-1/3">
               Skills
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8 md:w-2/3">
