@@ -117,7 +117,7 @@ export function ToolsSection() {
     <section className="bg-bs px-[5vw] py-16 duration-500">
       <div className="container mx-auto">
         <div className="flex flex-col justify-center">
-          <h2 className="py-4 text-center text-3xl font-bold text-tp sm:text-4xl">
+          <h2 className="py-4 text-center text-3xl font-semibold text-tp sm:text-4xl">
             My Tools
           </h2>
           <div className="py-16">
