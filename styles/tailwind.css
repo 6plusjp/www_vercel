@@ -16,21 +16,21 @@
     font-style: normal;
     font-display: optional; /* https://web.dev/preload-optional-fonts */
   }
-}
 
-/* underline */
-.underline-animation {
-  @apply relative inline-block no-underline hover:text-hp focus:text-hp;
-}
-.underline-animation:after {
-  content: "";
-  @apply absolute bottom-0 left-0 h-[1px] w-full origin-bottom-right scale-x-0 bg-hp transition-transform;
-}
-.underline-animation:hover:after {
-  @apply origin-bottom-left scale-x-100;
-}
-.underline-animation:focus:after {
-  @apply origin-bottom-left scale-x-100;
+  /* underline */
+  .underline-animation {
+    @apply relative inline-block no-underline hover:text-hp focus:text-hp;
+  }
+  .underline-animation:after {
+    content: "";
+    @apply absolute bottom-0 left-0 h-[1px] w-full origin-bottom-right scale-x-0 bg-hp transition-transform;
+  }
+  .underline-animation:hover:after {
+    @apply origin-bottom-left scale-x-100;
+  }
+  .underline-animation:focus:after {
+    @apply origin-bottom-left scale-x-100;
+  }
 }
 
 @layer components {
@@ -287,7 +287,4 @@
   .toc a {
     @apply w-auto hover:text-hp focus:text-hp focus:outline-none;
   }
-}
-
-@layer utilities {
 }

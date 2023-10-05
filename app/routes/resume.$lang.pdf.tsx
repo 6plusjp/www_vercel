@@ -50,27 +50,33 @@ function PDFDocument() {
 
   const styles = StyleSheet.create({
     page: {
-      fontFamily: "Inter",
-      fontSize: 16,
+      // fontFamily: "Inter",
+      fontSize: 12,
       color: "#232E53",
       paddingVertical: 60,
-      paddingHorizontal: 48,
+      paddingHorizontal: 52,
     },
     heading: {
       // fontFamily: "DM Serif Display",
       fontWeight: "bold",
       color: "green",
+      fontSize: 24,
+    },
+    section: { flexDirection: "row" },
+    headingSection: { width: "33.333333%" },
+    contentSection: {
+      width: "66.666666%",
     },
     flexItem: { color: "#757d94" },
     paragraph: { color: "black" },
   });
 
   return (
-    <Document title="Shoma Yamamoto's Resume">
+    <Document title="Shoma Yamamoto's Resume" author="Shoma Yamamoto">
       <Page style={styles.page}>
         <View>
-          <Text style={[styles.heading, { fontSize: 48 }]}>Shoma Yamamoto</Text>
-          <Text style={[styles.paragraph, { fontSize: 20 }]}>
+          <Text style={[styles.heading, { fontSize: 40 }]}>Shoma Yamamoto</Text>
+          <Text style={[styles.paragraph, { marginTop: 16, fontSize: 16 }]}>
             Self-taught, dedicated and highly motivated Web Developer with a
             passion for the acquisition of new skills and knowledge. Familiar
             with most major technology stacks and platforms. Strong focus on
@@ -78,7 +84,9 @@ function PDFDocument() {
             expectations and goals with a team is key to any successful project
             delivered.
           </Text>
-          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+          <View
+            style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 8 }}
+          >
             <Text
               style={[
                 styles.flexItem,
@@ -111,31 +119,29 @@ function PDFDocument() {
             </Link>
           </View>
         </View>
-        <View>
-          <Text style={[styles.heading, { fontSize: 30 }]}>
-            Work Experience
-          </Text>
-          <View>
-            <View>
-              <Text style={[styles.heading]}>Freelance</Text>
+        <View style={{ marginTop: 24 }}>
+          <Text style={[styles.heading]}>Work Experience</Text>
+          <View style={[styles.section, { marginTop: 24 }]}>
+            <View style={[styles.headingSection]}>
+              <Text style={[{ fontWeight: "bold" }]}>Freelance</Text>
               <Text style={{ color: "#757d94" }}>Apr 2020 - Current</Text>
             </View>
-            <View>
+            <View style={[styles.contentSection]}>
               <Text style={{ fontStyle: "italic" }}>
                 Web Developer - Web apps and websites creation. Graphic design.
                 Product development.
               </Text>
-              <View>
-                <Text style={{}}>
+              <View style={{ marginTop: 4 }}>
+                <Text style={{ marginTop: 4 }}>
                   Tech stack is predominantly React, Typescript, Jest/React
                   Testing Library and Tailwind CSS, using a rest API built in
                   Node.
                 </Text>
-                <Text style={{}}>
+                <Text style={{ marginTop: 4 }}>
                   Selected tech stack and libraries according to the
                   specifications of the site requested by the clients.
                 </Text>
-                <Text style={{}}>
+                <Text style={{ marginTop: 4 }}>
                   Topics include content marketing, landing page
                   copy/design/optimization, and more.
                 </Text>
@@ -143,60 +149,57 @@ function PDFDocument() {
             </View>
           </View>
         </View>
-        <View>
-          <Text style={[styles.heading, { fontSize: 30 }]}>Education</Text>
-          <View>
-            <View>
-              <Text style={{ fontWeight: "bold" }}>
+        <View style={{ marginTop: 24 }}>
+          <Text style={[styles.heading]}>Education</Text>
+          <View style={[styles.section, { marginTop: 24 }]}>
+            <View style={styles.headingSection}>
+              <Text style={[{ fontWeight: "bold" }]}>
                 Osaka Prefecture University (now Osaka Metropolitan University)
               </Text>
               <Text style={{ color: "#757d94" }}>2015 - 2020</Text>
             </View>
-            <View>
+            <View style={styles.contentSection}>
               <Text style={{ fontStyle: "italic" }}>
                 Science, College of Life, Environment, and Advanced Sciences
               </Text>
-              <View>
-                <Text style={{}}>
+              <View style={{ marginTop: 4 }}>
+                <Text style={{ marginTop: 4 }}>
                   Leave of absence and study abroad year at personal expense.
                 </Text>
-                <Text style={{}}>
+                <Text style={{ marginTop: 4 }}>
                   Withdrawn from school for personal reasons.
                 </Text>
               </View>
             </View>
           </View>
         </View>
-        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-          <Text style={[styles.heading, { fontSize: 30, width: "33.333333%" }]}>
-            Skills
-          </Text>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 24 }}>
+          <Text style={[styles.heading, styles.headingSection]}>Skills</Text>
           <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              width: "66.666666%",
-            }}
+            style={[
+              styles.contentSection,
+              { flexDirection: "row", flexWrap: "wrap" },
+            ]}
           >
-            <View>
+            <View style={{ flexBasis: "50%" }}>
               <Text style={{ fontWeight: "bold" }}>Languages</Text>
-              <View>
+              <View style={{ marginTop: 4 }}>
                 <Text>JavaScript, TypeScript</Text>
                 <Text>Python</Text>
                 <Text>Rust</Text>
                 <Text>PHP</Text>
               </View>
             </View>
-            <View>
+            <View style={{ flexBasis: "50%" }}>
               <Text style={{ fontWeight: "bold" }}>Frameworks</Text>
-              <View>
+              <View style={{ marginTop: 4 }}>
                 <Text>Remix</Text>
                 <Text>Tailwind CSS</Text>
               </View>
             </View>
-            <View>
+            <View style={{ flexBasis: "50%", marginTop: 16 }}>
               <Text style={{ fontWeight: "bold" }}>Other</Text>
-              <View>
+              <View style={{ marginTop: 4 }}>
                 <Text>Git</Text>
                 <Text>REST API</Text>
                 <Text>Linux</Text>

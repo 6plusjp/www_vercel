@@ -1,5 +1,5 @@
 import { json } from "@vercel/remix";
-import type { LoaderFunctionArgs } from "@vercel/remix";
+import type { LinksFunction, LoaderFunctionArgs } from "@vercel/remix";
 import { Link, useLoaderData } from "@remix-run/react";
 
 import { notFound } from "~/utils/responses";
@@ -16,6 +16,18 @@ export const loader = ({ params }: LoaderFunctionArgs) => {
 
 export const meta = () => {
   return [{ title: "Shoma Yamamoto's Resume | 6+" }];
+};
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: "preload",
+      href: "/fonts/dm-serif-display/DMSerifDisplay-Regular.woff2",
+      as: "font",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    },
+  ];
 };
 
 export default function Resume() {
