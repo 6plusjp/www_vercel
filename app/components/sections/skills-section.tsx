@@ -67,7 +67,7 @@ export function SkillsSection() {
   return (
     <section className="px-[5vw] py-16">
       <div className="container mx-auto">
-        <h2 className="py-4 text-center text-3xl font-bold text-tp sm:text-4xl">
+        <h2 className="py-4 text-center text-3xl font-semibold text-tp sm:text-4xl">
           My Skills
         </h2>
         <div className="py-16">

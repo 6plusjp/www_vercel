@@ -7,7 +7,7 @@ export function ContactSection({ className }: { className?: string }) {
     <section className={clsx(className, "py-16 text-center text-ts")}>
       <div className="container mx-auto">
         <div className="flex flex-col justify-center">
-          <h2 className="py-4 text-3xl font-bold text-tp sm:text-4xl">
+          <h2 className="py-4 text-3xl font-semibold text-tp sm:text-4xl">
             Get In Touch
           </h2>
           <p className="mb-8 text-base lg:text-lg">

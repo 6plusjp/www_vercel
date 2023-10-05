@@ -70,6 +70,7 @@ module.exports = {
       },
       fontFamily: {
         display: ["Inter", "var(--font-body)"],
+        "dm-serif-display": ['"DM Serif Display"', "serif"],
       },
       keyframes: {
         slideDownAndFade: {
