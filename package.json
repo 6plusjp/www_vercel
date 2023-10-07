@@ -36,7 +36,7 @@
     "@remix-run/react": "^2.0.1",
     "@remix-run/serve": "^2.0.1",
     "@remix-validated-form/with-zod": "^2.0.7",
-    "@vercel/analytics": "^1.0.2",
+    "@vercel/analytics": "^1.1.0",
     "@vercel/node": "^3.0.7",
     "@vercel/remix": "^2.0.1",
     "cloudinary-build-url": "^0.2.4",
@@ -68,7 +68,7 @@
     "remix-validated-form": "^5.1.5",
     "tiny-invariant": "^1.2.0",
     "unified": "^11.0.3",
-    "zod": "^3.22.3"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@cld-apis/types": "^0.1.6",
@@ -81,11 +81,11 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/fs-extra": "^11.0.2",
     "@types/lodash": "^4.14.199",
-    "@types/react": "^18.2.24",
-    "@types/react-dom": "^18.2.8",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.11",
     "autoprefixer": "^10.4.16",
     "cypress": "^13.3.0",
-    "eslint": "^8.50.0",
+    "eslint": "^8.51.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
