@@ -1,5 +1,4 @@
 import { bundleMDX } from "mdx-bundler";
-import * as matter from "gray-matter";
 import { LRUCache } from "lru-cache";
 
 import rehypeSlug from "rehype-slug";
@@ -8,7 +7,6 @@ import remarkGfm from "remark-gfm";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypePrism from "rehype-prism-plus";
 
-import { md2toc } from "./unified";
 import { readContentDir, readContentFile } from "./fs.server";
 import path from "path";
 
@@ -157,9 +155,9 @@ const getBlogPost = async (slug: string) => {
       return options;
     },
   });
-  const toc = await md2toc(matter.default(source).content);
+  // const toc = await md2toc(matter.default(source).content);
 
-  return { frontmatter, code, toc };
+  return { frontmatter, code };
 };
 
 export const getWorksPages = async (contentDir: string) => {
