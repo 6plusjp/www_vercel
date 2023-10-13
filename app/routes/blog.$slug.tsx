@@ -13,10 +13,8 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 import { Sidebar } from "~/components/sidebar";
 import { Alert } from "~/components/alert";
-import { Spacer } from "~/components/spacer";
 import { PostImage } from "~/components/post-image";
 import { MobileMenu } from "~/components/navbar";
-import { ExternalLink } from "~/components/external-link";
 
 import { formatDate } from "~/utils/format";
 import { getBlogPages, getMdxPage } from "~/utils/post.server";
@@ -26,6 +24,7 @@ import { getUrl } from "~/utils/misc";
 import { notFound } from "~/utils/responses";
 
 import prose from "~/styles/prose.css";
+import { TableOfContents } from "~/components/table-of-contents";
 
 export const handle: SEOHandle = {
   getSitemapEntries: async () => {
@@ -98,7 +97,7 @@ export const links: LinksFunction = () => {
 };
 
 export default function MdxScreen() {
-  const { frontmatter, code, toc } = useLoaderData<typeof loader>();
+  const { frontmatter, code } = useLoaderData<typeof loader>();
   const { slug } = useParams();
   const isDraft = Boolean(frontmatter.draft);
   const Component = useMemo(() => getMDXComponent(code), [code]);
@@ -179,7 +178,7 @@ export default function MdxScreen() {
       <div className="min-h-screen bg-slate-200 px-6 duration-500 dark:bg-slate-800 lg:flex">
         <div className="hidden flex-shrink-0 lg:block">
           <Sidebar>
-            {toc ? (
+            {/* {toc ? (
               <nav className="mb-8 text-tp">
                 <h4 className="mb-2 py-1 pt-0 text-base font-medium uppercase">
                   Contents
@@ -189,109 +188,91 @@ export default function MdxScreen() {
                   dangerouslySetInnerHTML={{ __html: toc }}
                 ></div>
               </nav>
-            ) : null}
+            ) : null} */}
           </Sidebar>
         </div>
         <div className="flex-grow pb-12 lg:h-full lg:py-12">
           <div className="flex items-center justify-end px-[5vw] py-4 sm:py-8 lg:hidden lg:py-12">
             <MobileMenu />
           </div>
-          <motion.div
-            initial="exit"
-            animate="enter"
-            exit="exit"
-            className="prose prose-sm mx-auto max-w-4xl dark:prose-invert sm:prose-base lg:prose-lg"
-          >
-            <motion.header
-              layoutId={`card-${slug}`}
-              className="not-prose pb-12 pt-4 lg:py-16"
+          <div className="block xl:flex xl:gap-8">
+            <TableOfContents />
+            <motion.div
+              initial="exit"
+              animate="enter"
+              exit="exit"
+              className="prose prose-sm max-w-4xl dark:prose-invert sm:prose-base lg:prose-lg"
             >
-              {isDraft ? (
-                <Alert state="info" className="mb-12">
-                  このブログ記事は下書きの状態です。リンクや内容等が変更される可能性があります。
-                </Alert>
-              ) : null}
-              <motion.div variants={motionVariants.text}>
-                <dl>
-                  <dt className="sr-only">Date</dt>
-                  <dd className="text-sm leading-6 text-slate-700 dark:text-slate-400 sm:text-center">
-                    <time
-                      dateTime={frontmatter.updated || frontmatter.published}
-                    >
-                      {frontmatter.updated
-                        ? `更新: ${formatDate(frontmatter.updated)}`
-                        : frontmatter.published
-                        ? `公開: ${formatDate(frontmatter.published)}`
-                        : null}
-                    </time>
-                  </dd>
-                </dl>
-                <h1 className="col-span-full mb-8 py-12 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 sm:text-center sm:text-4xl">
-                  {frontmatter.title}
-                </h1>
-              </motion.div>
-              <motion.div
-                variants={motionVariants.image}
-                className="relative rounded shadow-md"
-                layoutId={`image-container-${slug}`}
+              <motion.header
+                layoutId={`card-${slug}`}
+                className="not-prose pb-12 pt-4 lg:py-16"
               >
-                {frontmatter.bannerImgId ? (
-                  <PostImage
-                    className="rounded"
-                    imgId={frontmatter.bannerImgId}
-                    widths={[280, 560, 840, 1100]}
-                    sizes={[
-                      "(max-width:767px) 95vw",
-                      "(min-width:768px) and (max-width:1023px) 740px",
-                      "(min-width:1024px) and (max-width:1279px) 80vw",
-                      "900px",
-                    ].join(", ")}
-                    alt={frontmatter.bannerAlt}
-                  />
+                {isDraft ? (
+                  <Alert state="info" className="mb-12">
+                    このブログ記事は下書きの状態です。リンクや内容等が変更される可能性があります。
+                  </Alert>
                 ) : null}
-              </motion.div>
-              <motion.div
-                variants={motionVariants.back}
-                className="not-prose mt-16"
-              >
-                <Link
-                  className="group flex gap-2 text-black dark:text-white"
-                  prefetch="intent"
-                  to="/blog"
+                <motion.div variants={motionVariants.text}>
+                  <dl>
+                    <dt className="sr-only">Date</dt>
+                    <dd className="text-sm leading-6 text-slate-700 dark:text-slate-400 sm:text-center">
+                      <time
+                        dateTime={frontmatter.updated || frontmatter.published}
+                      >
+                        {frontmatter.updated
+                          ? `更新: ${formatDate(frontmatter.updated)}`
+                          : frontmatter.published
+                          ? `公開: ${formatDate(frontmatter.published)}`
+                          : null}
+                      </time>
+                    </dd>
+                  </dl>
+                  <h1 className="col-span-full mb-8 py-12 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 sm:text-center sm:text-4xl">
+                    {frontmatter.title}
+                  </h1>
+                </motion.div>
+                <motion.div
+                  variants={motionVariants.image}
+                  className="relative rounded shadow-md"
+                  layoutId={`image-container-${slug}`}
                 >
-                  <ArrowLeftIcon className="h-6 w-6 transition-transform duration-300 group-hover:-translate-x-1" />
-                  <span className="text-base">Back to Blog</span>
-                </Link>
-              </motion.div>
-            </motion.header>
-            <motion.article variants={motionVariants.code}>
-              {toc ? (
-                <nav className="mb-8 text-tp lg:hidden">
-                  <h2 className="mb-2">Contents</h2>
-                  <div
-                    className="toc"
-                    dangerouslySetInnerHTML={{ __html: toc }}
-                  ></div>
-                </nav>
-              ) : null}
-              <Component />
-              <Spacer size="sm" />
-              <ExternalLink
-                className="flex items-center justify-center"
-                href="https://www.buymeacoffee.com/6plus"
-              >
-                <img
-                  src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                  height="50"
-                  width="210"
-                  alt="6plus support"
-                />
-              </ExternalLink>
-            </motion.article>
-            <section title="If you found this article helpful.">
-              {/* {data.recommendations} */}
-            </section>
-          </motion.div>{" "}
+                  {frontmatter.bannerImgId ? (
+                    <PostImage
+                      className="rounded"
+                      imgId={frontmatter.bannerImgId}
+                      widths={[280, 560, 840, 1100]}
+                      sizes={[
+                        "(max-width:767px) 95vw",
+                        "(min-width:768px) and (max-width:1023px) 740px",
+                        "(min-width:1024px) and (max-width:1279px) 80vw",
+                        "900px",
+                      ].join(", ")}
+                      alt={frontmatter.bannerAlt}
+                    />
+                  ) : null}
+                </motion.div>
+                <motion.div
+                  variants={motionVariants.back}
+                  className="not-prose mt-16"
+                >
+                  <Link
+                    className="group flex gap-2 text-black dark:text-white"
+                    prefetch="intent"
+                    to="/blog"
+                  >
+                    <ArrowLeftIcon className="h-6 w-6 transition-transform duration-300 group-hover:-translate-x-1" />
+                    <span className="text-base">Back to Blog</span>
+                  </Link>
+                </motion.div>
+              </motion.header>
+              <motion.article variants={motionVariants.code}>
+                <Component />
+              </motion.article>
+              <section title="If you found this article helpful.">
+                {/* {data.recommendations} */}
+              </section>
+            </motion.div>
+          </div>
         </div>
       </div>
     </>
