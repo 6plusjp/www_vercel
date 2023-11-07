@@ -3,7 +3,7 @@ import { isEqual } from "lodash";
 
 import { getDomainUrl, removeTrailingSlash } from "./misc";
 
-//SECTION - sitemap.xml
+// sitemap.xml
 type SitemapEntry = {
   route: string;
   lastmod?: string;
@@ -137,9 +137,8 @@ function typedBoolean<T>(
 ): value is Exclude<T, "" | 0 | false | null | undefined> {
   return Boolean(value);
 }
-//!SECTION
 
-//SECTION - robots.txt
+// robots.txt
 type RobotsPolicy = {
   type: "allow" | "disallow" | "sitemap" | "crawlDelay" | "userAgent";
   value: string;
@@ -174,50 +173,8 @@ export function getRobotsText(request: Request): string {
     return `${accumulator}${typeTextMap[type]}: ${value}\n`;
   }, "");
 }
-//!SECTION
 
-//SECTION - meta
-// deprecated v1 meta
-// function getMeta({
-//   url,
-//   title = "6+ | Front-End Developer",
-//   description = "デジタル体験を加速させることで世界をより豊かにします。",
-//   image,
-//   isArticle = false,
-//   keywords = "",
-// }: {
-//   url: string;
-//   title?: string;
-//   description?: string;
-//   image?: string;
-//   isArticle?: boolean;
-//   keywords?: string;
-// }) {
-//   return {
-//     // ...defaultMeta,
-//     title,
-//     description,
-//     keywords,
-//     "og:url": url,
-//     "og:title": title,
-//     "og:description": description,
-//     "og:type": isArticle ? "article" : "website",
-//     ...(image
-//       ? {
-//           "og:image": image,
-//           "twitter:image": image,
-//           "twitter:card": "summary_large_image",
-//         }
-//       : null),
-//     "twitter:creator": "@6plusjp",
-//     "twitter:site": "@6plusjp",
-//     "twitter:title": title,
-//     "twitter:description": description,
-//     "twitter:alt": title,
-//   };
-// }
-
-// v2 meta
+// meta
 interface MetaArgs {
   title?: string;
   description?: string;
@@ -306,4 +263,3 @@ export const getMeta = ({
     { name: "twitter:site", content: "@6plusjp" },
   ];
 };
-//!SECTION
