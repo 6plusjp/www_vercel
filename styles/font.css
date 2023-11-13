@@ -89,11 +89,27 @@
     url("/fonts/inter/inter-latin-ext-900-normal.woff") format("woff");
 }
 
-/* DM Serif Display */
+/* DM Serif Display 400 */
 @font-face {
   font-family: "DM Serif Display";
-  src: url("/fonts/dm-serif-display/DMSerifDisplay-Regular.woff2")
-    format("woff2");
   font-style: normal;
+  font-weight: 400;
   font-display: optional; /* https://web.dev/preload-optional-fonts */
+  src:
+    url("/fonts/dm-serif-display/dm-serif-display-latin-ext-400-normal.woff2")
+      format("woff2"),
+    url("/fonts/dm-serif-display/dm-serif-display-latin-ext-400-normal.woff")
+      format("woff");
+}
+/* DM Serif Display 400 italic */
+@font-face {
+  font-family: "DM Serif Display";
+  font-style: italic;
+  font-weight: 400;
+  font-display: optional; /* https://web.dev/preload-optional-fonts */
+  src:
+    url("/fonts/dm-serif-display/dm-serif-display-latin-ext-400-italic.woff2")
+      format("woff2"),
+    url("/fonts/dm-serif-display/dm-serif-display-latin-ext-400-italic.woff")
+      format("woff");
 }
