@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 import colors from "tailwindcss/colors";
 import typography from "@tailwindcss/typography";
 import aspectRatio from "@tailwindcss/aspect-ratio";
@@ -69,8 +70,11 @@ module.exports = {
         yellow: colors.yellow,
       },
       fontFamily: {
-        display: ["Inter", "var(--font-body)"],
-        "dm-serif-display": ['"DM Serif Display"', "serif"],
+        display: ["var(--font-sans)", ...defaultTheme.fontFamily.sans],
+        "dm-serif-display": [
+          '"DM Serif Display"',
+          ...defaultTheme.fontFamily.sans,
+        ],
       },
       keyframes: {
         slideDownAndFade: {
@@ -88,7 +92,7 @@ module.exports = {
         slideUpAndFade: "slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
       },
 
-      typography: ({ theme }: { theme: any }) => ({
+      typography: () => ({
         DEFAULT: {
           css: [
             {

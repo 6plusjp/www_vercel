@@ -21,8 +21,8 @@ import { cssBundleHref } from "@remix-run/css-bundle";
 import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
 
-import "./styles/tailwind.css";
-import "./styles/global.css";
+import fontCSS from "./styles/font.css";
+import tailwindCSS from "./styles/tailwind.css";
 import noScriptCSS from "./styles/no-script.css";
 
 import { getEnv } from "./utils/env.server";
@@ -66,14 +66,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) =>
 
 export const links: LinksFunction = () => {
   return [
-    ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
-    {
-      rel: "preload",
-      href: "/fonts/inter/Inter-Regular.woff2",
-      as: "font",
-      type: "font/woff2",
-      crossOrigin: "anonymous",
-    },
+    // Preload CSS as a resource to avoid render blocking
+    { rel: "preload", href: fontCSS, as: "style" },
+    { rel: "preload", href: tailwindCSS, as: "style" },
+    cssBundleHref ? { rel: "preload", href: cssBundleHref, as: "style" } : null,
     {
       rel: "apple-touch-icon",
       sizes: "180x180",
@@ -94,14 +90,12 @@ export const links: LinksFunction = () => {
     { rel: "manifest", href: "/site.webmanifest" },
     {
       rel: "icon",
-      href: "/favicon-black.ico",
+      href: "/favicons/favicon-white.ico",
     },
-    {
-      rel: "icon",
-      href: "/favicon-white.ico",
-      media: "(prefers-color-scheme: dark)",
-    },
-  ];
+    { rel: "stylesheet", href: fontCSS },
+    { rel: "stylesheet", href: tailwindCSS },
+    cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : null,
+  ].filter(Boolean);
 };
 
 export default function App() {
