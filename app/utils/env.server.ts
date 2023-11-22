@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 function getEnv() {
   return {
     NODE_ENV: process.env.NODE_ENV,

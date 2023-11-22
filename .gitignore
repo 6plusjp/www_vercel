@@ -14,5 +14,10 @@ node_modules
 
 # Misc
 /.cache
-.env
 TODO.md
+
+# dotenv
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
