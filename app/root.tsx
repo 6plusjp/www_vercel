@@ -20,6 +20,7 @@ import { cssBundleHref } from "@remix-run/css-bundle";
 
 import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
+import { HoneypotProvider } from "remix-utils/honeypot/react";
 
 import fontCSS from "./styles/font.css";
 import tailwindCSS from "./styles/tailwind.css";
@@ -39,6 +40,7 @@ import { getMeta } from "./utils/seo";
 
 import { ExternalLink } from "./components/external-link";
 import { SkipContent } from "./components/skip-content";
+import { honeypot } from "./utils/honeypot.server";
 
 export const handle: SEOHandle & { id: string } = {
   id: "root",
@@ -53,6 +55,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       path: new URL(request.url).pathname,
     },
     theme: getTheme(),
+    honeypot: honeypot.getInputProps(),
   };
 
   return json(data);
@@ -103,10 +106,12 @@ export default function App() {
 
   return (
     <ThemeProvider specifiedTheme={data.theme}>
-      <Document>
-        <Outlet />
-        <ThemeBody ssrTheme={Boolean(data.theme)} />
-      </Document>
+      <HoneypotProvider {...data.honeypot}>
+        <Document>
+          <Outlet />
+          <ThemeBody ssrTheme={Boolean(data.theme)} />
+        </Document>
+      </HoneypotProvider>
     </ThemeProvider>
   );
 }

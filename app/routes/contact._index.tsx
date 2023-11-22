@@ -22,6 +22,8 @@ import { getMeta } from "~/utils/seo";
 import { useHydrated } from "~/utils/hydrated";
 import { sendEmail, sendEmailToOwner } from "~/utils/email.server";
 import { getUrl } from "~/utils/misc";
+import { checkHoneypot } from "~/utils/honeypot.server";
+import { HoneypotInputs } from "remix-utils/honeypot/react";
 
 const schema = z.object({
   name: z
@@ -57,8 +59,10 @@ type ActionData = {
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const result = await clientValidator.validate(await request.formData());
+  const formData = await request.formData();
+  const result = await clientValidator.validate(formData);
   if (result.error) return validationError(result.error, result.submittedData);
+  checkHoneypot(formData);
 
   const response = await sendEmailToOwner(result.data);
   if (response.ok) {
@@ -109,6 +113,7 @@ export default function Contact() {
             お問い合わせ
           </h1>
           <div className="mb-8 grid gap-x-12 gap-y-4 lg:grid-cols-2">
+            <HoneypotInputs />
             <Input name="name" label="お名前 / 会社名" placeholder="6+" />
             <Input
               type="email"
