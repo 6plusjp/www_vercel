@@ -1,9 +1,17 @@
-function getEnv() {
+/**
+ * This is used in both `entry.server.ts` and `root.tsx` to ensure that
+ * the environment variables are set and globally available before the app is
+ * started.
+ *
+ * NOTE: Do *not* add any environment variables in here that you do not wish to
+ * be included in the client.
+ * @returns all public ENV variables
+ */
+export function getEnv() {
+  require("dotenv").config;
+
   return {
     NODE_ENV: process.env.NODE_ENV,
-    SESSION_SECRET: process.env.SESSION_SECRET,
-    MAILERSEND_API_KEY: process.env.MAILERSEND_API_KEY,
-    HONEYPOT_SECRET: process.env.HONEYPOT_SECRET,
   };
 }
 
@@ -33,15 +41,13 @@ function getRequiredEnvVarFromObj(
   return value;
 }
 
-function getRequiredServerEnvVar(key: string, devValue?: string) {
+export function getRequiredServerEnvVar(key: string, devValue?: string) {
   return getRequiredEnvVarFromObj(process.env, key, devValue);
 }
 
-function getRequiredGlobalEnvVar(
+export function getRequiredGlobalEnvVar(
   key: keyof ReturnType<typeof getEnv>,
   devValue?: string,
 ) {
   return getRequiredEnvVarFromObj(ENV, key, devValue);
 }
-
-export { getEnv, getRequiredServerEnvVar, getRequiredGlobalEnvVar };
