@@ -11,6 +11,7 @@ import {
 } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
 import clsx from "clsx";
+import { HoneypotInputs } from "remix-utils/honeypot/react";
 
 import { Navbar } from "~/components/navbar";
 import { Input, Select, Textarea } from "~/components/form";
@@ -23,7 +24,6 @@ import { useHydrated } from "~/utils/hydrated";
 import { sendEmail, sendEmailToOwner } from "~/utils/email.server";
 import { getUrl } from "~/utils/misc";
 import { checkHoneypot } from "~/utils/honeypot.server";
-import { HoneypotInputs } from "remix-utils/honeypot/react";
 
 const schema = z.object({
   name: z
@@ -109,11 +109,11 @@ export default function Contact() {
             text: data?.fields.text ?? "",
           }}
         >
+          <HoneypotInputs />
           <h1 className="mb-12 py-8 text-3xl font-bold text-tp sm:text-4xl">
             お問い合わせ
           </h1>
           <div className="mb-8 grid gap-x-12 gap-y-4 lg:grid-cols-2">
-            <HoneypotInputs />
             <Input name="name" label="お名前 / 会社名" placeholder="6+" />
             <Input
               type="email"
