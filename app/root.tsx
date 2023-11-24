@@ -20,7 +20,6 @@ import { cssBundleHref } from "@remix-run/css-bundle";
 
 import { Analytics } from "@vercel/analytics/react";
 import clsx from "clsx";
-import { HoneypotProvider } from "remix-utils/honeypot/react";
 
 import fontCSS from "./styles/font.css";
 import tailwindCSS from "./styles/tailwind.css";
@@ -106,12 +105,10 @@ export default function App() {
 
   return (
     <ThemeProvider specifiedTheme={data.theme}>
-      <HoneypotProvider {...data.honeypot}>
-        <Document>
-          <Outlet />
-          <ThemeBody ssrTheme={Boolean(data.theme)} />
-        </Document>
-      </HoneypotProvider>
+      <Document>
+        <Outlet />
+        <ThemeBody ssrTheme={Boolean(data.theme)} />
+      </Document>
     </ThemeProvider>
   );
 }
