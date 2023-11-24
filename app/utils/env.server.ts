@@ -1,10 +1,9 @@
-require('dotenv').config()
-
 function getEnv() {
   return {
     NODE_ENV: process.env.NODE_ENV,
     SESSION_SECRET: process.env.SESSION_SECRET,
     MAILERSEND_API_KEY: process.env.MAILERSEND_API_KEY,
+    HONEYPOT_SECRET: process.env.HONEYPOT_SECRET,
   };
 }
 
@@ -22,7 +21,7 @@ declare global {
 function getRequiredEnvVarFromObj(
   obj: Record<string, string | undefined>,
   key: string,
-  devValue = `${key}-dev-value`
+  devValue = `${key}-dev-value`,
 ) {
   let value = devValue;
   const envVal = obj[key];
@@ -40,7 +39,7 @@ function getRequiredServerEnvVar(key: string, devValue?: string) {
 
 function getRequiredGlobalEnvVar(
   key: keyof ReturnType<typeof getEnv>,
-  devValue?: string
+  devValue?: string,
 ) {
   return getRequiredEnvVarFromObj(ENV, key, devValue);
 }

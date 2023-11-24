@@ -1,13 +1,9 @@
 import { createCookieSessionStorage, redirect } from "@vercel/remix";
 import invariant from "tiny-invariant";
 
-// import { Theme } from "./theme";
-// import { __DEV__ } from "./assertion";
 import { getRequiredServerEnvVar } from "./env.server";
-require("dotenv").config();
 
 const sessionStorageKey = "6+__session";
-// const hasSupport = () => typeof Storage !== "undefined";
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
 
 export const sessionStorage = createCookieSessionStorage({
@@ -48,7 +44,7 @@ export async function getUserId(request: Request): Promise<string | undefined> {
 
 export async function requireUserId(
   request: Request,
-  redirectTo: string = new URL(request.url).pathname
+  redirectTo: string = new URL(request.url).pathname,
 ): Promise<string> {
   const userId = await getUserId(request);
   if (!userId) {

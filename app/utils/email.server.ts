@@ -1,5 +1,4 @@
 import invariant from "tiny-invariant";
-require("dotenv").config();
 
 interface Props {
   subject: string;
