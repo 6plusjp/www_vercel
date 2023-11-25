@@ -1,4 +1,4 @@
-import { useActionData } from "@remix-run/react";
+import { useActionData, useLoaderData } from "@remix-run/react";
 import type { ActionFunctionArgs, MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
 
@@ -11,6 +11,7 @@ import {
 } from "remix-validated-form";
 import { withZod } from "@remix-validated-form/with-zod";
 import clsx from "clsx";
+import { HoneypotInputs } from "remix-utils/honeypot/react";
 
 import { Navbar } from "~/components/navbar";
 import { Input, Select, Textarea } from "~/components/form";
@@ -22,6 +23,7 @@ import { getMeta } from "~/utils/seo";
 import { useHydrated } from "~/utils/hydrated";
 import { sendEmail, sendEmailToOwner } from "~/utils/email.server";
 import { getUrl } from "~/utils/misc";
+import { checkHoneypot } from "~/utils/honeypot.server";
 
 const schema = z.object({
   name: z
@@ -57,8 +59,10 @@ type ActionData = {
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const result = await clientValidator.validate(await request.formData());
+  const formData = await request.formData();
+  const result = await clientValidator.validate(formData);
   if (result.error) return validationError(result.error, result.submittedData);
+  checkHoneypot(formData);
 
   const response = await sendEmailToOwner(result.data);
   if (response.ok) {
@@ -105,6 +109,7 @@ export default function Contact() {
             text: data?.fields.text ?? "",
           }}
         >
+          <HoneypotInputs />
           <h1 className="mb-12 py-8 text-3xl font-bold text-tp sm:text-4xl">
             お問い合わせ
           </h1>

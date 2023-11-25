@@ -1,2 +1,7 @@
 templates
 draft
+
+.env*
+!.env.vault
+.flaskenv*
+!.env.project
