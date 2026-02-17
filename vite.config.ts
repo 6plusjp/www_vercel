@@ -1,11 +1,11 @@
-import mdx from "@mdx-js/rollup";
-import { vitePlugin as remix } from "@remix-run/dev";
-import { installGlobals } from "@remix-run/node";
-import { defineConfig } from "vite";
-import { vercelPreset } from "@vercel/remix/vite";
-import tsconfigPaths from "vite-tsconfig-paths";
+import mdx from '@mdx-js/rollup'
+import { vitePlugin as remix } from '@remix-run/dev'
+import { installGlobals } from '@remix-run/node'
+import { defineConfig } from 'vite'
+import { vercelPreset } from '@vercel/remix/vite'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
-installGlobals();
+installGlobals()
 
 export default defineConfig({
   server: {
@@ -14,10 +14,9 @@ export default defineConfig({
   plugins: [
     mdx(),
     remix({
-      ignoredRouteFiles: ["**/*"],
-      serverModuleFormat: "esm",
+      serverModuleFormat: 'esm',
       presets: [vercelPreset()],
     }),
     tsconfigPaths(),
   ],
-});
+})

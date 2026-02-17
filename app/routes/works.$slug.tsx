@@ -1,79 +1,69 @@
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { Link, useLoaderData } from "@remix-run/react";
-import type { LoaderFunctionArgs, MetaFunction } from "@vercel/remix";
-import { json } from "@vercel/remix";
-import { getMDXComponent } from "mdx-bundler/client";
-import { useMemo } from "react";
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { Link, useLoaderData } from '@remix-run/react'
+import type { LoaderFunctionArgs, MetaFunction } from '@vercel/remix'
+import { json } from '@vercel/remix'
+import { getMDXComponent } from 'mdx-bundler/client'
+import { useMemo } from 'react'
 
-import { Alert } from "~/components/alert";
-import { Footer } from "~/components/footer";
-import { Navbar } from "~/components/navbar";
-import { PostImage } from "~/components/post-image";
-import { Spacer } from "~/components/spacer";
-import { formatMonth } from "~/utils/format";
-import { getUrl } from "~/utils/misc";
-import { getMdxPage, getWorksPages } from "~/utils/post.server";
-import { notFound } from "~/utils/responses";
-import type { SEOHandle } from "~/utils/seo";
-import { getMeta } from "~/utils/seo";
+import { Alert } from '~/components/alert'
+import { Footer } from '~/components/footer'
+import { Navbar } from '~/components/navbar'
+import { PostImage } from '~/components/post-image'
+import { Spacer } from '~/components/spacer'
+import { formatMonth } from '~/utils/format'
+import { getUrl } from '~/utils/misc'
+import { getMdxPage, getWorksPages } from '~/utils/post.server'
+import { notFound } from '~/utils/responses'
+import type { SEOHandle } from '~/utils/seo'
+import { getMeta } from '~/utils/seo'
 
-export const handle: SEOHandle = {
-  getSitemapEntries: async () => {
-    const pages = await getWorksPages("works");
-
-    return pages
-      .filter((page) => !page.draft)
-      .map((page) => {
-        return { route: `/works/${page.slug}`, priority: 0.7 };
-      });
-  },
-};
+export const handle: SEOHandle = {}
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const slug = params.slug || "index";
-  const post = await getMdxPage(slug, "works");
-  if (!post) throw notFound(slug);
+  const slug = params.slug || 'index'
+  const post = await getMdxPage(slug, 'works')
+  if (!post) throw notFound(slug)
 
   const headers = {
-    "Cache-Control": "private, max-age=3600",
-    Vary: "Cookie",
-  };
+    'Cache-Control': 'private, max-age=3600',
+    Vary: 'Cookie',
+  }
 
-  return json(post, { status: 200, headers });
-};
+  return json(post, { status: 200, headers })
+}
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   if (data?.frontmatter) {
-    const { keywords = [], ...extraMeta } = data.frontmatter.meta ?? {};
-    let title = data.frontmatter.title;
+    const { keywords = [], ...extraMeta } = data.frontmatter.meta ?? {}
+    let title = data.frontmatter.title
 
-    const isDraft = data.frontmatter.draft;
-    if (isDraft) title = `下書き: ${title ?? "No Title"} | 6+ Works`;
-    else title = `${title ?? "No Title"} | 6+ Works`;
+    const isDraft = data.frontmatter.draft
+    if (isDraft) title = `下書き: ${title ?? 'No Title'} | 6+ Works`
+    else title = `${title ?? 'No Title'} | 6+ Works`
 
     return [
       ...getMeta({
         title,
         description: data.frontmatter.description,
-        keywords: keywords.join(", "),
+        keywords: keywords.join(', '),
         url: `${getUrl()}/works/${params.slug}`,
         isDraft,
       }),
       extraMeta,
-    ];
+    ]
   } else {
     return [
       {
-        title: "お探しのページは見つかりませんでした",
+        title: 'お探しのページは見つかりませんでした',
       },
-    ];
+    ]
   }
-};
+}
 
 export default function Work() {
-  const { frontmatter, code } = useLoaderData<typeof loader>();
-  const isDraft = Boolean(frontmatter.draft);
-  const Component = useMemo(() => getMDXComponent(code), [code]);
+  const { frontmatter, code } = useLoaderData<typeof loader>()
+  const isDraft = Boolean(frontmatter.draft)
+  const Component = useMemo(() => getMDXComponent(code), [code])
 
   return (
     <>
@@ -94,8 +84,8 @@ export default function Work() {
                     {frontmatter.updated
                       ? `${formatMonth(frontmatter.updated)}`
                       : frontmatter.published
-                      ? `${formatMonth(frontmatter.published)}`
-                      : null}
+                        ? `${formatMonth(frontmatter.published)}`
+                        : null}
                   </time>
                 </dd>
               </dl>
@@ -110,11 +100,11 @@ export default function Work() {
                   imgId={frontmatter.bannerImgId}
                   widths={[280, 560, 840, 1100]}
                   sizes={[
-                    "(max-width:767px) 95vw",
-                    "(min-width:768px) and (max-width:1023px) 740px",
-                    "(min-width:1024px) and (max-width:1279px) 80vw",
-                    "900px",
-                  ].join(", ")}
+                    '(max-width:767px) 95vw',
+                    '(min-width:768px) and (max-width:1023px) 740px',
+                    '(min-width:1024px) and (max-width:1279px) 80vw',
+                    '900px',
+                  ].join(', ')}
                   alt={frontmatter.bannerAlt}
                 />
               ) : null}
@@ -138,5 +128,5 @@ export default function Work() {
         <Footer className="bg-bs duration-500" />
       </div>
     </>
-  );
+  )
 }
