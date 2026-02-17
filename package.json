@@ -6,6 +6,16 @@
   "description": "A remix version of 6+ portfolio",
   "author": "Shoma Yamamoto <6plusjp@gmail.com>",
   "license": "MIT",
+  "overrides": {
+    "axios": ">=1.13.5",
+    "esbuild": ">=0.24.3",
+    "estree-util-value-to-estree": ">=3.3.3",
+    "nanoid": ">=3.3.8",
+    "path-to-regexp": ">=6.3.0",
+    "rollup": ">=2.79.2",
+    "tar": ">=7.5.7",
+    "undici": ">=6.23.0"
+  },
   "scripts": {
     "build": "npm run cleanup && run-s build:*",
     "build:css": "postcss styles --base styles --dir app/styles --env production",
