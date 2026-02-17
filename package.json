@@ -20,7 +20,7 @@
   "scripts": {
     "build": "npm run cleanup && run-s build:*",
     "build:css": "postcss styles --base styles --dir app/styles --env production",
-    "build:remix": "remix build",
+    "build:remix": "remix vite:build",
     "dev": "run-p dev:*",
     "dev:css": "postcss styles --base styles --dir app/styles -w",
     "dev:remix": "remix dev",
@@ -28,7 +28,7 @@
     "lint": "eslint app/",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
-    "cleanup": "rimraf .cache ./build ./public/build ./app/styles",
+    "cleanup": "rimraf .cache .vercel ./build ./public/build ./app/styles",
     "reinstall": "npm run cleanup && rimraf package-lock.json pnpm-lock.yaml node_modules && npm i"
   },
   "eslintIgnore": [
@@ -106,7 +106,6 @@
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "typescript-eslint": "^7.0.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
@@ -116,6 +115,8 @@
     "rimraf": "^5.0.7",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.2",
+    "typescript-eslint": "^7.0.0",
+    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^2.1.0"
   },
   "engines": {

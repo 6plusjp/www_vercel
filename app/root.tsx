@@ -22,21 +22,16 @@ import { HoneypotProvider } from 'remix-utils/honeypot/react'
 
 import { ExternalLink } from './components/external-link'
 import { SkipContent } from './components/skip-content'
-import fontCSS from './styles/font.css'
-import noScriptCSS from './styles/no-script.css'
-import tailwindCSS from './styles/tailwind.css'
+import fontCSS from './styles/font.css?url'
+import noScriptCSS from './styles/no-script.css?url'
+import tailwindCSS from './styles/tailwind.css?url'
 import { getEnv } from './utils/env.server'
 import { honeypot } from './utils/honeypot.server'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/misc'
 import type { SEOHandle } from './utils/seo'
 import { getMeta } from './utils/seo'
-import {
-  getThemeSession,
-  ThemeBody,
-  ThemeProvider,
-  ThemeScript,
-  useTheme,
-} from './utils/theme'
+import { getThemeSession } from './utils/theme.server'
+import { ThemeBody, ThemeProvider, ThemeScript, useTheme } from './utils/theme'
 
 export const handle: SEOHandle & { id: string } = {
   id: 'root',
