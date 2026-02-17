@@ -12,7 +12,7 @@ export default defineConfig({
     port: 3000,
   },
   ssr: {
-    noExternal: ['lodash', 'fs-extra'],
+    noExternal: ['lodash', 'fs-extra', 'nanoid'],
   },
   plugins: [
     mdx(),
