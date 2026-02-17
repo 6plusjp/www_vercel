@@ -9,7 +9,7 @@ import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { renderToPipeableStream } from "react-dom/server";
 
-import isbot from "isbot";
+import { isbot } from "isbot";
 import { PassThrough } from "stream";
 
 import { otherRoutes } from "./other-routes.server";
