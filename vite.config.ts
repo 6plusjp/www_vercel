@@ -11,6 +11,9 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  ssr: {
+    noExternal: ['lodash', 'fs-extra'],
+  },
   plugins: [
     mdx(),
     remix({
