@@ -1,3 +1,5 @@
+import { useFetcher } from "@remix-run/react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 import {
   createContext,
   createElement,
@@ -6,8 +8,6 @@ import {
   useRef,
   useState,
 } from "react";
-import type { Dispatch, ReactNode, SetStateAction } from "react";
-import { useFetcher } from "@remix-run/react";
 
 import { __DEV__ } from "./assertion";
 import { getSession, sessionStorage } from "./session.server";
@@ -236,14 +236,14 @@ function isTheme(value: unknown): value is Theme {
 }
 
 export {
-  themes,
-  isTheme,
-  useTheme,
   getThemeSession,
-  ThemeContext,
-  ThemeScript,
+  isTheme,
   ThemeBody,
-  ThemeProvider,
+  ThemeContext,
   Themed,
+  ThemeProvider,
+  themes,
+  ThemeScript,
+  useTheme,
 };
 export type { Theme };

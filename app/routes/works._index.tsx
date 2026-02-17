@@ -1,17 +1,15 @@
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunctionArgs, MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
-import { useLoaderData } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
-import { PlusIcon } from "@heroicons/react/24/outline";
-
-import { Navbar } from "~/components/navbar";
 import { WorksCard } from "~/components/card";
-import { Spacer } from "~/components/spacer";
 import { Footer } from "~/components/footer";
-
-import { getMeta } from "~/utils/seo";
+import { Navbar } from "~/components/navbar";
+import { Spacer } from "~/components/spacer";
 import { getWorksPages } from "~/utils/post.server";
+import { getMeta } from "~/utils/seo";
 
 export const loader = async (_: LoaderFunctionArgs) => {
   const posts = await getWorksPages("works");

@@ -1,11 +1,10 @@
+import { Form, useActionData } from "@remix-run/react";
+import { withZod } from "@remix-validated-form/with-zod";
 import type { DataFunctionArgs } from "@vercel/remix";
 import { json } from "@vercel/remix";
-import { Form, useActionData } from "@remix-run/react";
-
-import { z } from "zod";
 import type { ValidatorData } from "remix-validated-form";
 import { validationError } from "remix-validated-form";
-import { withZod } from "@remix-validated-form/with-zod";
+import { z } from "zod";
 
 import type { SEOHandle } from "~/utils/seo";
 

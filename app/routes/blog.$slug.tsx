@@ -1,30 +1,27 @@
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Link, useLoaderData, useParams } from "@remix-run/react";
 import type {
   LinksFunction,
   LoaderFunctionArgs,
   MetaFunction,
 } from "@vercel/remix";
 import { json } from "@vercel/remix";
-import { Link, useLoaderData, useParams } from "@remix-run/react";
+import { motion, useReducedMotion } from "framer-motion";
+import { getMDXComponent } from "mdx-bundler/client";
 import { useMemo } from "react";
 
-import { getMDXComponent } from "mdx-bundler/client";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-
-import { Sidebar } from "~/components/sidebar";
 import { Alert } from "~/components/alert";
-import { PostImage } from "~/components/post-image";
 import { MobileMenu } from "~/components/navbar";
-
+import { PostImage } from "~/components/post-image";
+import { Sidebar } from "~/components/sidebar";
+import { TableOfContents } from "~/components/table-of-contents";
+import prose from "~/styles/prose.css";
 import { formatDate } from "~/utils/format";
+import { getUrl } from "~/utils/misc";
 import { getBlogPages, getMdxPage } from "~/utils/post.server";
+import { notFound } from "~/utils/responses";
 import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
-import { getUrl } from "~/utils/misc";
-import { notFound } from "~/utils/responses";
-
-import prose from "~/styles/prose.css";
-import { TableOfContents } from "~/components/table-of-contents";
 
 export const handle: SEOHandle = {
   getSitemapEntries: async () => {

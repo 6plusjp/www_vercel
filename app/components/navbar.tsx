@@ -1,11 +1,10 @@
-import { NavLink } from "@remix-run/react";
-
 import * as Menu from "@radix-ui/react-dropdown-menu";
+import { NavLink } from "@remix-run/react";
 import clsx from "clsx";
 
-import { ThemeToggle } from "./toggle";
 import { MenuIcon } from "./icons/menu-icon";
 import { SixPlusIcon } from "./icons/six-plus-icon";
+import { ThemeToggle } from "./toggle";
 
 const LINKS = [
   { name: "Home", to: "/", svg: <SixPlusIcon size={55} /> },

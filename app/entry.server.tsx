@@ -4,12 +4,11 @@
  * For more information, see https://remix.run/file-conventions/entry.server
  */
 
-import type { EntryContext } from "@vercel/remix";
 import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
-import { renderToPipeableStream } from "react-dom/server";
-
+import type { EntryContext } from "@vercel/remix";
 import { isbot } from "isbot";
+import { renderToPipeableStream } from "react-dom/server";
 import { PassThrough } from "stream";
 
 import { otherRoutes } from "./other-routes.server";

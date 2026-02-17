@@ -1,7 +1,3 @@
-import { forwardRef } from "react";
-import { Link } from "@remix-run/react";
-
-import * as Accordion from "@radix-ui/react-accordion";
 import {
   ArchiveBoxIcon,
   ChatBubbleLeftRightIcon,
@@ -9,13 +5,16 @@ import {
   CodeBracketIcon,
   SwatchIcon,
 } from "@heroicons/react/24/outline";
+import * as Accordion from "@radix-ui/react-accordion";
+import { Link } from "@remix-run/react";
+import { forwardRef } from "react";
 
 import { ExternalLink } from "../external-link";
 import { PythonIcon } from "../icons/python-icon";
 import { ReactIcon } from "../icons/react-icon";
-import { VueIcon } from "../icons/vue-icon";
 import { SlackIcon } from "../icons/slack-icon";
 import { TSIcon } from "../icons/ts-icon";
+import { VueIcon } from "../icons/vue-icon";
 
 const TAB_DESKTOP = [
   {

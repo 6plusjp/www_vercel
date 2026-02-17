@@ -1,8 +1,7 @@
-import { forwardRef, useState } from "react";
-
-import { buildImageUrl } from "cloudinary-build-url";
 import type { CldOptions, Resize } from "@cld-apis/types";
+import { buildImageUrl } from "cloudinary-build-url";
 import clsx from "clsx";
+import { forwardRef, useState } from "react";
 
 import { Skeleton } from "./skeleton";
 

@@ -53,7 +53,7 @@ export const useIntersectionObserver = (ref: RefObject<Element>) => {
 
     return () => observer.disconnect();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [ref?.current]);
 
   return entry;

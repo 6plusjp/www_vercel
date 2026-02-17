@@ -1,5 +1,3 @@
-import type { LoaderFunctionArgs } from "@vercel/remix";
-
 import {
   Document,
   Link,
@@ -9,6 +7,8 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
+import type { LoaderFunctionArgs } from "@vercel/remix";
+
 import { notFound, pdf } from "~/utils/responses";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {

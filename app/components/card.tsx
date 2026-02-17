@@ -1,10 +1,10 @@
 import { Link } from "@remix-run/react";
-
 import { motion } from "framer-motion";
-import { PostImage } from "./post-image";
 
-import type { Frontmatter } from "~/utils/post.server";
 import { formatDate, formatMonth } from "~/utils/format";
+import type { Frontmatter } from "~/utils/post.server";
+
+import { PostImage } from "./post-image";
 
 interface Props {
   frontmatter: Frontmatter;

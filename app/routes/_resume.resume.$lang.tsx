@@ -1,11 +1,11 @@
-import { json } from "@vercel/remix";
-import type { LinksFunction, LoaderFunctionArgs } from "@vercel/remix";
 import { Link, useLoaderData } from "@remix-run/react";
+import type { LinksFunction, LoaderFunctionArgs } from "@vercel/remix";
+import { json } from "@vercel/remix";
 
-import { notFound } from "~/utils/responses";
+import { Alert } from "~/components/alert";
 import { ExternalLink } from "~/components/external-link";
 import { SixPlusIcon } from "~/components/icons/six-plus-icon";
-import { Alert } from "~/components/alert";
+import { notFound } from "~/utils/responses";
 
 export const loader = ({ params }: LoaderFunctionArgs) => {
   if (params.lang !== "en" && params.lang !== "ja")

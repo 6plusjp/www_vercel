@@ -1,14 +1,13 @@
-import { bundleMDX } from "mdx-bundler";
 import { LRUCache } from "lru-cache";
-
-import rehypeSlug from "rehype-slug";
+import { bundleMDX } from "mdx-bundler";
+import path from "path";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import remarkGfm from "remark-gfm";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypePrism from "rehype-prism-plus";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
 import { readContentDir, readContentFile } from "./fs.server";
-import path from "path";
 
 export interface Frontmatter {
   title?: string;

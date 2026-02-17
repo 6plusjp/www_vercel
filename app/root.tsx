@@ -1,9 +1,4 @@
-import type {
-  LinksFunction,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@vercel/remix";
-import { json } from "@vercel/remix";
+import { cssBundleHref } from "@remix-run/css-bundle";
 import {
   isRouteErrorResponse,
   Link,
@@ -16,16 +11,26 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
-import { cssBundleHref } from "@remix-run/css-bundle";
-
 import { Analytics } from "@vercel/analytics/react";
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@vercel/remix";
+import { json } from "@vercel/remix";
 import clsx from "clsx";
+import { HoneypotProvider } from "remix-utils/honeypot/react";
 
+import { ExternalLink } from "./components/external-link";
+import { SkipContent } from "./components/skip-content";
 import fontCSS from "./styles/font.css";
-import tailwindCSS from "./styles/tailwind.css";
 import noScriptCSS from "./styles/no-script.css";
-
+import tailwindCSS from "./styles/tailwind.css";
 import { getEnv } from "./utils/env.server";
+import { honeypot } from "./utils/honeypot.server";
+import { getDomainUrl, getUrl, removeTrailingSlash } from "./utils/misc";
+import type { SEOHandle } from "./utils/seo";
+import { getMeta } from "./utils/seo";
 import {
   getThemeSession,
   ThemeBody,
@@ -33,14 +38,6 @@ import {
   ThemeScript,
   useTheme,
 } from "./utils/theme";
-import { getDomainUrl, getUrl, removeTrailingSlash } from "./utils/misc";
-import type { SEOHandle } from "./utils/seo";
-import { getMeta } from "./utils/seo";
-
-import { ExternalLink } from "./components/external-link";
-import { SkipContent } from "./components/skip-content";
-import { honeypot } from "./utils/honeypot.server";
-import { HoneypotProvider } from "remix-utils/honeypot/react";
 
 export const handle: SEOHandle & { id: string } = {
   id: "root",

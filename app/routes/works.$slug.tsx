@@ -1,23 +1,21 @@
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Link, useLoaderData } from "@remix-run/react";
 import type { LoaderFunctionArgs, MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
-import { Link, useLoaderData } from "@remix-run/react";
-import { useMemo } from "react";
-
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { getMDXComponent } from "mdx-bundler/client";
+import { useMemo } from "react";
 
 import { Alert } from "~/components/alert";
 import { Footer } from "~/components/footer";
 import { Navbar } from "~/components/navbar";
 import { PostImage } from "~/components/post-image";
 import { Spacer } from "~/components/spacer";
-
 import { formatMonth } from "~/utils/format";
 import { getUrl } from "~/utils/misc";
 import { getMdxPage, getWorksPages } from "~/utils/post.server";
+import { notFound } from "~/utils/responses";
 import type { SEOHandle } from "~/utils/seo";
 import { getMeta } from "~/utils/seo";
-import { notFound } from "~/utils/responses";
 
 export const handle: SEOHandle = {
   getSitemapEntries: async () => {

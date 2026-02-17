@@ -1,11 +1,10 @@
-import type { ReactNode } from "react";
 import { Link, NavLink } from "@remix-run/react";
+import type { ReactNode } from "react";
 
 import { ExternalLink } from "./external-link";
-import { ThemeToggle } from "./toggle";
-
 import { GitHubIcon } from "./icons/github-icon";
 import { RssIcon } from "./icons/rss-icon";
+import { ThemeToggle } from "./toggle";
 
 function Sidebar({ children }: { children?: ReactNode }) {
   return (

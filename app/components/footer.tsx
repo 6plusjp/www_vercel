@@ -1,12 +1,11 @@
 import { NavLink } from "@remix-run/react";
-
 import clsx from "clsx";
 
-import { ThemeToggle } from "./toggle";
+import { ExternalLink } from "./external-link";
 import { GitHubIcon } from "./icons/github-icon";
 // import { TwitterIcon } from "./icons/twitter-icon";
 import { RssIcon } from "./icons/rss-icon";
-import { ExternalLink } from "./external-link";
+import { ThemeToggle } from "./toggle";
 
 const NAV_LIST = [
   { name: "Home", to: "/" },
