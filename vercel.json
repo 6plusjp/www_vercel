@@ -2,7 +2,9 @@
   "build": {
     "env": {
       "ENABLE_FILE_SYSTEM_API": "1"
-    }
+    },
+    "command": "npm run build",
+    "outputDirectory": "build"
   },
   "cleanUrls": true,
   "redirects": [

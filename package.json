@@ -20,7 +20,7 @@
   "scripts": {
     "build": "npm run cleanup && run-s build:*",
     "build:css": "postcss styles --base styles --dir app/styles --env production",
-    "build:remix": "remix vite:build",
+    "build:remix": "remix build",
     "dev": "run-p dev:*",
     "dev:css": "postcss styles --base styles --dir app/styles -w",
     "dev:remix": "remix dev",
