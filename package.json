@@ -8,6 +8,7 @@
   "author": "Shoma Yamamoto <6plusjp@gmail.com>",
   "license": "MIT",
   "overrides": {
+    "@remix-run/server-runtime": "2.16.7",
     "axios": ">=1.13.5",
     "esbuild": ">=0.24.3",
     "estree-util-value-to-estree": ">=3.3.3",
