@@ -14,6 +14,9 @@ export default defineConfig({
   ssr: {
     noExternal: ['lodash', 'fs-extra', 'nanoid'],
   },
+  build: {
+    target: 'es2022',
+  },
   plugins: [
     mdx(),
     remix({
