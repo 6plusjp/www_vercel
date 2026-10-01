@@ -152,7 +152,7 @@ function EnResume() {
                         Playwright E2E test suite
                       </li>
                       <li>
-                        Deployed and maintained on Vercel since 2022 (372 commits)
+                        Deployed and maintained on Vercel since 2022
                       </li>
                     </ul>
                   </div>
@@ -185,7 +185,7 @@ function EnResume() {
                         107 issue resolution records + 6 coding policy documents
                       </li>
                       <li>
-                        529 commits over 3 months (Mar-Jun 2026)
+                        Approximately 12,000 lines of Rust, developed over 7 months (Mar-Oct 2026)
                       </li>
                     </ul>
                   </div>
@@ -338,7 +338,7 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
                   <div className="md:w-2/3 space-y-2">
                     <p>20ルートのSSRアプリケーション。ブログ/実績/履歴書/問い合わせ対応。</p>
                     <p>Playwright によるE2Eテスト実装。</p>
-                    <p>2022年から継続的に開発・運用（372 commits）。</p>
+                    <p>2022年から継続的に開発・運用。20ルート、TS/TSX/CSSで約8,000行。</p>
                   </div>
                 </div>
               </div>
@@ -358,7 +358,7 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
                   <div className="md:w-2/3 space-y-2">
                     <p>国・都市の階層ブラウズ・ファジー検索・接続セッション管理。</p>
                     <p>CI・Lint規約・統合テスト・Issue運用ドキュメントを整備。</p>
-                    <p>2026-03〜2026-06の3ヶ月間で529 commits。MITライセンス。</p>
+                    <p>2026-03〜2026-10の7ヶ月間、Rustソース約12,000行。MITライセンス。</p>
                   </div>
                 </div>
               </div>

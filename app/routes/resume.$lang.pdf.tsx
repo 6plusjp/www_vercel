@@ -147,7 +147,7 @@ function PDFDocument() {
                     &bull; Playwright E2E test suite
                   </Text>
                   <Text style={{ marginTop: 4 }}>
-                    &bull; Deployed and maintained on Vercel since 2022 (372 commits)
+                    &bull; Deployed and maintained on Vercel since 2022
                   </Text>
                 </View>
               </View>
@@ -180,7 +180,7 @@ function PDFDocument() {
                     &bull; 107 issue resolution records + 6 coding policy documents
                   </Text>
                   <Text style={{ marginTop: 4 }}>
-                    &bull; 529 commits over 3 months (Mar-Jun 2026)
+                    &bull; Approximately 12,000 lines of Rust, developed over 7 months (Mar-Oct 2026)
                   </Text>
                 </View>
               </View>
