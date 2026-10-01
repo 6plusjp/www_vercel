@@ -1,6 +1,6 @@
+import clsx from "clsx";
 import type { HTMLAttributes, Ref } from "react";
 import { forwardRef } from "react";
-import clsx from "clsx";
 
 interface Props {
   /**

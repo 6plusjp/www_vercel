@@ -1,7 +1,7 @@
 import { Link, useParams } from "@remix-run/react";
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 
-import clsx from "clsx";
 import { useTocObserver } from "~/hooks/use-intersection-observer";
 
 export const TableOfContents = () => {

@@ -1,9 +1,3 @@
-import type {
-  LinksFunction,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@vercel/remix";
-import { json } from "@vercel/remix";
 import {
   isRouteErrorResponse,
   Link,
@@ -15,39 +9,36 @@ import {
   ScrollRestoration,
   useLoaderData,
   useRouteError,
-} from "@remix-run/react";
-import { cssBundleHref } from "@remix-run/css-bundle";
+} from '@remix-run/react'
+import { Analytics } from '@vercel/analytics/react'
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from '@vercel/remix'
+import { json } from '@vercel/remix'
+import clsx from 'clsx'
+import { HoneypotProvider } from 'remix-utils/honeypot/react'
 
-import { Analytics } from "@vercel/analytics/react";
-import clsx from "clsx";
-
-import fontCSS from "./styles/font.css";
-import tailwindCSS from "./styles/tailwind.css";
-import noScriptCSS from "./styles/no-script.css";
-
-import { getEnv } from "./utils/env.server";
-import {
-  getThemeSession,
-  ThemeBody,
-  ThemeProvider,
-  ThemeScript,
-  useTheme,
-} from "./utils/theme";
-import { getDomainUrl, getUrl, removeTrailingSlash } from "./utils/misc";
-import type { SEOHandle } from "./utils/seo";
-import { getMeta } from "./utils/seo";
-
-import { ExternalLink } from "./components/external-link";
-import { SkipContent } from "./components/skip-content";
-import { honeypot } from "./utils/honeypot.server";
-import { HoneypotProvider } from "remix-utils/honeypot/react";
+import { ExternalLink } from './components/external-link'
+import { SkipContent } from './components/skip-content'
+import fontCSS from './styles/font.css?url'
+import noScriptCSS from './styles/no-script.css?url'
+import tailwindCSS from './styles/tailwind.css?url'
+import { getEnv } from './utils/env.server'
+import { honeypot } from './utils/honeypot.server'
+import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/misc'
+import type { SEOHandle } from './utils/seo'
+import { getMeta } from './utils/seo'
+import { getThemeSession } from './utils/theme.server'
+import { ThemeBody, ThemeProvider, ThemeScript, useTheme } from './utils/theme'
 
 export const handle: SEOHandle & { id: string } = {
-  id: "root",
-};
+  id: 'root',
+}
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { getTheme } = await getThemeSession(request);
+  const { getTheme } = await getThemeSession(request)
   const data = {
     ENV: getEnv(),
     requestInfo: {
@@ -56,53 +47,51 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     },
     theme: getTheme(),
     honeypot: honeypot.getInputProps(),
-  };
+  }
 
-  return json(data);
-};
+  return json(data)
+}
 
 export const meta: MetaFunction<typeof loader> = ({ data }) =>
   getMeta({
-    image: "/images/og.png",
+    image: '/images/og.png',
     url: getUrl(data?.requestInfo),
-  });
+  })
 
 export const links: LinksFunction = () => {
   return [
     // Preload CSS as a resource to avoid render blocking
-    { rel: "preload", href: fontCSS, as: "style" },
-    { rel: "preload", href: tailwindCSS, as: "style" },
-    cssBundleHref ? { rel: "preload", href: cssBundleHref, as: "style" } : null,
+    { rel: 'preload', href: fontCSS, as: 'style' },
+    { rel: 'preload', href: tailwindCSS, as: 'style' },
     {
-      rel: "apple-touch-icon",
-      sizes: "180x180",
-      href: "/favicons/apple-touch-icon.png",
+      rel: 'apple-touch-icon',
+      sizes: '180x180',
+      href: '/favicons/apple-touch-icon.png',
     },
     {
-      rel: "icon",
-      type: "image/png",
-      sizes: "32x32",
-      href: "/favicons/favicon-32x32.png",
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '32x32',
+      href: '/favicons/favicon-32x32.png',
     },
     {
-      rel: "icon",
-      type: "image/png",
-      sizes: "16x16",
-      href: "/favicons/favicon-16x16.png",
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '16x16',
+      href: '/favicons/favicon-16x16.png',
     },
-    { rel: "manifest", href: "/site.webmanifest" },
+    { rel: 'manifest', href: '/site.webmanifest' },
     {
-      rel: "icon",
-      href: "/favicons/favicon-white.ico",
+      rel: 'icon',
+      href: '/favicons/favicon-white.ico',
     },
-    { rel: "stylesheet", href: fontCSS },
-    { rel: "stylesheet", href: tailwindCSS },
-    cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : null,
-  ].filter(Boolean);
-};
+    { rel: 'stylesheet', href: fontCSS },
+    { rel: 'stylesheet', href: tailwindCSS },
+  ].filter(Boolean)
+}
 
 export default function App() {
-  const data = useLoaderData<typeof loader>();
+  const data = useLoaderData<typeof loader>()
 
   return (
     <ThemeProvider specifiedTheme={data.theme}>
@@ -113,15 +102,15 @@ export default function App() {
         </Document>
       </HoneypotProvider>
     </ThemeProvider>
-  );
+  )
 }
 
 function Document({ children }: { children: React.ReactNode }) {
-  const data = useLoaderData<typeof loader>();
-  const [theme] = useTheme();
+  const data = useLoaderData<typeof loader>()
+  const [theme] = useTheme()
 
   return (
-    <html lang="ja" className={clsx("font-display", theme)}>
+    <html lang="ja" className={clsx('font-display', theme)}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -130,7 +119,7 @@ function Document({ children }: { children: React.ReactNode }) {
         <link
           rel="canonical"
           href={removeTrailingSlash(
-            `${data.requestInfo.origin}${data.requestInfo.path}`,
+            `${data.requestInfo.origin}${data.requestInfo.path}`
           )}
         />
         <noscript>
@@ -147,11 +136,11 @@ function Document({ children }: { children: React.ReactNode }) {
         <Analytics />
       </body>
     </html>
-  );
+  )
 }
 
 export function ErrorBoundary() {
-  const error = useRouteError();
+  const error = useRouteError()
 
   if (isRouteErrorResponse(error)) {
     return (
@@ -183,7 +172,7 @@ export function ErrorBoundary() {
           </Layout>
         </body>
       </html>
-    );
+    )
   } else if (error instanceof Error) {
     return (
       <html lang="ja">
@@ -215,7 +204,7 @@ export function ErrorBoundary() {
           </Layout>
         </body>
       </html>
-    );
+    )
   } else {
     return (
       <html lang="ja">
@@ -242,7 +231,7 @@ export function ErrorBoundary() {
           </Layout>
         </body>
       </html>
-    );
+    )
   }
 }
 
@@ -290,7 +279,7 @@ function Layout({ children }: { children: React.ReactNode }) {
         </footer>
       </div>
     </>
-  );
+  )
 }
 
 function Icon({ size }: { size: number }) {
@@ -305,5 +294,5 @@ function Icon({ size }: { size: number }) {
       <title>6+</title>
       <path d="m1066.43 749-299.997.25V1097h-500L166 1270.46l1200.43-.46-299.56-520.75m-600.87.365L766 230m-.067.25L766 749.615l-299.567.135" />
     </svg>
-  );
+  )
 }

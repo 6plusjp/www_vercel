@@ -1,22 +1,20 @@
+import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import type { LoaderFunctionArgs, MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
-import { useLoaderData, useSearchParams } from "@remix-run/react";
+import clsx from "clsx";
+import { motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { motion } from "framer-motion";
-import { MagnifyingGlassIcon, PlusIcon } from "@heroicons/react/24/outline";
-import clsx from "clsx";
-
-import { Sidebar } from "~/components/sidebar";
 import { Card } from "~/components/card";
-import { Tag } from "~/components/tag";
-import { Spacer } from "~/components/spacer";
 import { MobileMenu } from "~/components/navbar";
-
-import { getMeta } from "~/utils/seo";
+import { Sidebar } from "~/components/sidebar";
+import { Spacer } from "~/components/spacer";
+import { Tag } from "~/components/tag";
 import type { Frontmatter } from "~/utils/post.server";
 import { getBlogPages } from "~/utils/post.server";
 import { filterPosts } from "~/utils/search";
+import { getMeta } from "~/utils/seo";
 
 type LoaderData = {
   posts: Frontmatter[];

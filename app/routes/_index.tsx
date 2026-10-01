@@ -1,13 +1,12 @@
 import type { MetaFunction } from "@vercel/remix";
 
-import { Navbar } from "~/components/navbar";
 import { Footer } from "~/components/footer";
+import { Navbar } from "~/components/navbar";
+import { AboutSection } from "~/components/sections/about-section";
+import { ContactSection } from "~/components/sections/contact-section";
 import { HomeTitle } from "~/components/sections/home-title";
 import { SkillsSection } from "~/components/sections/skills-section";
 import { ToolsSection } from "~/components/sections/tools-section";
-import { ContactSection } from "~/components/sections/contact-section";
-import { AboutSection } from "~/components/sections/about-section";
-
 import { getMeta } from "~/utils/seo";
 
 export const meta: MetaFunction = () => {

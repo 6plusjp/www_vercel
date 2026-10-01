@@ -1,110 +1,97 @@
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { Link, useLoaderData, useParams } from '@remix-run/react'
 import type {
   LinksFunction,
   LoaderFunctionArgs,
   MetaFunction,
-} from "@vercel/remix";
-import { json } from "@vercel/remix";
-import { Link, useLoaderData, useParams } from "@remix-run/react";
-import { useMemo } from "react";
+} from '@vercel/remix'
+import { json } from '@vercel/remix'
+import { motion, useReducedMotion } from 'framer-motion'
+import { getMDXComponent } from 'mdx-bundler/client'
+import { useMemo } from 'react'
 
-import { getMDXComponent } from "mdx-bundler/client";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { Alert } from '~/components/alert'
+import { MobileMenu } from '~/components/navbar'
+import { PostImage } from '~/components/post-image'
+import { Sidebar } from '~/components/sidebar'
+import { TableOfContents } from '~/components/table-of-contents'
+import prose from '~/styles/prose.css?url'
+import { formatDate } from '~/utils/format'
+import { getUrl } from '~/utils/misc'
+import { getBlogPages, getMdxPage } from '~/utils/post.server'
+import { notFound } from '~/utils/responses'
+import type { SEOHandle } from '~/utils/seo'
+import { getMeta } from '~/utils/seo'
 
-import { Sidebar } from "~/components/sidebar";
-import { Alert } from "~/components/alert";
-import { PostImage } from "~/components/post-image";
-import { MobileMenu } from "~/components/navbar";
-
-import { formatDate } from "~/utils/format";
-import { getBlogPages, getMdxPage } from "~/utils/post.server";
-import type { SEOHandle } from "~/utils/seo";
-import { getMeta } from "~/utils/seo";
-import { getUrl } from "~/utils/misc";
-import { notFound } from "~/utils/responses";
-
-import prose from "~/styles/prose.css";
-import { TableOfContents } from "~/components/table-of-contents";
-
-export const handle: SEOHandle = {
-  getSitemapEntries: async () => {
-    const pages = await getBlogPages("blog");
-
-    return pages
-      .filter((page) => !page.draft)
-      .map((page) => {
-        return { route: `/blog/${page.slug}`, priority: 0.7 };
-      });
-  },
-};
+export const handle: SEOHandle = {}
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const slug = params.slug || "index";
+  const slug = params.slug || 'index'
 
-  const post = await getMdxPage(slug);
-  if (!post) throw notFound(slug);
+  const post = await getMdxPage(slug)
+  if (!post) throw notFound(slug)
 
   const headers = {
-    "Cache-Control": "private, max-age=3600",
-    Vary: "Cookie",
-  };
+    'Cache-Control': 'private, max-age=3600',
+    Vary: 'Cookie',
+  }
 
-  return json(post, { status: 200, headers });
-};
+  return json(post, { status: 200, headers })
+}
 
 export const meta: MetaFunction<typeof loader> = ({ data, params }) => {
   if (data?.frontmatter) {
-    const { keywords = [], author } = data.frontmatter.meta ?? {};
-    let title = data.frontmatter.meta?.title ?? data.frontmatter.title;
+    const { keywords = [], author } = data.frontmatter.meta ?? {}
+    let title = data.frontmatter.meta?.title ?? data.frontmatter.title
     const description =
-      data.frontmatter.meta?.description ?? data.frontmatter.description;
+      data.frontmatter.meta?.description ?? data.frontmatter.description
 
-    const isDraft = data.frontmatter.draft;
-    if (isDraft) title = `下書き: ${title ?? "No Title"} | 6+ Blog`;
-    else title = `${title ?? "No Title"} | 6+ Blog`;
+    const isDraft = data.frontmatter.draft
+    if (isDraft) title = `下書き: ${title ?? 'No Title'} | 6+ Blog`
+    else title = `${title ?? 'No Title'} | 6+ Blog`
 
     return [
       ...getMeta({
         title,
         description,
-        keywords: keywords.join(", "),
+        keywords: keywords.join(', '),
         image: `/img/social/${params.slug}`,
         url: `${getUrl()}/blog/${params.slug}`,
         author,
         isDraft,
       }),
-    ];
+    ]
   } else {
     return [
       {
-        title: "お探しのブログページは見つかりませんでした",
+        title: 'お探しのブログページは見つかりませんでした',
       },
-    ];
+    ]
   }
-};
+}
 
 export const links: LinksFunction = () => {
   return [
     {
-      rel: "preload",
-      as: "font",
-      href: "https://fonts.gstatic.com/s/sourcecodepro/v20/HI_SiYsKILxRpg3hIP6sJ7fM7PqlPevWnsUnxg.woff2",
-      type: "font/woff2",
-      crossOrigin: "anonymous",
+      rel: 'preload',
+      as: 'font',
+      href: 'https://fonts.gstatic.com/s/sourcecodepro/v20/HI_SiYsKILxRpg3hIP6sJ7fM7PqlPevWnsUnxg.woff2',
+      type: 'font/woff2',
+      crossOrigin: 'anonymous',
     },
-    { rel: "stylesheet", href: prose },
-  ];
-};
+    { rel: 'stylesheet', href: prose },
+  ]
+}
 
 export default function MdxScreen() {
-  const { frontmatter, code } = useLoaderData<typeof loader>();
-  const { slug } = useParams();
-  const isDraft = Boolean(frontmatter.draft);
-  const Component = useMemo(() => getMDXComponent(code), [code]);
+  const { frontmatter, code } = useLoaderData<typeof loader>()
+  const { slug } = useParams()
+  const isDraft = Boolean(frontmatter.draft)
+  const Component = useMemo(() => getMDXComponent(code), [code])
 
-  const shouldReduceMotion = useReducedMotion();
-  const duration = shouldReduceMotion ? 0 : 0.5;
-  const easing = [0.175, 0.85, 0.42, 0.96];
+  const shouldReduceMotion = useReducedMotion()
+  const duration = shouldReduceMotion ? 0 : 0.5
+  const easing = [0.175, 0.85, 0.42, 0.96]
   const motionVariants = {
     text: {
       exit: {
@@ -171,7 +158,7 @@ export default function MdxScreen() {
         },
       },
     },
-  };
+  }
 
   return (
     <>
@@ -222,8 +209,8 @@ export default function MdxScreen() {
                         {frontmatter.updated
                           ? `更新: ${formatDate(frontmatter.updated)}`
                           : frontmatter.published
-                          ? `公開: ${formatDate(frontmatter.published)}`
-                          : null}
+                            ? `公開: ${formatDate(frontmatter.published)}`
+                            : null}
                       </time>
                     </dd>
                   </dl>
@@ -242,11 +229,11 @@ export default function MdxScreen() {
                       imgId={frontmatter.bannerImgId}
                       widths={[280, 560, 840, 1100]}
                       sizes={[
-                        "(max-width:767px) 95vw",
-                        "(min-width:768px) and (max-width:1023px) 740px",
-                        "(min-width:1024px) and (max-width:1279px) 80vw",
-                        "900px",
-                      ].join(", ")}
+                        '(max-width:767px) 95vw',
+                        '(min-width:768px) and (max-width:1023px) 740px',
+                        '(min-width:1024px) and (max-width:1279px) 80vw',
+                        '900px',
+                      ].join(', ')}
                       alt={frontmatter.bannerAlt}
                     />
                   ) : null}
@@ -276,5 +263,5 @@ export default function MdxScreen() {
         </div>
       </div>
     </>
-  );
+  )
 }

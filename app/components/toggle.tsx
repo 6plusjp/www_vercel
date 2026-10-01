@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
+import clsx from "clsx";
 
 import { Themed, themes, useTheme } from "~/utils/theme";
 

@@ -1,29 +1,27 @@
-import { useActionData, useLoaderData } from "@remix-run/react";
+import { useActionData } from "@remix-run/react";
+import { withZod } from "@remix-validated-form/with-zod";
 import type { ActionFunctionArgs, MetaFunction } from "@vercel/remix";
 import { json } from "@vercel/remix";
-
-import { z } from "zod";
+import clsx from "clsx";
+import { HoneypotInputs } from "remix-utils/honeypot/react";
 import type { ValidatorData } from "remix-validated-form";
 import {
   useIsSubmitting,
   ValidatedForm,
   validationError,
 } from "remix-validated-form";
-import { withZod } from "@remix-validated-form/with-zod";
-import clsx from "clsx";
-import { HoneypotInputs } from "remix-utils/honeypot/react";
+import { z } from "zod";
 
-import { Navbar } from "~/components/navbar";
-import { Input, Select, Textarea } from "~/components/form";
-import { Footer } from "~/components/footer";
 import { Alert } from "~/components/alert";
 import { Button } from "~/components/button";
-
-import { getMeta } from "~/utils/seo";
-import { useHydrated } from "~/utils/hydrated";
+import { Footer } from "~/components/footer";
+import { Input, Select, Textarea } from "~/components/form";
+import { Navbar } from "~/components/navbar";
 import { sendEmail, sendEmailToOwner } from "~/utils/email.server";
-import { getUrl } from "~/utils/misc";
 import { checkHoneypot } from "~/utils/honeypot.server";
+import { useHydrated } from "~/utils/hydrated";
+import { getUrl } from "~/utils/misc";
+import { getMeta } from "~/utils/seo";
 
 const schema = z.object({
   name: z

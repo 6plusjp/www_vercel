@@ -8,46 +8,43 @@
  * @returns all public ENV variables
  */
 export function getEnv() {
-  require("dotenv").config;
-
   return {
     NODE_ENV: process.env.NODE_ENV,
-  };
+  }
 }
 
-type ENV = ReturnType<typeof getEnv>;
+type ENV = ReturnType<typeof getEnv>
 
 // App puts these on
 declare global {
-  // eslint-disable-next-line
-  var ENV: ENV;
+  var ENV: ENV
   interface Window {
-    ENV: ENV;
+    ENV: ENV
   }
 }
 
 function getRequiredEnvVarFromObj(
   obj: Record<string, string | undefined>,
   key: string,
-  devValue = `${key}-dev-value`,
+  devValue = `${key}-dev-value`
 ) {
-  let value = devValue;
-  const envVal = obj[key];
+  let value = devValue
+  const envVal = obj[key]
   if (envVal) {
-    value = envVal;
-  } else if (obj.NODE_ENV === "production") {
-    throw new Error(`${key} is a required env variable`);
+    value = envVal
+  } else if (obj.NODE_ENV === 'production') {
+    throw new Error(`${key} is a required env variable`)
   }
-  return value;
+  return value
 }
 
 export function getRequiredServerEnvVar(key: string, devValue?: string) {
-  return getRequiredEnvVarFromObj(process.env, key, devValue);
+  return getRequiredEnvVarFromObj(process.env, key, devValue)
 }
 
 export function getRequiredGlobalEnvVar(
   key: keyof ReturnType<typeof getEnv>,
-  devValue?: string,
+  devValue?: string
 ) {
-  return getRequiredEnvVarFromObj(ENV, key, devValue);
+  return getRequiredEnvVarFromObj(ENV, key, devValue)
 }

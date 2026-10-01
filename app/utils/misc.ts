@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-import { isBrowser, __DEV__ } from "./assertion";
+import { __DEV__,isBrowser } from "./assertion";
 
 const noop = () => {};
 
@@ -126,11 +126,11 @@ function removeTrailingSlash(s: string) {
 }
 
 export {
-  noop,
-  ssrDocument,
-  ssrWindow,
   EnvironmentContext,
   getDomainUrl,
   getUrl,
+  noop,
   removeTrailingSlash,
+  ssrDocument,
+  ssrWindow,
 };

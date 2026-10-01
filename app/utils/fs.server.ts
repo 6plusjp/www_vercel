@@ -1,18 +1,20 @@
-import { readdir, readFile } from "fs-extra";
+import fse from 'fs-extra'
+import { join } from 'path'
 
-const contentPath = "../content";
+const { readdir, readFile } = fse
 
-// https://www.themosaad.com/blog/loading-static-file-remix-vercel
+const contentPath = join(process.cwd(), 'content')
+
 export const readContentDir = async (contentDir: string) => {
-  const content = __dirname + `/${contentPath}/${contentDir}`;
-  const data = await readdir(content);
+  const content = join(contentPath, contentDir)
+  const data = await readdir(content)
 
-  return data;
-};
+  return data
+}
 
 export const readContentFile = async (contentDir: string, file: string) => {
-  const content = __dirname + `/${contentPath}/${contentDir}/${file}`;
-  const data = await readFile(content, "utf8");
+  const content = join(contentPath, contentDir, file)
+  const data = await readFile(content, 'utf8')
 
-  return data.toString();
-};
+  return data.toString()
+}

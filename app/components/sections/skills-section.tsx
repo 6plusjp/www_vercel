@@ -1,6 +1,3 @@
-import { forwardRef } from "react";
-
-import * as Accordion from "@radix-ui/react-accordion";
 import {
   ArrowTrendingUpIcon,
   BriefcaseIcon,
@@ -10,6 +7,8 @@ import {
   GlobeAltIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
+import * as Accordion from "@radix-ui/react-accordion";
+import { forwardRef } from "react";
 
 const LINKS = [
   {

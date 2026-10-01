@@ -15,9 +15,13 @@ node_modules
 # Misc
 /.cache
 TODO.md
+draft/
 
 # dotenv
 .env*
 .flaskenv*
 !.env.project
 !.env.vault
+
+# codegraph index (local, regenerated)
+.codegraph/

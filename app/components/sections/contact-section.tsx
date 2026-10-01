@@ -1,5 +1,4 @@
 import { Link } from "@remix-run/react";
-
 import clsx from "clsx";
 
 export function ContactSection({ className }: { className?: string }) {

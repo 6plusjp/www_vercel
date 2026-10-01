@@ -1,5 +1,3 @@
-import type { LoaderFunctionArgs } from "@vercel/remix";
-
 import {
   Document,
   Link,
@@ -9,6 +7,8 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
+import type { LoaderFunctionArgs } from "@vercel/remix";
+
 import { notFound, pdf } from "~/utils/responses";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -77,12 +77,13 @@ function PDFDocument() {
             Yamamoto
           </Text>
           <Text style={[styles.paragraph, { marginTop: 16, fontSize: 14 }]}>
-            Self-taught, dedicated and highly motivated Web Developer with a
-            passion for the acquisition of new skills and knowledge. Familiar
-            with most major technology stacks and platforms. Strong focus on
-            user experience and accessibility. Believe that committing to share
-            expectations and goals with a team is key to any successful project
-            delivered.
+            Self-taught Web / Systems Developer with sustained self-directed
+            study in web application and CLI tool development. Comfortable
+            owning the full cycle - requirements, design, implementation,
+            testing, and documentation - as a solo practitioner. Registered as
+            a sole proprietor (self-employment declaration filed); currently
+            operating this site as a portfolio and service window for web
+            development work.
           </Text>
           <View
             style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 16 }}
@@ -93,7 +94,7 @@ function PDFDocument() {
                 { paddingRight: 6, borderRightWidth: 0.7 },
               ]}
             >
-              Web Developer
+              Self-taught Web / Systems Developer
             </Text>
             <Text
               style={[
@@ -120,33 +121,68 @@ function PDFDocument() {
           </View>
         </View>
         <View style={{ marginTop: 24 }}>
-          <Text style={[styles.heading]}>Work Experience</Text>
-          <View style={[styles.section, { marginTop: 24 }]}>
-            <View style={[styles.headingSection]}>
-              <Text style={[{ fontFamily: "Helvetica-Bold" }]}>Freelance</Text>
-              <Text style={{ marginTop: 8, color: "#757d94" }}>
-                Apr 2020 - Current
-              </Text>
+          <Text style={[styles.heading]}>Personal Projects</Text>
+          <View style={{ marginTop: 16 }}>
+            <View style={[styles.section, { marginTop: 12 }]}>
+              <View style={[styles.headingSection]}>
+                <Text style={[{ fontFamily: "Helvetica-Bold" }]}>
+                  <Link
+                    src="https://6plus.vercel.app"
+                    style={{ color: "#2cb67d" }}
+                  >
+                    Portfolio Site
+                  </Link>
+                </Text>
+                <Text style={{ marginTop: 4, color: "#757d94", fontSize: 10 }}>
+                  Remix, TypeScript, Vercel
+                </Text>
+              </View>
+              <View style={styles.contentSection}>
+                <View style={{ marginTop: 4 }}>
+                  <Text style={{ marginTop: 4 }}>
+                    &bull; SSR application with 20 routes: blog, works, resume,
+                    contact, policies, RSS, API
+                  </Text>
+                  <Text style={{ marginTop: 4 }}>
+                    &bull; Playwright E2E test suite
+                  </Text>
+                  <Text style={{ marginTop: 4 }}>
+                    &bull; Deployed and maintained on Vercel since 2022 (372 commits)
+                  </Text>
+                </View>
+              </View>
             </View>
-            <View style={[styles.contentSection]}>
-              <Text style={{ fontFamily: "Helvetica-Oblique" }}>
-                Web Developer - Web apps and websites creation. Graphic design.
-                Product development.
-              </Text>
-              <View style={{ marginTop: 8 }}>
-                <Text style={{ marginTop: 4 }}>
-                  &bull; Tech stack is predominantly React, Typescript,
-                  Jest/React Testing Library and Tailwind CSS, using a rest API
-                  built in Node.
+            <View style={[styles.section, { marginTop: 16 }]}>
+              <View style={[styles.headingSection]}>
+                <Text style={[{ fontFamily: "Helvetica-Bold" }]}>
+                  <Link
+                    src="https://github.com/6plusjp/protonvpn-tui"
+                    style={{ color: "#2cb67d" }}
+                  >
+                    ProtonVPN Terminal UI
+                  </Link>
                 </Text>
-                <Text style={{ marginTop: 4 }}>
-                  &bull; Selected tech stack and libraries according to the
-                  specifications of the site requested by the clients.
+                <Text style={{ marginTop: 4, color: "#757d94", fontSize: 10 }}>
+                  Rust
                 </Text>
-                <Text style={{ marginTop: 4 }}>
-                  &bull; Topics include content marketing, landing page
-                  copy/design/optimization, and more.
-                </Text>
+              </View>
+              <View style={styles.contentSection}>
+                <View style={{ marginTop: 4 }}>
+                  <Text style={{ marginTop: 4 }}>
+                    &bull; TUI wrapping protonvpn-cli: country/city hierarchy
+                    browsing, fuzzy search, connection session management
+                  </Text>
+                  <Text style={{ marginTop: 4 }}>
+                    &bull; GitHub Actions CI, clippy/rustfmt lint config, integration
+                    tests
+                  </Text>
+                  <Text style={{ marginTop: 4 }}>
+                    &bull; 107 issue resolution records + 6 coding policy documents
+                  </Text>
+                  <Text style={{ marginTop: 4 }}>
+                    &bull; 529 commits over 3 months (Mar-Jun 2026)
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
@@ -156,7 +192,19 @@ function PDFDocument() {
           <View style={[styles.section, { marginTop: 24 }]}>
             <View style={styles.headingSection}>
               <Text style={[{ fontFamily: "Helvetica-Bold" }]}>
-                Osaka Prefecture University (now Osaka Metropolitan University)
+                <Link
+                  src="https://www.osakafu-u.ac.jp/en/"
+                  style={{ color: "#2cb67d" }}
+                >
+                  Osaka Prefecture University
+                </Link>
+                {" "}
+                <Link
+                  src="https://www.omu.ac.jp/en/"
+                  style={{ color: "#2cb67d" }}
+                >
+                  (now Osaka Metropolitan University)
+                </Link>
               </Text>
               <Text style={{ marginTop: 8, color: "#757d94" }}>
                 2015 - 2020
@@ -164,12 +212,11 @@ function PDFDocument() {
             </View>
             <View style={styles.contentSection}>
               <Text style={{ fontFamily: "Helvetica-Oblique" }}>
-                Science, College of Life, Environment, and Advanced Sciences
+                Faculty of Science, Department of Life and Environmental Sciences
               </Text>
               <View style={{ marginTop: 8 }}>
                 <Text style={{ marginTop: 4 }}>
-                  &bull; Leave of absence and study abroad year at personal
-                  expense.
+                  &bull; One-year self-funded leave of absence: Toronto, Canada
                 </Text>
                 <Text style={{ marginTop: 4 }}>
                   &bull; Withdrawn from school for personal reasons.
@@ -189,28 +236,37 @@ function PDFDocument() {
             <View style={{ flexBasis: "50%" }}>
               <Text style={{ fontFamily: "Helvetica-Bold" }}>Languages</Text>
               <View style={{ marginTop: 8 }}>
-                <Text>JavaScript, TypeScript</Text>
-                <Text>Python</Text>
+                <Text>TypeScript, JavaScript</Text>
                 <Text>Rust</Text>
-                <Text>PHP</Text>
+                <Text>Python</Text>
               </View>
             </View>
             <View style={{ flexBasis: "50%" }}>
-              <Text style={{ fontFamily: "Helvetica-Bold" }}>Frameworks</Text>
+              <Text style={{ fontFamily: "Helvetica-Bold" }}>Frontend</Text>
               <View style={{ marginTop: 8 }}>
-                <Text>Remix</Text>
-                <Text>Tailwind CSS</Text>
+                <Text>Remix, React, Next.js</Text>
+                <Text>Tailwind CSS, MDX</Text>
               </View>
             </View>
             <View style={{ flexBasis: "50%", marginTop: 16 }}>
-              <Text style={{ fontFamily: "Helvetica-Bold" }}>Other</Text>
+              <Text style={{ fontFamily: "Helvetica-Bold" }}>Testing & Other</Text>
               <View style={{ marginTop: 8 }}>
-                <Text>Git</Text>
-                <Text>REST API</Text>
-                <Text>Linux</Text>
-                <Text>Unit testing</Text>
+                <Text>Playwright, Vitest</Text>
+                <Text>Git, Linux, REST API, Vercel</Text>
               </View>
             </View>
+          </View>
+        </View>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 24 }}>
+          <Text style={[styles.heading, styles.headingSection]}>Other</Text>
+          <View style={[styles.contentSection, { flexBasis: "100%" }]}>
+            <Text>Full motor vehicle licence (not AT-restricted)</Text>
+            <Text>
+              Available 3-4 days per week, from October 2026 (or immediately)
+            </Text>
+            <Text>
+              Sole proprietor registration filed (no revenue to date)
+            </Text>
           </View>
         </View>
       </Page>

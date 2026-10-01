@@ -1,13 +1,13 @@
 import type { Root } from "mdast";
 import type { Options } from "mdast-util-toc";
 import { toc } from "mdast-util-toc";
-import { unified } from "unified";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
 import format from "rehype-format";
+import rehypeRaw from "rehype-raw";
 import stringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
 import markdown from "remark-parse";
 import rehype from "remark-rehype";
+import { unified } from "unified";
 
 const KS_RE = /{{([^}]*)}}/g;
 

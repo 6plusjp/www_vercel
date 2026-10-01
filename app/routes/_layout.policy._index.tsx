@@ -1,6 +1,6 @@
 import type { MetaFunction } from "@vercel/remix";
-import { ExternalLink } from "~/components/external-link";
 
+import { ExternalLink } from "~/components/external-link";
 import { getUrl } from "~/utils/misc";
 import { getMeta } from "~/utils/seo";
 
