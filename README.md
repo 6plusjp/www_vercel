@@ -11,7 +11,7 @@
 
 - **本番環境で動作中**（Vercel SSR deployment）
 - 2022-04-03 の Initial commit から約 4 年半、継続的に開発・更新中
-- 395 commits / 152 ファイル（git 追跡対象） / TypeScript・TSX・CSS 合計 8,334 行（`package-lock.json` 除く）
+- ルーティング 18 ファイル / 20 ルート、TypeScript・TSX・CSS で約 8,000 行
 
 ---
 
