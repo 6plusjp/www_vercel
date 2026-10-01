@@ -4,9 +4,6 @@
 
 - **本番URL**: https://6plus.vercel.app （2026-10-01 時点で HTTP 200、SSR で HTML を返却することを実測確認済み / 48 KB）
 - **リポジトリ**: https://github.com/6plusjp/www_vercel
-- **meta description**: 「フリーランスでフロントエンド開発しています。」
-
-> ※ `https://6plus.tech` は現在 DNS 解決不可。Vercel 上のデプロイ（`6plus.vercel.app`）は健全に稼働しているため、README ではこちらを正として記載しています。
 
 ---
 
@@ -14,7 +11,7 @@
 
 - **本番環境で動作中**（Vercel SSR deployment）
 - 2022-04-03 の Initial commit から約 4 年半、継続的に開発・更新中
-- 372 commits / 159 ファイル（git 追跡対象） / TypeScript・TSX・CSS 合計 8,261 行（`package-lock.json` 除く）
+- 395 commits / 152 ファイル（git 追跡対象） / TypeScript・TSX・CSS 合計 8,334 行（`package-lock.json` 除く）
 
 ---
 
@@ -32,7 +29,7 @@
 
 ---
 
-## 主な機能・ルーティング（実在する 20 ルート）
+## 主な機能・ルーティング（実在する 18 ファイル / 20 ルート）
 
 | Route | 概要 |
 |-------|------|
@@ -105,7 +102,7 @@
 
 ```
 app/
-├── routes/              # 20 ルート（ファイルベースルーティング）
+├── routes/              # 18 ファイル（20 ルート、ファイルベースルーティング）
 ├── utils/               # honeypot, throttle, session, seo, email 等
 ├── components/          # 共通 UI コンポーネント
 ├── entry.client.tsx
@@ -148,7 +145,9 @@ npm run cleanup
 
 ## ライセンス
 
-個人のポートフォリオ目的で公開しています。コードの再利用・参考は自由ですが、コンテンツ（ブログ記事・実績・履歴書等）の無断転載はご遠慮ください。
+MIT License — 詳細は [LICENSE](LICENSE) を参照してください。
+
+コードの再利用・参考は自由ですが、コンテンツ（ブログ記事・実績・履歴書等）の無断転載はご遠慮ください。
 
 ---
 
