@@ -257,18 +257,6 @@ function PDFDocument() {
             </View>
           </View>
         </View>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 24 }}>
-          <Text style={[styles.heading, styles.headingSection]}>Other</Text>
-          <View style={[styles.contentSection, { flexBasis: "100%" }]}>
-            <Text>Full motor vehicle licence (not AT-restricted)</Text>
-            <Text>
-              Available 3-4 days per week, from October 2026 (or immediately)
-            </Text>
-            <Text>
-              Sole proprietor registration filed (no revenue to date)
-            </Text>
-          </View>
-        </View>
       </Page>
     </Document>
   );

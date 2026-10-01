@@ -2,7 +2,6 @@ import { Link, useLoaderData } from "@remix-run/react";
 import type { LinksFunction, LoaderFunctionArgs } from "@vercel/remix";
 import { json } from "@vercel/remix";
 
-import { Alert } from "~/components/alert";
 import { ExternalLink } from "~/components/external-link";
 import { SixPlusIcon } from "~/components/icons/six-plus-icon";
 import { notFound } from "~/utils/responses";
@@ -35,12 +34,6 @@ export default function Resume() {
 
   return (
     <>
-      <Alert state="warning">
-        The contents are under development and may differ from the facts or
-        change suddenly.
-        <br />
-        開発段階なので、内容が事実とは異なる場合や突然変更する可能性があります。
-      </Alert>
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between text-gray-500 px-4">
           <Link className="drop-shadow" to="/" prefetch="intent">
@@ -259,20 +252,6 @@ function EnResume() {
               </div>
             </div>
           </section>
-          <section className="space-y-8">
-            <h2 className="text-2xl md:text-3xl text-hs font-dm-serif-display">
-              Other
-            </h2>
-            <ul className="list-inside list-disc space-y-1">
-              <li>Full motor vehicle licence (not AT-restricted)</li>
-              <li>
-                Available 3-4 days per week, from October 2026 (or immediately)
-              </li>
-              <li>
-                Sole proprietor registration filed (no revenue to date)
-              </li>
-            </ul>
-          </section>
         </div>
       </div>
     </>
@@ -418,14 +397,6 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
                 </ul>
               </div>
             </div>
-          </section>
-          <section className="space-y-4">
-            <h2 className="font-bold text-lg text-hs">【その他】</h2>
-            <ul className="list-disc list-inside space-y-1">
-              <li>普通自動車免許（AT限定ではない）</li>
-              <li>週3〜4勤務、10月から（または即時）勤務可能</li>
-              <li>個人事業主届出済み（売上実績なし）</li>
-            </ul>
           </section>
         </div>
       </div>
