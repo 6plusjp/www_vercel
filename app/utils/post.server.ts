@@ -7,7 +7,11 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 
-import { readContentDir, readContentFile } from "./fs.server";
+import {
+  readContentDir,
+  readContentFile,
+  readContentFileIfExists,
+} from "./fs.server";
 
 export interface Frontmatter {
   title?: string;
@@ -98,7 +102,8 @@ export const getMdxPage = async (
 };
 
 const getWorksPage = async (slug: string) => {
-  const source = await readContentFile("works", `${slug}.mdx`);
+  const source = await readContentFileIfExists("works", `${slug}.mdx`);
+  if (source === undefined) return undefined;
 
   return await bundleMDX<Frontmatter>({
     source,
@@ -115,7 +120,8 @@ const getWorksPage = async (slug: string) => {
 };
 
 const getBlogPost = async (slug: string) => {
-  const source = await readContentFile("blog", `${slug}/index.mdx`);
+  const source = await readContentFileIfExists("blog", `${slug}/index.mdx`);
+  if (source === undefined) return undefined;
 
   const { frontmatter, code } = await bundleMDX<Frontmatter>({
     source,
