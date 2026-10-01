@@ -96,8 +96,7 @@ function EnResume() {
               Self-taught Web / Systems Developer with sustained self-directed
               study in web application and CLI tool development. Comfortable
               owning the full cycle - requirements, design, implementation,
-              testing, and documentation - as a solo practitioner. Registered as
-              a sole proprietor (self-employment declaration filed); currently
+              testing, and documentation - as a solo practitioner. Currently
               operating this site as a portfolio and service window for web
               development work.
             </p>
@@ -279,9 +278,8 @@ function JaResume() {
             <h2 className="font-bold text-lg text-hs">【職務要約】</h2>
             <p className="whitespace-pre-wrap">
 実務経験はないが、独学で Web アプリケーション開発・CLI ツール開発を継続的に行っている。
-Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュメント作成までを一人で
-完遂するスタイル。個人事業主（届出済み）で、Web 開発業務の受付窓口として
-このサイトを運営している。
+Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュメント作成までを
+一人で完遂するスタイル。Web 開発業務の受付窓口としてこのサイトを運営している。
             </p>
           </section>
           <section className="space-y-4">

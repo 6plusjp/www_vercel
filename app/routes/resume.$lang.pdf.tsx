@@ -80,8 +80,7 @@ function PDFDocument() {
             Self-taught Web / Systems Developer with sustained self-directed
             study in web application and CLI tool development. Comfortable
             owning the full cycle - requirements, design, implementation,
-            testing, and documentation - as a solo practitioner. Registered as
-            a sole proprietor (self-employment declaration filed); currently
+            testing, and documentation - as a solo practitioner. Currently
             operating this site as a portfolio and service window for web
             development work.
           </Text>
