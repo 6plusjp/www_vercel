@@ -104,7 +104,7 @@ function Footer({ className }: { className?: string }) {
             <ExternalLink
               className="ring-hp focus:outline-none focus:ring-2"
               aria-label="RSS"
-              href="https://6plus.tech/blog/rss.xml"
+              href="/blog/rss.xml"
             >
               <span className="sr-only"> View RSS </span>
               <RssIcon

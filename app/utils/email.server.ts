@@ -32,7 +32,7 @@ async function sendEmail(data: Props) {
   ※このメールにお心当たりのない場合は、誠に恐れ入りますが破棄いただきますよう、お願い申し上げます。
   ※本メールの送信元メールアドレスは、送信専用アドレスとなっております。このメールに返信されても、返信内容の確認およびご返答はできません。予めご了承ください。
 
-  □ウェブサイト ⇒ https://6plus.tech
+  □ウェブサイト ⇒ https://6plus.vercel.app
   `.trim();
   const htmlContent = `
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -84,7 +84,7 @@ async function sendEmail(data: Props) {
         <li>このメールにお心当たりのない場合は、誠に恐れ入りますが破棄いただきますよう、お願い申し上げます。</li>
         <li>本メールの送信元メールアドレスは、送信専用アドレスとなっております。このメールに返信されても、返信内容の確認およびご返答はできません。予めご了承ください。</li>
       </ul>
-      <p style="text-align: center; color: black; margin-top: 2rem;">Copyright &copy; <a style="color: #63A18F;" href="https://6plus.tech" target="_blank" rel="noopener noreferrer">6+</a> All rights reserved.</p>
+      <p style="text-align: center; color: black; margin-top: 2rem;">Copyright &copy; <a style="color: #63A18F;" href="https://6plus.vercel.app" target="_blank" rel="noopener noreferrer">6+</a> All rights reserved.</p>
     </div>
   </div>
 </body>
@@ -94,7 +94,7 @@ async function sendEmail(data: Props) {
 
   const body = {
     from: {
-      email: "info@6plus.tech",
+      email: process.env.MAIL_FROM_EMAIL ?? "6plusjp@gmail.com",
       name: "6+",
     },
     to: [
@@ -140,7 +140,7 @@ async function sendEmailToOwner(data: Props) {
 
   const body = {
     from: {
-      email: "info@6plus.tech",
+      email: process.env.MAIL_FROM_EMAIL ?? "6plusjp@gmail.com",
       name: "6+",
     },
     to: [

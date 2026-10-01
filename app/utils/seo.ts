@@ -190,7 +190,7 @@ export const getMeta = ({
   keywords,
   author,
   image = 'public/images/og.png',
-  url = 'https://6plus.tech',
+  url = 'https://6plus.vercel.app',
   isDraft = false,
 }: MetaArgs) => {
   return [

@@ -117,7 +117,7 @@ function getDomainUrl(request: Request) {
 
 function getUrl(requestInfo?: { origin: string; path: string }) {
   return removeTrailingSlash(
-    `${requestInfo?.origin ?? "https://6plus.tech"}${requestInfo?.path ?? ""}`
+    `${requestInfo?.origin ?? "https://6plus.vercel.app"}${requestInfo?.path ?? ""}`
   );
 }
 
