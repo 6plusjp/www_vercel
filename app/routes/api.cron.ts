@@ -1,14 +1,16 @@
-// NOTE - While in beta, cron jobs are free on all plans. However, it'll be a paid feature for general availability. https://vercel.com/docs/cron-jobs
-import type { VercelRequest, VercelResponse } from "@vercel/node";
+// NOTE - Vercel cron job hits this endpoint daily (see vercel.json "crons").
+// This must remain a Remix resource route: a loader-only module, no default
+// component export. Writing it as a @vercel/node style handler ({ request,
+// response }) makes Remix treat the default export as a React component and
+// crash with 500 (request.query is not a thing on render props).
+import { json } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 
-export default function handler(
-  request: VercelRequest,
-  response: VercelResponse,
-) {
-  if (request.query.key !== "k6p1uesj9y") {
-    response.status(404).end();
-    return;
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+  if (url.searchParams.get("key") !== "k6p1uesj9y") {
+    return new Response(null, { status: 404 });
   }
 
-  response.status(200).json({ success: true });
-}
+  return json({ success: true });
+};
