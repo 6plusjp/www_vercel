@@ -84,7 +84,7 @@ export async function getSitemapXml(
         while (parent) {
           // the root path is '/', so it messes things up if we add another '/'
           const parentPath = parent.path ? removeTrailingSlash(parent.path) : ''
-          path = `${parentPath}/${path}`
+          path = `${parentPath}/${path}`.replace(/\/{2,}/g, '/')
           parentId = parent.parentId
           parent = parentId ? remixContext.manifest.routes[parentId] : null
         }
