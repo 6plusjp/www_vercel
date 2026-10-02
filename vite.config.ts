@@ -7,12 +7,15 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 installGlobals()
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   server: {
     port: 3000,
   },
   ssr: {
-    noExternal: ['lodash', 'fs-extra', 'nanoid'],
+    // These are CommonJS. Forcing them through Vite's dev SSR transform leaves
+    // `module.exports` dangling ("module is not defined"), so only bundle them
+    // for the production build, where Rollup's CJS interop handles them.
+    noExternal: command === 'build' ? ['lodash', 'fs-extra', 'nanoid'] : [],
   },
   build: {
     target: 'es2022',
@@ -25,4 +28,4 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
-})
+}))
