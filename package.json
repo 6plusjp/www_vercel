@@ -16,10 +16,12 @@
     "follow-redirects": "^1.15.12",
     "minimatch": "^10.2.3",
     "nanoid": "3.1.31",
-    "path-to-regexp": ">=6.3.0",
     "rollup": ">=2.79.2",
     "tar": ">=7.5.7",
-    "undici": ">=6.23.0"
+    "undici": ">=6.23.0",
+    "@vercel/node": {
+      "path-to-regexp": "6.3.0"
+    }
   },
   "scripts": {
     "build": "npm run cleanup && run-s build:*",
