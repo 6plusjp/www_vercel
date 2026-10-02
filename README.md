@@ -11,7 +11,7 @@
 
 - **本番環境で動作中**（Vercel SSR deployment）
 - 2022-04-03 の Initial commit から約 4 年半、継続的に開発・更新中
-- ルーティング 18 ファイル / 20 ルート、TypeScript・TSX・CSS で約 8,000 行
+- ルーティング 17 ファイル / 17 ルート、TypeScript・TSX・CSS で約 12,000 行
 
 ---
 
@@ -29,7 +29,7 @@
 
 ---
 
-## 主な機能・ルーティング（実在する 18 ファイル / 20 ルート）
+## 主な機能・ルーティング（実在する 17 ファイル / 17 ルート）
 
 | Route | 概要 |
 |-------|------|
@@ -40,7 +40,6 @@
 | `_resume.tsx` / `_resume.resume.$lang.tsx` / `resume.$lang.pdf.tsx` | 履歴書（言語切替・PDF 生成） |
 | `contact._index.tsx` | 問い合わせフォーム（ハニーポット＋レート制限） |
 | `_layout.policy._index.tsx` / `_layout.terms._index.tsx` | プライバシーポリシー・利用規約 |
-| `api.cron.ts` | API エンドポイント（cron 等） |
 | `_md.tsx` / `_md.uses.mdx` | MDX レンダリング共通コンポーネント |
 | `action.form-validation.tsx` / `action.set-theme.ts` | Action（フォーム検証・テーマ切替） |
 
@@ -102,7 +101,7 @@
 
 ```
 app/
-├── routes/              # 18 ファイル（20 ルート、ファイルベースルーティング）
+├── routes/              # 17 ファイル（17 ルート、ファイルベースルーティング）
 ├── utils/               # honeypot, throttle, session, seo, email 等
 ├── components/          # 共通 UI コンポーネント
 ├── entry.client.tsx
