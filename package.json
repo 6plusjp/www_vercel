@@ -29,7 +29,7 @@
     "build:remix": "remix vite:build",
     "dev": "run-p dev:*",
     "dev:css": "postcss styles --base styles --dir app/styles -w",
-    "dev:remix": "remix dev",
+    "dev:remix": "remix vite:dev",
     "typecheck": "tsc",
     "lint": "eslint app/",
     "test": "playwright test",
