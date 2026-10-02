@@ -20,6 +20,14 @@ export default defineConfig(({ command }) => ({
   build: {
     target: 'es2022',
   },
+  optimizeDeps: {
+    // Vite 5 hardcodes ESBUILD_MODULES_TARGET (es2020/chrome87/...) for the dev
+    // dep optimizer and does NOT inherit `build.target`. esbuild >=0.25 can no
+    // longer lower destructuring for that target, so pin it here too.
+    esbuildOptions: {
+      target: 'es2022',
+    },
+  },
   plugins: [
     mdx(),
     remix({
