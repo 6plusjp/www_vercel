@@ -25,7 +25,7 @@
 | Content | **MDX**（bundler 経由でビルド時に変換） |
 | Testing | **Playwright**（E2E） |
 | Deployment | **Vercel**（SSR / Server deployment） |
-| Env Management | **dotenv-vault**（`.env.vault` を暗号化して git 追跡、`.env.keys` は未追跡） |
+| Env | **Vercel** のプロジェクト設定で管理（アプリ側は `process.env` のみ参照） |
 
 ---
 
@@ -74,8 +74,8 @@
 ## 開発・運用の仕組み
 
 - **Deployment**: Vercel（SSR / Server deployment）へ push するだけで自動デプロイ
-- **環境変数**: dotenv-vault を採用。`.env.vault` は暗号化済みで git 追跡、`.env.keys` は追跡しない（公式推奨の設計）
-- **CI 的な検証**: Playwright による E2E テスト（`tests/contact.spec.ts`、`tests/spec.spec.ts`）をローカルおよび CI で実行可能
+- **環境変数**: Vercel のプロジェクト設定で管理し、`process.env` 経由で参照する（ローカルは `.env.example` を参考に手動で用意）
+- **テスト**: Playwright による E2E テスト（`tests/contact.spec.ts`、`tests/spec.spec.ts`）を `npm test` でローカル実行。GitHub Actions は未導入
 - **ビルド**: `vite build` → Remix Vite plugin による SSR バンドル生成
 
 ---
