@@ -139,7 +139,7 @@ function PDFDocument() {
               <View style={styles.contentSection}>
                 <View style={{ marginTop: 4 }}>
                   <Text style={{ marginTop: 4 }}>
-                    &bull; SSR application with 20 routes: blog, works, resume,
+                    &bull; SSR application with 17 routes: blog, works, resume,
                     contact, policies, RSS, API
                   </Text>
                   <Text style={{ marginTop: 4 }}>

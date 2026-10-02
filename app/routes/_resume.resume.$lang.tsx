@@ -137,7 +137,7 @@ function EnResume() {
                   <div className="space-y-2 md:w-2/3">
                     <ul className="list-inside list-disc space-y-1">
                       <li>
-                        SSR application with 20 routes: blog, works, resume,
+                        SSR application with 17 routes: blog, works, resume,
                         contact, policies, RSS, API
                       </li>
                       <li>
@@ -313,9 +313,9 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
                     <div className="text-gray-500">Remix, TypeScript, Vercel</div>
                   </div>
                   <div className="md:w-2/3 space-y-2">
-                    <p>20ルートのSSRアプリケーション。ブログ/実績/履歴書/問い合わせ対応。</p>
+                    <p>17ルートのSSRアプリケーション。ブログ/実績/履歴書/問い合わせ対応。</p>
                     <p>Playwright によるE2Eテスト実装。</p>
-                    <p>2022年から継続的に開発・運用。20ルート、TS/TSX/CSSで約8,000行。</p>
+                    <p>2022年から継続的に開発・運用。17ルート、TS/TSX/CSSで約12,000行。</p>
                   </div>
                 </div>
               </div>
