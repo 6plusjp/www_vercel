@@ -36,7 +36,6 @@ const TAB_DESKTOP = [
     svg: <RemixIcon className="mx-auto sm:h-24 sm:w-24" />,
     link: "https://remix.run",
   },
-  
   {
     name: "Slack",
     svg: <SlackIcon className="mx-auto sm:h-24 sm:w-24" />,
@@ -117,7 +116,7 @@ function Desktop() {
           <ExternalLink
             href={tab.link}
             key={tab.name}
-            className="opacity-75 ring-hp grayscale hover:opacity-100 hover:grayscale-0 focus:opacity-100 focus:outline-none focus:grayscale-0"
+            className="opacity-100 ring-hp transition duration-300 hover:opacity-60 focus:outline-none focus:ring"
           >
             {tab.svg}
           </ExternalLink>
