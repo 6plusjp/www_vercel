@@ -1,4 +1,4 @@
-# 6+ | Front-End Developer Portfolio
+# 6+ Portfolio
 
 個人のフロントエンド開発ポートフォリオサイト。本番環境で稼働中。
 

@@ -1,5 +1,4 @@
 import {
-  ArrowTrendingUpIcon,
   BriefcaseIcon,
   ChevronDownIcon,
   CommandLineIcon,
@@ -16,24 +15,24 @@ const LINKS = [
     title: "Coding",
     paragraphs: [
       "HTML、CSS、JavaScript（TypeScript）",
-      "React、Vue.js、Svelteなどの多様なフレームワーク",
-      "可読性や保守性の高い設計",
+      "Remix / React",
+      "可読性や保守性を意識した実装",
     ],
   },
   {
     svg: <CommandLineIcon className="h-7 w-7 text-ts" />,
     title: "UI/UX",
     paragraphs: [
-      "あらゆるユーザーを考慮した、アクセシビリティを主軸に置いた設計",
-      "ニーズに合わせたプロトタイプの試用、またそのフィードバックやデータからの改善",
+      "アクセシビリティを意識した設計",
+      "レスポンシブデザインとユーザー体験の改善",
     ],
   },
   {
     svg: <BriefcaseIcon className="h-7 w-7 text-ts" />,
-    title: "Business Branding",
+    title: "Web Development",
     paragraphs: [
-      "SEOの内部施策を理解したURL設計、ページネーション、動的なタグ付け",
-      "コンテンツに沿ったキーワード選定とページスピードの改善",
+      "Remixを用いたフルスタック開発",
+      "パフォーマンスと保守性を意識した設計",
     ],
   },
   {
@@ -45,19 +44,11 @@ const LINKS = [
     ],
   },
   {
-    svg: <ArrowTrendingUpIcon className="h-7 w-7 text-ts" />,
-    title: "Trending",
-    paragraphs: [
-      "RSSを駆使した情報収集",
-      "目まぐるしく移り変わるトレンドに対応するためのミニマムな設計",
-    ],
-  },
-  {
     svg: <GlobeAltIcon className="h-7 w-7 text-ts" />,
     title: "Overseas Experience",
     paragraphs: [
-      "海外での就業経験",
-      "日本語リソースの少ないサービスの早期習熟",
+      "カナダ・トロントでの留学・滞在経験",
+      "日本語リソースの少ない環境への適応",
     ],
   },
 ];

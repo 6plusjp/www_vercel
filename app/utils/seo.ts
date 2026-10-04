@@ -185,7 +185,7 @@ interface MetaArgs {
 }
 
 export const getMeta = ({
-  title = '6+ | Front-End Developer',
+  title = '6+ | Web Engineer',
   description = 'デジタル体験を加速させることで世界をより豊かにします。',
   keywords,
   author,

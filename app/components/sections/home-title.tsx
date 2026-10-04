@@ -6,7 +6,7 @@ export function HomeTitle() {
           はじめまして。
         </h3>
         <h2 className="py-2 text-3xl font-semibold text-ts sm:text-5xl md:text-6xl">
-          Front-End Developer
+          Web Engineer
         </h2>
         <h1 className="py-6 text-5xl font-semibold text-slate-600 dark:text-slate-100 sm:text-7xl md:text-8xl">
           6+
@@ -15,10 +15,8 @@ export function HomeTitle() {
           </span>
         </h1>
         <p className="mb-12 max-w-md py-6 text-base font-medium text-ts md:text-lg">
-          I&apos;m a front-end engineer specializing in building exceptional
-          digital experiences. Currently, I&apos;m focused on building
-          accessible, human-centered products for a fast and resilient user
-          experience.
+          I&apos;m a web engineer focused on building accessible,
+          human-centered web applications.
         </p>
       </div>
     </header>

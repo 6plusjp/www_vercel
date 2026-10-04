@@ -22,9 +22,7 @@ export function AboutSection({ className }: { className?: string }) {
               <br />
               2020年から独力でWEBを学ぶ。
               <br />
-              高速で弾力性のあるUXの構築に重きを置く。
-              <br />
-              デジタル体験を加速させることで、世界をより豊かに。
+              アクセシビリティと保守性を意識したWebアプリケーションの開発に取り組んでいます。
             </p>
           </div>
         </div>

@@ -3,18 +3,15 @@ import {
   ChatBubbleLeftRightIcon,
   ChevronDownIcon,
   CodeBracketIcon,
-  SwatchIcon,
 } from "@heroicons/react/24/outline";
 import * as Accordion from "@radix-ui/react-accordion";
 import { Link } from "@remix-run/react";
 import { forwardRef } from "react";
 
 import { ExternalLink } from "../external-link";
-import { PythonIcon } from "../icons/python-icon";
 import { ReactIcon } from "../icons/react-icon";
 import { SlackIcon } from "../icons/slack-icon";
 import { TSIcon } from "../icons/ts-icon";
-import { VueIcon } from "../icons/vue-icon";
 
 const TAB_DESKTOP = [
   {
@@ -23,19 +20,14 @@ const TAB_DESKTOP = [
     link: "https://www.typescriptlang.org",
   },
   {
-    name: "Python",
-    svg: <PythonIcon className="mx-auto sm:h-24 sm:w-24" />,
-    link: "https://www.python.org",
-  },
-  {
     name: "React",
     svg: <ReactIcon className="mx-auto sm:h-24 sm:w-24" />,
     link: "https://reactjs.org",
   },
   {
-    name: "Vue.js",
-    svg: <VueIcon className="mx-auto sm:h-24 sm:w-24" />,
-    link: "https://vuejs.org",
+    name: "Remix",
+    svg: <ReactIcon className="mx-auto sm:h-24 sm:w-24" />,
+    link: "https://remix.run",
   },
   // {
   //   name: "Figma",
@@ -57,10 +49,6 @@ const TAB_MOBILE = [
         name: "TypeScript",
         link: "https://www.typescriptlang.org",
       },
-      {
-        name: "Python",
-        link: "https://www.python.org",
-      },
     ],
   },
   {
@@ -72,35 +60,14 @@ const TAB_MOBILE = [
         link: "https://reactjs.org",
       },
       {
-        name: "Vue.js",
-        link: "https://vuejs.org",
+        name: "Remix",
+        link: "https://remix.run",
       },
     ],
   },
+
   {
-    label: "Design",
-    svg: <SwatchIcon className="h-7 w-7 text-ts" />,
-    tools: [
-      {
-        name: "Figma",
-        link: "https://www.figma.com",
-      },
-      // {
-      //   name: 'Framer',
-      //   svg: (
-      //     <ExternalLink
-      //       href="https://www.framer.com/"
-      //       className="ring-hp focus:outline-none grayscale opacity-75 hover:opacity-100 hover:grayscale-0"
-      //     >
-      //       <FramerIcon className="mx-auto h-8 w-8 sm:h-24 sm:w-24" />
-      //     </ExternalLink>
-      //   ),
-      //   link: 'https://www.framer.com/',
-      // },
-    ],
-  },
-  {
-    label: "Chat",
+    label: "Others",
     svg: <ChatBubbleLeftRightIcon className="h-7 w-7 text-ts" />,
     tools: [
       {
