@@ -174,10 +174,11 @@ function EnResume() {
                         tests
                       </li>
                       <li>
-                        107 issue resolution records + 6 coding policy documents
+                        109 issue resolution records + 6 coding policy documents
                       </li>
                       <li>
-                        Approximately 12,000 lines of Rust, developed over 7 months (Mar-Oct 2026)
+                        Approximately 13,000 lines of Rust across 66 files, 2026-03 to
+                        2026-10
                       </li>
                     </ul>
                   </div>
@@ -238,7 +239,7 @@ function EnResume() {
               <div className="space-y-1">
                 <div className="font-bold">Frontend</div>
                 <ul>
-                  <li>Remix, React, Next.js</li>
+                  <li>Remix, React</li>
                   <li>Tailwind CSS, MDX</li>
                 </ul>
               </div>
@@ -287,12 +288,12 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
               【活かせる経験・知識・技術】
             </h2>
             <ul className="list-disc list-inside space-y-2">
-              <li>TypeScript / JavaScript を用いた Web アプリケーション開発（Remix, React, Next.js）</li>
+              <li>TypeScript / JavaScript を用いた Web アプリケーション開発（Remix, React）</li>
               <li>Rust による CLI / TUI アプリケーション開発</li>
-              <li>E2E テスト（Playwright）・ユニットテスト（Vitest）の設計・運用</li>
+              <li>E2E テスト（Playwright）・ユニットテスト（Vitest）の実装・運用</li>
               <li>MDX によるファイルベースコンテンツ管理</li>
               <li>Vercel への SSR デプロイと運用</li>
-              <li>Linux（Arch Linux）環境での開発・自動プロビジョニング</li>
+              <li>Linux 環境での開発（kitty / fish / Neovim / Zed）</li>
               <li>カナダ（トロント）での1年間の留学（自己負担）</li>
             </ul>
           </section>
@@ -315,7 +316,7 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
                   <div className="md:w-2/3 space-y-2">
                     <p>17ルートのSSRアプリケーション。ブログ/実績/履歴書/問い合わせ対応。</p>
                     <p>Playwright によるE2Eテスト実装。</p>
-                    <p>2022年から継続的に開発・運用。17ルート、TS/TSX/CSSで約12,000行。</p>
+                    <p>2022年から継続的に開発・運用。17ルート、TS/TSX/CSS/MDXで約13,000行。</p>
                   </div>
                 </div>
               </div>
@@ -335,7 +336,7 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
                   <div className="md:w-2/3 space-y-2">
                     <p>国・都市の階層ブラウズ・ファジー検索・接続セッション管理。</p>
                     <p>CI・Lint規約・統合テスト・Issue運用ドキュメントを整備。</p>
-                    <p>2026-03〜2026-10の7ヶ月間、Rustソース約12,000行。MITライセンス。</p>
+                    <p>2026-03〜2026-10、Rustソース66ファイル・約13,000行。MITライセンス。</p>
                   </div>
                 </div>
               </div>
@@ -378,7 +379,7 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
               <div className="space-y-2">
                 <div className="font-bold">フレームワーク</div>
                 <ul className="list-disc list-inside space-y-1">
-                  <li>Remix, React, Next.js</li>
+                  <li>Remix, React</li>
                   <li>Tailwind CSS, MDX</li>
                 </ul>
               </div>

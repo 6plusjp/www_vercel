@@ -13,7 +13,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       <channel>
         <title>6+ Blog</title>
         <link>${blogUrl}</link>
-        <description>6+ Blog ではWEB関連の情報をお届けしています。</description>
+        <description>6+ Blog ではWeb関連の情報をお届けしています。</description>
         <language>ja-JP</language>
         ${posts
           .map((post) =>

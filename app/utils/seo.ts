@@ -186,7 +186,7 @@ interface MetaArgs {
 
 export const getMeta = ({
   title = '6+ | Web Engineer',
-  description = 'デジタル体験を加速させることで世界をより豊かにします。',
+  description = 'WebアプリケーションとCLIツールの開発。Shoma Yamamoto。',
   keywords,
   author,
   image = 'public/images/og.png',
@@ -202,7 +202,7 @@ export const getMeta = ({
     },
     {
       name: 'keywords',
-      content: keywords ?? 'None',
+      content: keywords || undefined,
     },
     ...(author
       ? [

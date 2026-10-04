@@ -1,4 +1,7 @@
-import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import {
+  ArrowLeftIcon,
+  ArrowTopRightOnSquareIcon,
+} from '@heroicons/react/24/outline'
 import { Link, useLoaderData } from '@remix-run/react'
 import type { LoaderFunctionArgs, MetaFunction } from '@vercel/remix'
 import { json } from '@vercel/remix'
@@ -6,6 +9,7 @@ import { getMDXComponent } from 'mdx-bundler/client'
 import { useMemo } from 'react'
 
 import { Alert } from '~/components/alert'
+import { ExternalLink } from '~/components/external-link'
 import { Footer } from '~/components/footer'
 import { Navbar } from '~/components/navbar'
 import { PostImage } from '~/components/post-image'
@@ -92,9 +96,20 @@ export default function Work() {
               <h1 className="col-span-full mb-8 py-12 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 sm:text-center sm:text-4xl">
                 {frontmatter.title}
               </h1>
+              {frontmatter.repository ? (
+                <div className="flex justify-center">
+                  <ExternalLink
+                    className="btn bg-hp text-tp shadow transition duration-300 hover:-translate-y-0.5 hover:border hover:border-black hover:bg-transparent hover:text-hp"
+                    href={frontmatter.repository}
+                  >
+                    <ArrowTopRightOnSquareIcon className="h-5 w-5" />
+                    <span className="ml-2">Repository</span>
+                  </ExternalLink>
+                </div>
+              ) : null}
             </div>
-            <div className="relative rounded shadow-md">
-              {frontmatter.bannerImgId ? (
+            {frontmatter.bannerImgId ? (
+              <div className="relative rounded shadow-md">
                 <PostImage
                   className="rounded"
                   imgId={frontmatter.bannerImgId}
@@ -107,8 +122,8 @@ export default function Work() {
                   ].join(', ')}
                   alt={frontmatter.bannerAlt}
                 />
-              ) : null}
-            </div>
+              </div>
+            ) : null}
             <div className="not-prose mt-16">
               <Link
                 className="group flex gap-2 text-black dark:text-white"

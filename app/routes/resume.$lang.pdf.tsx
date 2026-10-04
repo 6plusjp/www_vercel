@@ -176,10 +176,11 @@ function PDFDocument() {
                     tests
                   </Text>
                   <Text style={{ marginTop: 4 }}>
-                    &bull; 107 issue resolution records + 6 coding policy documents
+                    &bull; 109 issue resolution records + 6 coding policy documents
                   </Text>
                   <Text style={{ marginTop: 4 }}>
-                    &bull; Approximately 12,000 lines of Rust, developed over 7 months (Mar-Oct 2026)
+                    &bull; Approximately 13,000 lines of Rust across 66 files,
+                    2026-03 to 2026-10
                   </Text>
                 </View>
               </View>
@@ -243,7 +244,7 @@ function PDFDocument() {
             <View style={{ flexBasis: "50%" }}>
               <Text style={{ fontFamily: "Helvetica-Bold" }}>Frontend</Text>
               <View style={{ marginTop: 8 }}>
-                <Text>Remix, React, Next.js</Text>
+                <Text>Remix, React</Text>
                 <Text>Tailwind CSS, MDX</Text>
               </View>
             </View>

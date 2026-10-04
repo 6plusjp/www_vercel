@@ -47,7 +47,7 @@ export const loader = async (_: LoaderFunctionArgs) => {
 export const meta: MetaFunction<typeof loader> = () =>
   getMeta({
     title: "Blog | 6+",
-    description: "WEB開発関連の情報を発信しています。",
+    description: "Web開発関連の情報を発信しています。",
   });
 
 export default function Blog() {
@@ -265,7 +265,7 @@ export default function Blog() {
               Welcome to 6+ Blog
             </h1>
             <p className="text-lg text-slate-700 dark:text-slate-400 sm:text-center">
-              WEB関連の情報をお届けしています。
+              Web関連の情報をお届けしています。
             </p>
           </header>
           <Spacer size="2xs" />

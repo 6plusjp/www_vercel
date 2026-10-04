@@ -10,6 +10,8 @@ import { forwardRef } from "react";
 
 import { ExternalLink } from "../external-link";
 import { ReactIcon } from "../icons/react-icon";
+import { RemixIcon } from "../icons/remix-icon";
+import { RustIcon } from "../icons/rust-icon";
 import { SlackIcon } from "../icons/slack-icon";
 import { TSIcon } from "../icons/ts-icon";
 
@@ -25,17 +27,18 @@ const TAB_DESKTOP = [
     link: "https://reactjs.org",
   },
   {
+    name: "Rust",
+    svg: <RustIcon className="mx-auto sm:h-24 sm:w-24" />,
+    link: "https://www.rust-lang.org",
+  },
+  {
     name: "Remix",
-    svg: <ReactIcon className="mx-auto sm:h-24 sm:w-24" />,
+    svg: <RemixIcon className="mx-auto sm:h-24 sm:w-24" />,
     link: "https://remix.run",
   },
-  // {
-  //   name: "Figma",
-  //   svg: <FigmaIcon className="mx-auto sm:h-24 sm:w-24" />,
-  //   link: "https://www.figma.com",
-  // },
+  
   {
-    name: "slack",
+    name: "Slack",
     svg: <SlackIcon className="mx-auto sm:h-24 sm:w-24" />,
     link: "https://slack.com",
   },
@@ -48,6 +51,10 @@ const TAB_MOBILE = [
       {
         name: "TypeScript",
         link: "https://www.typescriptlang.org",
+      },
+      {
+        name: "Rust",
+        link: "https://www.rust-lang.org",
       },
     ],
   },
@@ -71,7 +78,7 @@ const TAB_MOBILE = [
     svg: <ChatBubbleLeftRightIcon className="h-7 w-7 text-ts" />,
     tools: [
       {
-        name: "slack",
+        name: "Slack",
         link: "https://slack.com",
       },
     ],

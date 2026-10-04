@@ -29,6 +29,8 @@ export interface Frontmatter {
   bannerAlt?: string;
   bannerCredit?: string;
 
+  repository?: string;
+
   meta?: {
     title?: string;
     description?: string;

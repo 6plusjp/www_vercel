@@ -12,7 +12,8 @@ import { getMeta } from "~/utils/seo";
 export const meta: MetaFunction = () => {
   return [
     ...getMeta({
-      description: "フリーランスでフロントエンド開発しています。",
+      description:
+      "WebアプリケーションとCLIツールの開発。Shoma Yamamoto（Remix / TypeScript / Rust）。",
     }),
   ];
 };

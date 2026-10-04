@@ -6,7 +6,7 @@ interface Props {
   title?: string;
 }
 
-function SlackIcon({ size = 24, className, title = "slack" }: Props) {
+function SlackIcon({ size = 24, className, title = "Slack" }: Props) {
   return (
     <svg
       className={clsx(className)}

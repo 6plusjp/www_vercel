@@ -40,7 +40,7 @@ const LINKS = [
     title: "Content Writing",
     paragraphs: [
       "ブログのライティング",
-      "Contentfulやwordpress等のCMSに頼らないコンテンツ管理",
+      "MDXによるファイルベースのコンテンツ管理",
     ],
   },
   {
