@@ -1,0 +1,61 @@
+---
+title: ProtonVPN TUI
+description: ProtonVPN CLIをRustで包んだ、vim風キー操作のターミナルUI。個人開発。
+lang: ja
+published: 2026-10
+meta:
+  keywords:
+    - app
+    - Rust
+    - CLI
+    - TUI
+    - ratatui
+categories:
+  - Rust
+  - CLI
+  - TUI
+---
+
+## 概要
+
+ProtonVPNの公式CLIをRustで包んだ、ターミナルUIアプリケーションです。サーバー一覧の閲覧から接続、設定変更、ログ確認までをvim風のキー操作で行えます。
+
+個人開発プロジェクトです。
+
+## Tech Stack
+
+- Rust (edition 2021)
+- [ratatui](https://ratatui.rs/) / crossterm
+- clap（CLI引数解析）
+- serde / serde_json / toml（設定・キャッシュ）
+- thiserror / anyhow（エラー処理）
+- tracing（ログ）
+- notify-rust（ファイル変更通知）
+
+## 機能
+
+- 国・都市のツリー構造によるサーバー一覧の閲覧とファジィ検索
+- 最速サーバー・指定国/都市・ランダム・P2P・Tor・Secure Coreへの接続
+- Kill Switch / IPv6保護 / NATモデレート / VPN Accelerator などの設定変更
+- 接続履歴と通知のログ表示
+- 複数テーマ（Catppuccin / Dracula / Nord / Gruvbox / Tokyo Night）
+- テーマ変更時のリアルタイムプレビュー
+
+## 品質管理
+
+「動くこと」と「壊さないこと」を優先し、検証しやすい状態を維持しています。
+
+- CIで `cargo test` / `cargo fmt --check` / `cargo clippy -D warnings` を実行
+- 統合テスト5ファイル（`async_task` / `config` / `server` / `state` / `vpn_ops`）
+- pre-commitフック
+- リリースビルドは LTO + codegen-units=1 + strip
+
+## 設計上の判断
+
+- `protonvpn status` はuptimeを返さないため、接続時刻を自前で記録してセッション時間を算出
+- CLIの出力は不安定なため、TUI側で状態管理とキャッシュを持つ構造にした
+- エラーは `thiserror` の型で集約し、CLIとの境界で整形
+
+## 参考
+
+- [protonvpn-tui (GitHub)](https://github.com/6plusjp/protonvpn-tui)

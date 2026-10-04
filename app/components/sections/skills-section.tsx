@@ -1,6 +1,6 @@
 import {
-  BriefcaseIcon,
   ChevronDownIcon,
+  CodeBracketIcon,
   CommandLineIcon,
   ComputerDesktopIcon,
   GlobeAltIcon,
@@ -28,11 +28,11 @@ const LINKS = [
     ],
   },
   {
-    svg: <BriefcaseIcon className="h-7 w-7 text-ts" />,
-    title: "Web Development",
+    svg: <CodeBracketIcon className="h-7 w-7 text-ts" />,
+    title: "Rust / CLI",
     paragraphs: [
-      "Remixを用いたフルスタック開発",
-      "パフォーマンスと保守性を意識した設計",
+      "ProtonVPN CLI を Rust で包んだ、vim風キー操作のTUIを個人開発",
+      "clippy / rustfmt / 統合テスト（5ファイル）/ CIで品質を管理",
     ],
   },
   {
