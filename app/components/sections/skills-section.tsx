@@ -31,7 +31,7 @@ const LINKS = [
     svg: <CodeBracketIcon className="h-7 w-7 text-ts" />,
     title: "Rust / CLI",
     paragraphs: [
-      "ProtonVPN CLI を Rust で包んだ、vim風キー操作のTUIを個人開発",
+      "ProtonVPN CLI を Rust で包んだ、vim風キー操作のTUI",
       "clippy / rustfmt / 統合テスト（5ファイル）/ CIで品質を管理",
     ],
   },
