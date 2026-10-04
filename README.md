@@ -1,9 +1,10 @@
 # 6+ Portfolio
 
-個人のフロントエンド開発ポートフォリオサイト。本番環境で稼働中。
+Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で SSR 運用中。
 
-- **本番URL**: https://6plus.vercel.app （2026-10-01 時点で HTTP 200、SSR で HTML を返却することを実測確認済み / 48 KB）
+- **本番URL**: https://6plus.vercel.app （2026-10-04 時点で HTTP 200、SSR で HTML を返却することを実測確認済み / 48 KB）
 - **リポジトリ**: https://github.com/6plusjp/www_vercel
+- **デプロイ元ブランチ**: `main`（Vercel の既定ブランチ。`dev` の内容は本番に反映されません）
 
 ---
 
@@ -11,7 +12,7 @@
 
 - **本番環境で動作中**（Vercel SSR deployment）
 - 2022-04-03 の Initial commit から約 4 年半、継続的に開発・更新中
-- ルーティング 17 ファイル / 17 ルート、TypeScript・TSX・CSS で約 12,000 行
+- ルーティング 17 ファイル / 17 ルート、TS・TSX・CSS・MDX で約 13,000 行
 
 ---
 
@@ -49,7 +50,7 @@
 
 ---
 
-## 実装上の工夫（コード上の根拠あり）
+## 実装上の工夫
 
 ### スパム対策
 - **ハニーポット**: `app/utils/honeypot.server.ts`
@@ -63,6 +64,9 @@
 
 ### メール送信
 - `app/utils/email.server.ts` でサーバーサイド送信処理を実装
+
+### sitemap / robots.txt
+- カスタム `app/entry.server.tsx` で `/sitemap.xml` と `/robots.txt` を配信
 
 ### 入力バリデーション
 - `action.form-validation.tsx` でフォーム入力を検証し、サーバーアクション側で再検証
@@ -87,13 +91,9 @@
 - **`ssr.noExternal` 設定**で CommonJS モジュールをバンドルに含めるよう調整
 - **nanoid を 3.1.31 にダウングレード**（CJS 互換性確保のため）
 - **`require` を `env.server.ts` から除去**（ESM 互換化）
-- **`import.meta.url` の活用**（ESM 環境でのパス解決）
 - **`fs.server.ts` で `process.cwd()` を使用**（Vercel 上でのファイルシステムアクセス安定化）
 - **esbuild ターゲットに es2022 を追加**（分割代入等のモダン構文対応）
 - **Remix classic build への回帰**（安定性優先の判断）
-- **カスタム `entry.server.tsx` を削除し Vercel デフォルトを使用**（メンテナンス負荷低減）
-
-これらは「動くものを維持しつつ、プラットフォームの制約に合わせて段階的に適合させていく」という実務的な判断の積み重ねです。
 
 ---
 
@@ -105,7 +105,7 @@ app/
 ├── utils/               # honeypot, throttle, session, seo, email 等
 ├── components/          # 共通 UI コンポーネント
 ├── entry.client.tsx
-├── entry.server.tsx     # SSR エントリポイント
+├── entry.server.tsx     # SSR エントリポイント（sitemap.xml / robots.txt もここで処理）
 └── root.tsx
 content/
 ├── blog/                # *.mdx
