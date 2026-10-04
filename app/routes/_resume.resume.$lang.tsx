@@ -233,7 +233,6 @@ function EnResume() {
                 <ul>
                   <li>TypeScript, JavaScript</li>
                   <li>Rust</li>
-                  <li>Python</li>
                 </ul>
               </div>
               <div className="space-y-1">
@@ -373,7 +372,6 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
                 <ul className="list-disc list-inside space-y-1">
                   <li>TypeScript, JavaScript</li>
                   <li>Rust</li>
-                  <li>Python</li>
                 </ul>
               </div>
               <div className="space-y-2">

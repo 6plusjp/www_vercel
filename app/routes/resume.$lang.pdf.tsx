@@ -238,7 +238,6 @@ function PDFDocument() {
               <View style={{ marginTop: 8 }}>
                 <Text>TypeScript, JavaScript</Text>
                 <Text>Rust</Text>
-                <Text>Python</Text>
               </View>
             </View>
             <View style={{ flexBasis: "50%" }}>
