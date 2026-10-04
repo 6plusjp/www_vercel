@@ -1,5 +1,10 @@
 import invariant from "tiny-invariant";
 
+// Where contact form notifications are delivered, and the fallback sender when
+// MAIL_FROM_EMAIL is unset. Kept as one constant so the address lives in a
+// single place.
+const OWNER_EMAIL = "6plusjp@gmail.com";
+
 interface Props {
   subject: string;
   text: string;
@@ -94,7 +99,7 @@ async function sendEmail(data: Props) {
 
   const body = {
     from: {
-      email: process.env.MAIL_FROM_EMAIL ?? "6plusjp@gmail.com",
+      email: process.env.MAIL_FROM_EMAIL ?? OWNER_EMAIL,
       name: "6+",
     },
     to: [
@@ -140,12 +145,12 @@ async function sendEmailToOwner(data: Props) {
 
   const body = {
     from: {
-      email: process.env.MAIL_FROM_EMAIL ?? "6plusjp@gmail.com",
+      email: process.env.MAIL_FROM_EMAIL ?? OWNER_EMAIL,
       name: "6+",
     },
     to: [
       {
-        email: "6plusjp@gmail.com",
+        email: OWNER_EMAIL,
         name: "Shoma Yamamoto",
       },
     ],
