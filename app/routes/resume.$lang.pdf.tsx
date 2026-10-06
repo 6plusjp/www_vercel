@@ -212,11 +212,13 @@ function PDFDocument() {
             </View>
             <View style={styles.contentSection}>
               <Text style={{ fontFamily: "Helvetica-Oblique" }}>
-                Faculty of Science, Department of Life and Environmental Sciences
+                College of Life, Environment, and Advanced Sciences
               </Text>
               <View style={{ marginTop: 8 }}>
                 <Text style={{ marginTop: 4 }}>
-                  &bull; One-year self-funded leave of absence: Toronto, Canada
+                  &bull; About one year on leave, including approximately 10
+                  months in Toronto, Canada (not enrolled at a university or
+                  language school)
                 </Text>
                 <Text style={{ marginTop: 4 }}>
                   &bull; Withdrawn from school for personal reasons.

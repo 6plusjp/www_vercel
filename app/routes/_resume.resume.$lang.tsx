@@ -211,12 +211,13 @@ function EnResume() {
               </div>
               <div className="space-y-2 md:w-2/3">
                 <div className="italic">
-                  Faculty of Science, Department of Life and Environmental
-                  Sciences
+                  College of Life, Environment, and Advanced Sciences
                 </div>
                 <ul className="list-inside list-disc space-y-1">
                   <li>
-                    One-year self-funded leave of absence: Toronto, Canada
+                    About one year on leave, including approximately 10
+                    months in Toronto, Canada (not enrolled at a university
+                    or language school)
                   </li>
                   <li>Withdrawn from school for personal reasons.</li>
                 </ul>
@@ -277,7 +278,7 @@ function JaResume() {
           <section className="space-y-4">
             <h2 className="font-bold text-lg text-hs">【職務要約】</h2>
             <p className="whitespace-pre-wrap">
-実務経験はないが、独学で Web アプリケーション開発・CLI ツール開発を継続的に行っている。
+エンジニアとしての実務経験はないが、独学で Web アプリケーション開発・CLI ツール開発を継続的に行っている。
 Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュメント作成までを
 一人で完遂するスタイル。Web 開発業務の受付窓口としてこのサイトを運営している。
             </p>
@@ -293,7 +294,7 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
               <li>MDX によるファイルベースコンテンツ管理</li>
               <li>Vercel への SSR デプロイと運用</li>
               <li>Linux 環境での開発（kitty / fish / Neovim / Zed）</li>
-              <li>カナダ（トロント）での1年間の留学（自己負担）</li>
+              <li>カナダ（トロント）での約10ヶ月間の留学（大学・言語学校には通わず）</li>
             </ul>
           </section>
           <section className="space-y-4">
@@ -356,9 +357,12 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
                 <div className="text-gray-500">2015 - 2020</div>
               </div>
               <div className="md:w-2/3 space-y-2">
-                <p className="italic">理学部 生命環境科学科</p>
+                <p className="italic">生命環境科学域</p>
                 <ul className="list-disc list-inside space-y-1">
-                  <li>1年間休学し、カナダ（トロント）で留学（自己負担）</li>
+                  <li>
+                    約1年間休学。うち約10ヶ月間、カナダ・トロントで留学
+                    （大学・言語学校には通わず）
+                  </li>
                   <li>個人的理由により中退</li>
                 </ul>
               </div>
