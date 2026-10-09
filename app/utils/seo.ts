@@ -163,6 +163,7 @@ export function getRobotsText(request: Request): string {
     },
     { type: 'disallow', value: '/admin/' },
     { type: 'disallow', value: '/action/' },
+    { type: 'disallow', value: '/resume/' },
     // sitemap
     { type: 'sitemap', value: `${getDomainUrl(request)}/sitemap.xml` },
   ]
