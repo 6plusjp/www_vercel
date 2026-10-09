@@ -51,7 +51,7 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 | `blog.rss[.]xml.tsx` | RSS フィード生成 |
 | `works._index.tsx` / `works.$slug.tsx` | 実績一覧・詳細 |
 | `_resume.tsx` / `_resume.resume.$lang.tsx` / `resume.$lang.pdf.tsx` | 履歴書（言語切替・PDF 生成） |
-| `contact._index.tsx` | 問い合わせフォーム（ハニーポット＋レート制限） |
+| `contact._index.tsx` | 問い合わせフォーム（ハニーポット） |
 | `_layout.policy._index.tsx` / `_layout.terms._index.tsx` | プライバシーポリシー・利用規約 |
 | `_md.tsx` / `_md.uses.mdx` | MDX レンダリング共通コンポーネント |
 | `action.form-validation.tsx` / `action.set-theme.ts` | Action（フォーム検証・テーマ切替） |
@@ -66,7 +66,6 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 ### スパム対策
 - **ハニーポット**: `app/utils/honeypot.server.ts`
-- **レート制限**: `app/utils/throttle.ts`
 
 ### セッション管理
 - `app/utils/session.server.ts` でサーバーサイドセッションを実装
@@ -116,7 +115,7 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 ```
 app/
 ├── routes/              # 17 ファイル（17 ルート、ファイルベースルーティング）
-├── utils/               # honeypot, throttle, session, seo, email 等
+├── utils/               # honeypot, session, seo, email 等
 ├── components/          # 共通 UI コンポーネント
 ├── entry.client.tsx
 ├── entry.server.tsx     # SSR エントリポイント（sitemap.xml / robots.txt もここで処理）
