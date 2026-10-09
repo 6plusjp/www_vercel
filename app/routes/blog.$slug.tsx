@@ -162,8 +162,8 @@ export default function MdxScreen() {
 
   return (
     <>
-      <div className="min-h-screen bg-slate-200 px-6 duration-500 dark:bg-slate-800 lg:flex">
-        <div className="hidden flex-shrink-0 lg:block">
+      <div className="min-h-screen bg-slate-200 px-6 duration-500 [--sb:16rem] dark:bg-slate-800 xl:[--sb:20rem] 2xl:[--sb:24rem]">
+        <div className="fixed left-6 top-0 z-30 hidden h-screen lg:block">
           <Sidebar>
             {/* {toc ? (
               <nav className="mb-8 text-tp">
@@ -178,87 +178,87 @@ export default function MdxScreen() {
             ) : null} */}
           </Sidebar>
         </div>
-        <div className="flex-grow pb-12 lg:h-full lg:py-12">
+        <div className="relative mx-auto pb-12 lg:h-full lg:max-w-[min(42rem,calc(100vw_-_2*var(--sb)_-_4rem))] lg:py-12">
           <div className="flex items-center justify-end px-[5vw] py-4 sm:py-8 lg:hidden lg:py-12">
             <MobileMenu />
           </div>
-          <div className="block xl:flex xl:gap-8">
-            <TableOfContents />
-            <motion.div
-              initial="exit"
-              animate="enter"
-              exit="exit"
-              className="prose prose-sm max-w-4xl dark:prose-invert sm:prose-base lg:prose-lg"
+          <motion.div
+            initial="exit"
+            animate="enter"
+            exit="exit"
+            className="prose prose-sm max-w-4xl break-words dark:prose-invert sm:prose-base lg:prose-lg max-lg:mx-auto"
+          >
+            <motion.header
+              layoutId={`card-${slug}`}
+              className="not-prose pb-12 pt-4 lg:py-16"
             >
-              <motion.header
-                layoutId={`card-${slug}`}
-                className="not-prose pb-12 pt-4 lg:py-16"
+              {isDraft ? (
+                <Alert state="info" className="mb-12">
+                  このブログ記事は下書きの状態です。リンクや内容等が変更される可能性があります。
+                </Alert>
+              ) : null}
+              <motion.div variants={motionVariants.text}>
+                <dl>
+                  <dt className="sr-only">Date</dt>
+                  <dd className="text-sm leading-6 text-slate-700 dark:text-slate-400 sm:text-center">
+                    <time
+                      dateTime={frontmatter.updated || frontmatter.published}
+                    >
+                      {frontmatter.updated
+                        ? `更新: ${formatDate(frontmatter.updated)}`
+                        : frontmatter.published
+                          ? `公開: ${formatDate(frontmatter.published)}`
+                          : null}
+                    </time>
+                  </dd>
+                </dl>
+                <h1 className="col-span-full mb-8 py-12 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 sm:text-center sm:text-4xl">
+                  {frontmatter.title}
+                </h1>
+              </motion.div>
+              <motion.div
+                variants={motionVariants.image}
+                className="relative rounded shadow-md"
+                layoutId={`image-container-${slug}`}
               >
-                {isDraft ? (
-                  <Alert state="info" className="mb-12">
-                    このブログ記事は下書きの状態です。リンクや内容等が変更される可能性があります。
-                  </Alert>
+                {frontmatter.bannerImgId ? (
+                  <PostImage
+                    className="rounded"
+                    imgId={frontmatter.bannerImgId}
+                    widths={[280, 560, 840, 1100]}
+                    sizes={[
+                      '(max-width:767px) 95vw',
+                      '(min-width:768px) and (max-width:1023px) 740px',
+                      '(min-width:1024px) and (max-width:1279px) 80vw',
+                      '900px',
+                    ].join(', ')}
+                    alt={frontmatter.bannerAlt}
+                  />
                 ) : null}
-                <motion.div variants={motionVariants.text}>
-                  <dl>
-                    <dt className="sr-only">Date</dt>
-                    <dd className="text-sm leading-6 text-slate-700 dark:text-slate-400 sm:text-center">
-                      <time
-                        dateTime={frontmatter.updated || frontmatter.published}
-                      >
-                        {frontmatter.updated
-                          ? `更新: ${formatDate(frontmatter.updated)}`
-                          : frontmatter.published
-                            ? `公開: ${formatDate(frontmatter.published)}`
-                            : null}
-                      </time>
-                    </dd>
-                  </dl>
-                  <h1 className="col-span-full mb-8 py-12 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 sm:text-center sm:text-4xl">
-                    {frontmatter.title}
-                  </h1>
-                </motion.div>
-                <motion.div
-                  variants={motionVariants.image}
-                  className="relative rounded shadow-md"
-                  layoutId={`image-container-${slug}`}
+              </motion.div>
+              <motion.div
+                variants={motionVariants.back}
+                className="not-prose mt-16"
+              >
+                <Link
+                  className="group flex gap-2 text-black dark:text-white"
+                  prefetch="intent"
+                  to="/blog"
                 >
-                  {frontmatter.bannerImgId ? (
-                    <PostImage
-                      className="rounded"
-                      imgId={frontmatter.bannerImgId}
-                      widths={[280, 560, 840, 1100]}
-                      sizes={[
-                        '(max-width:767px) 95vw',
-                        '(min-width:768px) and (max-width:1023px) 740px',
-                        '(min-width:1024px) and (max-width:1279px) 80vw',
-                        '900px',
-                      ].join(', ')}
-                      alt={frontmatter.bannerAlt}
-                    />
-                  ) : null}
-                </motion.div>
-                <motion.div
-                  variants={motionVariants.back}
-                  className="not-prose mt-16"
-                >
-                  <Link
-                    className="group flex gap-2 text-black dark:text-white"
-                    prefetch="intent"
-                    to="/blog"
-                  >
-                    <ArrowLeftIcon className="h-6 w-6 transition-transform duration-300 group-hover:-translate-x-1" />
-                    <span className="text-base">Back to Blog</span>
-                  </Link>
-                </motion.div>
-              </motion.header>
-              <motion.article variants={motionVariants.code}>
-                <Component />
-              </motion.article>
-              <section title="If you found this article helpful.">
-                {/* {data.recommendations} */}
-              </section>
-            </motion.div>
+                  <ArrowLeftIcon className="h-6 w-6 transition-transform duration-300 group-hover:-translate-x-1" />
+                  <span className="text-base">Back to Blog</span>
+                </Link>
+              </motion.div>
+            </motion.header>
+            <motion.article variants={motionVariants.code}>
+              <Component />
+            </motion.article>
+            <section title="If you found this article helpful.">
+              {/* {data.recommendations} */}
+            </section>
+          </motion.div>
+          <div className="absolute left-full top-0 ml-8 hidden h-full w-52 xl:block">
+            <TableOfContents />
           </div>
         </div>
       </div>

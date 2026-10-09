@@ -11,7 +11,7 @@ export const TableOfContents = () => {
   const activeId = useTocObserver();
 
   return (
-    <nav className="sticky top-36 order-1 mt-10 hidden max-h-[calc(100vh-10rem)] w-52 flex-shrink-0 self-start overflow-y-auto pb-4 xl:block">
+    <nav className="sticky top-36 mt-10 hidden max-h-[calc(100vh-10rem)] w-52 flex-shrink-0 self-start overflow-y-auto pb-4 xl:block">
       <div className="mb-2 flex items-center pb-1 pt-0 text-[1rem] font-bold tracking-wide text-slate-900 dark:text-slate-200">
         On this page
       </div>
