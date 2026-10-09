@@ -8,11 +8,23 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 ---
 
+## スクリーンショット
+
+![トップページ](docs/assets/home.png)
+
+| 実績 | ブログ | お問い合わせ |
+|---|---|---|
+| ![実績一覧](docs/assets/works.png) | ![ブログ一覧](docs/assets/blog.png) | ![お問い合わせ](docs/assets/contact.png) |
+
+再生成方法は「[開発コマンド](#開発コマンド)」の `npm run screenshot` を参照してください。
+
+---
+
 ## 稼働状況
 
 - **本番環境で動作中**（Vercel SSR deployment）
 - 2022-04-03 の Initial commit から約 4 年半、継続的に開発・更新中
-- ルーティング 17 ファイル / 17 ルート、TS・TSX・CSS・MDX で約 13,000 行
+- ルーティング 17 ファイル / 17 ルート、TS・TSX・CSS・MDX で約 12,500 行
 
 ---
 
@@ -62,8 +74,9 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 ### SEO ユーティリティ
 - `app/utils/seo.ts` にて OG 画像・Twitter カード・canonical URL を一元管理
 
-### メール送信
-- `app/utils/email.server.ts` でサーバーサイド送信処理を実装
+### ~~メール送信~~
+- ~~`app/utils/email.server.ts` でサーバーサイド送信処理を実装（MailerSend API を使用）~~
+- Vercel のフリードメイン（`*.vercel.app`）へ移行し送信元ドメインの検証ができなくなったため、MailerSend API によるメール送信は利用できなくなりました（問い合わせは直接メールでお願いします）。
 
 ### sitemap / robots.txt
 - カスタム `app/entry.server.tsx` で `/sitemap.xml` と `/robots.txt` を配信
@@ -78,7 +91,8 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 - **Deployment**: Vercel（SSR / Server deployment）へ push するだけで自動デプロイ
 - **環境変数**: Vercel のプロジェクト設定で管理し、`process.env` 経由で参照する（ローカルは `.env.example` を参考に手動で用意）
-- **テスト**: Playwright による E2E テスト（`tests/contact.spec.ts`、`tests/spec.spec.ts`）を `npm test` でローカル実行。GitHub Actions は未導入
+- **テスト**: Playwright による E2E テスト（`tests/contact.spec.ts`、`tests/portfolio.spec.ts`、`tests/spec.spec.ts`）を `npm test` でローカル実行
+- **CI**: GitHub Actions（`.github/workflows/ci.yml`）で typecheck・lint・E2E を pull request / push ごとに実行
 - **ビルド**: `vite build` → Remix Vite plugin による SSR バンドル生成
 
 ---
@@ -110,6 +124,10 @@ app/
 content/
 ├── blog/                # *.mdx
 └── works/               # *.mdx
+.github/
+└── workflows/           # CI（typecheck / lint / E2E）
+docs/
+└── assets/              # README 用スクリーンショット
 tests/                   # Playwright E2E
 ```
 
@@ -135,6 +153,10 @@ npm run lint
 
 # E2E テスト（Playwright）
 npm test
+
+# README 用スクリーンショットを再生成
+# （別ターミナルで npm run dev を起動しておく）
+npm run screenshot
 
 # ビルドキャッシュ・生成物の削除
 npm run cleanup

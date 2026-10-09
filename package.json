@@ -37,6 +37,7 @@
     "lint": "eslint app/",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
+    "screenshot": "node scripts/screenshot.mjs",
     "cleanup": "rimraf .cache .vercel ./build ./public/build ./app/styles",
     "reinstall": "npm run cleanup && rimraf package-lock.json pnpm-lock.yaml node_modules && npm i"
   },

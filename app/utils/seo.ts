@@ -54,6 +54,7 @@ export async function getSitemapXml(
     await Promise.all(
       Object.entries(remixContext.routeModules).map(async ([id, mod]) => {
         if (id === 'root') return
+        if (!mod) return
 
         const handle = mod.handle as SEOHandle | undefined
         if (handle?.getSitemapEntries) {
@@ -163,6 +164,7 @@ export function getRobotsText(request: Request): string {
     },
     { type: 'disallow', value: '/admin/' },
     { type: 'disallow', value: '/action/' },
+    { type: 'disallow', value: '/resume/' },
     // sitemap
     { type: 'sitemap', value: `${getDomainUrl(request)}/sitemap.xml` },
   ]

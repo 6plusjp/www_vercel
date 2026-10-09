@@ -222,7 +222,7 @@ export function pdf(
     headers.set("Content-Type", "application/pdf");
   }
 
-  return new Response(content, {
+  return new Response(content as BodyInit, {
     ...responseInit,
     headers,
   });
@@ -286,7 +286,7 @@ export function image(
     headers.set("Content-Type", type);
   }
 
-  return new Response(content, {
+  return new Response(content as BodyInit, {
     ...init,
     headers,
   });
