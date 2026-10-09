@@ -111,6 +111,11 @@ export default function Contact() {
           <h1 className="mb-12 py-8 text-3xl font-bold text-tp sm:text-4xl">
             お問い合わせ
           </h1>
+          <Alert state="warning" className="mb-12">
+            現在、お問い合わせフォームからのメール送信ができません。
+            <br />
+            お手数ですが、6plusjp6gmail.com（2つ目の6を@に）まで直接ご連絡ください。
+          </Alert>
           <div className="mb-8 grid gap-x-12 gap-y-4 lg:grid-cols-2">
             <Input name="name" label="お名前 / 会社名" placeholder="6+" />
             <Input
@@ -147,7 +152,7 @@ export default function Contact() {
               <Alert state="error" className="lg:w-max">
                 エラーが発生したため、送信できませんでした!
                 <br />
-                お手数ですがしばらくして再度お試しになるか、6plusjp6gmail.com（2つ目の6を@に）まで直接ご連絡ください。
+                お手数ですが、6plusjp6gmail.com（2つ目の6を@に）まで直接ご連絡ください。
               </Alert>
             ) : null}
           </div>
