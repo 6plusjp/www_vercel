@@ -182,13 +182,12 @@ export default function MdxScreen() {
           <div className="flex items-center justify-end px-[5vw] py-4 sm:py-8 lg:hidden lg:py-12">
             <MobileMenu />
           </div>
-          <div className="block xl:flex xl:gap-8">
-            <TableOfContents />
+          <div className="block lg:ml-[calc(50vw_-_504px)] xl:ml-[calc(50vw_-_624px)] xl:flex xl:gap-8 2xl:ml-[calc(50vw_-_728px)]">
             <motion.div
               initial="exit"
               animate="enter"
               exit="exit"
-              className="prose prose-sm max-w-4xl dark:prose-invert sm:prose-base lg:prose-lg"
+              className="prose prose-sm max-w-4xl shrink-0 break-words dark:prose-invert sm:prose-base lg:prose-lg lg:w-[448px] xl:w-[560px] 2xl:w-[640px]"
             >
               <motion.header
                 layoutId={`card-${slug}`}
@@ -259,6 +258,7 @@ export default function MdxScreen() {
                 {/* {data.recommendations} */}
               </section>
             </motion.div>
+            <TableOfContents />
           </div>
         </div>
       </div>
