@@ -14,7 +14,10 @@ export const loader = ({ params }: LoaderFunctionArgs) => {
 };
 
 export const meta = () => {
-  return [{ title: "Shoma Yamamoto's Resume | 6+" }];
+  return [
+    { title: "Shoma Yamamoto's Resume | 6+" },
+    { name: "robots", content: "noindex, nofollow" },
+  ];
 };
 
 export const links: LinksFunction = () => {
@@ -116,6 +119,57 @@ function EnResume() {
               </li>
             </ul>
           </header>
+          <section className="space-y-8 md:flex block md:space-y-0">
+            <h2 className="text-2xl md:text-3xl text-hs font-dm-serif-display md:w-1/3">
+              Skills &amp; Experience
+            </h2>
+            <div className="space-y-8 md:w-2/3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8">
+                <div className="space-y-1">
+                  <div className="font-bold">Languages</div>
+                  <ul>
+                    <li>TypeScript, JavaScript</li>
+                    <li>Rust</li>
+                  </ul>
+                </div>
+                <div className="space-y-1">
+                  <div className="font-bold">Frontend</div>
+                  <ul>
+                    <li>Remix, React</li>
+                    <li>Tailwind CSS, MDX</li>
+                  </ul>
+                </div>
+                <div className="space-y-1">
+                  <div className="font-bold">Testing &amp; Other</div>
+                  <ul>
+                    <li>Playwright, Vitest</li>
+                    <li>Git, Linux, REST API, Vercel</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="font-bold">Experience</div>
+                <ul className="list-inside list-disc space-y-1">
+                  <li>
+                    Web application development with TypeScript / JavaScript
+                    (Remix, React)
+                  </li>
+                  <li>CLI / TUI application development in Rust</li>
+                  <li>E2E testing (Playwright) and unit testing (Vitest)</li>
+                  <li>File-based content management with MDX</li>
+                  <li>SSR deployment and operations on Vercel</li>
+                  <li>
+                    Linux-based development environment (kitty / fish / Neovim /
+                    Zed)
+                  </li>
+                  <li>
+                    Approximately 10 months in Toronto, Canada (not enrolled at
+                    a university or language school)
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
           <section className="space-y-8">
             <h2 className="text-2xl md:text-3xl text-hs font-dm-serif-display">
               Personal Projects
@@ -186,72 +240,6 @@ function EnResume() {
               </div>
             </div>
           </section>
-          <section className="space-y-8">
-            <h2 className="text-2xl md:text-3xl text-hs font-dm-serif-display">
-              Education
-            </h2>
-            <div className="flex flex-col md:flex-row space-y-1 md:space-y-0">
-              <div className="space-y-1 md:space-y-2 md:w-1/3">
-                <h2 className="font-bold">
-                  <ExternalLink
-                    className="hover:opacity-70"
-                    href="https://www.osakafu-u.ac.jp/en/"
-                  >
-                    Osaka Prefecture University
-                  </ExternalLink>
-                  <br />
-                  <ExternalLink
-                    className="hover:opacity-70"
-                    href="https://www.omu.ac.jp/en/"
-                  >
-                    (now Osaka Metropolitan University)
-                  </ExternalLink>
-                </h2>
-                <div className="text-[#757d94]">2015 - 2020</div>
-              </div>
-              <div className="space-y-2 md:w-2/3">
-                <div className="italic">
-                  College of Life, Environment, and Advanced Sciences
-                </div>
-                <ul className="list-inside list-disc space-y-1">
-                  <li>
-                    About one year on leave, including approximately 10
-                    months in Toronto, Canada (not enrolled at a university
-                    or language school)
-                  </li>
-                  <li>Withdrawn from school for personal reasons.</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <section className="space-y-8 md:flex block md:space-y-0">
-            <h2 className="text-2xl md:text-3xl text-hs font-dm-serif-display md:w-1/3">
-              Skills
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8 md:w-2/3">
-              <div className="space-y-1">
-                <div className="font-bold">Languages</div>
-                <ul>
-                  <li>TypeScript, JavaScript</li>
-                  <li>Rust</li>
-                </ul>
-              </div>
-              <div className="space-y-1">
-                <div className="font-bold">Frontend</div>
-                <ul>
-                  <li>Remix, React</li>
-                  <li>Tailwind CSS, MDX</li>
-                </ul>
-              </div>
-              <div className="space-y-1">
-                <div className="font-bold">Testing & Other</div>
-                <ul>
-                  <li>Playwright, Vitest</li>
-                  <li>Git, Linux, REST API, Vercel</li>
-                </ul>
-              </div>
-            </div>
-          </section>
         </div>
       </div>
     </>
@@ -285,17 +273,50 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
           </section>
           <section className="space-y-4">
             <h2 className="font-bold text-lg text-hs">
-              【活かせる経験・知識・技術】
+              【スキル・活かせる経験】
             </h2>
-            <ul className="list-disc list-inside space-y-2">
-              <li>TypeScript / JavaScript を用いた Web アプリケーション開発（Remix, React）</li>
-              <li>Rust による CLI / TUI アプリケーション開発</li>
-              <li>E2E テスト（Playwright）・ユニットテスト（Vitest）の実装・運用</li>
-              <li>MDX によるファイルベースコンテンツ管理</li>
-              <li>Vercel への SSR デプロイと運用</li>
-              <li>Linux 環境での開発（kitty / fish / Neovim / Zed）</li>
-              <li>カナダ（トロント）での約10ヶ月間の留学（大学・言語学校には通わず）</li>
-            </ul>
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4">
+                <div className="space-y-2">
+                  <div className="font-bold">言語</div>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>TypeScript, JavaScript</li>
+                    <li>Rust</li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <div className="font-bold">フレームワーク</div>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Remix, React</li>
+                    <li>Tailwind CSS, MDX</li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <div className="font-bold">テスト</div>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Playwright, Vitest</li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <div className="font-bold">その他</div>
+                  <ul className="list-disc list-inside space-y-1">
+                    <li>Git, Linux, REST API, Vercel</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="font-bold">経験</div>
+                <ul className="list-disc list-inside space-y-2">
+                  <li>TypeScript / JavaScript を用いた Web アプリケーション開発（Remix, React）</li>
+                  <li>Rust による CLI / TUI アプリケーション開発</li>
+                  <li>E2E テスト（Playwright）・ユニットテスト（Vitest）の実装・運用</li>
+                  <li>MDX によるファイルベースコンテンツ管理</li>
+                  <li>Vercel への SSR デプロイと運用</li>
+                  <li>Linux 環境での開発（kitty / fish / Neovim / Zed）</li>
+                  <li>カナダ（トロント）での約10ヶ月間の留学（大学・言語学校には通わず）</li>
+                </ul>
+              </div>
+            </div>
           </section>
           <section className="space-y-4">
             <h2 className="font-bold text-lg text-hs">【主な個人プロジェクト】</h2>
@@ -339,63 +360,6 @@ Remix / TypeScript / Rust を中心に、設計・実装・テスト・ドキュ
                     <p>2026-03〜2026-10、Rustソース66ファイル・約13,000行。MITライセンス。</p>
                   </div>
                 </div>
-              </div>
-            </div>
-          </section>
-          <section className="space-y-4">
-            <h2 className="font-bold text-lg text-hs">【教育】</h2>
-            <div className="flex flex-col md:flex-row">
-              <div className="md:w-1/3">
-                <h3 className="font-bold">
-                  <ExternalLink
-                    className="hover:opacity-70"
-                    href="https://www.osakafu-u.ac.jp/"
-                  >
-                    大阪公立大学（旧：大阪府立大学）
-                  </ExternalLink>
-                </h3>
-                <div className="text-gray-500">2015 - 2020</div>
-              </div>
-              <div className="md:w-2/3 space-y-2">
-                <p className="italic">生命環境科学域</p>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>
-                    約1年間休学。うち約10ヶ月間、カナダ・トロントで留学
-                    （大学・言語学校には通わず）
-                  </li>
-                  <li>個人的理由により中退</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <section className="space-y-4">
-            <h2 className="font-bold text-lg text-hs">【習得スキル】</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4">
-              <div className="space-y-2">
-                <div className="font-bold">言語</div>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>TypeScript, JavaScript</li>
-                  <li>Rust</li>
-                </ul>
-              </div>
-              <div className="space-y-2">
-                <div className="font-bold">フレームワーク</div>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Remix, React</li>
-                  <li>Tailwind CSS, MDX</li>
-                </ul>
-              </div>
-              <div className="space-y-2">
-                <div className="font-bold">テスト</div>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Playwright, Vitest</li>
-                </ul>
-              </div>
-              <div className="space-y-2">
-                <div className="font-bold">その他</div>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Git, Linux, REST API, Vercel</li>
-                </ul>
               </div>
             </div>
           </section>

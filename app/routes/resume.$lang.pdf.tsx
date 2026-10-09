@@ -15,7 +15,9 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   if (!params.lang || (params.lang !== "en" && params.lang !== "ja"))
     throw notFound("お探しのページは見つかりませんでした。");
 
-  return pdf(await generatePDF(params.lang));
+  return pdf(await generatePDF(params.lang), {
+    headers: { "X-Robots-Tag": "noindex, nofollow, noarchive" },
+  });
 };
 
 async function generatePDF(lang: string): Promise<Buffer> {
@@ -120,6 +122,52 @@ function PDFDocument() {
           </View>
         </View>
         <View style={{ marginTop: 24 }}>
+          <Text style={[styles.heading]}>Skills & Experience</Text>
+          <View style={{ marginTop: 16 }}>
+            <View style={styles.section}>
+              <View style={styles.headingSection}>
+                <Text style={{ fontFamily: "Helvetica-Bold" }}>Languages</Text>
+              </View>
+              <View style={styles.contentSection}>
+                <Text style={{ marginTop: 4 }}>&bull; TypeScript, JavaScript</Text>
+                <Text style={{ marginTop: 4 }}>&bull; Rust</Text>
+              </View>
+            </View>
+            <View style={[styles.section, { marginTop: 12 }]}>
+              <View style={styles.headingSection}>
+                <Text style={{ fontFamily: "Helvetica-Bold" }}>Frontend</Text>
+              </View>
+              <View style={styles.contentSection}>
+                <Text style={{ marginTop: 4 }}>&bull; Remix, React</Text>
+                <Text style={{ marginTop: 4 }}>&bull; Tailwind CSS, MDX</Text>
+              </View>
+            </View>
+            <View style={[styles.section, { marginTop: 12 }]}>
+              <View style={styles.headingSection}>
+                <Text style={{ fontFamily: "Helvetica-Bold" }}>Testing & Other</Text>
+              </View>
+              <View style={styles.contentSection}>
+                <Text style={{ marginTop: 4 }}>&bull; Playwright, Vitest</Text>
+                <Text style={{ marginTop: 4 }}>&bull; Git, Linux, REST API, Vercel</Text>
+              </View>
+            </View>
+            <View style={[styles.section, { marginTop: 12 }]}>
+              <View style={styles.headingSection}>
+                <Text style={{ fontFamily: "Helvetica-Bold" }}>Experience</Text>
+              </View>
+              <View style={styles.contentSection}>
+                <Text style={{ marginTop: 4 }}>&bull; Web application development with TypeScript / JavaScript (Remix, React)</Text>
+                <Text style={{ marginTop: 4 }}>&bull; CLI / TUI application development in Rust</Text>
+                <Text style={{ marginTop: 4 }}>&bull; E2E testing (Playwright) and unit testing (Vitest)</Text>
+                <Text style={{ marginTop: 4 }}>&bull; File-based content management with MDX</Text>
+                <Text style={{ marginTop: 4 }}>&bull; SSR deployment and operations on Vercel</Text>
+                <Text style={{ marginTop: 4 }}>&bull; Linux-based development environment (kitty / fish / Neovim / Zed)</Text>
+                <Text style={{ marginTop: 4 }}>&bull; Approximately 10 months in Toronto, Canada (not enrolled at a university or language school)</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={{ marginTop: 24 }}>
           <Text style={[styles.heading]}>Personal Projects</Text>
           <View style={{ marginTop: 16 }}>
             <View style={[styles.section, { marginTop: 12 }]}>
@@ -183,77 +231,6 @@ function PDFDocument() {
                     2026-03 to 2026-10
                   </Text>
                 </View>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View style={{ marginTop: 24 }}>
-          <Text style={[styles.heading]}>Education</Text>
-          <View style={[styles.section, { marginTop: 24 }]}>
-            <View style={styles.headingSection}>
-              <Text style={[{ fontFamily: "Helvetica-Bold" }]}>
-                <Link
-                  src="https://www.osakafu-u.ac.jp/en/"
-                  style={{ color: "#2cb67d" }}
-                >
-                  Osaka Prefecture University
-                </Link>
-                {" "}
-                <Link
-                  src="https://www.omu.ac.jp/en/"
-                  style={{ color: "#2cb67d" }}
-                >
-                  (now Osaka Metropolitan University)
-                </Link>
-              </Text>
-              <Text style={{ marginTop: 8, color: "#757d94" }}>
-                2015 - 2020
-              </Text>
-            </View>
-            <View style={styles.contentSection}>
-              <Text style={{ fontFamily: "Helvetica-Oblique" }}>
-                College of Life, Environment, and Advanced Sciences
-              </Text>
-              <View style={{ marginTop: 8 }}>
-                <Text style={{ marginTop: 4 }}>
-                  &bull; About one year on leave, including approximately 10
-                  months in Toronto, Canada (not enrolled at a university or
-                  language school)
-                </Text>
-                <Text style={{ marginTop: 4 }}>
-                  &bull; Withdrawn from school for personal reasons.
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 24 }}>
-          <Text style={[styles.heading, styles.headingSection]}>Skills</Text>
-          <View
-            style={[
-              styles.contentSection,
-              { flexDirection: "row", flexWrap: "wrap" },
-            ]}
-          >
-            <View style={{ flexBasis: "50%" }}>
-              <Text style={{ fontFamily: "Helvetica-Bold" }}>Languages</Text>
-              <View style={{ marginTop: 8 }}>
-                <Text>TypeScript, JavaScript</Text>
-                <Text>Rust</Text>
-              </View>
-            </View>
-            <View style={{ flexBasis: "50%" }}>
-              <Text style={{ fontFamily: "Helvetica-Bold" }}>Frontend</Text>
-              <View style={{ marginTop: 8 }}>
-                <Text>Remix, React</Text>
-                <Text>Tailwind CSS, MDX</Text>
-              </View>
-            </View>
-            <View style={{ flexBasis: "50%", marginTop: 16 }}>
-              <Text style={{ fontFamily: "Helvetica-Bold" }}>Testing & Other</Text>
-              <View style={{ marginTop: 8 }}>
-                <Text>Playwright, Vitest</Text>
-                <Text>Git, Linux, REST API, Vercel</Text>
               </View>
             </View>
           </View>

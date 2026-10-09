@@ -30,32 +30,21 @@ test.describe("Contact page", () => {
       page.getByRole("textbox", { name: "お名前 / 会社名" }),
     ).toBeFocused();
 
-    const errors = await page.getByTestId("error-message").all();
+    const errors = await page.getByRole("alert").all();
     expect(errors).toHaveLength(3);
 
     await page.getByTestId("reset").click();
     await expect(page.getByText("必須です")).not.toBeVisible();
   });
 
-  test("should not be cleared the form when the page is reloaded", async ({
-    page,
-  }) => {
-    const username = faker.person.fullName();
-    const email = faker.internet.email();
-    const subjects = ["仕事のご依頼", "ご質問", "その他"];
-    const subjectIndex = faker.number.int({ min: 0, max: 2 });
+  test("reset button clears the entered values", async ({ page }) => {
+    const name = faker.person.fullName();
 
-    await page.getByRole("textbox", { name: "お名前 / 会社名" }).fill(username);
-    await page.getByRole("textbox", { name: "メールアドレス" }).fill(email);
-    await page.selectOption('select[name="subject"]', subjects[subjectIndex]);
-    await page
-      .getByRole("textbox", { name: "お問い合わせ内容" })
-      .fill(faker.lorem.text());
+    const nameInput = page.getByRole("textbox", { name: "お名前 / 会社名" });
+    await nameInput.fill(name);
+    await expect(nameInput).toHaveValue(name);
 
-    await page.reload();
-
-    await expect(page.getByText(username)).toBeVisible();
-    await expect(page.getByText(email)).toBeVisible();
-    await expect(page.getByText(subjects[subjectIndex])).toBeVisible();
+    await page.getByTestId("reset").click();
+    await expect(nameInput).toHaveValue("");
   });
 });

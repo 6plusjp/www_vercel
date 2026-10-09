@@ -131,7 +131,7 @@ type SelectProps = {
 };
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
-  { name, label, placeholder, multiple, "data-cy": dataTestId, children },
+  { name, label, multiple, "data-cy": dataTestId, children },
   ref,
 ) {
   const suffix = useId();
@@ -153,7 +153,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
         aria-required="true"
         aria-describedby={error ? errorId : undefined}
         data-cy={dataTestId}
-        {...getInputProps({ id: inputId, placeholder, multiple, ref })}
+        {...getInputProps({ id: inputId, multiple, ref })}
       >
         {children}
       </select>

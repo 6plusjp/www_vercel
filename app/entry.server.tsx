@@ -38,6 +38,13 @@ export default async function handleRequest(
     })
   }
 
+  // Resume pages contain personal information: reject crawler indexing.
+  // (Loader response headers are not propagated to document responses by
+  // Remix, so the header must be set here on the final response headers.)
+  if (url.pathname.startsWith('/resume/')) {
+    responseHeaders.set('X-Robots-Tag', 'noindex, nofollow, noarchive')
+  }
+
   return isbot(request.headers.get('user-agent'))
     ? handleBotRequest(
         request,

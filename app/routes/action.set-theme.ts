@@ -1,8 +1,8 @@
 import type { ActionFunctionArgs } from '@vercel/remix'
 import { json, redirect } from '@vercel/remix'
 
-import { getThemeSession } from '~/utils/theme.server'
 import { isTheme } from '~/utils/theme'
+import { getThemeSession } from '~/utils/theme.server'
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await getThemeSession(request)

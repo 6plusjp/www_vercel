@@ -1,14 +1,9 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("The page", () => {
-  test("successfully loads", async ({ page }) => {
+test.describe("Smoke Tests", () => {
+  test("homepage loads successfully", async ({ page }) => {
     await page.goto("/");
-    await page.getByText("Terms").click();
-  });
-});
-
-test.describe("My First Test", () => {
-  test("does not do much", () => {
-    expect(true).toBe(true);
+    await expect(page).toHaveTitle(/6\+/);
+    await expect(page.getByRole("heading", { name: /Shoma Yamamoto/i })).toBeVisible();
   });
 });
