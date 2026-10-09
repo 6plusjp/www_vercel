@@ -15,7 +15,9 @@ export const sessionStorage = createCookieSessionStorage({
     path: "/",
     sameSite: "lax",
     secrets: [getRequiredServerEnvVar("SESSION_SECRET")],
-    secure: true,
+    // Secure cookies are rejected over http://localhost by WebKit, which
+    // breaks theme persistence in E2E. Only force Secure in production.
+    secure: process.env.NODE_ENV === "production",
   },
 });
 
