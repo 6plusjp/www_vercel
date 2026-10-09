@@ -30,8 +30,8 @@ import { honeypot } from './utils/honeypot.server'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/misc'
 import type { SEOHandle } from './utils/seo'
 import { getMeta } from './utils/seo'
-import { getThemeSession } from './utils/theme.server'
 import { ThemeBody, ThemeProvider, ThemeScript, useTheme } from './utils/theme'
+import { getThemeSession } from './utils/theme.server'
 
 export const handle: SEOHandle & { id: string } = {
   id: 'root',

@@ -12,6 +12,12 @@ node_modules
 # Postcss build
 /app/styles
 
+# Playwright
+/playwright-report
+/test-results
+/blob-report
+/playwright/.cache
+
 # Misc
 /.cache
 TODO.md

@@ -24,7 +24,7 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 - **本番環境で動作中**（Vercel SSR deployment）
 - 2022-04-03 の Initial commit から約 4 年半、継続的に開発・更新中
-- ルーティング 17 ファイル / 17 ルート、TS・TSX・CSS・MDX で約 12,600 行
+- ルーティング 17 ファイル / 17 ルート、TS・TSX・CSS・MDX で約 12,500 行
 
 ---
 

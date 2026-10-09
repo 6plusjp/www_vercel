@@ -54,6 +54,7 @@ export async function getSitemapXml(
     await Promise.all(
       Object.entries(remixContext.routeModules).map(async ([id, mod]) => {
         if (id === 'root') return
+        if (!mod) return
 
         const handle = mod.handle as SEOHandle | undefined
         if (handle?.getSitemapEntries) {

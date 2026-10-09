@@ -11,7 +11,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 function useThrottle(
   callbackFn: Function,
   timeout: number = 300,
-): [(...args: any) => any, boolean] {
+): [(...args: unknown[]) => unknown, boolean] {
   const [ready, setReady] = useState(true);
   const timerRef = useRef<number | undefined>(undefined);
 
@@ -22,7 +22,7 @@ function useThrottle(
   }
 
   const throttledFunction = useCallback(
-    (...args) => {
+    (...args: unknown[]) => {
       if (!ready) {
         return;
       }
