@@ -10,6 +10,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      # Required by app/utils/session.server.ts at startup (value only needs
+      # to be non-empty for the E2E run).
+      SESSION_SECRET: ci-test-session-secret
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
