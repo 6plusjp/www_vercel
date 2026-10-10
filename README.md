@@ -18,7 +18,7 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 - **本番環境で動作中**（Vercel SSR deployment）
 - 2022-04-03 の Initial commit から約 4 年半、継続的に開発・更新中
-- ルーティング 18 ファイル（17 ルート + 共通レイアウト `_layout.tsx`）、`app/` と `content/` で TS・TSX・CSS・MDX 約 12,350 行
+- ルーティング 17 ファイル（共通レイアウト `_layout.tsx`）、`app/`・`content/`・`styles/` で TS・TSX・CSS・MDX 約 8,300 行
 
 ---
 
@@ -36,7 +36,7 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 ---
 
-## 主な機能・ルーティング（実在する 18 ファイル / 17 ルート）
+## 主な機能・ルーティング（実在する 17 ルート）
 
 | Route                                                               | 概要                                           |
 | ------------------------------------------------------------------- | ---------------------------------------------- |
@@ -139,7 +139,6 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 - **`require` を `env.server.ts` から除去**（ESM 互換化）
 - **`fs.server.ts` で `process.cwd()` を使用**（Vercel 上でのファイルシステムアクセス安定化）
 - **esbuild ターゲットに es2022 を追加**（分割代入等のモダン構文対応）
-- **Remix classic build への回帰**（安定性優先の判断）
 
 ---
 
@@ -147,7 +146,7 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 ```
 app/
-├── routes/              # 18 ファイル（17 ルート + _layout.tsx、ファイルベースルーティング）
+├── routes/              # 17 ファイル（ファイルベースルーティング）
 ├── utils/               # honeypot, session, seo, email 等
 ├── components/          # 共通 UI コンポーネント
 ├── entry.client.tsx
@@ -156,6 +155,7 @@ app/
 content/
 ├── blog/                # *.mdx
 └── works/               # *.mdx
+styles/                  # PostCSS ソース（tailwind / prose / font / no-script）
 .github/
 └── workflows/           # CI（typecheck / lint / E2E）
 docs/
