@@ -12,51 +12,47 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 ![トップページ](docs/assets/home.png)
 
-| 実績 | ブログ | お問い合わせ |
-|---|---|---|
-| ![実績一覧](docs/assets/works.png) | ![ブログ一覧](docs/assets/blog.png) | ![お問い合わせ](docs/assets/contact.png) |
-
-再生成方法は「[開発コマンド](#開発コマンド)」の `npm run screenshot` を参照してください。
-
 ---
 
 ## 稼働状況
 
 - **本番環境で動作中**（Vercel SSR deployment）
 - 2022-04-03 の Initial commit から約 4 年半、継続的に開発・更新中
-- ルーティング 17 ファイル / 17 ルート、TS・TSX・CSS・MDX で約 12,500 行
+- ルーティング 18 ファイル（17 ルート + 共通レイアウト `_layout.tsx`）、`app/` と `content/` で TS・TSX・CSS・MDX 約 12,350 行
 
 ---
 
 ## 技術スタック
 
-| 分類 | 技術 |
-|------|------|
-| Framework | **Remix**（Vite ビルド構成） |
-| Language | **TypeScript** |
-| Styling | **Tailwind CSS** |
-| Content | **MDX**（bundler 経由でビルド時に変換） |
-| Testing | **Playwright**（E2E） |
-| Deployment | **Vercel**（SSR / Server deployment） |
-| Env | **Vercel** のプロジェクト設定で管理（アプリ側は `process.env` のみ参照） |
+| 分類       | 技術                                                                     |
+| ---------- | ------------------------------------------------------------------------ |
+| Framework  | **Remix**（Vite ビルド構成）                                             |
+| Language   | **TypeScript**                                                           |
+| Styling    | **Tailwind CSS**                                                         |
+| Content    | **MDX**（bundler 経由でビルド時に変換）                                  |
+| Testing    | **Playwright**（E2E）                                                    |
+| Deployment | **Vercel**（SSR / Server deployment）                                    |
+| Env        | **Vercel** のプロジェクト設定で管理（アプリ側は `process.env` のみ参照） |
 
 ---
 
-## 主な機能・ルーティング（実在する 17 ファイル / 17 ルート）
+## 主な機能・ルーティング（実在する 18 ファイル / 17 ルート）
 
-| Route | 概要 |
-|-------|------|
-| `_index.tsx` | トップページ |
-| `blog._index.tsx` / `blog.$slug.tsx` | ブログ一覧・詳細 |
-| `blog.rss[.]xml.tsx` | RSS フィード生成 |
-| `works._index.tsx` / `works.$slug.tsx` | 実績一覧・詳細 |
-| `_resume.tsx` / `_resume.resume.$lang.tsx` / `resume.$lang.pdf.tsx` | 履歴書（言語切替・PDF 生成） |
-| `contact._index.tsx` | 問い合わせフォーム（ハニーポット＋レート制限） |
-| `_layout.policy._index.tsx` / `_layout.terms._index.tsx` | プライバシーポリシー・利用規約 |
-| `_md.tsx` / `_md.uses.mdx` | MDX レンダリング共通コンポーネント |
-| `action.form-validation.tsx` / `action.set-theme.ts` | Action（フォーム検証・テーマ切替） |
+| Route                                                               | 概要                                           |
+| ------------------------------------------------------------------- | ---------------------------------------------- |
+| `_index.tsx`                                                        | トップページ                                   |
+| `_layout.tsx`                                                       | 共通レイアウト（ルートを持たない親レイアウト） |
+| `blog._index.tsx` / `blog.$slug.tsx`                                | ブログ一覧・詳細                               |
+| `blog.rss[.]xml.tsx`                                                | RSS フィード生成                               |
+| `works._index.tsx` / `works.$slug.tsx`                              | 実績一覧・詳細                                 |
+| `_resume.tsx` / `_resume.resume.$lang.tsx` / `resume.$lang.pdf.tsx` | 履歴書（日本語・英語の切替・PDF 生成）         |
+| `contact._index.tsx`                                                | 問い合わせフォーム（ハニーポット）             |
+| `_layout.policy._index.tsx` / `_layout.terms._index.tsx`            | プライバシーポリシー・利用規約                 |
+| `_md.tsx` / `_md.uses.mdx`                                          | MDX レンダリング共通コンポーネント             |
+| `action.form-validation.tsx` / `action.set-theme.ts`                | Action（フォーム検証・テーマ切替）             |
 
 ### コンテンツ管理
+
 - `content/blog/*.mdx`、`content/works/*.mdx` をファイルベースで管理
 - MDX はビルド時に変換、ランタイム依存を持たない
 
@@ -65,25 +61,61 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 ## 実装上の工夫
 
 ### スパム対策
+
 - **ハニーポット**: `app/utils/honeypot.server.ts`
-- **レート制限**: `app/utils/throttle.ts`
 
 ### セッション管理
+
 - `app/utils/session.server.ts` でサーバーサイドセッションを実装
 
 ### SEO ユーティリティ
+
 - `app/utils/seo.ts` にて OG 画像・Twitter カード・canonical URL を一元管理
 
-### ~~メール送信~~
-- ~~`app/utils/email.server.ts` でサーバーサイド送信処理を実装（MailerSend API を使用）~~
-- Vercel のフリードメイン（`*.vercel.app`）へ移行し送信元ドメインの検証ができなくなったため、MailerSend API によるメール送信は利用できなくなりました（問い合わせは直接メールでお願いします）。
+### メール送信（現在は無効化）
+
+- `app/utils/email.server.ts` に MailerSend API を使ったサーバーサイド送信処理を実装済み（コードは現在もリポジトリに残置）
+- Vercel のフリードメイン（`*.vercel.app`）へ移行し送信元ドメインの検証ができなくなったため、送信機能のみ無効化しています（問い合わせは直接メールでお願いします）。
 
 ### sitemap / robots.txt
+
 - カスタム `app/entry.server.tsx` で `/sitemap.xml` と `/robots.txt` を配信
+- サイトマップ生成・robots テキストは `app/utils/seo.ts` に集約
+- クローラ制御: `/admin/`・`/action/`・`/resume/` へのクロールを拒否し、GPTBot にも個別に disallow を指定
 
 ### 入力バリデーション
+
 - `action.form-validation.tsx` でフォーム入力を検証し、サーバーアクション側で再検証
+- **Zod** スキーマ + `withZod` によるスキーマベースの検証を実装
 - `app/utils/assertion.ts` に型アサーションを集約
+
+### アクセシビリティ
+
+- スキップナビゲーション（`SkipContent`）・各アイコンの `aria-label`・focus-visible によるキーボード操作対応
+- `prefers-reduced-motion`（`useReducedMotion`）を尊重したアニメーション制御
+
+### エラーハンドリング
+
+- `app/root.tsx` の `ErrorBoundary` で 404 / 一般エラー / 不明エラーの 3 状態を共通レイアウトで処理
+- 開発時はスタックトレースを表示し、本番でも導線（ナビゲーション）を維持
+
+### パフォーマンス
+
+- sitemap / robots に `Cache-Control: public, max-age=3600`、ブログ・実績のレスポンスに `private, max-age=3600` を付与
+- リンクの `prefetch="intent"`、Cloudinary のレスポンシブ画像（`srcSet` / `sizes`）、スケルトンローディング
+
+### プログレッシブエンハンスメント
+
+- JavaScript 無効環境でも送信できる問い合わせフォーム（`NoJsFormRoute`）
+
+### UI モーション
+
+- **framer-motion** による一覧カードのマウント・ホバーアニメーション
+
+### PWA・アクセス解析
+
+- `site.webmanifest`・apple-touch-icon による PWA 対応
+- **Vercel Analytics** によるアクセス計測
 
 ---
 
@@ -91,7 +123,7 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 - **Deployment**: Vercel（SSR / Server deployment）へ push するだけで自動デプロイ
 - **環境変数**: Vercel のプロジェクト設定で管理し、`process.env` 経由で参照する（ローカルは `.env.example` を参考に手動で用意）
-- **テスト**: Playwright による E2E テスト（`tests/contact.spec.ts`、`tests/portfolio.spec.ts`、`tests/spec.spec.ts`）を `npm test` でローカル実行
+- **テスト**: Playwright による E2E テスト（`tests/contact.spec.ts`、`tests/portfolio.spec.ts`、`tests/spec.spec.ts`、セットアップ用 `tests/global-setup.ts`）を `npm test` でローカル実行
 - **CI**: GitHub Actions（`.github/workflows/ci.yml`）で typecheck・lint・E2E を pull request / push ごとに実行
 - **ビルド**: `vite build` → Remix Vite plugin による SSR バンドル生成
 
@@ -115,8 +147,8 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 ```
 app/
-├── routes/              # 17 ファイル（17 ルート、ファイルベースルーティング）
-├── utils/               # honeypot, throttle, session, seo, email 等
+├── routes/              # 18 ファイル（17 ルート + _layout.tsx、ファイルベースルーティング）
+├── utils/               # honeypot, session, seo, email 等
 ├── components/          # 共通 UI コンポーネント
 ├── entry.client.tsx
 ├── entry.server.tsx     # SSR エントリポイント（sitemap.xml / robots.txt もここで処理）
@@ -168,4 +200,4 @@ npm run cleanup
 
 MIT License — 詳細は [LICENSE](LICENSE) を参照してください。
 
-コードの再利用・参考は自由ですが、コンテンツ（ブログ記事・実績・履歴書等）の無断転載はご遠慮ください。
+コードの再利用・参考は自由ですが、コンテンツの無断転載はご遠慮ください。
