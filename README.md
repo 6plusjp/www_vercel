@@ -29,7 +29,7 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 | Framework  | **Remix**（Vite ビルド構成）                                             |
 | Language   | **TypeScript**                                                           |
 | Styling    | **Tailwind CSS**                                                         |
-| Content    | **MDX**（bundler 経由でビルド時に変換）                                  |
+| Content    | **MDX**（本文は実行時に `mdx-bundler` でコンパイル、ルートは Vite でビルド時変換）                                  |
 | Testing    | **Playwright**（E2E）                                                    |
 | Deployment | **Vercel**（SSR / Server deployment）                                    |
 | Env        | **Vercel** のプロジェクト設定で管理（アプリ側は `process.env` のみ参照） |
@@ -53,8 +53,9 @@ Remix + TypeScript 製の個人運営ポートフォリオサイト。Vercel で
 
 ### コンテンツ管理
 
-- `content/blog/*.mdx`、`content/works/*.mdx` をファイルベースで管理
-- MDX はビルド時に変換、ランタイム依存を持たない
+- `content/blog/<slug>/index.mdx`、`content/works/<slug>.mdx` をファイルベースで管理
+- 本文はリクエスト時に `bundleMDX`（mdx-bundler）でコンパイルし、`lru-cache` のプロセス内メモリキャッシュ（キーは `contentDir:slug`、件数上限 `max: 500`・TTL なし）に格納。クライアントでは `getMDXComponent` で描画
+- ルートとして読み込む `_md.uses.mdx` は Vite の `@mdx-js/rollup` によりビルド時に変換
 
 ---
 

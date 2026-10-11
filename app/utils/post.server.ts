@@ -74,13 +74,8 @@ if (process.platform === "win32") {
   );
 }
 
-const DEFAULT_MAX_AGE = 1000 * 60 * 60 * 24 * 7;
-
 const cache = new LRUCache<string, PostData>({
-  maxSize: process.env.NODE_ENV === "production" ? DEFAULT_MAX_AGE : 2500,
-  sizeCalculation: () => {
-    return 1;
-  },
+  max: 500,
 });
 
 export const getMdxPage = async (
