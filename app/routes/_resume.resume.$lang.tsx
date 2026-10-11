@@ -24,7 +24,7 @@ export const links: LinksFunction = () => {
   return [
     {
       rel: "preload",
-      href: "/fonts/dm-serif-display/DMSerifDisplay-Regular.woff2",
+      href: "/fonts/dm-serif-display/dm-serif-display-latin-ext-400-normal.woff2",
       as: "font",
       type: "font/woff2",
       crossOrigin: "anonymous",

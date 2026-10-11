@@ -75,7 +75,7 @@ export const links: LinksFunction = () => {
     {
       rel: 'preload',
       as: 'font',
-      href: 'https://fonts.gstatic.com/s/sourcecodepro/v20/HI_SiYsKILxRpg3hIP6sJ7fM7PqlPevWnsUnxg.woff2',
+      href: '/fonts/source-code-pro/source-code-pro-latin-ext-400-normal.woff2',
       type: 'font/woff2',
       crossOrigin: 'anonymous',
     },
