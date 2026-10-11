@@ -25,6 +25,7 @@ import { SkipContent } from './components/skip-content'
 import fontCSS from './styles/font.css?url'
 import noScriptCSS from './styles/no-script.css?url'
 import tailwindCSS from './styles/tailwind.css?url'
+import { __DEV__ } from './utils/assertion'
 import { getEnv } from './utils/env.server'
 import { honeypot } from './utils/honeypot.server'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/misc'
@@ -187,11 +188,21 @@ export function ErrorBoundary() {
               <h1 className="text-2xl underline underline-offset-8 sm:text-4xl">
                 There was an error!
               </h1>
-              <p className="text-lg">{error.message}</p>
-              <div className="text-lg">
-                <p>The stack trace is:</p>
-                <pre className="overflow-x-auto px-1 py-4">{error.stack}</pre>
-              </div>
+              {__DEV__ ? (
+                <>
+                  <p className="text-lg">{error.message}</p>
+                  <div className="text-lg">
+                    <p>The stack trace is:</p>
+                    <pre className="overflow-x-auto px-1 py-4">
+                      {error.stack}
+                    </pre>
+                  </div>
+                </>
+              ) : (
+                <p className="text-lg">
+                  An unexpected error occurred. Please try again later.
+                </p>
+              )}
               <p className="text-lg">
                 <Link
                   className="text-blue-500 underline hover:no-underline focus:no-underline"
