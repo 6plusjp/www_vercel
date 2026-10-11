@@ -55,7 +55,7 @@ export default async function handleRequest(
   if (!__DEV__) {
     responseHeaders.set(
       'Content-Security-Policy',
-      `default-src 'self'; script-src 'self' 'nonce-${nonce}' https://va.vercel-scripts.com https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://res.cloudinary.com https://cdn.buymeacoffee.com https://vercel.live https://vercel.com; font-src 'self' https://fonts.gstatic.com https://vercel.live https://assets.vercel.com; connect-src 'self' https://va.vercel-scripts.com wss://ws-us3.pusher.com https://vercel.live; frame-src https://vercel.live; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'`
+      `default-src 'self'; script-src 'self' 'nonce-${nonce}' 'unsafe-eval' https://va.vercel-scripts.com https://vercel.live; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://res.cloudinary.com https://cdn.buymeacoffee.com https://vercel.live https://vercel.com; font-src 'self' https://fonts.gstatic.com https://vercel.live https://assets.vercel.com; connect-src 'self' https://va.vercel-scripts.com wss://ws-us3.pusher.com https://vercel.live; frame-src https://vercel.live; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'`
     )
   }
 
