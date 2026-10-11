@@ -29,6 +29,7 @@ import { __DEV__ } from './utils/assertion'
 import { getEnv } from './utils/env.server'
 import { honeypot } from './utils/honeypot.server'
 import { getDomainUrl, getUrl, removeTrailingSlash } from './utils/misc'
+import { getNonce } from './utils/nonce'
 import type { SEOHandle } from './utils/seo'
 import { getMeta } from './utils/seo'
 import { ThemeBody, ThemeProvider, ThemeScript, useTheme } from './utils/theme'
@@ -109,6 +110,7 @@ export default function App() {
 function Document({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<typeof loader>()
   const [theme] = useTheme()
+  const nonce = getNonce()
 
   return (
     <html lang="ja" className={clsx('font-display', theme)}>
@@ -131,9 +133,9 @@ function Document({ children }: { children: React.ReactNode }) {
       <body className="w-full antialiased">
         <SkipContent />
         {children}
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
+        <ScrollRestoration nonce={nonce} />
+        <Scripts nonce={nonce} />
+        <LiveReload nonce={nonce} />
         <Analytics />
       </body>
     </html>
