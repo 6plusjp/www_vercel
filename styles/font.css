@@ -113,3 +113,13 @@
     url("/fonts/dm-serif-display/dm-serif-display-latin-ext-400-italic.woff")
       format("woff");
 }
+
+/* Source Code Pro 400 */
+@font-face {
+  font-family: "Source Code Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url("/fonts/source-code-pro/source-code-pro-latin-ext-400-normal.woff2")
+    format("woff2");
+}
